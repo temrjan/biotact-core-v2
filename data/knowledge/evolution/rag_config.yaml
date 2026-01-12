@@ -1,0 +1,44 @@
+# RAG Indexer Config — BIOTACT
+# Коллекция: knowledge-evolution
+
+qdrant:
+  collection: knowledge-evolution
+  host: "biotact-qdrant"
+  port: 6333
+
+source:
+  path: /app/data/knowledge/evolution
+  patterns:
+    - "*.txt"
+
+parser:
+  format: sections
+  section_start: "===СЕКЦИЯ==="
+  section_end: "===/СЕКЦИЯ==="
+
+bilingual:
+  enabled: false
+  languages:
+    - code: ru
+      title_pattern: 'Название RU:\s*(.+)'
+      content_marker: "RU:"
+      primary: true
+    - code: uz
+      title_pattern: 'Название UZ:\s*(.+)'
+      content_marker: "UZ:"
+
+chunking:
+  max_chars: 8000
+  min_chars: 50
+
+embeddings:
+  model: text-embedding-3-large
+  dimensions: 3072
+  batch_size: 20
+
+metadata:
+  department_id: askbiotact
+
+indexing:
+  incremental: true
+  clean_orphaned: true

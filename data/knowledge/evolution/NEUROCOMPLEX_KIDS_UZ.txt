@@ -1,0 +1,250 @@
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — Mahsulot kartasi]
+Mahsulot: NEUROCOMPLEX KIDS
+
+MAQSAD: Bolalar miyasi va asab tizimini rivojlantirish uchun kompleks — omega-3 + L-karnitin + glitsin + magniy + sink + vitamin C + B guruh vitaminlarining to'liq spektri.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Stiklar 1,5 g, 30 dona. Kukun, tez eriydigan.
+YOSH: 1 yoshdan (1 yoshgacha — pediatr tavsiyasi bilan 0,5 stik).
+KURS: 20-30 kun. Barqaror ta'sir uchun: yiliga 2-3 kurs, ayniqsa bog'cha, maktabga moslashish va intensiv o'quv yuklamalari davrida.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan.
+XUSUSIYATI: Omega-3 dengiz suv o'tlaridan (baliqdan emas), baliq hidi yo'q. Probiotiklar tarkibida yo'q.
+
+1 STIK TARKIBI (1,5 g):
+Omega-3 (DHA+ALA) — 200 mg (DHA dengiz suv o'tlaridan)
+L-karnitin — 150 mg
+Glitsin — 80 mg
+Magniy — 25 mg
+Sink — 3 mg
+Vitamin C (askorbin kislotasi) — 30 mg
+Vitamin B1 (tiamin) — 0,6 mg
+Vitamin B2 (riboflavin) — 0,7 mg
+Vitamin B3 (niatsin) — 8 mg
+Vitamin B5 (pantotenov kislotasi) — 4 mg
+Vitamin B6 (piridoksin) — 0,6 mg
+Vitamin B7 (biotin) — 20 mkg
+Vitamin B9 (foliy kislotasi) — 120 mkg
+
+DOZALASH:
+1 yoshgacha: 0,5 stik/kun (100 mg omega-3)
+1-4 yosh: 1 stik/kun (200 mg omega-3)
+4 yoshdan katta: 2 stik/kun (400 mg omega-3)
+Bolalar ovqati, sharbat yoki suv bilan aralashtirish. Ertalab yoki kunduzi ovqat bilan qabul qilish.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Omega-3 (DHA): miyaning asosiy qurilish materiali, miyadagi DHA ning 97% ni tashkil etadi. Tafakkur va ko'rish rivojlanishi uchun muhim ahamiyatga ega.
+L-karnitin: yog' kislotalarini mitoxondriyalarga tashiydi, miya uchun energiya. Diqqat va chidamlilikni yaxshilaydi.
+Glitsin: tormozlovchi neyromediator, qo'zg'aluvchanlikni kamaytiradi, uyqu va o'rganish qobiliyatini yaxshilaydi.
+Magniy: asab impulslarini uzatish, stressni kamaytirish, mushaklarni bo'shashtirish.
+Sink: 300+ fermentlar ishlashi, xotira, immunitet.
+B vitaminlar: asab tizimi va energetik almashinuv uchun to'liq spektr.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — Diqqat, xotira, o'rganish]
+Mahsulot: Omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + B va C vitaminlar, stiklar, 1 yoshdan.
+Mexanizm: DHA omega-3 miyaning tarkibiy komponenti hisoblanadi, L-karnitin neyronlar uchun energiya ta'minlaydi, sink va vitamin B6 esa diqqat va xotira uchun javobgar neyromediatorlar sintezini kuchaytiradi.
+
+QACHON TAVSIYA ETILADI:
+bola diqqatini jamlolmaydi, bir joyda o'tirolmaydi, chalg'iydi, e'tiborsiz, tarqoq, tinglamaydi, giperaktiv, SDVG, diqqat yetishmovchiligi sindromi, tinchimas, hammasini unutadi, harflarni aralashtiradi, xotirasi yomon, bola yomon o'qiydi, eslab qololmaydi, she'rni yodlab ololmaydi, matematikaga qiynaladi, o'qishga qiynaladi, disleksiya, maktabda ulgurmaydigan, yomon baholar.
+
+Tibbiy terminlar: SDVG, disleksiya, disgrafiya, diskalkuliya, kognitiv buzilishlar.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — Nutq va rivojlanish]
+Mahsulot: Omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + B va C vitaminlar, stiklar, 1 yoshdan.
+Mexanizm: DHA omega-3 neyrorivojlanish va miyaning nutq markazlarini shakllantirish uchun muhim ahamiyatga ega. Glitsin va B guruh vitaminlari asab tizimining yetilishi va neyronlararo aloqalarni qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+nutq kechikishi, bola kech gapira boshladi, yomon gapiradi, harflarni to'g'ri talaffuz qilolmaydi, duduqlanish, psixomotor rivojlanishning kechikishi, NKK, PRK, autizm, autistik spektr buzilishi, bolalar bilan muloqot qilmaydi.
+
+Tibbiy terminlar: NKK, PRK, ASB, neyrorivojlanish.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — Uyqu, stress, moslashish]
+Mahsulot: Omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + B va C vitaminlar, stiklar, 1 yoshdan.
+Mexanizm: Glitsin tormozlovchi neyromediator hisoblanadi va asab tizimining qo'zg'aluvchanligini kamaytiradi. Magniy tinchlantiruvchi ta'sirni kuchaytiradi va mushaklarni bo'shashtiradi, uxlab qolish va uyqu sifatini yaxshilaydi.
+
+QACHON TAVSIYA ETILADI:
+bola asabiy, injiq, yig'loqi, isterikalar, xavotirli bola, qo'rqadi, qo'rquvlar, bog'chaga moslashish, maktabga moslashish, birinchi sinf, bola maktabga borganisi kelmaydi, imtihonlar oldidan stress, olimpiadalar, bola yomon uxlaydi, uxlab qololmaydi, kechasi uyg'onib ketadi, bezovta uyqu, dahshatli tushlar, tungi qo'rquvlar, uxlayotganda tish g'ichirlaydi, bruksizm, haddan tashqari qo'zg'algan, tinchlana olmaydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — Charchoq, energiya, o'tish davri]
+Mahsulot: Omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + B va C vitaminlar, stiklar, 1 yoshdan.
+Mexanizm: L-karnitin yog' kislotalarini mitoxondriyalarga tashiydi, energiya ishlab chiqarish uchun, B guruh vitaminlari esa energetik almashuvni ta'minlaydi. Omega-3 va magniy gormonal o'zgarishlar davrida kayfiyatni barqarorlashtiradi.
+
+QACHON TAVSIYA ETILADI:
+bola tez charchaydi, holsiz, energiyasi yo'q, apatik, hech narsa qilgisi kelmaydi, kasallikdan keyin holsiz, ORVI dan keyin tiklanish, tez-tez kasal bo'ladi, kuchsiz bola, o'smir asabiy, o'smir agressiv, kayfiyat o'zgarishlari, pubertat, o'smirlik depressiyasi, asabiylashgan o'smir.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: NEUROCOMPLEX KIDS — omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + C 30 mg + B1-B9 vitaminlar, stiklar, 1 yoshdan.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Miya-ichak o'qi (brain-gut): glitsin + magniy + B vitaminlar neyromediatorlar va kognitiv funksiyalarga ta'sir qiladi.
+Neyrorivojlanish o'qi: DHA omega-3 — miyaning tarkibiy komponenti, L-karnitin — neyronlar uchun energiya.
+Nutriyentlar sinergiyasi: sink + B6 neyromediatorlar sintezini kuchaytiradi, magniy + glitsin ikkilangan tinchlantiruvchi ta'sir beradi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. BOG'CHA/MAKTABGA MOSLASHISH (immunitet + miya):
+   NEUROCOMPLEX KIDS + IMMUNOCOMPLEX KIDS
+   Miya + immunitet. Jamoaga o'tishda ideal. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 3 mg + 5 mg = 8 mg, yig'indisi xavfsiz bo'lsa-da, optimal ta'sir uchun navbatlash yaxshiroq).
+
+2. O'SISH + MIYA RIVOJLANISHI (1-4 yosh):
+   NEUROCOMPLEX KIDS + BIFOLAK ZINCUM
+   Miya uchun omega-3 + o'sish uchun sink. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor).
+
+3. MAKTAB O'QUVCHISI (7+ yosh, diqqat + suyaklar):
+   NEUROCOMPLEX KIDS + CALCIY TRIACTIVE D3
+   Miya + o'sayotgan organizm suyaklari. Bir vaqtda qabul qilish mumkin (CALCIY tarkibida sink yo'q).
+
+4. ASAB TIZIMI + BO'SHASHTIRISH:
+   NEUROCOMPLEX KIDS + BIFOLAK MAGNIY
+   Asab tizimini kuchaytirilgan qo'llab-quvvatlash: omega-3 + ikkilangan magniy. Bir vaqtda qabul qilish mumkin.
+
+5. KASALLIKDAN KEYIN (miya va tanani tiklash):
+   NEUROCOMPLEX KIDS + IMMUNOCOMPLEX KIDS
+   Avval immunitet (2-3 hafta), keyin miya (2-3 hafta). Ketma-ket kurslar.
+
+6. O'SMIR (12+ yosh, o'qish + stress):
+   NEUROCOMPLEX KIDS + BIFOLAK MAGNIY
+   O'qish uchun omega-3 + stressdan magniy. Bir vaqtda qabul qilish mumkin. Ayniqsa imtihonlar oldidan.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: NEUROCOMPLEX KIDS — omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + C 30 mg + B1-B9 vitaminlar, stiklar, 1 yoshdan.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. NEUROCOMPLEX KIDS + BIFOLAK ZINCUM = MA'LUMOT
+   Sabab: ikkalasida ham sink bor (3 mg + 10 mg = 13 mg). Yig'indisi 4+ yoshdagi bolalar uchun xavfsiz, lekin kurslar bilan navbatlash yaxshiroq.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+2. NEUROCOMPLEX KIDS + IMMUNOCOMPLEX = MA'LUMOT
+   Sabab: ikkalasida ham sink bor (3 mg + 12,5 mg = 15,5 mg). O'smirlar uchun xavfsiz, navbatlash yaxshiroq.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Dengiz mahsulotlari yoki suv o'tlariga allergiya.
+   Sabab: omega-3 dengiz suv o'tlaridan olingan. Suv o'tlariga allergiya kam uchraydi, lekin tasdiqlangan allergiyada qabul qilish taqiqlangan.
+   Skript: "Agar bolangizda dengiz mahsulotlari yoki suv o'tlariga allergiya bo'lsa, NEUROCOMPLEX KIDS qabul qilish mumkin emas."
+
+2. Yuqori harorat (38 darajadan yuqori).
+   Sabab: kasallikning o'tkir davrida organizm barcha resurslarni infeksiyaga qarshi kurashga yo'naltiradi. BAD qabul qilish qo'shimcha yuk tug'diradi.
+   Skript: "Harorat 38 darajadan yuqori bo'lsa, qabul qilishni to'xtating. Normallashgandan 2-3 kun keyin kursni davom ettirish mumkin."
+
+3. O'tkir infeksion kasalliklar kasallik avjida.
+   Skript: "O'tkir bosqich tugashini kuting. Tuzalgandan keyin NEUROCOMPLEX KIDS kuchni tiklashga yordam beradi."
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Surunkali buyrak kasalliklari. Magniy va B vitaminlar buyrak orqali chiqariladi. Buyrak funksiyasi buzilganda to'planishi mumkin. Nefrolog bilan maslahat.
+2. Jigar kasalliklari. B vitaminlar jigarda metabolizm bo'ladi. Jiddiy kasalliklarda yuk ortiqcha bo'lishi mumkin. Gepatolog bilan maslahat.
+3. Epilepsiya. Omega-3 va B vitaminlar asab tizimining qo'zg'aluvchanligiga ta'sir qilishi mumkin. Ma'lumotlar qarama-qarshi, lekin ehtiyotkorlik zarur. Nevrolog bilan maslahat majburiy.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antikoagulyantlar (varfarin, geparin): omega-3 200-400 mg antikoagulyant ta'sirni biroz kuchaytirishi mumkin. Kuniga 1000 mg gacha dozalarda xavf minimal, lekin shifokorni xabardor qilish kerak.
+
+Antiagregantlar (aspirin, klopidogrel): omega-3 qo'shimcha ravishda trombositlar agregatsiyasini kamaytiradi. Shifokor nazoratida birgalikda qabul qilish.
+
+Tirishish qarshi dorilar (valproev kislotasi, karbamazepin): valproat L-karnitin darajasini pasaytiradi. NEUROCOMPLEX KIDS bu yetishmovchilikni qoplaydi (150 mg L-karnitin). Nevrolog bilan maslahat, qabul qilish foydali bo'lishi mumkin.
+
+Sedativ va uyqu dorilari: glitsin 80 mg + magniy 25 mg yumshoq tinchlantiruvchi ta'sir beradi. Sedativ dorilar bilan birgalikda qabul qilish uyquchanlikni kuchaytirishi mumkin. NEUROCOMPLEX KIDS ertalab, sedativ dorilar kechqurun.
+
+Litiy preparatlari: magniy qondagi litiy darajasiga ta'sir qilishi mumkin. Litiy nazorati, psixiatr bilan maslahat.
+
+Ftorixinolon va tetrasiklin antibiotiklari: sink 3 mg — doza minimal, lekin xavfsizlik uchun 2 soat oraliq.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: NEUROCOMPLEX_KIDS
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[NEUROCOMPLEX_KIDS — 4 dan 4-bo'lim: Komponentlar me'yorlari va batafsil dozalash]
+Mahsulot: NEUROCOMPLEX KIDS — omega-3 200 mg + L-karnitin 150 mg + glitsin 80 mg + magniy 25 mg + sink 3 mg + C 30 mg + B1 0,6 mg + B2 0,7 mg + B3 8 mg + B5 4 mg + B6 0,6 mg + B7 20 mkg + B9 120 mkg, stiklar, 1 yoshdan.
+
+OMEGA-3 DHA (1 stikda 200 mg)
+
+Kunlik me'yorlar (EFSA):
+Chaqaloqlar 0-24 oy: 100 mg DHA. Bolalar 2-18 yosh: 250 mg DHA+EPA.
+
+Qoplanishi: 0,5 stik = 100 mg (chaqaloqlar uchun me'yor). 1 stik = 200 mg (me'yorga yaqin). 2 stik = 400 mg (optimal qo'llab-quvvatlash uchun minimumdan oshadi).
+
+Yuqori chegara: kuniga 5 g gacha EPA+DHA (EFSA). Mahsulotdagi dozalar ancha past.
+
+MUHIM: DHA organizmda yetarli miqdorda sintez bo'lmaydi. Miya lipidlar miqdori bo'yicha ikkinchi organ bo'lib, DHA uning tuzilishining katta qismini tashkil etadi.
+
+MAGNIY (1 stikda 25 mg)
+
+Kunlik me'yorlar:
+Bolalar 1-3 yosh: 80 mg. Bolalar 4-8 yosh: 130 mg. Bolalar 9-13 yosh: 240 mg.
+
+Qoplanishi: 1 stik = me'yorning 31% (1-3 yosh). 2 stik = me'yorning 38% (4-8 yosh).
+
+SINK (1 stikda 3 mg)
+
+Kunlik me'yorlar:
+Bolalar 1-3 yosh: 3 mg. Bolalar 4-8 yosh: 5 mg. Bolalar 9-13 yosh: 8 mg.
+
+Qoplanishi: 1 stik = me'yorning 100% (1-3 yosh). 2 stik (6 mg) = me'yorning 120% (4-8 yosh).
+
+Yuqori xavfsiz daraja (UL): 1-3 yosh 7 mg, 4-8 yosh 12 mg, 9-13 yosh 23 mg. Barcha dozalar UL dan ancha past.
+
+L-KARNITIN (1 stikda 150 mg)
+
+Belgilangan RDA yo'q. Organizm kuniga 10-20 mg sintez qiladi. Tadqiqotlar: bolalar uchun samarali dozalar kuniga 50-200 mg. L-karnitin yog' kislotalarini energiya ishlab chiqarish uchun mitoxondriyalarga tashiydi.
+
+GLITSIN (1 stikda 80 mg)
+
+Belgilangan RDA yo'q. Organizm kuniga 3 g sintez qiladi. 80 mg — bolalar uchun xavfsiz doza. Tormozlovchi neyromediator sifatida ishlaydi va uyqu sifatini yaxshilaydi.
+
+B GURUH VITAMINLARI (2 stikda):
+B1 (1,2 mg): bolalar me'yorining 100-200%. B2 (1,4 mg): 100-175%. B3 (16 mg): 100-200%. B5 (8 mg): 100-160%. B6 (1,2 mg): 100-200%. B7 (40 mkg): 100%+. B9 (240 mkg): 80-120%.
+
+BATAFSIL DOZALASH:
+
+1 yoshgacha (pediatr tavsiyasi bilan): 0,5 stik/kun. Bolalar ovqati bilan aralashtirish.
+1-4 yosh: 1 stik/kun ovqat bilan.
+4 yoshdan katta: 2 stik/kun (1 marta yoki ertalab/kechqurun bo'lib qabul qilish mumkin).
+
+TARTIB: ertalab yoki kunduzi ovqat bilan (omega-3 va yog'da eriydigan komponentlarning yaxshiroq so'rilishi uchun). Kechqurun qabul qilish ham mumkin (glitsin + magniy uyquni yaxshilaydi).
+
+KURS: 20-30 kun. Barqaror ta'sir uchun: yiliga 2-3 kurs. Tavsiya etilgan davrlar: bog'cha/maktabga moslashish (sentabr), qishki imtihonlar (dekabr-yanvar), bahorgi charchoq (mart-aprel).
+===/СЕКЦИЯ===

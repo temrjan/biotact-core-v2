@@ -1,0 +1,259 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — Mahsulot kartasi]
+Mahsulot: BIFOLAK ZINCUM
+
+MAQSAD: Organik sink + 8 probiotik — o'sish, immunitet va OIT (oshqozon-ichak trakti) uchun.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Stiklar 0,5 g, 30 dona. O'simlik asosli, tez eriydigan. 8 yoshgacha bolalarga — ochib, suvda (20-50 ml) aralashtirib berish.
+YOSH: Tug'ilganidan boshlab (1 yoshgacha — pediatr tavsiyasi bilan).
+KURS: 20-30 kun. JSST bo'yicha diareya paytida — 10-14 kun.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan.
+
+1 STIK TARKIBI (0,5 g):
+Sink (sink sitrat) — 10 mg (sitrat biosamaradorligi 35%, oksid 4%)
+Probiotiklar 8 shtamm, jami 10 mlrd KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+1 yoshgacha: pediatr tayinlashi bilan
+1-4 yosh: 0,5 stik/kun (5 mg sink)
+4 yoshdan katta: 1 stik/kun (10 mg sink)
+Kattalar: 1-2 stik/kun (10-20 mg sink)
+Ovqatdan keyin qabul qilish.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Sink: 300+ fermentlar ishlashi, immun hujayralar (T-limfotsitlar, NK), o'sish va rivojlanish, testosteron sintezi, yaralarning bitishi, teri salomatligi.
+Probiotiklar: mikroflorani tiklash, patogenlarga qarshi antagonizm, antibiotiklarga chidamlilik, sinkning so'rilishini yaxshilash.
+Prebiotiklar (inulin, maltodekstrin): foydali bakteriyalar uchun ozuqa.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — OIT va diareya]
+Mahsulot: Organik sink 10 mg (sitrat) + 8 probiotik 10 mlrd KOB, stiklar, tug'ilganidan boshlab.
+Mexanizm: Sink ichak to'siq funksiyasini mustahkamlaydi va shilliq qavatning tiklanishini tezlashtiradi. Probiotiklar mikroflorani tiklaydi, patogen florani bosadi, antibiotiklarga chidamli.
+
+QACHON TAVSIYA ETILADI:
+Bolada ich ketishi, diareya, suyuq najas, ichak buzilishi, qorin og'rig'i, kolikalar, qorin dam bo'lishi, antibiotikdan keyin, disbakterioz, najas buzilishi, ichak infeksiyasi.
+
+Tibbiy terminlar: sink malabsorbsiyasi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — O'sish, vazn, ishtaha]
+Mahsulot: Organik sink 10 mg (sitrat) + 8 probiotik 10 mlrd KOB, stiklar, tug'ilganidan boshlab.
+Mexanizm: Sink o'sish gormoni va rivojlanishda ishtirok etuvchi 300+ fermentlar ishlashi uchun zarur. Probiotiklar ichakda sink va oziq moddalarning so'rilishini yaxshilaydi.
+
+QACHON TAVSIYA ETILADI:
+Bola yaxshi o'smayapti, o'sishda orqada qolyapti, bo'yi past, oz vazn oladi, vaznda kamchilik, jismoniy rivojlanishning kechikishi, bola yemaydi, ishtahasi yo'q, ovqatdan bosh tortadi, hamma narsa mazasiz, ta'm buzilishi, hidlarni sezmaydi, hid sezish pasaygan.
+
+Tibbiy terminlar: gipogevziya, giposmiya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — Immunitet]
+Mahsulot: Organik sink 10 mg (sitrat) + 8 probiotik 10 mlrd KOB, stiklar, tug'ilganidan boshlab.
+Mexanizm: Sink T-limfotsitlar va NK-hujayralarning rivojlanishi va faollashuvi uchun zarur. Probiotiklar ichakning to'siq funksiyasini kuchaytiradi (ichak-immunitet o'qi), immun javobni rag'batlantiradi.
+
+QACHON TAVSIYA ETILADI:
+Tez-tez kasal bo'ladi, immunitet past, shamollash, ORVI, tomoq og'riydi, yo'tal, burun oqishi, angina, shamollash mavsumi, bemor bilan aloqa, bog'chada tez-tez kasal bo'ladi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — Teri, soch, tirnoq, erkak salomatligi]
+Mahsulot: Organik sink 10 mg (sitrat) + 8 probiotik 10 mlrd KOB, stiklar, tug'ilganidan boshlab.
+Mexanizm: Sink kollagen sintezi, yaralarning bitishi va teri salomatligida ishtirok etadi. Probiotiklar ichak-teri o'qi orqali yallig'lanishni kamaytiradi. Sink testosteron sintezi va erkak fertilligi uchun zarur.
+
+QACHON TAVSIYA ETILADI:
+O'smirdagi sivilchalar, akne, soch to'kiladi, tirnoq sinadi, tirnoqda oq dog'lar, teri quruq, yaralar sekin bitadi, teri po'stlashi, dermatit, jinsiy mayl pasayishi, erkak bepushtligi, fertillik, testosteron, otalikni rejalashtirish, prostatit, o'tish davri, o'smirlarda gormonal muvozanatsizlik.
+
+Tibbiy terminlar: leykonixiya, alopesiya, gipogonadizm.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: BIFOLAK ZINCUM — sink 10 mg + 8 probiotik, stiklar, tug'ilganidan boshlab.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi (gut-immunity): sink + probiotiklar ichak to'siq funksiyasini kuchaytiradi, immunitetni mustahkamlaydi.
+Ichak-miya o'qi (gut-brain): sog'lom mikroflora kognitiv funksiyalar, kayfiyat, uyquga ta'sir qiladi.
+Ichak-teri o'qi (gut-skin): disbakterioz yallig'lanish va teri muammolariga olib keladi. Probiotiklar + sink ikkala bo'g'inga ta'sir qiladi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. BOLA O'SISHI (o'sish va vazn muammolari):
+   BIFOLAK ZINCUM + CALCIY TRIACTIVE D3
+   Sink o'sish gormoni uchun + kaltsiy va D3 suyaklar uchun. Faol o'sish uchun ideal juftlik.
+
+2. MAKTABGA TAYYORGARLIK (4-6 yosh, diqqat + immunitet):
+   BIFOLAK ZINCUM + NEUROCOMPLEX KIDS
+   Sink immunitet uchun + omega-3, letsitin diqqat va xotira uchun. KETMA-KET qabul qilish (kurslar bilan), chunki ikkalasida ham sink bor.
+
+3. ICHAK-MIYA O'QI kichik bolalar uchun (1-3 yosh):
+   BIFOLAK NEO + BIFOLAK ZINCUM
+   Mikroflorani kuchaytirilgan tiklash + o'sish va immunitet uchun sink.
+
+4. TEZ-TEZ SHAMOLLASH bolalarda (immunitet):
+   BIFOLAK ZINCUM + IMMUNOCOMPLEX KIDS
+   MUHIM: KETMA-KET kurslar bilan qabul qilish (bir vaqtda emas), chunki ikkalasida ham sink bor.
+
+5. KATTA ERKAKLAR UCHUN (fertillik, testosteron):
+   BIFOLAK ZINCUM + BIFOLAK ACTIVE (umumiy tonus) — birga qabul qilish mumkin.
+
+6. AYOLLAR UCHUN (teri, soch):
+   BIFOLAK ZINCUM + DERMACOMPLEX — kurslar bilan, bir vaqtda emas (ikkalasida ham sink bor).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: BIFOLAK ZINCUM — sink 10 mg + 8 probiotik, stiklar, tug'ilganidan boshlab.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. BIFOLAK ZINCUM + IMMUNOCOMPLEX KIDS = OGOHLANTIRISH
+   Sabab: sinkning ortiqcha miqdori (10 + IMMUNOCOMPLEX KIDS tarkibidagi).
+   Yechim: KETMA-KET kurslar bilan qabul qilish, bir vaqtda EMAS. Avval bir mahsulot 20-30 kun, keyin ikkinchisi.
+
+2. BIFOLAK ZINCUM + NEUROCOMPLEX KIDS = OGOHLANTIRISH
+   Sabab: bir vaqtda qabul qilganda sink ortiqcha bo'ladi.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Tarkibiy qismlarga individual notoqatlik.
+   Sink yoki probiotiklarga allergiya: toshma, qichishish, shish, og'ir holatlarda — anafilaksiya.
+   Skript: "Agar siz yoki bolangizda avval sink preparatlari yoki probiotiklarga allergiya bo'lgan bo'lsa, bu mahsulot mos kelmaydi. Allergolog bilan maslahatlashing."
+
+2. Og'ir buyrak yetishmovchiligi (dializ).
+   Sabab: sink buyrak orqali chiqariladi, SBY da — toksik darajagacha to'planishi.
+   Skript: "Buyrak bilan jiddiy muammolar bo'lsa yoki siz dializda bo'lsangiz, sink qabul qilish nefrolog nazoratida bo'lishi kerak."
+
+3. O'tkir holatlar (qizil bayroqlar — darhol shifokorga):
+   38 darajadan yuqori harorat
+   Qorinda kuchli og'riq
+   Axlatda qon
+   To'xtamaydigan qusish
+   Tutqanoq
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan):
+
+1. Vilson-Konovalov kasalligi (mis almashinuvi buzilishi) — dozani shifokor belgilaydi.
+2. Mis yetishmovchiligi — 2-3 oydan ortiq kursda mis darajasini nazorat qilish yoki tanaffus qilish.
+3. Surunkali OIT kasalliklari (Kron kasalligi, tseliakiya) — gastroenterolog bilan maslahat.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antibiotiklar (xinolonlar: tsiprofloksatsin; tetratsiklinlar: doksitsiklin; tsefalosporinlar):
+Sink antibiotiklar so'rilishini kamaytiradi. Interval: antibiotikdan 2 soat OLDIN yoki 4-6 soat KEYIN.
+Skript: "Antibiotik qabul qilgandan kamida 2 soat oldin yoki 4 soat keyin oraliq qo'ying."
+
+Temir preparatlari: so'rilish uchun raqobatlashadi. 2-3 soat interval.
+Penisillamin: sink so'rilishini kamaytiradi. 1-2 soat interval.
+Tiazid diuretiklari (gipotiazid): sink chiqarilishini oshiradi, BIFOLAK ZINCUM qoplash uchun foydali.
+Proton pompa ingibitorlari (omeprazol): sink so'rilishini kamaytiradi, dozani oshirish kerak bo'lishi mumkin.
+OIV integrazalari (dolutegravir): infeksionist bilan maslahat majburiy.
+
+MUHIM: BIFOLAK ZINCUM tarkibidagi probiotiklar antibiotiklarga chidamli va antibiotiklar vaqtida va keyin mikroflorani tiklashga yordam beradi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM — 4 dan 4-bo'lim: Sink me'yorlari va batafsil dozalash]
+Mahsulot: BIFOLAK ZINCUM — sink 10 mg (sitrat) + 8 probiotik, stiklar, tug'ilganidan boshlab.
+
+SINKNING KUNLIK ME'YORLARI (NIH, EFSA, JSST):
+
+BOLALAR:
+0-6 oy: 2 mg (adekvatli iste'mol)
+7-12 oy: 3 mg
+1-3 yosh: 3 mg
+4-8 yosh: 5 mg
+9-13 yosh: 8 mg
+
+O'SMIRLAR 14-18 yosh:
+Yigitlar: 11 mg
+Qizlar: 9 mg
+
+KATTALAR 19+:
+Erkaklar: 11 mg
+Ayollar: 8 mg
+Homiladorlar: 11-12 mg
+Emiziklilar: 12-13 mg
+
+YUQORI XAVFSIZ DARAJA (UL — oshirmaslik):
+1-3 yosh: 7 mg
+4-8 yosh: 12 mg
+9-13 yosh: 23 mg
+14-18 yosh: 34 mg
+Kattalar: 40 mg
+
+BIFOLAK ZINCUM BILAN EHTIYOJNING QOPLANISHI:
+
+Bolalar 1-4 yosh (0,5 stik = 5 mg): me'yorning 167% ni qoplaydi (3 mg), lekin UL dan past (7 mg) — xavfsiz.
+Bolalar 4-8 yosh (1 stik = 10 mg): me'yorning 200% ni qoplaydi (5 mg), UL dan past (12 mg) — xavfsiz.
+Bolalar 9-13 yosh (1 stik = 10 mg): me'yorning 125% ni qoplaydi (8 mg), UL dan ancha past (23 mg).
+O'smirlar (1 stik = 10 mg): me'yorning 91-111% ni qoplaydi, UL dan ancha past (34 mg).
+Kattalar (1 stik = 10 mg): me'yorning 91-125% ni qoplaydi, UL dan ancha past (40 mg).
+Kattalar (2 stik = 20 mg): me'yorning 182-250% ni qoplaydi, UL dan past (40 mg) — xavfsiz.
+
+SINK SHAKLI — SITRAT:
+Biosamaradorlik: 35% (sink oksid 4%, sulfat 15-20% ga nisbatan).
+Afzallik: yaxshiroq so'riladi, oshqozonni kamroq ta'sirlaydi, bolalarga mos.
+
+BIFOLAK ZINCUM BATAFSIL DOZALASH:
+
+1 yoshgacha: faqat pediatr tayinlashi bilan.
+1-4 yosh: 0,5 stik/kun. Ochib, yarmisini 20-30 ml suvga solib, aralashtirish, ichirish.
+4-8 yosh: 1 stik/kun. Suvda eritish yoki ichidagini yutish mumkin.
+8 yoshdan katta: 1 stik/kun, suv bilan yutish.
+Kattalar: 1-2 stik/kun. Aniq yetishmovchilikda — 2 stik.
+
+QABUL QILISH TARTIBI: ovqatdan keyin — yaxshiroq ko'tariladi.
+
+KURS: 20-30 kun standart. Diareya (JSST): 10-14 kun. Takroriy kurs 1-2 oydan keyin.
+
+JSST BOLALARDA DIAREYA PROTOKOLI:
+6 oygacha: kuniga 10 mg, 10-14 kun
+6 oydan katta: kuniga 20 mg, 10-14 kun
+Qo'shimcha: og'iz orqali regidratatsiya (regidron, ORS)
+
+MAXSUS GURUHLAR:
+Vegetarianlar/veganlar: ehtiyoj yuqori (fitatlar so'rilishni 30-50% ga kamaytiradi).
+Keksalar: so'rilish pasayadi, kuniga 2 stik tavsiya etiladi.
+Sportchilar: ter bilan sink yo'qolishi, kuniga 2 stik tavsiya etiladi.
+Homiladorlar: ruxsat etiladi, kuniga 1 stik ehtiyojni qoplaydi. Ginekolog bilan maslahat.
+Emiziklilar: ruxsat etiladi, kuniga 1-2 stik.
+
+SINK YETISHMOVCHILIGI XAVF GURUHLARI: vegetarianlar, keksalar, OIT kasalliklari bo'lgan bemorlar (Kron, tseliakiya), alkogol qaramlik, sportchilar, rivojlanayotgan mamlakatlardagi bolalar.
+===/СЕКЦИЯ===

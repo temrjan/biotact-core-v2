@@ -1,0 +1,122 @@
+{
+  "BIFOLAK_ACTIVE_RU.txt": {
+    "hash": "4b978ca77720e9dee679b2a65ec9a9da",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:29.996007+00:00"
+  },
+  "BIFOLAK_ACTIVE_UZ.txt": {
+    "hash": "27f2ef4fb75eb789c64473bf736fbb0d",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:30.403913+00:00"
+  },
+  "BIFOLAK_MAGNIY_RU.txt": {
+    "hash": "b24c16b0730c1fae0b6b0e30639f152c",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:30.818576+00:00"
+  },
+  "BIFOLAK_MAGNIY_UZ.txt": {
+    "hash": "b577893a2cbbeb618eecf5ff8968ee41",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:33.178080+00:00"
+  },
+  "BIFOLAK_NEO_RU.txt": {
+    "hash": "d084da4cc55c4f5d222ea5163dc489d4",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:33.624333+00:00"
+  },
+  "BIFOLAK_NEO_UZ.txt": {
+    "hash": "658a6cd83ca9e93de8c0a6b5d20ffd5a",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:34.025306+00:00"
+  },
+  "BIFOLAK_ZINCUM_C_D3_RU.txt": {
+    "hash": "89ba19e411b6fe68e807d07e19a45b00",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:34.425877+00:00"
+  },
+  "BIFOLAK_ZINCUM_C_D3_UZ.txt": {
+    "hash": "3cd734a881a8d6456ebfadf45a86faa9",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:34.785424+00:00"
+  },
+  "BIFOLAK_ZINCUM_RU.txt": {
+    "hash": "bf5fce23341b42a71d171644ead74f95",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:35.477011+00:00"
+  },
+  "BIFOLAK_ZINCUM_UZ.txt": {
+    "hash": "dbe9778731d85f6c67fa0c0e6495bdd9",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:35.929152+00:00"
+  },
+  "CALCIY_TRIACTIVE_D3_RU.txt": {
+    "hash": "d002d6a9346f52cfb4b6a329f87f373a",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:36.409973+00:00"
+  },
+  "CALCIY_TRIACTIVE_D3_UZ.txt": {
+    "hash": "ddaf3836f7c2c1d11e810344ad10872d",
+    "chunks": 9,
+    "indexed_at": "2026-02-12T06:28:36.785266+00:00"
+  },
+  "DERMACOMPLEX_RU.txt": {
+    "hash": "914890a39c9de325f1742b1fb12f4843",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:37.392188+00:00"
+  },
+  "DERMACOMPLEX_UZ.txt": {
+    "hash": "1b3098797755b96b2606d4f7045c456a",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:38.036923+00:00"
+  },
+  "IMMUNOCOMPLEX_KIDS_RU.txt": {
+    "hash": "73b4e76417bed21b73fc14449e12789b",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:38.506843+00:00"
+  },
+  "IMMUNOCOMPLEX_KIDS_UZ.txt": {
+    "hash": "0795335024033695c5ec87309f68b9e3",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:38.876687+00:00"
+  },
+  "IMMUNOCOMPLEX_RU.txt": {
+    "hash": "b867978dd2fce0c21b0ffa16cb9ee965",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:39.302535+00:00"
+  },
+  "IMMUNOCOMPLEX_UZ.txt": {
+    "hash": "7a51bffc5b93e59773e9fd6d5dac6489",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:39.689662+00:00"
+  },
+  "NEUROCOMPLEX_KIDS_RU.txt": {
+    "hash": "18edabe6bcecd5ff35a1dc93a7ff6bb5",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:40.095588+00:00"
+  },
+  "NEUROCOMPLEX_KIDS_UZ.txt": {
+    "hash": "e8cf228146fb01f3768f7202ca99e14e",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:40.411878+00:00"
+  },
+  "OPHTALMOCOMPLEX_RU.txt": {
+    "hash": "897a4750a74eac94eed1033778dc0f83",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:40.830652+00:00"
+  },
+  "OPHTALMOCOMPLEX_UZ.txt": {
+    "hash": "2fb2b3d6149e8a82b0504366c2e8bf4d",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:41.190161+00:00"
+  },
+  "biotact_rag_cards_tech_qdrant.txt": {
+    "hash": "fcb30681761fac859ec1804620dd0c11",
+    "chunks": 16,
+    "indexed_at": "2026-02-12T06:28:41.874021+00:00"
+  },
+  "prices.txt": {
+    "hash": "ae1b866cd3e2f9a4dd06e6354aa75459",
+    "chunks": 8,
+    "indexed_at": "2026-02-12T06:28:42.437650+00:00"
+  }
+}

@@ -1,0 +1,296 @@
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — Mahsulot kartasi]
+Mahsulot: DERMACOMPLEX
+
+MAQSAD: Teri, soch va tirnoq salomatligi — 13 ta tabiiy komponent. Kuchaytirilgan antioksidant kompleks (kversetin + bromelain) + terini ichkaridan tozalash uchun probiotiklar.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), ISO 9001 va ISO 22000 HACCP.
+CHIQARILISH SHAKLI: Kapsulalar 0,5 g, 30 dona. O'simlik kapsulalari.
+YOSH: 4 yoshdan. 8 yoshgacha bolalarga — kapsulani ochib, kukunini oz miqdordagi suvda eritish.
+KURS: 20-30 kun. Barqaror natija uchun: yiliga 2-3 kurs.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz.
+XUSUSIYAT: Noyob uch komponentli antioksidant formulasi — kversetin + bromelain + C vitamini. Ichak-teri o'qi uchun 8 turdagi probiotiklar.
+
+1 KAPSULA TARKIBI (0,5 g):
+
+"Sog'lom teri" kompleksi:
+Kversetin — 140 mg (kuchli antioksidant, yallig'lanishga qarshi)
+Bromelain — 100 mg (ananas fermenti, yallig'lanishga qarshi, shishlarni so'radi)
+A vitamini (retinol) — 1100 mkg (teri hujayralarini yangilash)
+E vitamini (tokoferol) — 80 mg (antioksidant, hujayra membranalarini himoya qiladi)
+C vitamini (askorbin kislota) — 100 mg (kollagen sintezi)
+Sink — 15 mg (yog' bezlari ishini tartibga solish)
+Selen — 80 mkg (antioksidant, ultrabinafsha nurlardan himoya)
+
+"Soch va tirnoq kuchi" kompleksi:
+Biotin (B7 vitamini) — 2500 mkg (soch va tirnoq uchun keratin)
+B3 vitamini (niatsin) — 8 mg (mikrosirkulyatsiya, soch ildizlarini oziqlantirish)
+B5 vitamini (pantoten kislotasi) — 6 mg (teri regeneratsiyasi)
+B9 vitamini (foliy kislota) — 150 mkg (hujayralar bo'linishi, soch o'sishi)
+
+Sinbiotik kompleks:
+Probiotiklar 8 tur — 50 mln KOB
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+4 yoshdan katta bolalarga: 1 kapsula/kun
+Kattalarga: 1-2 kapsula/kun
+Ovqatdan keyin qabul qilish.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Kversetin: gistamin ishlab chiqarishni bloklaydi, yallig'lanish fermentlarini bosadi (SOG-2, LOG), qizarishlar va toshmalarni kamaytiradi.
+Bromelain: shish oqsillarini parchalaydi, yallig'lanishni bartaraf etadi, teriga qon oqimini yaxshilaydi.
+Biotin 2500 mkg: keratin sintezini rag'batlantirish uchun yuqori doza. 2-3 kursda soch va tirnoq tuzilishini yaxshilaydi.
+A vitamini: epidermis yangilanishini tartibga solish, teri yog'i ishlab chiqarishni normallashtirish, teshiklarni kichraytirish.
+E vitamini: hujayra membranalarining lipidlarini oksidlanishdan himoya qilish, ajinlarning oldini olish.
+Sink: yog' bezlari ishini nazorat qilish, akne paytida yallig'lanishga qarshi ta'sir.
+Probiotiklar: ichak-teri o'qi. Sog'lom mikroflora yallig'lanishlarni, allergiyalarni va toshmalarni kamaytiradi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — Akne va yog'li teri]
+Mahsulot: Kversetin, bromelain va probiotiklar bilan teri, soch va tirnoq salomatligi uchun kompleks (13 komponent).
+Mexanizm: Kversetin gistaminni bloklaydi va yallig'lanishni bosadi (SOG-2, LOG). Sink yog' bezlari ishini tartibga soladi. Probiotiklar ichak-teri o'qini tiklaydi, ichkaridan yallig'lanishlar va toshmalarni kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+sivilchalar, akne, bo'tir toshmalari, yuzda toshmalar, o'smirdagi sivilchalar, iyakdagi sivilchalar, peshonadagi sivilchalar, orqadagi sivilchalar, qora nuqtalar, komedonlar, yog'li teri, teshiklar kengaygan, postakne, sivilchalardan keyin dog'lar, teridagi chandiqlar, sivilchalar izlari, qizarishlar, rozatsea, o'smir sivilchalari, teri yog'i
+
+Tibbiy terminlar: akne vulgaris, rozatsea, seboreya
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — Quruqlik, dermatit, allergiya]
+Mahsulot: Kversetin, bromelain va probiotiklar bilan teri, soch va tirnoq salomatligi uchun kompleks (13 komponent).
+Mexanizm: A vitamini epidermis yangilanishini normallashtiradi. E vitamini hujayra membranalarining lipidlarini oksidlanishdan himoya qiladi. Kversetin antigistamin ta'sirga ega bo'lib, allergik reaktsiyalarni kamaytiradi. Probiotiklar ichak-teri o'qi orqali allergik yallig'lanishlarni kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+quruq teri, teri po'stlaydi, teri yoriladi, qo'llar quruq, teridagi tirnash, qichishish, teri qichiydi, teridagi allergiya, ekzema, atopik dermatit, neyrodermit, seboreyli dermatit, kepak, psoriaz (qo'llab-quvvatlash)
+
+Tibbiy terminlar: atopik dermatit, seboreya, giperkeratoz, fotodermatoz
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — Sochlar]
+Mahsulot: Kversetin, bromelain va probiotiklar bilan teri, soch va tirnoq salomatligi uchun kompleks (13 komponent).
+Mexanizm: Biotin 2500 mkg soch tuzilishini mustahkamlash uchun keratin sintezini rag'batlantiradi. B3 vitamini mikrosirkulyatsiyani va soch follikulalarini oziqlantishni yaxshilaydi. Foliy kislota hujayralar bo'linishi va soch o'sishini qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+soch to'kiladi, kuchli soch to'kilishi, kalliklash, alopetsiya, kal, soch siyraklashadi, ingichka sochlar, mo'rt sochlar, quruq sochlar, uchlari yoriladi, soch sekin o'sadi, tug'ruqdan keyin soch to'kiladi, stressdan keyin soch, androgen alopetsiya
+
+Tibbiy terminlar: alopetsiya, androgen alopetsiya, telogen alopetsiya
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — Tirnoqlar va teri qarishi]
+Mahsulot: Kversetin, bromelain va probiotiklar bilan teri, soch va tirnoq salomatligi uchun kompleks (13 komponent).
+Mexanizm: Biotin tirnoqlarning keratin tuzilishini mustahkamlaydi. C vitamini kollagen sintezini rag'batlantiradi. Uch komponentli antioksidant formulasi (kversetin + bromelain + C vitamini) terining oksidativ qarishini sekinlashtiradi.
+
+QACHON TAVSIYA ETILADI:
+tirnoqlar qavatlanadi, tirnoqlar sinadi, tirnoqlar yumshoq, tirnoqlar yupqa, tirnoqlarda oq dog'lar, tirnoqlar sarg'aygan, tirnoq zamburug'i (qo'llab-quvvatlash), tirnoqlar sekin o'sadi, tirnoqlar mo'rt, tirnoqlarda egatchalar, ajinlar, teri bo'shashgan, teri turgor, pigment dog'lari, yosh bilan bog'liq dog'lar, fotoyasharish, erta qarish, teri uchun antioksidantlar, kollagen, teri elastikligi, nutrikosmetika, go'zallik uchun vitaminlar, teri xira, teridagi nosog'lom rang, teri oqargan, ko'z ostidagi ko'karishlar
+
+Tibbiy terminlar: onixodistrofiya, fotodermatoz
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: DERMACOMPLEX — kversetin 140 mg + bromelain 100 mg + A vitamini 1100 mkg + E 80 mg + C 100 mg + sink 15 mg + selen 80 mkg + biotin 2500 mkg + B3/B5/B9 + 50 mln probiotiklar, kapsulalar, 4 yoshdan.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-teri o'qi (gut-skin): probiotiklar + sink + A vitamini — teri yallig'lanishi ko'pincha ichakda boshlanadi.
+Antioksidant himoya: kversetin + E vitamini + C + selen — teri hujayralarining oksidativ stressdan to'rt bosqichli himoyasi.
+Yallig'lanishga qarshi o'q: bromelain + kversetin — yallig'lanish kaskadlarini ikki tomonlama bosish, shishlar va qizarishlarni kamaytirish.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. TERI + OIT (akne, dermatitlar):
+   DERMACOMPLEX + BIFOLAK NEO
+   Teri + ichak mikroflorasini kuchaytirilgan tiklash. Bir vaqtda qabul qilish mumkin.
+
+2. SOCH/TIRNOQ + SUYAKLAR:
+   DERMACOMPLEX + CALCIY TRIACTIVE D3
+   Soch/tirnoq uchun biotin + ularni mustahkamlash uchun kaltsiy. Bir vaqtda qabul qilish mumkin (CALCIY tarkibida sink yo'q).
+
+3. TERI + STRESS (ayollar):
+   DERMACOMPLEX + BIFOLAK MAGNIY
+   Teri go'zalligi + asab tizimini qo'llab-quvvatlash (stress terini yomonlashtiradi). Bir vaqtda qabul qilish mumkin.
+
+4. TERI + IMMUNITET:
+   DERMACOMPLEX + IMMUNOCOMPLEX
+   Teri + immun himoya. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 15+12,5=27,5 mg, va selen: 80+75=155 mkg).
+
+5. O'SMIR (akne + sink):
+   DERMACOMPLEX + BIFOLAK ZINCUM
+   Aknega qarshi kompleks kurash + yog' bezlarini tartibga solish uchun qo'shimcha sink. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 15+10=25 mg).
+
+6. TERI + ANTIOKSIDANTLAR (yosh bilan bog'liq o'zgarishlar):
+   DERMACOMPLEX + BIFOLAK ZINCUM+C+D3
+   Antioksidantlar + sink + C vitamini + D3 kompleks yoshartirish uchun. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 15+25=40 mg UL chegarasida).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: DERMACOMPLEX — kversetin 140 mg + bromelain 100 mg + A vitamini 1100 mkg + E 80 mg + C 100 mg + sink 15 mg + selen 80 mkg + biotin 2500 mkg + B3/B5/B9 + 50 mln probiotiklar, kapsulalar, 4 yoshdan.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. DERMACOMPLEX + OPHTALMOCOMPLEX = Bir vaqtda TAQIQLANGAN
+   Sabab: umumiy A vitamini 1100+1400=2500 mkg (UL 3000 mkg ga yaqin), sink 15+12,5=27,5 mg, selen 80+55=135 mkg.
+   Yechim: FAQAT KETMA-KET kurslar bilan, tanaffus bilan.
+
+2. DERMACOMPLEX + IMMUNOCOMPLEX = OGOHLANTIRISH
+   Sabab: sink 15+12,5=27,5 mg, selen 80+75=155 mkg.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+3. DERMACOMPLEX + BIFOLAK ZINCUM+C+D3 = OGOHLANTIRISH
+   Sabab: umumiy sink 15+25=40 mg UL chegarasida.
+   Yechim: qat'iy KETMA-KET kurslar bilan qabul qilish.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Homiladorlik.
+   Sabab: 1 kapsuladagi A vitamini 1100 mkg (2 kapsuladagi 2200 mkg) homiladorlar uchun UL 3000 mkg ga yaqin. Retinolning ortiqchasi dastlabki 60 kunda homila rivojlanish nuqsonlarini keltirib chiqaradi. Kversetin homiladorlikda tavsiya etilmaydi (xavfsizlik bo'yicha yetarli ma'lumot yo'q).
+   Skript: "Homiladorlik davrida DERMACOMPLEX qabul qilish mumkin emas. Homiladorlar uchun BIFOLAK MAGNIY yoki CALCIY TRIACTIVE D3 mos keladi."
+
+2. Emizish davri.
+   Sabab: emizish davrida kversetin va bromelainning xavfsizligi bo'yicha yetarli ma'lumot yo'q. A vitamini sutga o'tadi.
+   Skript: "Emizish davrida voz kechgan ma'qul. Emizuvchi onalar uchun BIFOLAK MAGNIY yoki CALCIY TRIACTIVE D3 mos keladi."
+
+3. Qon ivishining buzilishi (gemofiliya, trombositopeniya).
+   Sabab: UCH TOMONLAMA antikoagulyant ta'sir. Bromelain qon ivishini sekinlashtiradi va trombotsitlar agregatsiyasini bosadi. E vitamini 80 mg K vitaminiga bog'liq omillarni inhibitsiya qiladi. Kversetin antitrombotik xususiyatlarga ega. Birgalikdagi ta'sir qon ketish xavfini sezilarli darajada oshiradi.
+   Skript: "Qon ivishi buzilgan bo'lsa, DERMACOMPLEX qabul qilish mumkin emas. Gematologga murojaat qiling."
+
+4. Rejalashtirilgan jarrohlik operatsiyalar.
+   Sabab: bromelainni operatsiyadan kamida 2 hafta oldin to'xtatish, E vitaminini — 1 oy oldin. Kuchaygan qon ketish xavfi.
+   Skript: "Agar operatsiya rejalashtirilgan bo'lsa, 2-4 hafta oldin qabul qilishni to'xtating. Jarrohga barcha qo'shimchalar haqida albatta xabar bering."
+
+5. Faol qon ketishlar (oshqozon, bachadon, burun).
+   Sabab: tarkibiy qismlar qonni suyultiradi va qon yo'qotishni kuchaytirishi mumkin.
+   Skript: "Har qanday qon ketishda DERMACOMPLEX qabul qilish mumkin emas. Avval qon ketishni to'xtating va shifokorga murojaat qiling."
+
+6. Ananas yoki lateksga allergiya.
+   Sabab: bromelain ananas poyasidan olinadi. Lateks-ananas-papayya-kivi o'rtasida kesishma allergiya. Reaktsiyalar og'ir bo'lishi mumkin, anafilaksiyagacha.
+   Skript: "Ananas yoki lateksga allergiya bo'lsa, DERMACOMPLEX mos kelmaydi. Teri va soch uchun BIFOLAK ZINCUM+C+D3 mos keladi."
+
+7. Og'ir buyrak kasalliklari (buyrak yetishmovchiligi, dializ).
+   Sabab: buyrak funksiyasi buzilganda kversetin, sink va selen to'planishi mumkin.
+   Skript: "Buyrak bilan jiddiy muammolar bo'lsa, nefrolog bilan albatta kelishib oling."
+
+8. 4 yoshgacha bolalar. A vitaminining yuqori dozalari, bromelain va kversetin tavsiya etilmaydi. Kichkintoylar uchun BIFOLAK NEO bor.
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Antikoagulyantlar yoki antiagregantlar qabul qilish (varfarin, aspirin, klopidogrel, geparin). Bromelain + E vitamini + kversetin ularning ta'sirini kuchaytiradi. MNO nazorati, shifokor bilan kelishuv.
+2. Jigar kasalliklari (gepatit, sirroz). Kversetin jigarda metabolizmlanadi, A vitamini jigarda to'planadi. Gepatolog bilan maslahat.
+3. Estrogenga bog'liq o'simtalar (ko'krak bezi, tuxumdon, endometriy saratoni). Kversetin estrogenlar bilan o'zaro ta'sir qilishi mumkin. Faqat onkolog ruxsati bilan.
+4. Qandli diabet. Kversetin qon shakarini tushirishi mumkin. Shakar tushiruvchi dorilar bilan birgalikda gipoglikemiya bo'lishi mumkin. Qabul qilish boshida shakarni nazorat qilish.
+5. Antikonvulsant dorilar qabul qilish (valproat). Valproat kislotasi sink va selen darajasini tushiradi. DERMACOMPLEX ularni to'ldiradi, lekin dozalar tuzatishni talab qilishi mumkin. Nevrolog bilan maslahat.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antikoagulyantlar (varfarin, atsenokumarol): bromelain + E vitamini + kversetin ta'sirni kuchaytiradi. Har 1-2 haftada MNO nazorati.
+
+Antiagregantlar (aspirin, klopidogrel, dipiridamol): bromelain antiagregant ta'sirni kuchaytiradi. Qon ketishni kuzatish.
+
+Tetratsiklinlar (doksitsiklin): bromelain so'rilishni oshiradi. Qabul qilishni 2 soatga ajratish yoki DERMACOMPLEX ni antibiotik tugaguncha kechiktirish.
+
+Ftorxinolonlar (tsiprofloksatsin): kversetin sitoxrom P450 orqali o'zaro ta'sir qilishi mumkin. 2 soat interval.
+
+Levotiroksin: sink va selen metabolizmga ta'sir qiladi. Levotiroksinni ertalab och qoringa, DERMACOMPLEX ni 4 soatdan keyin qabul qilish.
+
+Retinoidlar (izotretinoin, Roakkutan): bir vaqtda qabul qilish TAQIQLANGAN — umumiy A vitamini gipervitaminozga olib kelishi mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: DERMACOMPLEX
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[DERMACOMPLEX — 4 dan 4-bo'lim: Komponentlar me'yorlari va batafsil dozalash]
+Mahsulot: DERMACOMPLEX — kversetin 140 mg + bromelain 100 mg + A vitamini 1100 mkg + E 80 mg + C 100 mg + sink 15 mg + selen 80 mkg + biotin 2500 mkg + B3 8 mg + B5 6 mg + B9 150 mkg + 50 mln probiotiklar, kapsulalar, 4 yoshdan.
+
+KVERSETIN (1 kapsulada 140 mg)
+
+Belgilangan RDA/UL yo'q. Tadqiqotlar: samarali dozalar 500-1000 mg/kun. 140 mg — yallig'lanishga qarshi ta'sirli xavfsiz mo'tadil doza. 2 kapsula = 280 mg — xavfsiz ham.
+
+Ta'siri: eng kuchli tabiiy antioksidantlardan biri, gistamin ishlab chiqarishni bosadi (antigistamin ta'sir), SOG-2 va LOG ni bloklaydi (yallig'lanishga qarshi fermentlar).
+
+BROMELAIN (1 kapsulada 100 mg)
+
+Belgilangan RDA yo'q. Samarali dozalar: 200-800 mg/kun. 100 mg — boshlang'ich terapevtik doza. 2 kapsula = 200 mg — to'liq yallig'lanishga qarshi doza.
+
+Ta'siri: ananas poyasidan olingan proteolitik ferment, shishlarni so'radi, teri mikrosirkulyatsiyasini yaxshilaydi.
+
+A VITAMINI (1 kapsulada 1100 mkg)
+
+Kunlik me'yorlar: bolalar 4-8 yosh 400 mkg, 9-13 yosh 600 mkg, o'smirlar 700-900 mkg, katta erkaklar 900 mkg, ayollar 700 mkg.
+UL: bolalar 4-8 yosh 900 mkg, 9-13 yosh 1700 mkg, 14-18 yosh 2800 mkg, kattalar 3000 mkg.
+
+Qoplash: 1 kapsula (1100 mkg) = me'yorning 122-275%. 4-8 yoshli bolalar uchun 1 kapsula UL dan oshadi (900 mkg), shuning uchun qat'iy 1 kapsula/kun, ko'p emas.
+2 kapsula (2200 mkg) = kattalar uchun UL dan past (3000 mkg).
+
+BIOTIN B7 (1 kapsulada 2500 mkg)
+
+Belgilangan UL yo'q (suvda eriydigan). Adekvatli iste'mol: bolalar 4-8 yosh 12 mkg, o'smirlar 20-25 mkg, kattalar 30 mkg.
+
+Qoplash: 1 kapsula = me'yorning 8333%. Yuqori doza xavfsiz (suvda eriydigan vitamin, ortiqchasi chiqariladi). 2500-5000 mkg terapevtik dozani dermatologlar soch va tirnoq tuzilishini yaxshilash uchun ishlatadi.
+
+SINK (1 kapsulada 15 mg)
+
+Kunlik me'yorlar: bolalar 4-8 yosh 5 mg, 9-13 yosh 8 mg, o'smirlar 9-11 mg, katta erkaklar 11 mg, ayollar 8 mg.
+UL: bolalar 4-8 yosh 12 mg, 9-13 yosh 23 mg, 14-18 yosh 34 mg, kattalar 40 mg.
+
+Qoplash: 1 kapsula (15 mg) = me'yorning 136-300%. 4-8 yoshli bolalar uchun (UL 12 mg) qat'iy 1 kapsula/kun.
+2 kapsula (30 mg) = kattalar uchun UL dan past.
+
+SELEN (1 kapsulada 80 mkg)
+
+Kunlik me'yorlar: bolalar 4-8 yosh 30 mkg, 9-13 yosh 40 mkg, o'smirlar/kattalar 55 mkg.
+UL: bolalar 4-8 yosh 150 mkg, 9-13 yosh 280 mkg, kattalar 400 mkg (NIH) / 255 mkg (EFSA).
+
+Qoplash: 1 kapsula (80 mkg) = me'yorning 145-267%. 2 kapsula (160 mkg) = kattalar uchun UL dan past.
+
+BATAFSIL DOZALASH:
+
+Bolalar 4-8 yosh: qat'iy 1 kapsula/kun (A vitamini va sink yuqori chegarada). Kapsulani ochib suvda eritish.
+Bolalar 9-14 yosh: 1 kapsula/kun.
+O'smirlar 14-18 yosh: 1-2 kapsula/kun.
+Kattalar: 1-2 kapsula/kun.
+
+TARTIB: ovqatdan keyin, kunning istalgan vaqtida. Yog'da eriydigan komponentlarning (A, E) yaxshiroq so'rilishi uchun yog'li ovqat bilan birga tavsiya etiladi.
+
+KURS VA DAVRIYLIGI:
+Asosiy kurs: 20-30 kun.
+Akne paytida: 1 oylik tanaffuslar bilan 2-3 kurs.
+Soch to'kilishida: 30 kunlik kurs, 2 hafta tanaffus, takrorlash. Birinchi natijalar 2-3 kursdan keyin.
+Mo'rt tirnoqlarda: 30 kunlik kurs, natija 2-3 oydan keyin ko'rinadi (tirnoq o'sish tezligi).
+Mavsumiy qo'llab-quvvatlash: bahorda va kuzda.
+
+XAVF GURUHLARI: akne bilan o'smirlar, tug'ruqdan keyingi ayollar (soch to'kilishi), stressdan keyingi odamlar, muvozanatsiz ovqatlanishda, uzoq kasalliklardan keyin.
+===/СЕКЦИЯ===

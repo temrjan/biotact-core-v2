@@ -1,0 +1,241 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- Mahsulot kartasi]
+Mahsulot: BIFOLAK NEO
+
+MAQSAD: Hayotning birinchi kunlaridan boshlab bolalar uchun maxsus probiotik. Ichak sog'lom mikroflorasini shakllantirish, kolikalar va dam bo'lishni bartaraf etish, bolaning immunitetini mustahkamlash.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), ISO 9001 va ISO 22000 HACCP.
+CHIQARILISH SHAKLI: Stiklar (sashe) 1,5 g, qadoqda 20 dona.
+YOSH: Tug'ilganidan boshlab. Barcha yoshdagi bolalar uchun yagona shakl.
+KURS: 20-30 kun. Natijani mustahkamlash uchun -- 2 kurs.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz.
+XUSUSIYAT: Sof sinbiotik -- vitaminlar va minerallar SAQLAMAYDI. Faqat probiotiklar + prebiotiklar. 1 stikda 100 mlrd KOB.
+
+1 STIK TARKIBI (1,5 g):
+Probiotiklar 8 shtamm, jami 100 mlrd KOB dan ortiq:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+Har qanday yoshdagi bolalarga: 1 stik/kun, ovqatdan keyin.
+20-50 ml sovitilgan suyuqlik (suv, sut, ona suti, bolalar aralashmasi) bilan aralashtirish. Harorat 40 darajadan oshmasin. Kukunning to'liq erimasligi -- bu normal holat.
+
+TA'SIR MEXANIZMI:
+Bifidobakteriyalar: yo'g'on ichakni egallaydi, patogenlarni bosadi, B va K vitaminlarini ishlab chiqaradi.
+Laktobakteriyalar: ingichka ichakda yashaydi, laktozani parchalaydi, immunitetni kuchaytiradi.
+Propionibakteriyalar: yallig'lanishga qarshi ta'sir.
+Termofil streptokokk: laktozani o'zlashtirishga yordam beradi.
+Inulin: bifidobakteriyalar o'sishini 5-10 baravar rag'batlantiradi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- Chaqaloqlarda kolikalar va dam bo'lish]
+Mahsulot: Bolalar sinbiotigi 100 mlrd KOB, 8 shtamm probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab.
+Mexanizm: Bifido- va laktobakteriyalar chaqaloqning yetilmagan ichagini egallaydi, gaz hosil qiluvchi patogenlarni bosadi va hazm qilishni normallashtiradi. Inulin o'z bifidobakteriyalarining o'sishini 5-10 baravar rag'batlantiradi.
+
+QACHON TAVSIYA ETILADI:
+bolada kolikalar, yangi tug'ilgan chaqaloqda kolikalar, bola emizgandan keyin yig'laydi, bola oyoqlarini bukadi, bolada gazlar, bolada dam bo'lish, qorni qattiq, qorni barabandek, bola baqiradi va zo'riqadi, gaz chiqa olmaydi, gaz chiqaradi va yig'laydi, 3 oylik kolikalar.
+
+Tibbiy terminlar: chaqaloq kolikalari, OITning funksional buzilishlari.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- Chaqaloq najasi va qaytarish]
+Mahsulot: Bolalar sinbiotigi 100 mlrd KOB, 8 shtamm probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab.
+Mexanizm: 100 mlrd foydali bakteriya ichak mikroflorasi muvozanatini tiklaydi, ichak motorikasi va najas konsistensiyasini normallashtiradi. Laktobakteriyalar laktozani parchalaydi, gaz hosil bo'lishini va qaytarishni kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+bolada ich ketishi, ko'krak bolasida suyuq najas, bolada yashil najas, ko'pikli najas, hidli najas, yangi tug'ilgan chaqaloqda qabziyat, bola 3 kun najas qilmayapti, najas tartibsiz, najasda shilimshiq, hazm bo'lmagan bo'laklar, bola tez-tez qaytaradi, ko'p qaytaradi, favvora kabi qaytaradi, bolada reflyuks.
+
+Tibbiy terminlar: disbakterioz, disbioz.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- Antibiotikdan keyin, kesarevo, sun'iy oziqlantirish]
+Mahsulot: Bolalar sinbiotigi 100 mlrd KOB, 8 shtamm probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab.
+Mexanizm: Kesarevo orqali tug'ilgan bolalarda tug'ruq yo'llari mikroflorasi bilan aloqa bo'lmaydi, aralashma bilan oziqlanadiganlarda ona suti probiotiklari yo'q. Antibiotiklar foydali florani yo'q qiladi. 100 mlrd bakteriya sog'lom mikroflorani tiklaydi va shakllantiradi.
+
+QACHON TAVSIYA ETILADI:
+bolaga antibiotik berildi, antibiotikdan keyin ich ketishi, antibiotikdan keyin najas buzildi, bolada disbakterioz, bolaning mikroflorasini tiklash, bola uchun probiotiklar, kesarevodan keyingi bola, kesarevo kesimi mikroflora, sun'iy oziqlantirishdagi bola, ko'krak o'rniga aralashma, aralashmaga o'tildi, qo'shimcha ovqat boshlandi, qo'shimcha ovqat kiritilgandan keyin najas o'zgardi, bolada laktoza notoqatligi.
+
+Tibbiy terminlar: laktaza yetishmovchiligi, antibiotik bilan bog'liq diareya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- Allergiya/teri, immunitet, xulq-atvor, o'sish]
+Mahsulot: Bolalar sinbiotigi 100 mlrd KOB, 8 shtamm probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab.
+Mexanizm: Immun hujayralarning 70% ichakda joylashgan. Hayotning birinchi kunlaridan sog'lom mikroflora kuchli immunitetni shakllantiradi. Ichak-teri o'qi: chaqaloqlarda disbakterioz diatez va dermatit bilan namoyon bo'ladi. Ichak-miya o'qi: mikroflora uyqu va rivojlanishga ta'sir qiladi.
+
+QACHON TAVSIYA ETILADI:
+bolada diatez, qizil yonoqlar, g'adir-budur yonoqlar, ko'krak bolasida atopik dermatit, oprelostlar o'tmaydi, bolada quruq teri, bolada toshma, bolada oziq-ovqat allergiyasi, bola tez-tez kasal bo'ladi, bog'chada doim kasal, tumovdan chiqmayapti, doimiy shamollash, tez-tez otitlar, cho'zilib ketgan kasalliklar, uzoq o'tmaydigan tumov, bola bezovta, yomon uxlaydi, yig'lab uyg'onadi, injiq bola, sabapsiz yig'laydi, holsiz bola, bola yomon ovqatlanadi, ishtahasi yo'q, vazn yomon oladi, sekin o'sadi.
+
+Tibbiy terminlar: atopiya, disbakterioz, disbioz.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: BIFOLAK NEO -- 8 turdagi 100 mlrd probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab. Vitaminlar va minerallar saqlamaydi.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi: immun hujayralarning 70% ichakda joylashgan. Hayotning birinchi kunlaridan sog'lom mikroflora umr bo'yi kuchli immunitetni shakllantiradi.
+Ichak-teri o'qi: chaqaloqlarda disbakterioz diatez va atopik dermatit bilan namoyon bo'ladi.
+Ichak-miya o'qi: mikroflora bolaning uyqusi, kayfiyati va rivojlanishiga ta'sir qiladi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+MUHIM: BIFOLAK NEO vitaminlar va minerallar saqlamaydi. Barcha mahsulotlar bilan xavfsiz kombinatsiyalanadi.
+
+1. KOLIKALAR + O'SISH (tug'ilganidan boshlab):
+   BIFOLAK NEO + BIFOLAK ZINCUM
+   Mikroflora + o'sish va immunitet uchun sink. Bir vaqtda qabul qilish mumkin.
+
+2. MIKROFLORA + KALTSIY (6 oydan boshlab):
+   BIFOLAK NEO + CALCIY TRIACTIVE D3
+   Sog'lom ichak kaltsiy so'rilishini yaxshilaydi. Bir vaqtda qabul qilish mumkin.
+
+3. ANTIBIOTIKDAN KEYIN (kuchaytirilgan tiklash):
+   BIFOLAK NEO + IMMUNOCOMPLEX KIDS (3 oydan boshlab)
+   Probiotiklar + immun qo'llab-quvvatlash. Bir vaqtda qabul qilish mumkin.
+
+4. KOLIKALAR + TINCHLIK (tug'ilganidan boshlab):
+   BIFOLAK NEO + BIFOLAK MAGNIY (stiklar)
+   Kolikalardan mikroflora + tinch uyqu uchun magniy. Bir vaqtda qabul qilish mumkin.
+
+5. OG'IR DISBAKTERIOZ (kuchaytirilgan sxema):
+   Avval BIFOLAK ACTIVE (1 trillion, 20 kun) -- zarba dozasi.
+   Keyin BIFOLAK NEO (100 mlrd, 20 kun) -- saqlab turish.
+   Ketma-ket kurslar.
+
+6. BOG'CHAGA MOSLASHISH (2-3 yosh):
+   BIFOLAK NEO + BIFOLAK ZINCUM
+   Mikroflora + sink orqali immunitet. Bog'chaga borishdan oldin ideal. Bir vaqtda qabul qilish mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: BIFOLAK NEO -- 8 turdagi 100 mlrd probiotik + prebiotiklar, stiklar, tug'ilganidan boshlab. Vitaminlar va minerallar saqlamaydi.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+Yo'q. BIFOLAK NEO -- sof sinbiotik. Barcha mahsulotlar bilan xavfsiz kombinatsiyalanadi.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT -- shifokorga):
+
+1. Chala tug'ilgan bolalar (37 haftadan kam gestatsiya, vazni 1000 g dan kam).
+   Sabab: yetilmagan immun tizim va ichak shilliq qavatida. Tirik bakteriyalar kiritilganda sepsis (qon zaharlanishi) xavfi. Amerika Pediatriya Akademiyasi bunday bolalarga probiotik tavsiya etmaydi.
+   Skript: "Chala tug'ilgan bolalar uchun probiotiklar xavfli bo'lishi mumkin. Neonatolog bilan albatta maslahatlashing."
+
+2. Immunodefitsitli bolalar (tug'ma immunodefitsit, immunosupressorlar qabul qilish, OIV).
+   Sabab: tirik bakteriyalar jiddiy infeksiyalarga sabab bo'lishi mumkin (bakteriyemiya, sepsis).
+   Skript: "Bolaning immuniteti bilan muammolar bo'lsa, probiotiklar faqat shifokor ruxsati bilan."
+
+3. Reanimatsiyada og'ir kasallangan bolalar (markaziy venoz kateterli).
+   Sabab: infeksiya xavfi yuqori.
+
+4. Tarkibiy qismlarga allergiya. Asosiy allergenlarni saqlamasa ham (laktoza, glyuten), reaksiyaning birinchi belgilarida (toshma, qichishish, shish) to'xtatish va shifokorga murojaat qilish.
+
+5. Bolaning o'tkir holatlari: 38 darajadan yuqori harorat, qorinda kuchli og'riq, najasda qon, to'xtamaydigan qusish -- darhol shifokorga. Probiotiklar birinchi yordam vositasi emas.
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik bilan):
+
+1. Kesarevo orqali tug'ilgan bolalar -- bu qarshi ko'rsatma EMAS, aksincha KO'RSATMA. Bunday bolalarda mikroflora boshqacha shakllanadi (tug'ruq yo'llari mikroflorasi bilan aloqa yo'q). BIFOLAK NEO ayniqsa kerak.
+
+2. Sun'iy oziqlantirishdagi bolalar -- bu ham KO'RSATMA. Ona suti tabiiy probiotiklar saqlaydi. Aralashma bilan oziqlanadiganlarda mikroflora kamroq xilma-xil.
+
+3. Oziq-ovqat allergiyali bolalar. Minimal dozadan boshlash, 2-3 kun kuzatish. Yomonlashganda -- to'xtatish.
+
+4. Emlash davri. Vaksinalar bilan salbiy o'zaro ta'sir haqida ma'lumot yo'q. Ba'zi pediatrlar emlashdan 2-3 kun oldin/keyin tanaffus tavsiya etadi.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antibiotiklar: 2 soat qoidasi. BIFOLAK NEOni antibiotikdan 2 soat keyin qabul qilish. Antibiotiklar boshlangan 1-kundan boshlash. Kurs tugaganidan keyin 2 hafta davom ettirish. Probiotiklar antibiotik bilan bog'liq diareya xavfini 29-35% ga kamaytiradi.
+
+Sorbentlar (Smekta, faol ko'mir): 2-3 soat interval. Sorbent ertalab, BIFOLAK NEO tushlikda.
+
+Zamburug'ga qarshi dorilar (nistatin, flukonazol): bakteriyalarga ta'sir qilmaydi. Birga qabul qilish mumkin. Bolada kandidozda BIFOLAK NEO muvozanatni tiklashga yordam beradi.
+
+Fermentlar (Kreon, Mezim): salbiy o'zaro ta'sir yo'q. Birga qabul qilish mumkin.
+
+Antatsidlar (omeprazol, ranitidin): kislotalikni kamaytiradi, probiotiklarga oshqozonda tirik qolishga yordam beradi. Birga qabul qilish mumkin.
+
+Isitmani tushiruvchilar (paratsetamol, ibuprofen): o'zaro ta'sir yo'q. Yuqori haroratda avval isitmani tushirish, probiotiklar normallashgandan keyin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK NEO -- 4 dan 4-bo'lim: Me'yorlar va batafsil dozalash]
+Mahsulot: BIFOLAK NEO -- 8 turdagi 100 mlrd KOB probiotik + prebiotiklar (inulin, maltodekstrin), stiklar 1,5 g, 20 dona.
+
+PROBIOTIKLAR (100 mlrd KOB = 100 000 000 000)
+
+Probiotiklar uchun belgilangan RDA/UL yo'q. 100 mlrd doza -- yuqori, hayotning birinchi kunlaridan mikroflorani shakllantirish uchun optimal.
+
+BIOTACT BOSHQA MAHSULOTLARI BILAN SOLISHTIRISH:
+BIFOLAK ACTIVE: 1 trillion KOB -- shoshilinch tiklash uchun (og'ir disbakterioz, zaharlanish).
+BIFOLAK NEO: 100 mlrd KOB -- bolalarda mikroflorani shakllantirish va saqlash uchun.
+Boshqa mahsulotlar (ZINCUM, MAGNIY, IMMUNOCOMPLEX va boshqalar): 50 mln -- 10 mlrd KOB -- saqlovchi doza.
+
+BIFOLAK NEO aksariyat bolalar apteka probiotiklariga qaraganda 10-100 baravar ko'p probiotik saqlaydi.
+
+BATAFSIL DOZALASH:
+
+Yangi tug'ilganlar (0-1 oy): 1 stik/kun. 20 ml ona suti yoki aralashma bilan aralashtirish.
+Chaqaloqlar (1-12 oy): 1 stik/kun. 20-30 ml suyuqlik bilan aralashtirish.
+1-3 yoshli bolalar: 1 stik/kun. 30-50 ml suv, sut yoki sharbat bilan aralashtirish.
+3 yoshdan katta bolalar: 1 stik/kun.
+
+TARTIB: ovqatdan keyin. Suyuqlik harorati 40 darajadan oshmasin (probiotiklar issiqdan nobud bo'ladi!). Kukunning to'liq erimasligi -- bu normal, tabiiy komponentlar xususiyati bilan bog'liq.
+
+KURS VA SXEMALAR:
+
+Standart kurs: 20-30 kun. Mustahkamlash uchun -- 2 kurs.
+
+Kolikalarda (0-3 oy): 1 stik/kun, kurs 20-30 kun. Kolikalar odatda 3-4 oygacha o'tadi, probiotiklar bu jarayonni tezlashtiradi.
+
+Antibiotikdan keyin: antibiotiklar boshlangan 1-kundan boshlash (dozadan 2 soat keyin). Kurs tugaganidan keyin 2 hafta davom ettirish. Birinchi 48 soatda boshlash diareya xavfini 29-35% ga kamaytiradi.
+
+Kesarevodan keyingi bolalar: hayotning birinchi kunlaridan boshlash (pediatr bilan kelishilgan holda). Kurs 30 kun, bir oydan keyin takrorlash.
+
+Sun'iy oziqlantirishdagi bolalar: mikroflorani saqlash uchun har 2-3 oyda 20-30 kunlik kurs.
+
+Qo'shimcha ovqat kiritishda: yangi mahsulot kiritishdan 1 hafta oldin boshlash. Kurs 20 kun.
+
+Bog'chaga tayyorgarlik: birinchi tashrifdan 2-3 hafta oldin boshlash. Bog'chadagi birinchi oyda davom ettirish.
+
+BOLALARDA MIKROFLORA BUZILISHI BELGILARI (BIFOLAK NEO qachon kerak):
+Hazm qilish: kolikalar, dam bo'lish, tartibsiz najas, tez-tez qaytarish, ishtaha yomonligi.
+Teri: diatez, atopik dermatit, oprelostlar, quruqlik va po'stlash.
+Immunitet: tez-tez shamollash (yiliga 6-8 martadan ko'p), cho'zilib ketgan tuzalish, doimiy tumov, takrorlanuvchi otitlar.
+Xulq-atvor: bezovta uyqu, injiqlik, sabapsiz yig'lash, holsizlik.
+O'sish: vaznning yomon ortishi, sekin o'sish.
+Bolada ro'yxatdan 3 va undan ortiq belgi bo'lsa -- disbakterioz ehtimoli yuqori.
+===/СЕКЦИЯ===

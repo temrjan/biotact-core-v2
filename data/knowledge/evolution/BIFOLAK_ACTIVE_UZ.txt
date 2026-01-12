@@ -1,0 +1,254 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — Mahsulot kartasi]
+Mahsulot: BIFOLAK ACTIVE
+
+MAQSAD: Rekord miqdordagi probiotiklar bilan kuchli sinbiotik — 1 TRILLION KOB (1 000 000 000 000) foydali bakteriya, 8 turi. BIOTACT mahsulotlari orasida eng yuqori kontsentratsiya. Ichakni tozalash va tiklash, immunitetni mustahkamlash.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+
+IKKI CHIQARILISH SHAKLI:
+1. KAPSULALAR — kattalar va 7 yoshdan bolalar uchun. 2 kapsula = 1 g = 1 trillion KOB.
+2. STIKLAR (1,5 g) — bolalar va har qanday yoshdagi kattalar uchun. 1 stik = 1 trillion KOB.
+Probiotiklar kontsentratsiyasi ikkala shaklda ham bir xil.
+
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan, diabetiklarga mos.
+XUSUSIYATI: Toza sinbiotik — vitamin va minerallar SAQLAMAYDI. Faqat probiotiklar + prebiotiklar. Har qanday mahsulotlar bilan kombinatsiyalash uchun xavfsiz.
+
+TARKIBI (1 stik yoki 2 kapsula):
+Probiotiklar 8 shtamm, jami 1 TRILLION KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+Bakteriyalar tirik va liofilizatsiya qilingan (maxsus usulda quritilgan). Ichakda suyuqlik bilan aloqa qilganda faollashadi.
+
+DOZALASH:
+KAPSULALAR: kattalar va 7 yoshdan bolalarga — kuniga 1 kapsula, ovqatdan keyin, iliq suv bilan yutish.
+STIKLAR: bolalar va kattalarga — kuniga 1 stik. 20-50 ml sovutilgan suyuqlikda (40 darajadan yuqori emas) aralashtirish. Bolalar ovqatiga, sutga qo'shish mumkin.
+Kurs: 20-30 kun. Natijani mustahkamlash uchun — 2 kurs.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Bifidobakteriyalar (3 shtamm): yo'g'on ichakning asosiy aholisi (mikrofloraning 90% gacha), sut va sirka kislotalarini ishlab chiqaradi, patogenlarni bosadi, B va K vitaminlarini sintez qiladi.
+Laktobakteriyalar (3 shtamm): ingichka ichakda yashaydi, laktaza ishlab chiqaradi (sut shakarini parchalaydi), tabiiy antibiotiklar ishlab chiqaradi, immun javobni kuchaytiradi.
+Propionibakteriyalar: propion kislotasini ishlab chiqaradi, yallig'lanishga qarshi ta'sirga ega.
+Termofil streptokokk: laktozani o'zlashtirishga yordam beradi, antibakterial moddalar ishlab chiqaradi.
+Inulin: bifidobakteriyalar o'sishini 5-10 marta rag'batlantiradi, kaltsiy va magniy o'zlashtirilishini yaxshilaydi, xolesterinni kamaytiradi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — OIT va hazm qilish]
+Mahsulot: Sinbiotik 1 trillion KOB, 8 shtamm probiotik + prebiotiklar, kapsulalar/stiklar.
+Mexanizm: Bifido- va laktobakteriyalar patogenlarni bosadi, sut va sirka kislotalarini ishlab chiqaradi, hazm qilishni normallashtiradi. Inulin foydali mikrofloraning o'sishini 5-10 marta rag'batlantiradi.
+
+QACHON TAVSIYA ETILADI:
+qorin og'riydi, qorin og'rig'i, qorin dam bo'lishi, gaz, meteorizm, qorin g'uldirashi, qorinda og'irlik, ovqatdan keyin yomon, ko'ngil aynishi, qayt qilgisi kelishi, kekirish, ko'krak qafasida achishish, og'izdan yoqimsiz hid, hazm qilish buzilishi.
+
+Tibbiy terminlar: disbakterioz, disbioz, qo'zg'aluvchan ichak sindromi, QIS.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — Najas]
+Mahsulot: Sinbiotik 1 trillion KOB, 8 shtamm probiotik + prebiotiklar, kapsulalar/stiklar.
+Mexanizm: 1 trillion foydali bakteriya ichakni obod qiladi, mikroflora muvozanatini tiklaydi va ichak harakatini normallashtiradi. Inulin prebiotik sifatida najas tarkibini yaxshilaydi.
+
+QACHON TAVSIYA ETILADI:
+ich ketishi, diareya, suyuq najas, oshqozon buzilishi, ichak buzilishi, qabziyat, hojatxonaga chiqolmayapman, najas tartibsiz, qabziyat va ich ketishi navbatlanadi, najasda hazm bo'lmagan ovqat, najasda shilliq.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — Antibiotikdan keyin va zaharlanish]
+Mahsulot: Sinbiotik 1 trillion KOB, 8 shtamm probiotik + prebiotiklar, kapsulalar/stiklar.
+Mexanizm: 1 trillion bakteriyaning zarba dozasi antibiotiklar yoki zaharlanishdan keyin mikroflorani tez tiklaydi. Antibiotikdan 2 soat keyin qabul qilish, antibiotik kursidan keyin 2 hafta davom ettirish.
+
+QACHON TAVSIYA ETILADI:
+antibiotikdan keyin qorin og'riydi, antibiotikdan keyin ich ketishi, antibiotikdan keyin disbakterioz, antibiotikdan keyin kandidoz, mikroflorani tiklash, antibiotikdan keyin probiotiklar, davolanishdan keyin ichak ishlamayapti, zaharlanish, zaharlandim, oziq-ovqat zaharlanishi, qusish va ich ketishi, ichak infeksiyasi, rotavirus, rotavirus infeksiyasi, ko'ngil aynishi va qusish, bolada qusish, bolada ich ketishi.
+
+Tibbiy terminlar: antibiotik bilan bog'liq diareya, klostridial infeksiya, disbakterioz, disbioz.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — Immunitet va allergiya/teri]
+Mahsulot: Sinbiotik 1 trillion KOB, 8 shtamm probiotik + prebiotiklar, kapsulalar/stiklar.
+Mexanizm: Immun hujayralarning 70% ichakda joylashgan. 1 trillion bakteriya mikroflorani tiklaydi va immunitetni faollashtiradi. Ichak-teri o'qi: disbakterioz akneni 80% ga, ekzemani 56% ga kuchaytiradi.
+
+QACHON TAVSIYA ETILADI:
+tez-tez kasal bo'laman, immunitet past, bola tez-tez kasal bo'ladi, doimiy shamollash, kasalliklardan chiqolmayapman, uzoq tuzalaman, takrorlanuvchi infeksiyalar, gerpes, kandidoz, zamburug', allergiya, toshma, krapivnitsa, bolada diatez, atopik dermatit, oziq-ovqat allergiyasi, mahsulotlarga notoqatlik, sut ko'tarmayapman, laktoza notoqatligi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — Operatsiyalar, parazitlar, boshqalar]
+Mahsulot: Sinbiotik 1 trillion KOB, 8 shtamm probiotik + prebiotiklar, kapsulalar/stiklar.
+Mexanizm: Jiddiy buzilishlarda (operatsiyalar, kimyoterapiya, parazitlar) ichakni tez obod qilish uchun zarba dozasi kerak. 1 trillion bakteriya aksariyat apteka probiotiklarga qaraganda 100-1000 marta ko'p.
+
+QACHON TAVSIYA ETILADI:
+ichak operatsiyasidan keyin, kimyoterapiyadan keyin, nurli terapiyadan keyin, operatsiyadan keyin tiklash, kolonoskopiya, operatsiyaga tayyorgarlik, gijja, gelmintozlar, gijja davolanishdan keyin, ichakni tozalash, lyambliya, noto'g'ri ovqatlanish, fastfud, ziyofatdan keyin, ko'p yeb qo'ydim, ichkilikdan keyin, sayohat (sayohatchi diareyasi), suv almashinishi, iqlim almashinishi, yangi ovqat.
+
+Tibbiy terminlar: nekrotizatsiyalovchi enterokolit.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: BIFOLAK ACTIVE — 8 turdagi 1 trillion probiotik + prebiotiklar, kapsulalar/stiklar. Vitamin va minerallar saqlamaydi.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi: immun hujayralarning 70% ichakda joylashgan. 1 trillion bakteriya mikroflorani tez tiklaydi va immunitetni faollashtiradi.
+Ichak-miya o'qi: sog'lom mikroflora kayfiyat, kognitiv funksiyalar va uyquga ta'sir qiladi.
+Ichak-teri o'qi: disbakterioz akneni 80% ga, ekzemani 56% ga kuchaytiradi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+MUHIM: BIFOLAK ACTIVE vitamin va minerallar saqlamaydi. Boshqa mahsulotlar bilan kesishmalar yo'q. Hamma narsa bilan xavfsiz kombinatsiyalash mumkin.
+
+1. ANTIBIOTIKDAN KEYIN (to'liq tiklash):
+   BIFOLAK ACTIVE + IMMUNOCOMPLEX KIDS (yoki kattalar uchun IMMUNOCOMPLEX)
+   Mikroflorani maksimal tiklash + immun qo'llab-quvvatlash. Bir vaqtda qabul qilish mumkin.
+
+2. ICHAK + STRESS:
+   BIFOLAK ACTIVE + BIFOLAK MAGNIY
+   Mikroflora + asab tizimi uchun magniy. Ichak-miya o'qi. Bir vaqtda qabul qilish mumkin.
+
+3. ZAHARLANISH / ICHAK INFEKSIYASI:
+   BIFOLAK ACTIVE + BIFOLAK ZINCUM
+   Probiotiklar + sink (JSST diareya paytida sinkni tavsiya etadi). Bir vaqtda qabul qilish mumkin.
+
+4. ICHAK + TERI (akne, dermatit):
+   BIFOLAK ACTIVE + DERMACOMPLEX
+   Ichakni tozalash (sabab) + terini oziqlantirish (natija). Bir vaqtda qabul qilish mumkin.
+
+5. GO'DAK (kolikalar + mikroflora):
+   BIFOLAK ACTIVE + BIFOLAK NEO
+   Go'dakda og'ir disbakteriozda kurslarni navbatlab qo'llash mumkin: avval ACTIVE (1 trillion), keyin NEO (100 mlrd) qo'llab-quvvatlash uchun.
+
+6. ICHAK + BOLA O'SISHI:
+   BIFOLAK ACTIVE + CALCIY TRIACTIVE D3
+   Sog'lom ichak kaltsiy o'zlashtirilishini yaxshilaydi. Bir vaqtda qabul qilish mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: BIFOLAK ACTIVE — 8 turdagi 1 trillion probiotik + prebiotiklar, kapsulalar/stiklar. Vitamin va minerallarsiz.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+Yo'q. BIFOLAK ACTIVE — vitamin va minerallarsiz toza sinbiotik. Barcha mahsulotlar bilan xavfsiz kombinatsiyalash mumkin.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Immunodefitsit (tug'ma, OIV, immunosupressorlar qabul qilish).
+   Sabab: immunitet zaif bo'lganda tirik bakteriyalar jiddiy infeksiyalarga (bakteriyemiya, sepsis) sabab bo'lishi mumkin.
+   Skript: "Immunitet bilan muammolar bo'lsa, probiotiklar faqat shifokor ruxsati bilan qabul qilinishi mumkin."
+
+2. Chala tug'ilgan bolalar (37 haftadan kam, vazni 1000 g dan kam).
+   Sabab: immunitet va ichak shilliq qavatining yetilmaganligi. Sepsis xavfi.
+   Skript: "Chala tug'ilgan go'daklar uchun neonatolog bilan maslahatdan o'tish shart."
+
+3. Reanimatsiyada og'ir bemorlar (markaziy venoz kateterlar bilan).
+   Sabab: infeksiya xavfi yuqori.
+
+4. O'tkir pankreatit.
+   Sabab: tadqiqotlar o'tkir pankreatitda probiotiklar qabul qilganda asoratlar xavfi oshishini ko'rsatgan.
+
+5. Tarkibiy qismlarga allergiya. Belgilari: toshma, qichishish, shish.
+
+6. O'tkir holatlar (harorat 38 darajadan yuqori, qorinda kuchli og'riq, najasda qon, to'xtamaydigan qusish) — avval shifokorga.
+
+NISBIY QARSHI KO'RSATMALAR:
+
+1. Ortiqcha bakterial o'sish sindromi (SIBO). Qo'shimcha probiotiklar qorin dam bo'lishini kuchaytirishi mumkin. Minimal dozadan boshlash, kuzatish.
+2. Og'ir ichak kasalliklari (Kron kasalligining qo'zishi, faol fazadagi yarali kolit). Faqat gastroenterolog bilan kelishilgan holda.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antibiotiklar: BIFOLAK ACTIVE ni antibiotikdan 2 soat KEYIN qabul qilish. Probiotiklar antibiotik kursining 1-kunidan boshlab qabul qilish. Antibiotik tugaganidan keyin kamida 2 hafta davom ettirish.
+
+Sorbentlar (Smekta, faol ko'mir, Enterosgel): sorbentlar probiotiklar bilan bog'lanadi. 2-3 soat oraliq. Tartib: sorbent ertalab, BIFOLAK ACTIVE tushlikda.
+
+Zamburug'ga qarshi dorilar (nistatin, flukonazol): bakteriyalarga ta'sir qilmaydi. Birga qabul qilish mumkin.
+
+Fermentlar (Kreon, Mezim): salbiy o'zaro ta'sir yo'q. Birga qabul qilish mumkin.
+
+Proton pompa ingibitorlari (omeprazol, pantoprazol): kislotalilikni kamaytiradi, bu probiotiklarga oshqozondan o'tishda yashashga yordam beradi.
+
+Isitmani tushiruvchi dorilar (paratsetamol, ibuprofen): o'zaro ta'sir yo'q. Yuqori haroratda avval uni tushirish, probiotiklar harorat normallashganidan keyin berish.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ACTIVE — 4 dan 4-bo'lim: Me'yorlar va batafsil dozalash]
+Mahsulot: BIFOLAK ACTIVE — 8 turdagi 1 trillion KOB probiotik + prebiotiklar (inulin, maltodekstrin), kapsulalar/stiklar.
+
+PROBIOTIKLAR (1 trillion KOB = 1 000 000 000 000)
+
+Probiotiklar uchun belgilangan RDA/UL yo'q. JSST probiotiklar "adekvatli miqdorda kiritilganda salomatlikka foyda keltiruvchi tirik mikroorganizmlar" deb ta'riflaydi.
+
+DOZALAR SOLISHTIRILISHI:
+BIFOLAK ACTIVE: 1 TRILLION KOB — shoshilinch tiklash uchun rekord doza.
+BIFOLAK NEO: 100 mlrd KOB — bolalar uchun yuqori doza.
+Boshqa BIOTACT mahsulotlari: 50 mln — 10 mlrd KOB — qo'llab-quvvatlovchi doza.
+Oddiy apteka probiotiklari: 1-10 mlrd KOB.
+
+BIFOLAK ACTIVE aksariyat apteka probiotiklarga qaraganda 100-1000 marta ko'p bakteriya saqlaydi.
+
+NIMA UCHUN AYNAN 1 TRILLION: Jiddiy buzilishlarda (antibiotiklar, zaharlanishlar, OIT operatsiyalari) ichakni tez obod qilish uchun zarba dozasi zarur.
+
+QAYSI SHAKLNI TANLASH:
+STIKLAR: har qanday yoshdagi bolalarga (tug'ilganidan boshlab mumkin), yutishda qiyinchilik bo'lganda, keksalarga. 1 stik = 1 trillion KOB.
+KAPSULALAR: kattalar va 7 yoshdan bolalarga, sayohatlarda. 1 kapsula = 500 mlrd KOB (kuniga 1 kapsula tavsiya etiladi = yetarli).
+Ikkala shakl ham bir xil samarali.
+
+BATAFSIL DOZALASH:
+
+STIKLAR:
+Har qanday yoshdagi bolalarga: kuniga 1 stik. 20-50 ml sovutilgan suyuqlikda (40 darajadan yuqori emas) aralashtirish. Bolalar ovqatiga, sutga, ona sutigacha qo'shish mumkin.
+
+KAPSULALAR:
+Kattalar va 7 yoshdan bolalarga: kuniga 1 kapsula. Iliq suv bilan yutish (issiq emas).
+
+TARTIB: ovqatdan keyin. Qabul qilish vaqti muhim emas. Stik kukunining to'liq erimasligi — bu normal.
+
+KURS VA SXEMALAR:
+
+Standart kurs: 20-30 kun. Natijani mustahkamlash uchun — 2 kurs.
+
+Antibiotiklar bilan: antibiotik kursining 1-kunidan boshlash. Antibiotikdan 2 soat keyin qabul qilish. Antibiotik tugaganidan keyin 2 hafta davom ettirish.
+
+Zaharlanishda: faol qusish to'xtagandan so'ng darhol boshlash. Kurs 10-14 kun.
+
+OIT operatsiyasidan keyin: jarroh bilan kelishilgan holda boshlash, odatda operatsiyadan 2-3 kun keyin. Kurs 30 kun.
+
+Profilaktika (sayohat, iqlim almashinishi): sayohatdan 5-7 kun oldin boshlash, davomida va qaytgandan keyin 1 hafta davom ettirish.
+
+AYNIQSA TAVSIYA ETILADIGAN GURUHLAR: antibiotik kursidan keyin, surunkali disbakteriozda, oziq-ovqat zaharlanishlarida, allergiya va teri muammolarida, tez-tez kasal bo'ladigan bolalar, kesarcha tug'ilgan bolalar, sun'iy ovqatlanishdagi bolalar, OIT operatsiyalaridan keyin, kimyoterapiya/nurli terapiya paytida.
+===/СЕКЦИЯ===

@@ -1,0 +1,275 @@
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — Mahsulot kartasi]
+Mahsulot: IMMUNOCOMPLEX
+
+MAQSAD: Kompleks immun himoya — beta-glyukan + sink + selen + vitamin C + vitaminlar B3 va B9 + 8 probiotik.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Kapsulalar 0,5 g, 30 dona. O'simlik kapsulalari.
+YOSH: 7 yoshdan va kattalar. 7 yoshgacha bolalar uchun IMMUNOCOMPLEX KIDS mavjud.
+KURS: 20 kun. Profilaktika: yiliga 2-3 kurs, 1-2 oylik tanaffuslar bilan.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan, diabetiklarga mos.
+
+1 KAPSULA TARKIBI (0,5 g):
+Beta-glyukan — 100 mg (immunomodulyator, makrofaglar va NK-hujayralarni faollashtiradi)
+Sink — 12,5 mg (sink sitrat, biosamaradorlik 35%)
+Selen — 75 mkg (antioksidant, immun tizim hujayralarini himoya qiladi)
+Vitamin C (askorbin kislotasi) — 200 mg
+Vitamin B3 (niatsin) — 8 mg
+Vitamin B9 (fol kislotasi) — 200 mkg
+Probiotiklar 8 shtamm, jami 5 mlrd KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+7-14 yosh bolalarga: 1 kapsula/kun
+14-18 yosh o'smirlarga: 1-2 kapsula/kun
+Kattalarga: 1-2 kapsula/kun
+Ertalab nonushta vaqtida yoki kunning birinchi yarmida qabul qilish. 100-150 ml iliq suv bilan yutish.
+Kapsula yuta olmaydigan bolalar uchun: ochib, iliq suv yoki ovqatga (issiq emas) aralashtirib berish.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Beta-glyukan: makrofaglar, neytrofillar, NK-hujayralarni faollashtiradi. Tabiiy himoyani kuchaytiradi, tuzalishni tezlashtiradi.
+Sink + Vitamin C: yetarli immun javobni ta'minlaydi, yaralarning bitishini tezlashtiradi, antioksidantlar.
+Selen: hujayralarni oksidativ stressdan himoya qiladi, qalqonsimon bezni qo'llab-quvvatlaydi, viruslarga qarshi kurashda yordam beradi.
+B3 (niatsin): energiya almashinuvi, teri va asab tizimi salomatligi.
+B9 (fol kislotasi): hujayralar bo'linishi, qon ishlab chiqarish, o'sish va rivojlanish.
+Probiotiklar: sog'lom ichak orqali immunitetni mustahkamlash, mikroflorani tiklash.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — Tomoq va shamollash]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan + sink + selen + vitamin C + probiotiklar. Kapsulalar, 7 yoshdan.
+Mexanizm: Beta-glyukan makrofaglar va NK-hujayralarni faollashtiradi, virus va bakteriyalarga qarshi kurashni tezlashtiradi. Sink va vitamin C immun javobni kuchaytiradi va tuzalishni tezlashtiradi.
+
+QACHON TAVSIYA ETILADI:
+Tomoq og'riydi, tomoq qizarib ketdi, tomoqni tirnashtiradi, tomoqni qiryapti, yutish og'riydi, yutish qiyin, angina, tonzillit, faringit, laringit, ovoz o'tirib qoldi, ovoz yo'qoldi, ovoz xirillab qoldi, burun oqishi, burun bitib qoldi, burun nafas olmaydi, burundan oqadi, yo'tal, quruq yo'tal, ho'l yo'tal, yo'tal o'tmayddi, bronxit, traxeit, harorat, isitma, qaltirash, badanni ezadi, badan og'riydi, ORVI, ORZ, gripp, shamollash, sovuq qotgandan keyin.
+
+Tibbiy terminlar: retsidivlovchi respirator infeksiyalar.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — Immunitet va profilaktika]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan + sink + selen + vitamin C + probiotiklar. Kapsulalar, 7 yoshdan.
+Mexanizm: Beta-glyukan + sink + selen + vitamin C tug'ma va adaptiv immunitetni ko'p darajali faollashtirishni ta'minlaydi. Probiotiklar sog'lom ichak orqali immunitetni mustahkamlaydi.
+
+QACHON TAVSIYA ETILADI:
+Tez-tez kasal bo'ladi, doim kasal bo'laman, doimiy kasallanadi, kasallikdan chiqmaydi, immunitet zaif, immunitet past, tez-tez infeksiyalar, shamollash mavsumi, ORVI profilaktikasi, epidemiya, bemor bilan aloqa, oilada kimdir kasal bo'ldi, labda gerpes, tez-tez gerpes, surunkali kasalliklar, tez-tez zo'rayishlar, keksa odam, mavsum almashishi, bahorgi avitaminoz.
+
+Tibbiy terminlar: immunodefitsit, opportunistik infeksiyalar, immunokompromis holatlar.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — Tiklanish va charchoq]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan + sink + selen + vitamin C + probiotiklar. Kapsulalar, 7 yoshdan.
+Mexanizm: Probiotiklar antibiotikdan keyin mikroflorani tiklaydi, sink va vitamin C yaralarning bitishi va tiklanishni tezlashtiradi. B3 va B9 energiya almashinuvi va qon ishlab chiqarishni qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+Kasallikdan keyin, shamollashdan keyin tiklanish, shamollash uzoq o'tmaydi, cho'zilgan tuzalish, antibiotikdan keyin, mikrofloraning buzilishi, disbakterioz, holsizlik, kuch yo'q, kuch tushishi, surunkali charchoq, tez charchash, uyquchanlik, sustlik, apatiya, energiya yo'q, uzoq tiklanaman, stress, jismoniy zo'riqish, aqliy zo'riqish.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — OIT]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan + sink + selen + vitamin C + probiotiklar. Kapsulalar, 7 yoshdan.
+Mexanizm: 8 shtamm probiotiklar + prebiotiklar (inulin) ichak mikroflorasi muvozanatini tiklaydi, qorin dam bo'lishi va gaz hosil bo'lishini kamaytiradi, najasni normallashtiradi.
+
+QACHON TAVSIYA ETILADI:
+Qorin dam bo'lishi, gaz, meteorizm, ich ketishi, diareya, oshqozon buzilishi, qorin og'rig'i.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan 100 mg + sink 12,5 mg + selen 75 mkg + vitamin C 200 mg + B3 + B9 + 5 mlrd probiotiklar, kapsulalar, 7 yoshdan.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi (gut-immunity): beta-glyukan + probiotiklar + sink + selen — tug'ma va adaptiv immunitetni ko'p darajali faollashtirish.
+Ichak-miya o'qi (gut-brain): probiotiklar + B3 + B9 kognitiv funksiyalar va kayfiyatga ta'sir qiladi.
+Antioksidant himoya: selen + vitamin C — hujayralarni oksidativ stressdan ikki tomonlama himoya.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. SHAMOLLASH / ORVI (kuchaytirilgan himoya):
+   IMMUNOCOMPLEX + BIFOLAK ZINCUM+C+D3
+   Beta-glyukan + uch tomonlama immun formula (Zn+C+D3). MUHIM: KETMA-KET kurslar bilan qabul qilish, chunki umumiy sink 12,5+25=37,5 mg UL 40 mg ga yaqin.
+
+2. STRESS + IMMUNITET (kattalar):
+   IMMUNOCOMPLEX + BIFOLAK MAGNIY
+   Immun himoya + asab tizimini qo'llab-quvvatlash. Bir vaqtda qabul qilish mumkin, sink bo'yicha kesishish yo'q.
+
+3. KASALLIKDAN KEYIN TIKLANISH:
+   IMMUNOCOMPLEX + BIFOLAK ACTIVE
+   Immunitet + umumiy tonus, energiya, kuchlarni tiklash. Bir vaqtda qabul qilish mumkin.
+
+4. 7-14 YOSH BOLALAR (o'qish + immunitet):
+   IMMUNOCOMPLEX + NEUROCOMPLEX KIDS
+   Immunitet + omega-3, letsitin diqqat va xotira uchun. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor).
+
+5. TERI VA IMMUNITET (ayollar):
+   IMMUNOCOMPLEX + DERMACOMPLEX
+   KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor).
+
+6. KEKSALAR (65+, kompleks qo'llab-quvvatlash):
+   IMMUNOCOMPLEX + CALCIY TRIACTIVE D3
+   Immunitet + suyaklar va mushaklar. Bir vaqtda qabul qilish mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan 100 mg + sink 12,5 mg + selen 75 mkg + vitamin C 200 mg + B3 + B9 + 5 mlrd probiotiklar, kapsulalar, 7 yoshdan.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. IMMUNOCOMPLEX + BIFOLAK ZINCUM+C+D3 = OGOHLANTIRISH
+   Sabab: umumiy sink 12,5+25=37,5 mg, UL 40 mg ga yaqin.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+2. IMMUNOCOMPLEX + NEUROCOMPLEX KIDS = OGOHLANTIRISH
+   Sabab: ikkalasida ham sink bor, bir vaqtda qabul qilganda ortiqcha bo'ladi.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+3. IMMUNOCOMPLEX + DERMACOMPLEX = OGOHLANTIRISH
+   Sabab: ikkalasida ham sink bor.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Organ transplantatsiyasi.
+   Sabab: beta-glyukan immun hujayralarni (makrofaglar, NK-hujayralar) faollashtiradi, transplant rad etilishini keltirib chiqarishi mumkin.
+   Skript: "Agar sizga organ ko'chirilgan bo'lsa, IMMUNOCOMPLEX qarshi ko'rsatilgan. Beta-glyukan immunitetni faollashtiradi, bu rad etilishga olib kelishi mumkin. Qo'shimchalarni faqat transplantolog bilan muhokama qiling."
+
+2. Immunodepressantlar qabul qilish (tsiklosporin, takrolimus, azatioprin, metotreksat).
+   Sabab: beta-glyukan immunosupressiyaga qarshi ta'sir ko'rsatadi, autoimmun kasallik zo'rayishi yoki organ rad etilishini keltirib chiqarishi mumkin.
+   Skript: "Agar siz immunitetni bosuvchi dorilar qabul qilsangiz, IMMUNOCOMPLEX ularning samaradorligini pasaytirishi mumkin. Shifokor bilan albatta kelishing."
+
+3. Tarkibiy qismlarga allergiya.
+   Alohida e'tibor: beta-glyukan achitqidan olinadi. Achitqiga allergiyada — qarshi ko'rsatilgan.
+   Belgilar: toshma, qichishish, shish, nafas olish qiyinlashishi.
+
+4. Yuqori haroratli (38 darajadan yuqori) o'tkir infeksiyalar.
+   Sabab: beta-glyukan o'tkir fazada yallig'lanish reaktsiyasini kuchaytirishi mumkin.
+   Skript: "Yuqori haroratda avval o'tkir holatni bartaraf eting. IMMUNOCOMPLEX ni harorat normallashgandan keyin boshlash yaxshiroq."
+
+5. 7 yoshgacha bolalar.
+   Skript: "7 yoshgacha bolalar uchun moslashtirilgan dozali IMMUNOCOMPLEX KIDS mavjud."
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Immunodepressantlarsiz autoimmun kasalliklar (revmatoid artrit, volchanka, Xashimoto tireoiditi, psoriaz). Har ikki kunda 1 kapsuladan boshlash, holatni kuzatish.
+2. Surunkali buyrak kasalliklari. Selen 75 mkg to'planishi mumkin. SBK 3-5 yoki dializda — nefrolog majburiy.
+3. Homiladorlik. Selen 150 mkg (2 kapsula) homiladorlar me'yoridan (60 mkg) oshadi. Ginekolog bilan kelishib kuniga 1 kapsuladan ko'p emas.
+4. Emizish. Shifokor bilan maslahatdan keyin kuniga 1 kapsuladan ko'p emas.
+5. Vilson-Konovalov kasalligi. Sink mis almashinuviga ta'sir qiladi, dozani shifokor belgilaydi.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Ftorxinolon antibiotiklari (tsiprofloksatsin, levofloksatsin, moksifloksatsin):
+Sink so'rilishini 60-90% ga kamaytiradi. Interval: 2 soat OLDIN yoki 4-6 soat KEYIN.
+Sxema: antibiotik ertalab och qoringa, IMMUNOCOMPLEX kechqurun ovqat bilan.
+
+Tetrasiklin antibiotiklari (doksitsiklin, tetrasiklin):
+Xuddi shunday, sink tetratsiklinlarni bog'laydi. Interval: 2 soat OLDIN yoki 4-6 soat KEYIN.
+
+Antigipertenziv dorilar (kaptopril, enalapril, lozartan, amlodipin):
+Beta-glyukan qo'shimcha ravishda bosimni tushirishi mumkin. 1 kapsuladan boshlash, o'zini his qilishini kuzatish.
+
+Tiazid diuretiklari (gidroxlorotiazid, indapamid):
+Sink chiqarilishini oshiradi. IMMUNOCOMPLEX qoplash uchun foydali. Interval 2-3 soat.
+
+Indometatsin: bir vaqtda qabul qilishdan saqlaning (nojo'ya ta'sirlarni oshiradi). Boshqa NPVS (ibuprofen, diklofenak) bilan interval 2-3 soat.
+Penisillamin: sink so'rilishini kamaytiradi. Interval 2 soat.
+Levodopa (Parkinson kasalligi): sink yuqori konsentratsiyalarni 30-50% ga kamaytiradi. Nevrolog bilan maslahat.
+
+MUHIM: IMMUNOCOMPLEX tarkibidagi probiotiklar antibiotiklarga chidamli va antibiotiklar vaqtida mikroflorani tiklashga yordam beradi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX — 4 dan 4-bo'lim: Tarkibiy qismlar me'yorlari va batafsil dozalash]
+Mahsulot: IMMUNOCOMPLEX — beta-glyukan 100 mg + sink 12,5 mg + selen 75 mkg + vitamin C 200 mg + B3 8 mg + B9 200 mkg + 5 mlrd probiotiklar, kapsulalar, 7 yoshdan.
+
+SINK (1 kapsulada 12,5 mg)
+
+Kunlik me'yorlar (NIH, EFSA):
+Bolalar 9-13 yosh: 8 mg. O'smirlar: yigitlar 11 mg, qizlar 9 mg. Kattalar: erkaklar 11 mg, ayollar 8 mg. Homiladorlar: 11-12 mg. Emiziklilar: 12-13 mg.
+
+Yuqori xavfsiz daraja (UL):
+9-13 yosh: 23 mg. 14-18 yosh: 34 mg. Kattalar: 40 mg.
+
+Qoplanish: 1 kapsula (12,5 mg) = me'yorning 114-156%, UL dan ancha past. 2 kapsula (25 mg) = o'smirlar va kattalar uchun UL dan past.
+
+SELEN (1 kapsulada 75 mkg)
+
+Kunlik me'yorlar:
+Bolalar 9-13 yosh: 40 mkg. O'smirlar/kattalar: 55 mkg. Homiladorlar: 60 mkg. Emiziklilar: 70 mkg.
+
+Yuqori xavfsiz daraja (UL, EFSA 2023):
+7-10 yosh: 130 mkg. 11-14 yosh: 200 mkg. 15-17 yosh: 230 mkg. Kattalar: 255 mkg (EFSA) / 400 mkg (NIH).
+
+Qoplanish: 1 kapsula (75 mkg) = me'yorning 136%, UL dan ancha past. 2 kapsula (150 mkg) = kattalar uchun UL dan past, lekin homiladorlarda tavsiya etilmaydi.
+
+Selenning roli: selenoproteinlar (antioksidant fermentlar) tarkibiga kiradi, immun hujayralarni himoya qiladi, qalqonsimon bezni qo'llab-quvvatlaydi, viruslarga qarshi kurashda yordam beradi.
+
+VITAMIN C (1 kapsulada 200 mg)
+
+Kunlik me'yorlar:
+Bolalar 9-13 yosh: 45 mg. O'smirlar: o'g'il bolalar 75 mg, qiz bolalar 65 mg. Kattalar: erkaklar 110 mg, ayollar 95 mg. Chekuvchilar: qo'shimcha +35 mg.
+
+Vitamin C suvda eriydigan, ortiqchasi to'planmaydi, buyrak orqali chiqariladi.
+
+Qoplanish: 1 kapsula (200 mg) = me'yorning 182-444%. Xavfsiz, ortiqchasi chiqariladi.
+
+BETA-GLYUKAN (1 kapsulada 100 mg)
+
+Belgilangan RDA/UL yo'q. Tadqiqotlar: samarali dozalar 100-500 mg/kun. IMMUNOCOMPLEX dagi 100 mg — makrofaglar va NK-hujayralarni faollashtirish uchun isbotlangan samarali doza. Achitqidan (Saccharomyces cerevisiae) olingan.
+
+VITAMINLAR B3 VA B9
+
+B3 (niatsin) 8 mg: bolalar me'yori 8-12 mg, kattalar 14-16 mg. UL: bolalar 15-20 mg, kattalar 35 mg. 1 kapsula me'yorning 50-100% ni qoplaydi.
+B9 (fol kislotasi) 200 mkg: bolalar me'yori 200-300 mkg, kattalar 400 mkg. UL: bolalar 400-600 mkg, kattalar 1000 mkg. 1 kapsula me'yorning 50-100% ni qoplaydi.
+
+IMMUNOCOMPLEX BATAFSIL DOZALASH:
+
+Bolalar 7-14 yosh: 1 kapsula/kun, ertalab nonushta bilan.
+O'smirlar 14-18 yosh: 1-2 kapsula/kun.
+Kattalar: 1-2 kapsula/kun.
+Keksalar (65+): 1 kapsula/kun (immunitetni qo'llab-quvvatlash uchun optimal).
+
+TARTIB: ertalab yoki kunning birinchi yarmida, ovqat bilan. Kechqurun emas (B-vitaminlar uyquga ta'sir qilishi mumkin). 100-150 ml iliq suv bilan yutish (issiq emas).
+
+KURS: 20 kun standart. Shamollash mavsumida profilaktika: yiliga 2-3 kurs, 1-2 oylik tanaffuslar bilan. Kasallikdan keyin: harorat normallashgandan so'ng darhol boshlash.
+
+MAVSUMIY PROFILAKTIKA SXEMASI:
+Sentyabr: 20 kunlik kurs. Oktyabr-noyabr: tanaffus. Dekabr: 20 kunlik kurs. Fevral: 20 kunlik kurs.
+
+XAVF GURUHLARI (kimlarga ayniqsa tavsiya etiladi): keksalar, katta jamoalarda ishlovchilar, tez-tez kasallanuvchilar, stress va zo'riqish davri, mavsumlar almashishi.
+===/СЕКЦИЯ===

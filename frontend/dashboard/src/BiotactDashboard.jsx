@@ -1,0 +1,1053 @@
+import React, { useState, useRef, useEffect, useCallback, createContext, useContext } from 'react';
+import {
+  LayoutGrid, Wallet, TrendingUp, Users, Package,
+  Settings, Bell, Send, Sparkles, ArrowUpRight,
+  ArrowDownRight, ChevronLeft, ChevronRight,
+  Server, Megaphone, Briefcase, ShoppingCart, Coffee,
+  Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2,
+  Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText
+} from 'lucide-react';
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid,
+  Tooltip, ResponsiveContainer
+} from 'recharts';
+import * as api from './api';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+/*
+ * BIOTACT Core Dashboard v3.1
+ * With Backend API Integration
+ */
+
+// ═══════════════════════════════════════════════════════════════
+// THEME SYSTEM
+// ═══════════════════════════════════════════════════════════════
+
+const ThemeContext = createContext(null);
+
+const themes = {
+  light: {
+    name: 'light',
+    bg: {
+      page: '#fafaf9',
+      card: '#ffffff',
+      elevated: '#f5f5f4',
+      accent: '#499C75',
+      accentHover: '#3d8a66',
+      input: '#f5f5f4',
+      userBubble: '#1c1917',
+      aiBubble: '#f5f5f4',
+    },
+    border: {
+      default: '#eeeceb',
+      subtle: '#f7f7f6',
+    },
+    text: {
+      primary: '#1c1917',
+      secondary: '#57534e',
+      muted: '#a8a29e',
+      inverse: '#ffffff',
+      accent: '#499C75',
+      success: '#499C75',
+      warning: '#d97706',
+      error: '#dc2626',
+    },
+    chart: {
+      grid: '#eeeceb',
+      line1: '#499C75',
+      line2: '#d6d3d1',
+      gradient1: 'rgba(73, 156, 117, 0.12)',
+    }
+  },
+  dark: {
+    name: 'dark',
+    bg: {
+      page: '#0c0a09',
+      card: '#1c1917',
+      elevated: '#292524',
+      accent: '#499C75',
+      accentHover: '#5aad86',
+      input: '#292524',
+      userBubble: '#499C75',
+      aiBubble: '#292524',
+    },
+    border: {
+      default: '#353230',
+      subtle: '#252220',
+    },
+    text: {
+      primary: '#fafaf9',
+      secondary: '#d6d3d1',
+      muted: '#78716c',
+      inverse: '#0c0a09',
+      accent: '#499C75',
+      success: '#5aad86',
+      warning: '#fbbf24',
+      error: '#f87171',
+    },
+    chart: {
+      grid: '#353230',
+      line1: '#499C75',
+      line2: '#57534e',
+      gradient1: 'rgba(73, 156, 117, 0.15)',
+    }
+  }
+};
+
+function ThemeProvider({ children }) {
+  const [mode, setMode] = useState('system');
+  const [resolved, setResolved] = useState('light');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('biotact-theme');
+    if (saved) setMode(saved);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const update = () => {
+      const r = mode === 'system' ? (mq.matches ? 'dark' : 'light') : mode;
+      setResolved(r);
+    };
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, [mode]);
+
+  const setTheme = (m) => {
+    setMode(m);
+    localStorage.setItem('biotact-theme', m);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme: themes[resolved], mode, setTheme, isDark: resolved === 'dark' }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+const useTheme = () => useContext(ThemeContext);
+
+// ═══════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════
+
+const CATEGORIES = {
+  hosting: { name: 'Серверы', icon: Server, color: '#2563eb' },
+  marketing: { name: 'Маркетинг', icon: Megaphone, color: '#dc2626' },
+  salary: { name: 'Команда', icon: Users, color: '#499C75' },
+  inventory: { name: 'Закупки', icon: ShoppingCart, color: '#d97706' },
+  office: { name: 'Офис', icon: Coffee, color: '#7c3aed' },
+  logistics: { name: 'Логистика', icon: Package, color: '#0891b2' },
+  other: { name: 'Прочее', icon: Wallet, color: '#6b7280' },
+  sales: { name: 'Продажи', icon: TrendingUp, color: '#499C75' }
+};
+
+const fmt = (v, short = true) => {
+  if (v === null || v === undefined) return '0';
+  const num = typeof v === 'string' ? parseFloat(v) : v;
+  if (short) {
+    if (num >= 1e9) return `${(num / 1e9).toFixed(1)}B`;
+    if (num >= 1e6) return `${(num / 1e6).toFixed(1)}M`;
+    if (num >= 1e3) return `${(num / 1e3).toFixed(0)}K`;
+  }
+  return new Intl.NumberFormat('ru-RU').format(num);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LOGIN FORM
+// ═══════════════════════════════════════════════════════════════
+
+function LoginForm({ onLogin, theme }) {
+  const [email, setEmail] = useState('dashboard@biotact.uz');
+  const [password, setPassword] = useState('dashboard123');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      await api.login(email, password);
+      onLogin();
+    } catch (err) {
+      setError(err.message || 'Ошибка входа');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: theme.bg.page }}>
+      <div className="w-full max-w-sm p-8 rounded-2xl border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: theme.bg.accent }}>
+            <span className="font-bold text-lg" style={{ color: theme.text.inverse }}>B</span>
+          </div>
+          <h1 className="text-xl font-semibold" style={{ color: theme.text.primary }}>BIOTACT Dashboard</h1>
+          <p className="text-sm mt-1" style={{ color: theme.text.muted }}>Войдите в систему</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-medium mb-1.5" style={{ color: theme.text.secondary }}>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2"
+              style={{ backgroundColor: theme.bg.input, color: theme.text.primary, '--tw-ring-color': theme.bg.accent }}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium mb-1.5" style={{ color: theme.text.secondary }}>Пароль</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2"
+              style={{ backgroundColor: theme.bg.input, color: theme.text.primary, '--tw-ring-color': theme.bg.accent }}
+              required
+            />
+          </div>
+
+          {error && (
+            <div className="text-sm p-3 rounded-lg" style={{ backgroundColor: `${theme.text.error}15`, color: theme.text.error }}>
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2"
+            style={{ backgroundColor: theme.bg.accent, color: theme.text.inverse, opacity: loading ? 0.7 : 1 }}
+          >
+            {loading && <Loader2 size={16} className="animate-spin" />}
+            {loading ? 'Вход...' : 'Войти'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// THEME TOGGLE COMPONENT
+// ═══════════════════════════════════════════════════════════════
+
+function ThemeToggle() {
+  const { mode, setTheme, theme } = useTheme();
+  const [open, setOpen] = useState(false);
+  const opts = [
+    { v: 'light', icon: Sun, label: 'Светлая' },
+    { v: 'dark', icon: Moon, label: 'Тёмная' },
+    { v: 'system', icon: Monitor, label: 'Системная' },
+  ];
+  const cur = opts.find(o => o.v === mode) || opts[0];
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="p-2 rounded-lg transition-all duration-200 hover:scale-105"
+        style={{ color: theme.text.muted, backgroundColor: open ? theme.bg.elevated : 'transparent' }}
+      >
+        <cur.icon size={18} />
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div
+            className="absolute right-0 mt-2 w-44 rounded-xl z-50 border overflow-hidden shadow-2xl"
+            style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+          >
+            {opts.map(o => (
+              <button
+                key={o.v}
+                onClick={() => { setTheme(o.v); setOpen(false); }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors"
+                style={{
+                  color: mode === o.v ? theme.text.accent : theme.text.secondary,
+                  backgroundColor: mode === o.v ? theme.bg.elevated : 'transparent'
+                }}
+              >
+                <o.icon size={16} />
+                <span className="flex-1 text-left">{o.label}</span>
+                {mode === o.v && <Check size={14} />}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+
+function Dashboard({ onLogout }) {
+  const { theme, isDark } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const section = location.pathname === "/" ? "dashboard" : location.pathname.slice(1);
+  const setSection = (s) => navigate(s === "dashboard" ? "/" : "/" + s);
+  const [sidebar, setSidebar] = useState(true);
+
+  // Chat state
+  const [msgs, setMsgs] = useState([
+    { id: '0', role: 'ai', text: 'Здравствуйте! Напишите команду — например: «Расход 15 млн на серверы»', ts: new Date() }
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const endRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // Data from API
+  const [kpi, setKpi] = useState({ revenue: 0, expenses: 0, profit: 0, profit_margin: 0 });
+  const [txs, setTxs] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+
+  const chartData = [
+    { month: 'Авг', income: 120, expenses: 78 },
+    { month: 'Сен', income: 135, expenses: 82 },
+    { month: 'Окт', income: 148, expenses: 85 },
+    { month: 'Ноя', income: 142, expenses: 88 },
+    { month: 'Дек', income: 165, expenses: 92 },
+    { month: 'Янв', income: 158, expenses: 83 },
+  ];
+
+  // Load data from API
+  const loadData = useCallback(async () => {
+    setDataLoading(true);
+    try {
+      const [kpiData, txsData] = await Promise.all([
+        api.getKPI(),
+        api.getTransactions({ limit: 50 })
+      ]);
+      setKpi(kpiData);
+      setTxs(txsData.map(tx => ({
+        ...tx,
+        date: new Date(tx.transaction_date || tx.created_at)
+      })));
+    } catch (err) {
+      console.error('Failed to load data:', err);
+      if (err.message === 'Unauthorized') {
+        onLogout();
+      }
+    } finally {
+      setDataLoading(false);
+    }
+  }, [onLogout]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const totalExp = parseFloat(kpi.expenses) || 0;
+  const totalInc = parseFloat(kpi.revenue) || 0;
+  const profit = parseFloat(kpi.profit) || 0;
+  const margin = kpi.profit_margin?.toFixed(1) || '0.0';
+
+  const breakdown = Object.entries(CATEGORIES)
+    .map(([k, c]) => ({
+      key: k, name: c.name, color: c.color, icon: c.icon,
+      amount: txs.filter(t => t.type === 'expense' && t.category === k).reduce((s, t) => s + parseFloat(t.amount || 0), 0)
+    }))
+    .filter(i => i.amount > 0)
+    .sort((a, b) => b.amount - a.amount);
+
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs]);
+
+  const send = useCallback(async () => {
+    if (!input.trim() || loading) return;
+    const userMsg = { id: Date.now().toString(), role: 'user', text: input.trim(), ts: new Date() };
+    setMsgs(p => [...p, userMsg]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const response = await api.sendChatMessage(userMsg.text, sessionId);
+
+      // Save session ID for conversation continuity
+      if (response.session_id) {
+        setSessionId(response.session_id);
+      }
+
+      const aiMsg = {
+        id: (Date.now() + 1).toString(),
+        role: 'ai',
+        text: response.answer,
+        ts: new Date(),
+        status: response.action_result?.success ? 'success' : undefined
+      };
+
+      setMsgs(prev => [...prev, aiMsg]);
+
+      // If action was successful, reload data
+      if (response.action_result?.success) {
+        await loadData();
+      }
+    } catch (err) {
+      const errorMsg = {
+        id: (Date.now() + 1).toString(),
+        role: 'ai',
+        text: `Ошибка: ${err.message}`,
+        ts: new Date(),
+        status: 'warning'
+      };
+      setMsgs(prev => [...prev, errorMsg]);
+    } finally {
+      setLoading(false);
+    }
+  }, [input, loading, sessionId, loadData]);
+
+  const nav = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
+    { id: 'askbiotact', label: 'AskBiotact', icon: Bot },
+    { id: 'marketing', label: 'Marketing', icon: Megaphone },
+    { id: 'hr', label: 'HR', icon: Briefcase },
+  ];
+
+  // AskBiotact state
+  const [prompt, setPrompt] = useState('Загрузка...');
+  const [savedPrompt, setSavedPrompt] = useState('');
+  const [promptLoading, setPromptLoading] = useState(true);
+  const [botRestarting, setBotRestarting] = useState(false);
+  const [askMsgs, setAskMsgs] = useState([
+    { id: '0', role: 'ai', text: 'Здравствуйте! 💚 Я консультант Biotact. Чем могу помочь?', ts: new Date() }
+  ]);
+  const [askInput, setAskInput] = useState('');
+  const [askLoading, setAskLoading] = useState(false);
+  const askEndRef = useRef(null);
+  const askInputRef = useRef(null);
+
+  // Load prompt from server
+  useEffect(() => {
+    const loadPrompt = async () => {
+      try {
+        const data = await api.getPrompt('askbiotact');
+        setPrompt(data.content);
+        setSavedPrompt(data.content);
+      } catch (err) {
+        console.error('Failed to load prompt:', err);
+        setPrompt('// Ошибка загрузки промпта');
+      } finally {
+        setPromptLoading(false);
+      }
+    };
+    loadPrompt();
+  }, []);
+
+  const handleSavePrompt = async () => {
+    try {
+      await api.updatePrompt('askbiotact', prompt);
+      setSavedPrompt(prompt);
+    } catch (err) {
+      console.error('Failed to save prompt:', err);
+    }
+  };
+
+  const handleResetPrompt = () => {
+    setPrompt(savedPrompt);
+  };
+const handleRestartBot = async () => {    setBotRestarting(true);    try {      await api.restartBot();      alert("Бот перезапущен!");    } catch (err) {      console.error("Failed to restart bot:", err);      alert("Ошибка перезапуска бота: " + err.message);    } finally {      setBotRestarting(false);    }  };
+
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(prompt);
+  };
+
+  useEffect(() => {
+    askEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [askMsgs]);
+
+  const sendAskMessage = useCallback(async () => {
+    if (!askInput.trim() || askLoading) return;
+    const userMsg = { id: Date.now().toString(), role: 'user', text: askInput.trim(), ts: new Date() };
+    setAskMsgs(p => [...p, userMsg]);
+    setAskInput('');
+    setAskLoading(true);
+
+    // Simulate AI response (TODO: integrate with backend)
+    setTimeout(() => {
+      const aiMsg = {
+        id: (Date.now() + 1).toString(),
+        role: 'ai',
+        text: 'Понимаю вашу заботу! 💚 Расскажите подробнее — для кого ищете продукт и какие симптомы беспокоят?',
+        ts: new Date()
+      };
+      setAskMsgs(prev => [...prev, aiMsg]);
+      setAskLoading(false);
+    }, 1500);
+  }, [askInput, askLoading]);
+
+  if (dataLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center" style={{ backgroundColor: theme.bg.page }}>
+        <div className="text-center">
+          <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: theme.bg.accent }} />
+          <p style={{ color: theme.text.muted }}>Загрузка данных...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-screen flex transition-colors duration-300" style={{ backgroundColor: theme.bg.page, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+
+      {/* ══════════ SIDEBAR ══════════ */}
+      <aside
+        className="flex flex-col border-r transition-all duration-300"
+        style={{ width: sidebar ? 224 : 64, backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+      >
+        {/* Logo */}
+        <div className="h-16 flex items-center px-4 border-b" style={{ borderColor: theme.border.subtle }}>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: theme.bg.accent }}>
+              <span className="font-bold text-sm" style={{ color: theme.text.inverse }}>B</span>
+            </div>
+            {sidebar && (
+              <div className="overflow-hidden">
+                <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>BIOTACT</div>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: theme.text.muted }}>Core</div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 py-4 px-2">
+          {nav.map(item => {
+            const active = section === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setSection(item.id)}
+                className="w-full flex items-center gap-3 px-3 py-2.5 mb-1 rounded-lg transition-all duration-200"
+                style={{
+                  backgroundColor: active ? 'rgba(73, 156, 117, 0.1)' : 'transparent',
+                  color: active ? theme.text.accent : theme.text.secondary
+                }}
+              >
+                <item.icon size={18} strokeWidth={active ? 2 : 1.5} />
+                {sidebar && <span className="text-sm font-medium">{item.label}</span>}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Toggle */}
+        <div className="p-3 border-t" style={{ borderColor: theme.border.subtle }}>
+          <button
+            onClick={() => setSidebar(!sidebar)}
+            className="w-full flex items-center justify-center p-2 rounded-lg transition-colors"
+            style={{ color: theme.text.muted }}
+          >
+            {sidebar ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+          </button>
+        </div>
+
+        {/* Logout */}
+        <div className="p-3 border-t" style={{ borderColor: theme.border.subtle }}>
+          <button
+            onClick={onLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-red-500/10"
+            style={{ color: theme.text.muted }}
+          >
+            <LogOut size={18} strokeWidth={1.5} />
+            {sidebar && <span className="text-sm">Выйти</span>}
+          </button>
+        </div>
+      </aside>
+
+      {/* ══════════ MAIN CONTENT ══════════ */}
+      <main className="flex-1 overflow-auto">
+        {/* Header */}
+        <header
+          className="sticky top-0 z-20 backdrop-blur-sm border-b"
+          style={{ backgroundColor: isDark ? 'rgba(12,10,9,0.9)' : 'rgba(250,250,249,0.9)', borderColor: theme.border.default }}
+        >
+          <div className="h-16 px-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-lg font-semibold" style={{ color: theme.text.primary }}>
+                {section === 'dashboard' && 'Главная панель'}
+                {section === 'askbiotact' && 'AskBiotact'}
+                {section === 'marketing' && 'Маркетинг'}
+                {section === 'hr' && 'HR / Кадры'}
+              </h1>
+              <p className="text-xs" style={{ color: theme.text.muted }}>
+                {section === 'askbiotact' ? 'AI Консультант' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={loadData}
+                className="p-2 rounded-lg transition-colors"
+                style={{ color: theme.text.muted }}
+                title="Обновить данные"
+              >
+                <Loader2 size={18} strokeWidth={1.5} className={dataLoading ? 'animate-spin' : ''} />
+              </button>
+              <ThemeToggle />
+              <button
+                className="relative p-2 rounded-lg transition-colors"
+                style={{ color: theme.text.muted }}
+              >
+                <Bell size={18} strokeWidth={1.5} />
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
+              </button>
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium"
+                style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}
+              >
+                АД
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Dashboard Grid */}
+        {section === 'dashboard' && (
+        <div className="p-8 max-w-6xl">
+          {/* KPIs */}
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {/* Revenue */}
+            <div
+              className="rounded-xl p-6 border transition-shadow duration-300 hover:shadow-lg"
+              style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: theme.text.muted }}>Выручка</span>
+                <span className="flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: isDark ? 'rgba(16,185,129,0.15)' : 'rgba(5,150,105,0.1)', color: theme.text.success }}>
+                  <ArrowUpRight size={12} />12%
+                </span>
+              </div>
+              <div className="text-3xl font-semibold tracking-tight" style={{ color: theme.text.primary }}>{fmt(totalInc)}</div>
+              <div className="text-xs mt-1" style={{ color: theme.text.muted }}>сум / месяц</div>
+            </div>
+
+            {/* Expenses */}
+            <div
+              className="rounded-xl p-6 border transition-shadow duration-300 hover:shadow-lg"
+              style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: theme.text.muted }}>Расходы</span>
+                <span className="flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: isDark ? 'rgba(251,191,36,0.15)' : 'rgba(217,119,6,0.1)', color: theme.text.warning }}>
+                  <ArrowUpRight size={12} />8%
+                </span>
+              </div>
+              <div className="text-3xl font-semibold tracking-tight" style={{ color: theme.text.primary }}>{fmt(totalExp)}</div>
+              <div className="text-xs mt-1" style={{ color: theme.text.muted }}>сум / месяц</div>
+            </div>
+
+            {/* Profit */}
+            <div
+              className="rounded-xl p-6 transition-all duration-300 hover:scale-[1.02]"
+              style={{ backgroundColor: theme.bg.accent }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)' }}>Прибыль</span>
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: theme.text.inverse }}>{margin}%</span>
+              </div>
+              <div className="text-3xl font-semibold tracking-tight" style={{ color: theme.text.inverse }}>{fmt(profit)}</div>
+              <div className="text-xs mt-1" style={{ color: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.6)' }}>чистая / месяц</div>
+            </div>
+          </div>
+
+          {/* Charts */}
+          <div className="grid grid-cols-5 gap-6 mb-8">
+            {/* Area Chart */}
+            <div
+              className="col-span-3 rounded-xl p-6 border"
+              style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Динамика за 6 месяцев</h2>
+                <div className="flex items-center gap-4 text-xs">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.chart.line1 }} />
+                    <span style={{ color: theme.text.muted }}>Доходы</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.chart.line2 }} />
+                    <span style={{ color: theme.text.muted }}>Расходы</span>
+                  </span>
+                </div>
+              </div>
+              <div className="h-56">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="incGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={theme.chart.line1} stopOpacity={0.15} />
+                        <stop offset="100%" stopColor={theme.chart.line1} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={theme.chart.grid} vertical={false} />
+                    <XAxis dataKey="month" stroke={theme.text.muted} fontSize={11} tickLine={false} axisLine={false} />
+                    <YAxis stroke={theme.text.muted} fontSize={11} tickLine={false} axisLine={false} tickFormatter={v => `${v}M`} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: theme.bg.card, border: `1px solid ${theme.border.default}`, borderRadius: 8, fontSize: 12 }}
+                      labelStyle={{ color: theme.text.primary }}
+                      formatter={(v) => [`${v} млн сум`]}
+                    />
+                    <Area type="monotone" dataKey="income" stroke={theme.chart.line1} strokeWidth={2} fill="url(#incGrad)" />
+                    <Area type="monotone" dataKey="expenses" stroke={theme.chart.line2} strokeWidth={2} fill="transparent" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Breakdown */}
+            <div
+              className="col-span-2 rounded-xl p-6 border"
+              style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+            >
+              <h2 className="text-sm font-semibold mb-6" style={{ color: theme.text.primary }}>Структура расходов</h2>
+              <div className="space-y-4">
+                {breakdown.length === 0 ? (
+                  <p className="text-sm" style={{ color: theme.text.muted }}>Нет данных о расходах</p>
+                ) : breakdown.map(item => {
+                  const pct = totalExp > 0 ? (item.amount / totalExp * 100).toFixed(0) : 0;
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.key} className="group">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-2">
+                          <div
+                            className="w-7 h-7 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110"
+                            style={{ backgroundColor: `${item.color}15` }}
+                          >
+                            <Icon size={14} style={{ color: item.color }} />
+                          </div>
+                          <span className="text-sm" style={{ color: theme.text.secondary }}>{item.name}</span>
+                        </div>
+                        <span className="text-sm font-medium" style={{ color: theme.text.primary }}>{fmt(item.amount)}</span>
+                      </div>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: theme.bg.elevated }}>
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${pct}%`, backgroundColor: item.color }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Transactions */}
+          <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+            <div className="px-6 py-4 border-b flex items-center justify-between" style={{ borderColor: theme.border.subtle }}>
+              <h2 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Последние операции</h2>
+              <button className="text-xs transition-colors" style={{ color: theme.text.muted }}>Все операции →</button>
+            </div>
+            <div>
+              {txs.length === 0 ? (
+                <div className="px-6 py-8 text-center">
+                  <p className="text-sm" style={{ color: theme.text.muted }}>Нет операций. Добавьте через чат!</p>
+                </div>
+              ) : txs.slice(0, 5).map((tx, i) => {
+                const cat = CATEGORIES[tx.category];
+                const Icon = cat?.icon || Wallet;
+                return (
+                  <div
+                    key={tx.id || tx.transaction_id}
+                    className="px-6 py-4 flex items-center justify-between transition-colors"
+                    style={{ borderTop: i > 0 ? `1px solid ${theme.border.subtle}` : 'none' }}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${cat?.color || '#6b7280'}10` }}>
+                        <Icon size={18} style={{ color: cat?.color || '#6b7280' }} />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium" style={{ color: theme.text.primary }}>{cat?.name || 'Прочее'}</div>
+                        <div className="text-xs" style={{ color: theme.text.muted }}>
+                          {tx.date?.toLocaleDateString?.('ru-RU', { day: 'numeric', month: 'short' }) || tx.transaction_date}
+                          {tx.period === 'yearly' && ' • Годовой'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-sm font-semibold" style={{ color: tx.type === 'expense' ? theme.text.primary : theme.text.success }}>
+                      {tx.type === 'expense' ? '−' : '+'}{fmt(tx.amount, false)} <span style={{ color: theme.text.muted, fontWeight: 400 }}>сум</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        )}
+
+        {/* AskBiotact Section */}
+        {section === 'askbiotact' && (
+        <div className="flex-1 flex flex-col p-6 overflow-hidden">
+          {/* Prompt Editor */}
+          <div className="flex-1 flex flex-col rounded-xl border overflow-hidden" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+            {/* Prompt Header */}
+            <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: theme.border.subtle }}>
+              <div className="flex items-center gap-2">
+                <FileText size={16} style={{ color: theme.text.muted }} />
+                <span className="text-sm font-medium" style={{ color: theme.text.primary }}>System Prompt</span>
+                {prompt !== savedPrompt && (
+                  <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: theme.text.warning + '20', color: theme.text.warning }}>
+                    Изменено
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={handleCopyPrompt}
+                  className="p-2 rounded-lg transition-colors hover:opacity-80"
+                  style={{ color: theme.text.muted }}
+                  title="Копировать"
+                >
+                  <Copy size={16} />
+                </button>
+                <button
+                  onClick={handleResetPrompt}
+                  className="p-2 rounded-lg transition-colors hover:opacity-80"
+                  style={{ color: theme.text.muted }}
+                  title="Сбросить"
+                  disabled={prompt === savedPrompt}
+                >
+                  <RotateCcw size={16} />
+                </button>
+                <button
+                  onClick={handleSavePrompt}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                  style={{
+                    backgroundColor: prompt !== savedPrompt ? theme.bg.accent : theme.bg.elevated,
+                    color: prompt !== savedPrompt ? theme.text.inverse : theme.text.muted
+                  }}
+                  disabled={prompt === savedPrompt}
+                >
+                  <Save size={14} />
+                  Сохранить
+                </button>
+                <button
+                  onClick={handleRestartBot}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                  style={{
+                    backgroundColor: theme.bg.elevated,
+                    color: theme.text.warning
+                  }}
+                  disabled={botRestarting}
+                >
+                  <RefreshCw size={14} className={botRestarting ? "animate-spin" : ""} />
+                  {botRestarting ? "Перезапуск..." : "Перезапустить бота"}
+                </button>
+              </div>
+            </div>
+
+            {/* Prompt Textarea */}
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="flex-1 p-4 text-sm focus:outline-none font-mono"
+              style={{
+                backgroundColor: theme.bg.card,
+                color: theme.text.primary,
+                lineHeight: 1.7,
+                minHeight: '400px',
+                resize: 'vertical'
+              }}
+              placeholder="Введите системный промпт..."
+            />
+
+            {/* Prompt Footer */}
+            <div className="px-4 py-3 border-t flex items-center justify-between" style={{ borderColor: theme.border.subtle }}>
+              <div className="flex items-center gap-4 text-xs" style={{ color: theme.text.muted }}>
+                <span>{prompt.length} символов</span>
+                <span>{prompt.split('\n').length} строк</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                  style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}
+                >
+                  <Upload size={14} />
+                  Загрузить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
+
+        {/* Marketing & HR Placeholder */}
+        {(section === 'marketing' || section === 'hr') && (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: theme.bg.elevated }}>
+              {section === 'marketing' ? <Megaphone size={28} style={{ color: theme.text.muted }} /> : <Briefcase size={28} style={{ color: theme.text.muted }} />}
+            </div>
+            <h2 className="text-lg font-semibold mb-2" style={{ color: theme.text.primary }}>
+              {section === 'marketing' ? 'Маркетинг' : 'HR / Кадры'}
+            </h2>
+            <p className="text-sm" style={{ color: theme.text.muted }}>Раздел в разработке</p>
+          </div>
+        </div>
+        )}
+      </main>
+
+      {/* ══════════ CHAT SIDEBAR ══════════ */}
+      <aside
+        className="w-96 flex flex-col border-l"
+        style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
+      >
+        {/* Header */}
+        <div className="h-16 px-5 flex items-center gap-3 border-b" style={{ borderColor: theme.border.default }}>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: isDark ? theme.bg.accent : theme.text.primary }}>
+            {section === 'askbiotact' ? <Bot size={16} style={{ color: theme.text.inverse }} /> : <Sparkles size={16} style={{ color: theme.text.inverse }} />}
+          </div>
+          <div className="flex-1">
+            <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>
+              {section === 'askbiotact' ? 'Тест консультанта' : 'AI Ассистент'}
+            </div>
+            <div className="text-[11px] flex items-center gap-1" style={{ color: theme.text.success }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.text.success }} />
+              {section === 'askbiotact' ? 'Промпт загружен' : 'Подключён к API'}
+            </div>
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 overflow-auto p-4 space-y-4">
+          {(section === 'askbiotact' ? askMsgs : msgs).map(m => (
+            <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
+                className="max-w-[85%] px-4 py-3 text-sm leading-relaxed"
+                style={{
+                  backgroundColor: m.role === 'user' ? theme.bg.userBubble : theme.bg.aiBubble,
+                  color: m.role === 'user' ? theme.text.inverse : theme.text.primary,
+                  borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px'
+                }}
+              >
+                {m.status === 'success' && (
+                  <div className="flex items-center gap-1.5 text-xs font-medium mb-2" style={{ color: theme.text.success }}>
+                    <Check size={12} /><span>Готово</span>
+                  </div>
+                )}
+                {m.status === 'warning' && (
+                  <div className="flex items-center gap-1.5 text-xs font-medium mb-2" style={{ color: theme.text.warning }}>
+                    <AlertCircle size={12} /><span>Внимание</span>
+                  </div>
+                )}
+                <p className="whitespace-pre-line">{m.text}</p>
+              </div>
+            </div>
+          ))}
+          {(section === 'askbiotact' ? askLoading : loading) && (
+            <div className="flex justify-start">
+              <div className="px-4 py-3 rounded-2xl" style={{ backgroundColor: theme.bg.aiBubble }}>
+                <div className="flex items-center gap-1">
+                  {[0, 150, 300].map(d => (
+                    <span key={d} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: theme.text.muted, animationDelay: `${d}ms` }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={section === 'askbiotact' ? askEndRef : endRef} />
+        </div>
+
+        {/* Quick Actions */}
+        <div className="px-4 py-3 border-t" style={{ borderColor: theme.border.subtle }}>
+          <div className="flex gap-2 flex-wrap">
+            {(section === 'askbiotact'
+              ? ['У ребенка живот болит', 'После антибиотиков', 'Сколько стоит?']
+              : ['Расход 5 млн на маркетинг', 'Доход 10 млн', 'Покажи отчёт']
+            ).map(a => (
+              <button
+                key={a}
+                onClick={() => {
+                  if (section === 'askbiotact') {
+                    setAskInput(a);
+                    askInputRef.current?.focus();
+                  } else {
+                    setInput(a);
+                    inputRef.current?.focus();
+                  }
+                }}
+                className="px-3 py-1.5 text-xs font-medium rounded-full transition-colors"
+                style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}
+              >
+                {a.length > 18 ? a.slice(0, 18) + '...' : a}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Input */}
+        <div className="p-4 border-t" style={{ borderColor: theme.border.default }}>
+          <div className="flex gap-2">
+            <input
+              ref={section === 'askbiotact' ? askInputRef : inputRef}
+              type="text"
+              value={section === 'askbiotact' ? askInput : input}
+              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : send())}
+              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : 'Напишите команду...'}
+              disabled={section === 'askbiotact' ? askLoading : loading}
+              className="flex-1 border-0 rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2"
+              style={{
+                backgroundColor: theme.bg.input,
+                color: theme.text.primary,
+                '--tw-ring-color': theme.bg.accent
+              }}
+            />
+            <button
+              onClick={section === 'askbiotact' ? sendAskMessage : send}
+              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : (!input.trim() || loading)}
+              className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
+              style={{ backgroundColor: theme.bg.accent }}
+            >
+              <Send size={16} style={{ color: theme.text.inverse }} />
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP WRAPPER
+// ═══════════════════════════════════════════════════════════════
+
+export default function BiotactCoreDashboard() {
+  const [isAuthenticated, setIsAuthenticated] = useState(api.isAuthenticated());
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    api.clearAuth();
+    setIsAuthenticated(false);
+  };
+
+  return (
+    <ThemeProvider>
+      {isAuthenticated ? (
+        <Dashboard onLogout={handleLogout} />
+      ) : (
+        <LoginFormWrapper onLogin={handleLogin} />
+      )}
+    </ThemeProvider>
+  );
+}
+
+function LoginFormWrapper({ onLogin }) {
+  const { theme } = useTheme();
+  return <LoginForm onLogin={onLogin} theme={theme} />;
+}

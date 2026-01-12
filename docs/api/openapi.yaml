@@ -1,0 +1,436 @@
+openapi: 3.1.0
+info:
+  title: Biotact Platform API
+  description: |
+    AI-powered RAG система для фармацевтической компании Biotact.
+
+    ## Аутентификация
+    API использует JWT Bearer токены. Получите токен через `/auth/login`
+    и передавайте его в заголовке `Authorization: Bearer <token>`.
+
+    ## Отделы (Departments)
+    - `marketing` - Маркетинг
+    - `sales` - Продажи
+    - `call_center` - Колл-центр
+    - `logistics` - Логистика
+    - `accounting` - Бухгалтерия
+  version: 2.0.0
+  contact:
+    name: Biotact Dev Team
+    email: dev@biotact.uz
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development
+  - url: https://core.biotact.uz/api/v1
+    description: Production
+
+tags:
+  - name: health
+    description: Health check endpoints
+  - name: auth
+    description: Authentication endpoints
+  - name: chat
+    description: Chat and RAG endpoints
+
+paths:
+  /health:
+    get:
+      tags:
+        - health
+      summary: Health check
+      description: Проверка работоспособности сервиса и его зависимостей
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: healthy
+                version: 2.0.0
+                timestamp: '2026-01-12T10:00:00Z'
+                dependencies:
+                  database: healthy
+                  qdrant: healthy
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User login
+      description: Аутентификация пользователя и получение JWT токена
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: user@biotact.uz
+              password: secretpassword
+      responses:
+        '200':
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              example:
+                access_token: eyJhbGciOiJIUzI1NiIs...
+                token_type: bearer
+                expires_in: 3600
+                user:
+                  id: 1
+                  email: user@biotact.uz
+                  department_id: marketing
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                detail: Invalid email or password
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /chat/query:
+    post:
+      tags:
+        - chat
+      summary: Send chat query
+      description: |
+        Отправка вопроса в RAG систему.
+        Система найдёт релевантные документы в базе знаний отдела пользователя
+        и сгенерирует ответ с помощью LLM.
+      operationId: chatQuery
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatQueryRequest'
+            example:
+              message: Какие препараты рекомендовать при головной боли?
+              session_id: sess_abc123
+      responses:
+        '200':
+          description: Successfully generated response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatQueryResponse'
+              example:
+                answer: На основе нашей базы знаний, при головной боли рекомендуются...
+                sources:
+                  - id: doc_123
+                    title: Руководство по анальгетикам
+                    relevance_score: 0.92
+                  - id: doc_456
+                    title: FAQ по препаратам
+                    relevance_score: 0.87
+                session_id: sess_abc123
+                message_id: msg_xyz789
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/sessions:
+    get:
+      tags:
+        - chat
+      summary: Get user chat sessions
+      description: Получение списка чат-сессий текущего пользователя
+      operationId: getChatSessions
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of sessions to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Number of sessions to skip
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of chat sessions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSessionsResponse'
+              example:
+                sessions:
+                  - id: sess_abc123
+                    title: Вопросы по анальгетикам
+                    created_at: '2026-01-12T09:00:00Z'
+                    updated_at: '2026-01-12T10:30:00Z'
+                    message_count: 5
+                  - id: sess_def456
+                    title: Логистика поставок
+                    created_at: '2026-01-11T14:00:00Z'
+                    updated_at: '2026-01-11T14:45:00Z'
+                    message_count: 3
+                total: 15
+                limit: 20
+                offset: 0
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /auth/login
+
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - version
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          description: Overall service health status
+        version:
+          type: string
+          description: API version
+        timestamp:
+          type: string
+          format: date-time
+          description: Current server time
+        dependencies:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [healthy, unhealthy]
+          description: Health status of dependencies
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          description: User email address
+        password:
+          type: string
+          minLength: 8
+          maxLength: 128
+          description: User password
+
+    LoginResponse:
+      type: object
+      required:
+        - access_token
+        - token_type
+        - expires_in
+        - user
+      properties:
+        access_token:
+          type: string
+          description: JWT access token
+        token_type:
+          type: string
+          enum: [bearer]
+          description: Token type (always "bearer")
+        expires_in:
+          type: integer
+          description: Token expiration time in seconds
+        user:
+          $ref: '#/components/schemas/UserInfo'
+
+    UserInfo:
+      type: object
+      required:
+        - id
+        - email
+        - department_id
+      properties:
+        id:
+          type: integer
+          description: User ID
+        email:
+          type: string
+          format: email
+          description: User email
+        department_id:
+          type: string
+          description: User's department identifier
+          enum: [marketing, sales, call_center, logistics, accounting]
+
+    ChatQueryRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          minLength: 1
+          maxLength: 4000
+          description: User's question or message
+        session_id:
+          type: string
+          description: Optional session ID to continue existing conversation
+
+    ChatQueryResponse:
+      type: object
+      required:
+        - answer
+        - sources
+        - session_id
+        - message_id
+      properties:
+        answer:
+          type: string
+          description: Generated answer from RAG system
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: Documents used to generate the answer
+        session_id:
+          type: string
+          description: Chat session ID
+        message_id:
+          type: string
+          description: Unique message ID
+
+    Source:
+      type: object
+      required:
+        - id
+        - title
+        - relevance_score
+      properties:
+        id:
+          type: string
+          description: Document ID
+        title:
+          type: string
+          description: Document title
+        relevance_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Relevance score (0-1)
+
+    ChatSessionsResponse:
+      type: object
+      required:
+        - sessions
+        - total
+        - limit
+        - offset
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatSession'
+        total:
+          type: integer
+          description: Total number of sessions
+        limit:
+          type: integer
+          description: Requested limit
+        offset:
+          type: integer
+          description: Requested offset
+
+    ChatSession:
+      type: object
+      required:
+        - id
+        - title
+        - created_at
+        - updated_at
+        - message_count
+      properties:
+        id:
+          type: string
+          description: Session ID
+        title:
+          type: string
+          description: Auto-generated session title
+        created_at:
+          type: string
+          format: date-time
+          description: Session creation time
+        updated_at:
+          type: string
+          format: date-time
+          description: Last message time
+        message_count:
+          type: integer
+          description: Number of messages in session
+
+    ErrorResponse:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          type: string
+          description: Error message
+
+    ValidationError:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  oneOf:
+                    - type: string
+                    - type: integer
+              msg:
+                type: string
+              type:
+                type: string

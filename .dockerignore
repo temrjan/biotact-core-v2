@@ -1,0 +1,83 @@
+# Git
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+dist/
+build/
+eggs/
+wheels/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+tests/
+
+# Type checking & Linting
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+
+# Environment files (secrets!)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite3
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.docker/
+
+# Documentation (not needed in image)
+docs/
+*.md
+!README.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
+tmpclaude-*
+
+# Data files (mounted as volume)
+data/
+
+# Scripts (not needed in runtime)
+scripts/
+
+# GitHub
+.github/

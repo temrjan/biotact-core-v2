@@ -1,0 +1,32 @@
+{
+  "BIFOLAK_ACTIVE_RAG.txt": {
+    "hash": "c477cc1fa17bf14eb1a7f997928c1865",
+    "sections": 27,
+    "indexed_at": "2026-01-20T06:19:43.465646+00:00"
+  },
+  "BIFOLAK_MAGNIY_RAG_v2.txt": {
+    "hash": "f3930f820ceb035409e3280265e38807",
+    "sections": 26,
+    "indexed_at": "2026-01-20T06:19:45.647761+00:00"
+  },
+  "BIFOLAK_ZINCUM_C_D3_RAG.txt": {
+    "hash": "6d9e1800892f501f8ccc21205d87bf79",
+    "sections": 23,
+    "indexed_at": "2026-01-20T06:19:47.609613+00:00"
+  },
+  "cases.txt": {
+    "hash": "e586aab1a680f7b33c46451d179dfd8d",
+    "sections": 15,
+    "indexed_at": "2026-01-20T06:19:49.738523+00:00"
+  },
+  "prices.txt": {
+    "hash": "c318183df788a950840a2edeecbd4657",
+    "sections": 8,
+    "indexed_at": "2026-01-20T06:19:50.235639+00:00"
+  },
+  "BIFOLAK_NEO_RAG.txt": {
+    "hash": "d927ba625f667a63d94c60d8eafe5d2c",
+    "sections": 17,
+    "indexed_at": "2026-01-20T06:23:14.008717+00:00"
+  }
+}

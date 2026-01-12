@@ -1,0 +1,273 @@
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — Mahsulot kartasi]
+Mahsulot: IMMUNOCOMPLEX KIDS
+
+MAQSAD: Bolalar uchun immun himoya — sink + selen + C vitamini + B3 va B9 vitaminlari + 8 probiotik. Bolalar uchun moslashtirilgan dozalar.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Kapsulalar/stiklar 0,5 g, 30 dona. O'simlik asosli kapsulalar.
+YOSH: 3 oylikdan boshlab. Chaqaloqlar uchun — pediatr tavsiyasi bilan.
+KURS: 20-30 kun. Profilaktika: yilda 2-3 kurs shamollash mavsumida.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan, diabetiklarga mos.
+XUSUSIYAT: Homilador va emizikli ayollarga mos (ona va bolani himoya qiladi).
+
+1 KAPSULA TARKIBI (0,5 g):
+Sink (sink sitrat) — 5 mg (sitrat biosamaradorligi 35%)
+Selen — 30 mkg
+C vitamini (askorbin kislotasi) — 50 mg
+B3 vitamini (niatsin) — 6 mg
+B9 vitamini (fol kislotasi) — 100 mkg
+Probiotiklar 8 shtamm, jami 2 mlrd KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+1 yoshgacha: yarim kapsula (0,25 g) kuniga, pediatr tavsiyasi bilan
+1-4 yosh: 1 kapsula/kun
+4-7 yosh: 2 kapsula/kun
+QANDAY BERISH: kapsulani ochib, kukuni 20-50 ml suv, sut yoki bolalar ovqatiga aralashtirib berish. Suyuqlik harorati 40 darajadan yuqori bo'lmasin (aks holda probiotiklar nobud bo'ladi).
+
+TARKIBIY QISMLARNING TA'SIRI:
+Sink + C vitamini: immun javobni ta'minlaydi, kasalliklardan himoya qiladi, tuzalishni tezlashtiradi.
+Selen: antioksidant, bolaning hujayralarini oksidativ stressdan himoya qiladi.
+B3 + B9: energetik almashinuv, qon yaratilishi, o'sish va rivojlanish.
+Probiotiklar: sog'lom ichak orqali immunitetni mustahkamlaydi, mikroflorani tiklaydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — Tez-tez shamollash va tomoq]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink + selen + C vitamini + probiotiklar. Kapsulalar/stiklar, 3 oylikdan boshlab.
+Mexanizm: Sink + C vitamini + selen + probiotiklar immun javobni kuchaytiradi, bolalarda shamollash kasalliklarida tuzalishni tezlashtiradi.
+
+QACHON TAVSIYA ETILADI:
+Tez-tez kasallanish: bola tez-tez kasal bo'ladi, doimo kasal, shamollashdan chiqmaydi, har oy kasallanadi, bolada immunitet past, tez-tez kasallanuvchi bola.
+Tomoq va shamollash: bolada tomoq qizargan, bolaga yutish og'riydi, bolada angina, bolada yo'tal, akillagan yo'tal, bolada burun oqishi, burun bitgan, krup, adenoidlar, otit, faringit.
+Harorat: bolada harorat ko'tarilgan, bolada isitma, bolani qaltiratyapti, bolada ORVI, bolada gripp.
+
+Tibbiy terminlar: bolalarda takrorlanuvchi nafas yo'llari infeksiyalari, tez-tez kasallanuvchi bolalar (TKB), bolalarda ikkilamchi immunodefitsit.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — Bog'cha, maktab va profilaktika]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink + selen + C vitamini + probiotiklar. Kapsulalar/stiklar, 3 oylikdan boshlab.
+Mexanizm: Probiotiklar + sink + selen jamoada yangi infeksiyalar bilan aloqada bolaning immunitetini qo'llab-quvvatlaydi. Profilaktik kurs kasallanish chastotasini kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+Bog'cha va maktab: bola bog'chaga borishni boshladi, bog'chaga moslashish, guruhda karantin, bola barcha viruslarni yuqtiradi, kasal bola bilan aloqa.
+Profilaktika: shamollash mavsumi, bolalarda ORVI profilaktikasi, bola immunitetini mustahkamlash, bolalar uchun vitaminlar.
+Tiklanish: bola kasallikdan keyin, shamollashdan keyin tiklanish, bola yuqori yuklamalarda.
+
+Tibbiy terminlar: moslashuv sindromi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — OIT va antibiotikdan keyin]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink + selen + C vitamini + probiotiklar. Kapsulalar/stiklar, 3 oylikdan boshlab.
+Mexanizm: 8 shtamm probiotiklar antibiotikdan keyin ichak mikroflorasini tiklaydi. Sink + selen OIT shilliq qavatini mustahkamlaydi.
+
+QACHON TAVSIYA ETILADI:
+OIT: bolaning qorni og'riyapti, kolikalar, qorin dam bo'lishi, bolada ich ketishi.
+Antibiotikdan keyin: bolada antibiotikdan keyin, bolada disbakterioz, mikroflorani tiklash.
+
+Tibbiy terminlar: disbakterioz, antibiotik bilan bog'liq diareya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — Xulq-atvor, ishtaha, homiladorlik]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink + selen + C vitamini + probiotiklar. Kapsulalar/stiklar, 3 oylikdan boshlab.
+Mexanizm: Sink + B3, B9 vitaminlari ishtahani, energiyani va bolaning o'sishini qo'llab-quvvatlaydi. Yumshoq dozalar homiladorlik va emizish davrida xavfsiz.
+
+QACHON TAVSIYA ETILADI:
+Xulq-atvor va ishtaha: bola holsiz, ishtahasi yo'q, bola yomon yeydi, ovqatdan bosh tortadi, bola injiq, yig'laydi, bezovta, yomon uxlaydi.
+Homiladorlik va emizish: homiladorlik, emizish, ona va bolani himoya qilish, homiladorlar uchun vitaminlar, homiladorlikda immunitet.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink 5 mg + selen 30 mkg + C vitamini 50 mg + B3 + B9 + 2 mlrd probiotik, kapsulalar/stiklar, 3 oylikdan boshlab.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi (gut-immunity): sink + selen + probiotiklar — sog'lom ichak orqali bolalar immunitetiga uch tomonlama qo'llab-quvvatlash.
+Antioksidant himoya: selen + C vitamini — o'sib borayotgan hujayralarni shikastlanishdan himoya qilish.
+O'sish vitaminlari: B3 + B9 + sink — energetik almashinuv, qon yaratilishi, hujayra bo'linishi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. TEZ-TEZ SHAMOLLASH (chaqaloqlar 3 oy-3 yosh):
+   IMMUNOCOMPLEX KIDS + BIFOLAK NEO
+   Immunitet + mikroflorani kuchaytirilgan tiklash. Bir vaqtda qabul qilish mumkin, sink bo'yicha kesishish yo'q.
+
+2. O'SISH + IMMUNITET (1-7 yosh):
+   IMMUNOCOMPLEX KIDS + BIFOLAK ZINCUM
+   Immun himoya + o'sish uchun qo'shimcha sink. KETMA-KET kurslar bilan qabul qilish, chunki umumiy sink (5+10=15 mg 1+1 da) kichik bolalar uchun me'yoridan oshishi mumkin.
+
+3. SUYAKLAR + IMMUNITET (2-7 yosh):
+   IMMUNOCOMPLEX KIDS + CALCIY TRIACTIVE D3
+   Immunitet + faol o'sish davrida suyaklar uchun kaltsiy va D3. Bir vaqtda qabul qilish mumkin.
+
+4. ANTIBIOTIKDAN KEYIN (to'liq tiklanish):
+   IMMUNOCOMPLEX KIDS + BIFOLAK ACTIVE
+   Immunitet + energiya va mikroflorani tiklash. Bir vaqtda qabul qilish mumkin.
+
+5. HOMILADORLIK VA EMIZISH:
+   IMMUNOCOMPLEX KIDS homilador va emizikli ayollar uchun mustaqil mahsulot sifatida xavfsiz. Yumshoq dozalar ona va bolaga xavf tug'dirmaydi.
+
+MUVOFIQLIK QOIDASI:
+Agar ikki mahsulotda sink bo'lsa — KETMA-KET qabul qilish (bir kurs ketidan ikkinchisi), ayniqsa kichik bolalar uchun. Kichik bolalarda sinkning yuqori chegarasi past (UL: 1-3 yosh 7 mg, 4-8 yosh 12 mg).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink 5 mg + selen 30 mkg + C vitamini 50 mg + B3 + B9 + 2 mlrd probiotik, kapsulalar/stiklar, 3 oylikdan boshlab.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. IMMUNOCOMPLEX KIDS + BIFOLAK ZINCUM = KICHIK BOLALAR UCHUN OGOHLANTIRISH
+   Sabab: umumiy sink (5+5=10 mg yarim dozalarda, 5+10=15 mg to'liq dozalarda) 1-3 yoshli bolalar uchun UL dan oshishi mumkin (7 mg).
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+2. IMMUNOCOMPLEX KIDS + BIFOLAK MAGNIY diareya paytida = OGOHLANTIRISH
+   Sabab: magniy surgi ta'siriga ega, diareya kuchayishi mumkin.
+   Yechim: diareya mavjud bo'lganda birga qabul qilmaslik.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Tarkibiy qismlarga allergiya.
+   Boladagi belgilar: toshma, qizarish, teri qichishi, yuz/lab/til shishi, nafas olish qiyinligi, qabul qilgandan keyin qusish yoki ich ketishi.
+   Skript: "Agar bolangizda avval vitaminlar yoki minerallarga allergiya bo'lgan bo'lsa, minimal dozadan boshlang va reaktsiyani kuzating."
+
+2. O'tkir holatlar (qizil bayroqlar — darhol shifokorga, qabul qilishni boshlamaslik):
+   38 darajadan yuqori harorat
+   Qorinda kuchli og'riq
+   Axlatda qon yoki qonli qusish
+   Nafas olish qiyinligi
+   Tutqanoq
+   Kuchli holsizlik, ovqat va ichimlikdan to'liq bosh tortish
+   Kuchli qusish yoki bir sutkalik ich ketishi
+
+   Skript: "Yuqori harorat yoki kuchli betoblik bo'lsa, bolani shifokorga ko'rsating. IMMUNOCOMPLEX KIDS tuzalgandan keyin immunitetni mustahkamlashga yordam beradi, lekin o'tkir kasalliklarni davolashni almashtirmaydi."
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Bolada buyrak kasalliklari. Sink va selenning chiqarilishi sekinlashishi mumkin. Nefrolog yoki pediatr tavsiyasi bilan qabul qilish.
+2. Vilson-Konovalov kasalligi. Sink mis almashinuviga ta'sir qiladi, shifokor nazorati majburiy.
+3. Qalqonsimon bez kasalliklari. Selen tireoid gormonlari metabolizmida ishtirok etadi. Endokrinolog bilan maslahat.
+4. Buyrakda tosh kasalligi. IMMUNOCOMPLEX KIDS dagi C vitamini dozasi mo''tadil (50 mg) va xavfsiz, lekin anamnezda tosh bo'lsa — urolog bilan maslahat.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Tetratsiklin antibiotiklar (doksitsiklin):
+Sink antibiotikning so'rilishini kamaytiradi. Interval: antibiotikdan 2 soat OLDIN yoki 4 soat KEYIN.
+
+Ftorxinolon antibiotiklar (tsiprofloksatsin):
+Sink erimaydigan komplekslar hosil qiladi. Interval: 2 soat OLDIN yoki 4-6 soat KEYIN.
+
+Tsefalosporin antibiotiklar (tseftriakson, tsefuroksim):
+Ta'sir minimal, lekin 2 soatga ajratish afzal.
+
+Temir preparatlari: so'rilish uchun sink bilan raqobatlashadi. 2-3 soat interval.
+Qalqonsimon bez preparatlari: selen tireoid gormonlariga ta'sir qiladi. Endokrinolog bilan maslahat.
+
+MUHIM: IMMUNOCOMPLEX KIDS tarkibidagi probiotiklar antibiotiklarga chidamli. Mikroflorani himoya qilish uchun antibiotik bilan bir vaqtda qabul qilishni boshlash mumkin (2-4 soat intervalni saqlagan holda).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: IMMUNOCOMPLEX_KIDS
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[IMMUNOCOMPLEX_KIDS — 4 dan 4-bo'lim: Tarkibiy qismlar me'yorlari va batafsil dozalash]
+Mahsulot: IMMUNOCOMPLEX KIDS — sink 5 mg + selen 30 mkg + C vitamini 50 mg + B3 6 mg + B9 100 mkg + 2 mlrd probiotik, kapsulalar/stiklar, 3 oylikdan boshlab.
+
+SINK (kapsulasiga 5 mg)
+
+Kunlik me'yorlar (NIH, EFSA):
+0-6 oy: 2 mg. 7-12 oy: 3 mg. 1-3 yosh: 3 mg. 4-8 yosh: 5 mg.
+
+Yuqori xavfsiz daraja (UL):
+0-6 oy: 4 mg. 7-12 oy: 5 mg. 1-3 yosh: 7 mg. 4-8 yosh: 12 mg.
+
+Mahsulot bilan qoplanishi:
+1 yoshgacha (0,5 kapsula = 2,5 mg): me'yorning 83%, UL dan past — xavfsiz.
+1-3 yosh (1 kapsula = 5 mg): me'yorning 167%, UL dan past (7 mg) — xavfsiz.
+4-7 yosh (2 kapsula = 10 mg): me'yorning 200%, UL dan past (12 mg) — xavfsiz.
+
+SELEN (kapsulasiga 30 mkg)
+
+Kunlik me'yorlar:
+0-6 oy: 15 mkg. 7-12 oy: 20 mkg. 1-3 yosh: 20 mkg. 4-8 yosh: 30 mkg.
+
+Yuqori xavfsiz daraja (UL, EFSA 2023):
+1-3 yosh: 60 mkg. 4-6 yosh: 90 mkg. 7-10 yosh: 130 mkg.
+
+Mahsulot bilan qoplanishi:
+1 yoshgacha (0,5 kapsula = 15 mkg): me'yorning 75-100%, UL dan past.
+1-3 yosh (1 kapsula = 30 mkg): me'yorning 150%, UL dan past (60 mkg) — xavfsiz.
+4-7 yosh (2 kapsula = 60 mkg): me'yorning 200%, UL chegarasida (90 mkg) — xavfsiz.
+
+Selenning roli: antioksidant, hujayralarni shikastlanishdan himoya qiladi, qalqonsimon bezni qo'llab-quvvatlaydi, viruslarga qarshi kurashga yordam beradi.
+
+C VITAMINI (kapsulasiga 50 mg)
+
+Kunlik me'yorlar:
+0-6 oy: 40 mg (NIH) / 20 mg (EFSA). 1-3 yosh: 15-20 mg. 4-8 yosh: 25-30 mg.
+
+C vitamini suvda eriydigan, ortiqchasi to'planmaydi, buyraklar orqali chiqariladi.
+
+Mahsulot bilan qoplanishi:
+1-3 yosh (1 kapsula = 50 mg): me'yorning 250-333%. Xavfsiz.
+4-7 yosh (2 kapsula = 100 mg): me'yorning 333-400%. Xavfsiz, ortiqchasi chiqariladi.
+
+B3 VA B9 VITAMINLARI
+
+B3 (niatsin) 6 mg: 1-3 yoshli bolalar me'yori 6 mg, 4-8 yosh 8 mg. 1 kapsula me'yorning 75-100% ni qoplaydi.
+B9 (fol kislotasi) 100 mkg: 1-3 yoshli bolalar me'yori 150 mkg, 4-8 yosh 200 mkg. 1 kapsula me'yorning 50-67% ni qoplaydi.
+
+IMMUNOCOMPLEX KIDS BATAFSIL DOZALASH:
+
+1 yoshgacha: 0,5 kapsula (yarmi) kuniga. Pediatr tavsiyasi bilan.
+1-4 yosh: 1 kapsula/kun.
+4-7 yosh: 2 kapsula/kun (ertalab va kechqurun bo'lish mumkin).
+
+QANDAY BERISH: Kapsulani ochib, kukuni 20-50 ml suyuqlikka (suv, sut, bolalar ovqati) solish. Harorat 40 darajadan yuqori bo'lmasin! Issiq suyuqlik probiotikalarni o'ldiradi. Aralashtiring, darhol ichiring.
+
+TARTIB: ertalab nonushta bilan yoki kunning birinchi yarmida.
+
+KURS: 20-30 kun standart. Shamollash mavsumida profilaktika: yilda 2-3 kurs, 1-2 oylik tanaffus bilan.
+
+PROFILAKTIKA SXEMASI:
+Sentyabr (bog'cha/maktabdan oldin): 20-30 kunlik kurs. 1-2 oylik tanaffus. Dekabr-yanvar (shamollash cho'qqisi): 20-30 kunlik kurs. Mart-aprel (bahorgi avitaminoz): 20-30 kunlik kurs.
+
+BOG'CHAGA MOSLASHISH:
+Bog'chaga borishdan 2-3 hafta oldin IMMUNOCOMPLEX KIDS kursini boshlash. 20-30 kun davom ettirish. Bu immunitetni mustahkamlaydi va moslashish davrida kasallanish chastotasini kamaytiradi.
+
+HOMILADOR VA EMIZIKLI AYOLLAR:
+IMMUNOCOMPLEX KIDS ning yumshoq dozalari homilador va emizikli ayollarga mos. 1 kapsula/kun onaning immunitetini qo'llab-quvvatlaydi va bolani himoya qiladi. Ginekolog bilan maslahat tavsiya etiladi.
+===/СЕКЦИЯ===

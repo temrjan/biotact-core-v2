@@ -1,0 +1,396 @@
+===ДОКУМЕНТ===
+Тип: price_list
+Название RU: Цены и доставка BIOTACT
+Название UZ: BIOTACT narxlari va yetkazib berish
+Дата актуализации: 2025-01-19
+Валюта: UZS
+Теги: цены, прайс, стоимость, доставка, narx, yetkazib berish, price, delivery
+===/ДОКУМЕНТ===
+
+
+===СЕКЦИЯ===
+Название RU: Цены на продукты BIOTACT — сколько стоит BIFOLAK NEO, ACTIVE, ZINCUM, MAGNIY, CALCIY, IMMUNOCOMPLEX
+Название UZ: BIOTACT mahsulotlari narxlari — BIFOLAK, CALCIY, IMMUNOCOMPLEX qancha turadi
+
+RU:
+Актуальные цены на продукцию BIOTACT DEUTSCHLAND (в узбекских сумах):
+
+BIFOLAK NEO (детский, с рождения) — 61 000 сум
+BIFOLAK ACTIVE (капсулы или стики) — 69 000 сум
+BIFOLAK ZINCUM — 69 000 сум
+BIFOLAK MAGNIY (капсулы или стики) — 76 000 сум
+BIFOLAK ZINCUM+C+D3 — 76 000 сум
+CALCIY TRIACTIVE D3 — 76 000 сум
+IMMUNOCOMPLEX (взрослый) — 76 000 сум
+IMMUNOCOMPLEX KIDS (детский) — 76 000 сум
+DERMACOMPLEX (кожа, волосы) — 94 000 сум
+NEUROCOMPLEX KIDS (память, внимание) — 101 000 сум
+OPHTALMOCOMPLEX (зрение) — 123 000 сум
+
+Техника для кухни Healthy Lifestyle:
+Аэрогриль — 850 000 сум
+Соковыжималка — 820 000 сум
+Ручной блендер — 320 000 сум
+Электрический блендер — 320 000 сум
+Тостер — 255 000 сум
+Кухонный комбайн — 230 000 сум
+Электрический чайник — 160 000 сум
+
+Аксессуары Active Life:
+Жилетка двусторонняя — 330 000 сум
+Умный браслет Dodobit DT06 — 306 000 сум
+Рюкзак Healthy Lifestyle — 250 000 сум
+Складная сумка — 235 000 сум
+Зонт-трость BIOTACT — 180 000 сум
+Сумка через плечо — 150 000 сум
+Сумка-органайзер — 125 000 сум
+Термос KD-775, 600 мл — 96 000 сум
+Зонт складной BIOTACT — 85 000 сум
+Маникюрный набор (12 предметов) — 55 000 сум
+Шапка Healthy Lifestyle — 50 000 сум
+
+UZ:
+BIOTACT DEUTSCHLAND mahsulotlarining joriy narxlari (o'zbek so'mida):
+
+BIFOLAK NEO (bolalar uchun, tug'ilgandan boshlab) — 61 000 so'm
+BIFOLAK ACTIVE (kapsulalar yoki stiklar) — 69 000 so'm
+BIFOLAK ZINCUM — 69 000 so'm
+BIFOLAK MAGNIY (kapsulalar yoki stiklar) — 76 000 so'm
+BIFOLAK ZINCUM+C+D3 — 76 000 so'm
+IMMUNOCOMPLEX (kattalar uchun) — 76 000 so'm
+IMMUNOCOMPLEX KIDS (bolalar uchun) — 76 000 so'm
+DERMACOMPLEX (teri, sochlar) — 94 000 so'm
+NEUROCOMPLEX KIDS (xotira, diqqat) — 101 000 so'm
+OPHTALMOCOMPLEX (ko'rish) — 123 000 so'm
+
+Oshxona texnikasi Healthy Lifestyle:
+Aerogril — 850 000 so'm
+Sharbat siqgich — 820 000 so'm
+Qo'l blenderi — 320 000 so'm
+Elektr blender — 320 000 so'm
+Toster — 255 000 so'm
+Oshxona kombaini — 230 000 so'm
+Elektr choynak — 160 000 so'm
+
+Active Life aksessuarlari:
+Ikki tomonlama jilet — 330 000 so'm
+Aqlli bilakuzuk Dodobit DT06 — 306 000 so'm
+Ryukzak Healthy Lifestyle — 250 000 so'm
+Buklanadigan sumka — 235 000 so'm
+Soyabon-tayoq BIOTACT — 180 000 so'm
+Yelka sumkasi — 150 000 so'm
+Sumka-organayzer — 125 000 so'm
+Termos KD-775, 600 ml — 96 000 so'm
+Buklanadigan soyabon BIOTACT — 85 000 so'm
+Manikur to'plami (12 ta buyum) — 55 000 so'm
+Shapka Healthy Lifestyle — 50 000 so'm
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Доставка по Узбекистану
+Название UZ: O'zbekiston bo'ylab yetkazib berish
+
+RU:
+Мы осуществляем доставку заказов во все регионы Республики Узбекистан.
+
+Доставка по городу Ташкент:
+Стоимость доставки составляет 30 000 сум.
+При заказе на сумму от 250 000 сум доставка по Ташкенту бесплатная.
+
+Доставка в другие регионы Узбекистана:
+Доставка осуществляется экспресс-почтой по тарифам перевозчика.
+Сроки и стоимость зависят от региона и выбранной службы доставки.
+
+UZ:
+Biz O'zbekiston Respublikasining barcha hududlariga buyurtmalarni yetkazib beramiz.
+
+Toshkent shahri bo'ylab yetkazib berish:
+Yetkazib berish narxi 30 000 so'm.
+250 000 so'mdan ortiq buyurtma qilganda Toshkent bo'ylab yetkazib berish bepul.
+
+O'zbekistonning boshqa hududlariga yetkazib berish:
+Yetkazib berish ekspress-pochta orqali tashuvchi tariflariga muvofiq amalga oshiriladi.
+Muddatlar va narx hudud va tanlangan yetkazib berish xizmatiga bog'liq.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Пробиотики BIFOLAK — подробно
+Название UZ: BIFOLAK probiotiklari — batafsil
+
+RU:
+BIFOLAK NEO — 61 000 сум
+Синбиотик для детей с рождения. 100 миллиардов полезных бактерий. Форма выпуска: стики по 1,5 г, 20 штук в упаковке. Подходит для новорожденных, грудничков и детей до 12 лет.
+
+BIFOLAK ACTIVE — 69 000 сум
+Синбиотик для взрослых и подростков. 1 триллион полезных бактерий плюс пребиотики. Доступен в капсулах (0,4 г, 20 штук) или стиках (1,5 г, 20 штук). Для здоровья кишечника и восстановления микрофлоры.
+
+BIFOLAK ZINCUM — 69 000 сум
+Синбиотик с цинком. Форма выпуска: стики по 1,5 г, 10 штук. Поддерживает иммунитет, здоровье кожи и заживление. Для взрослых и подростков.
+
+BIFOLAK MAGNIY — 76 000 сум
+Синбиотик с магнием и витаминами группы B (B1, B2, B6, B9). Доступен в капсулах (0,3 г, 30 штук) или стиках (1,5 г, 30 штук). Помогает при стрессе, улучшает сон, снимает мышечные судороги. Для взрослых и детей от 7 лет.
+
+BIFOLAK ZINCUM+C+D3 — 76 000 сум
+CALCIY TRIACTIVE D3 — 76 000 сум
+Комплексная защита иммунитета. Цинк, витамин C и витамин D3. Форма выпуска: стики по 1,5 г, 10 штук. Для взрослых и детей с 3 лет.
+
+UZ:
+BIFOLAK NEO — 61 000 so'm
+Tug'ilgandan boshlab bolalar uchun sinbiotik. 100 milliard foydali bakteriyalar. Chiqarish shakli: 1,5 g stiklar, qadoqda 20 dona. Yangi tug'ilgan chaqaloqlar, emizikli bolalar va 12 yoshgacha bolalar uchun mos.
+
+BIFOLAK ACTIVE — 69 000 so'm
+Kattalar va o'smirlar uchun sinbiotik. 1 trillion foydali bakteriyalar va prebiotiklar. Kapsulalarda (0,4 g, 20 dona) yoki stiklarda (1,5 g, 20 dona) mavjud. Ichak salomatligi va mikroflorani tiklash uchun.
+
+BIFOLAK ZINCUM — 69 000 so'm
+Rux bilan sinbiotik. Chiqarish shakli: 1,5 g stiklar, 10 dona. Immunitetni, teri salomatligini va bitishni qo'llab-quvvatlaydi. Kattalar va o'smirlar uchun.
+
+BIFOLAK MAGNIY — 76 000 so'm
+Magniy va B guruhi vitaminlari (B1, B2, B6, B9) bilan sinbiotik. Kapsulalarda (0,3 g, 30 dona) yoki stiklarda (1,5 g, 30 dona) mavjud. Stressda yordam beradi, uyquni yaxshilaydi, mushak tortishishlarini bartaraf etadi. Kattalar va 7 yoshdan bolalar uchun.
+
+BIFOLAK ZINCUM+C+D3 — 76 000 so'm
+Immunitetni kompleks himoya qilish. Rux, C vitamini va D3 vitamini. Chiqarish shakli: 1,5 g stiklar, 10 dona. Kattalar va 3 yoshdan bolalar uchun.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Витаминные комплексы — подробно
+Название UZ: Vitamin komplekslari — batafsil
+
+RU:
+IMMUNOCOMPLEX — 76 000 сум
+Комплекс для укрепления иммунитета взрослых. Витамины C, D, цинк, селен и растительные экстракты. Форма выпуска: стики по 1,5 г, 10 штук. Для защиты от простуд и вирусов.
+
+IMMUNOCOMPLEX KIDS — 76 000 сум
+Детский иммунный комплекс. Витамины C, D3, цинк и растительные экстракты. Форма выпуска: стики по 1,5 г, 10 штук. Для детей от 3 до 14 лет. Укрепляет защитные силы организма ребенка.
+
+NEUROCOMPLEX KIDS — 101 000 сум
+Комплекс для развития нервной системы и мозга детей. Магний, витамины группы B, глицин, таурин. Форма выпуска: стики по 1,5 г, 20 штук. Для детей от 3 до 14 лет. Улучшает память, концентрацию внимания и обучаемость.
+
+DERMACOMPLEX — 94 000 сум
+Комплекс для красоты кожи, волос и ногтей. Коллаген, биотин, витамины A, C, E. Форма выпуска: капсулы по 0,5 г, 20 штук. Для женщин и мужчин, заботящихся о внешности.
+
+OPHTALMOCOMPLEX — 123 000 сум
+CALCIY TRIACTIVE D3 — 76 000 сум
+Тройная формула для укрепления костей, зубов и ногтей. Кальций цитрат, витамин D3, витамины группы B и пробиотики. Форма выпуска: стики по 3 г, 30 штук. Для детей с 6 месяцев и взрослых. Профилактика остеопороза, рахита, укрепление костей при беременности.
+Комплекс для здоровья глаз и остроты зрения. Лютеин, зеаксантин, витамины A и E. Форма выпуска: капсулы по 0,5 г, 20 штук. Для тех, кто много работает за компьютером, студентов и людей с нагрузкой на зрение.
+
+UZ:
+IMMUNOCOMPLEX — 76 000 so'm
+Kattalar immunitetini mustahkamlash uchun kompleks. C, D vitaminlari, rux, selen va o'simlik ekstraktlari. Chiqarish shakli: 1,5 g stiklar, 10 dona. Shamollash va viruslardan himoya qilish uchun.
+
+IMMUNOCOMPLEX KIDS — 76 000 so'm
+Bolalar immun kompleksi. C, D3 vitaminlari, rux va o'simlik ekstraktlari. Chiqarish shakli: 1,5 g stiklar, 10 dona. 3 yoshdan 14 yoshgacha bolalar uchun. Bola organizmining himoya kuchlarini mustahkamlaydi.
+
+NEUROCOMPLEX KIDS — 101 000 so'm
+Bolalar asab tizimi va miyasini rivojlantirish uchun kompleks. Magniy, B guruhi vitaminlari, glitsin, taurin. Chiqarish shakli: 1,5 g stiklar, 20 dona. 3 yoshdan 14 yoshgacha bolalar uchun. Xotirani, diqqatni va o'rganish qobiliyatini yaxshilaydi.
+
+DERMACOMPLEX — 94 000 so'm
+Teri, sochlar va tirnoqlar go'zalligi uchun kompleks. Kollagen, biotin, A, C, E vitaminlari. Chiqarish shakli: 0,5 g kapsulalar, 20 dona. Tashqi ko'rinishiga g'amxo'rlik qiladigan ayollar va erkaklar uchun.
+
+OPHTALMOCOMPLEX — 123 000 so'm
+Ko'z salomatligi va ko'rish o'tkirligi uchun kompleks. Lyutein, zeaksantin, A va E vitaminlari. Chiqarish shakli: 0,5 g kapsulalar, 20 dona. Kompyuterda ko'p ishlaydigan, talabalar va ko'rishga yuklamasi bo'lganlar uchun.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Техника для кухни Healthy Lifestyle
+Название UZ: Oshxona texnikasi Healthy Lifestyle
+
+RU:
+Аэрогриль Healthy Lifestyle — 850 000 сум
+Готовит без масла с помощью горячего воздуха. Жарит, запекает, готовит на гриле. Идеален для здорового питания всей семьи.
+
+Соковыжималка Healthy Lifestyle — 820 000 сум
+Мощная соковыжималка для свежих соков из фруктов и овощей. Быстрое приготовление витаминных напитков дома.
+
+Ручной блендер Healthy Lifestyle — 320 000 сум
+Компактный блендер для смузи, пюре и соусов. Удобен для быстрого приготовления.
+
+Электрический блендер Healthy Lifestyle — 320 000 сум
+Стационарный блендер для смузи, коктейлей и измельчения продуктов.
+
+Тостер Healthy Lifestyle — 255 000 сум
+Готовит хрустящие тосты за считанные минуты. Регулировка степени прожарки.
+
+Кухонный комбайн Healthy Lifestyle — 230 000 сум
+Многофункциональный комбайн: измельчает, нарезает, смешивает.
+
+Электрический чайник Healthy Lifestyle — 160 000 сум
+Быстрое кипячение воды, автоматическое отключение, безопасный корпус.
+
+UZ:
+Aerogril Healthy Lifestyle — 850 000 so'm
+Issiq havo yordamida moysiz pishiradi. Qovuradi, pishiradi, grilda tayyorlaydi. Butun oila uchun sog'lom ovqatlanish uchun ideal.
+
+Sharbat siqgich Healthy Lifestyle — 820 000 so'm
+Meva va sabzavotlardan yangi sharbatlar uchun kuchli sharbat siqgich. Uyda vitaminli ichimliklarni tez tayyorlash.
+
+Qo'l blenderi Healthy Lifestyle — 320 000 so'm
+Smuzi, pyure va souslar uchun ixcham blender. Tez tayyorlash uchun qulay.
+
+Elektr blender Healthy Lifestyle — 320 000 so'm
+Smuzi, kokteyllar va mahsulotlarni maydalash uchun statsionar blender.
+
+Toster Healthy Lifestyle — 255 000 so'm
+Bir necha daqiqada qarsildoq tostlar tayyorlaydi. Qovurish darajasini sozlash.
+
+Oshxona kombaini Healthy Lifestyle — 230 000 so'm
+Ko'p funksiyali kombayn: maydalaydi, kesadi, aralashtiradi.
+
+Elektr choynak Healthy Lifestyle — 160 000 so'm
+Suvni tez qaynatadi, avtomatik o'chadi, xavfsiz korpus.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Аксессуары Active Life
+Название UZ: Active Life aksessuarlari
+
+RU:
+Жилетка двусторонняя Healthy Lifestyle — 330 000 сум
+Практичная двусторонняя жилетка для активного образа жизни. Два цвета в одном изделии.
+
+Умный браслет Dodobit DT06 — 306 000 сум
+Фитнес-браслет с функциями отслеживания активности, пульса, сна и уведомлений. Водонепроницаемый, совместим с Android и iOS.
+
+Рюкзак Healthy Lifestyle — 250 000 сум
+Удобный рюкзак для города, спорта и путешествий. Доступен в сером и зелёном цветах.
+
+Складная сумка Healthy Lifestyle — 235 000 сум
+Компактная сумка, которая складывается для удобного хранения. Серый или зелёный цвет.
+
+Зонт-трость BIOTACT DEUTSCHLAND — 180 000 сум
+Надёжный зонт-трость с логотипом BIOTACT. Защита от дождя и ветра.
+
+Сумка через плечо Healthy Lifestyle — 150 000 сум
+Лёгкая сумка через плечо для ежедневного использования.
+
+Сумка-органайзер Healthy Lifestyle — 125 000 сум
+Компактный органайзер для мелочей. Серый или зелёный цвет.
+
+Термос KD-775, 600 мл — 96 000 сум
+Термос из нержавеющей стали. Сохраняет тепло до 12 часов, холод до 24 часов.
+
+Зонт складной BIOTACT DEUTSCHLAND — 85 000 сум
+Компактный складной зонт с логотипом BIOTACT. Помещается в сумку.
+
+Маникюрный набор (12 предметов) — 55 000 сум
+Профессиональный набор в кожаном футляре. Отличный подарок.
+
+Шапка Healthy Lifestyle — 50 000 сум
+Тёплая шапка с логотипом. Серый или зелёный цвет.
+
+UZ:
+Ikki tomonlama jilet Healthy Lifestyle — 330 000 so'm
+Faol turmush tarzi uchun amaliy ikki tomonlama jilet. Bitta buyumda ikkita rang.
+
+Aqlli bilakuzuk Dodobit DT06 — 306 000 so'm
+Faollik, puls, uyqu va bildirishnomalarni kuzatish funksiyalari bilan fitnes-bilakuzuk. Suv o'tkazmaydigan, Android va iOS bilan mos.
+
+Ryukzak Healthy Lifestyle — 250 000 so'm
+Shahar, sport va sayohatlar uchun qulay ryukzak. Kulrang va yashil rangda mavjud.
+
+Buklanadigan sumka Healthy Lifestyle — 235 000 so'm
+Qulay saqlash uchun buklanadigan ixcham sumka. Kulrang yoki yashil rang.
+
+Soyabon-tayoq BIOTACT DEUTSCHLAND — 180 000 so'm
+BIOTACT logotipi bilan ishonchli soyabon-tayoq. Yomg'ir va shamoldan himoya.
+
+Yelka sumkasi Healthy Lifestyle — 150 000 so'm
+Kundalik foydalanish uchun yengil yelka sumkasi.
+
+Sumka-organayzer Healthy Lifestyle — 125 000 so'm
+Mayda narsalar uchun ixcham organayzer. Kulrang yoki yashil rang.
+
+Termos KD-775, 600 ml — 96 000 so'm
+Zanglamaydigan po'latdan termos. Issiqlikni 12 soatgacha, sovuqlikni 24 soatgacha saqlaydi.
+
+Buklanadigan soyabon BIOTACT DEUTSCHLAND — 85 000 so'm
+BIOTACT logotipi bilan ixcham buklanadigan soyabon. Sumkaga sig'adi.
+
+Manikur to'plami (12 ta buyum) — 55 000 so'm
+Charm qutidagi professional to'plam. Ajoyib sovg'a.
+
+Shapka Healthy Lifestyle — 50 000 so'm
+Logotipi bilan iliq shapka. Kulrang yoki yashil rang.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Часто задаваемые вопросы о ценах
+Название UZ: Narxlar haqida tez-tez beriladigan savollar
+
+RU:
+Вопрос: Сколько стоит магний BIOTACT?
+Ответ: BIFOLAK MAGNIY стоит 76 000 сум. Доступен в капсулах или стиках, цена одинаковая.
+
+Вопрос: Какой самый недорогой продукт?
+Ответ: Шапка Healthy Lifestyle — 50 000 сум. Из БАДов самый доступный — BIFOLAK NEO за 61 000 сум.
+
+Вопрос: Какой самый дорогой продукт?
+Ответ: Аэрогриль Healthy Lifestyle — 850 000 сум. Из БАДов самый дорогой — OPHTALMOCOMPLEX за 123 000 сум.
+
+Вопрос: Есть ли скидки?
+Ответ: При заказе от 250 000 сум доставка по Ташкенту бесплатная.
+
+Вопрос: Сколько стоит доставка?
+Ответ: По Ташкенту 30 000 сум. При заказе от 250 000 сум — бесплатно. В регионы — по тарифам перевозчика.
+
+UZ:
+Savol: BIOTACT magniy qancha turadi?
+Javob: BIFOLAK MAGNIY narxi 76 000 so'm. Kapsulalarda yoki stiklarda mavjud, narxi bir xil.
+
+Savol: Eng arzon mahsulot qaysi?
+Javob: Shapka Healthy Lifestyle — 50 000 so'm. BADlardan eng arzon — BIFOLAK NEO, 61 000 so'm.
+
+Savol: Eng qimmat mahsulot qaysi?
+Javob: Aerogril Healthy Lifestyle — 850 000 so'm. BADlardan eng qimmat — OPHTALMOCOMPLEX, 123 000 so'm.
+
+Savol: Chegirmalar bormi?
+Javob: 250 000 so'mdan ortiq buyurtma qilganda Toshkent bo'ylab yetkazib berish bepul.
+
+Savol: Yetkazib berish qancha turadi?
+Javob: Toshkent bo'ylab 30 000 so'm. 250 000 so'mdan ortiq buyurtmada — bepul. Hududlarga — tashuvchi tariflariga muvofiq.
+===/СЕКЦИЯ===
+
+
+===СЕКЦИЯ===
+Название RU: Поисковые запросы о ценах
+Название UZ: Narxlar haqida qidiruv so'rovlari
+
+RU:
+Этот раздел помогает найти информацию о ценах по различным запросам:
+
+Сколько стоит биофолак? Цена bifolak? Bifolak narxi qancha?
+Какая цена на витамины biotact? Стоимость продукции?
+Пробиотики биотакт цена? Синбиотик стоимость?
+Narxi qancha? Nechi sum turadi? Nechi pul?
+Магний цена? Magniy narxi? Стресс витамины цена?
+Детские витамины цена? Bolalar vitamini narxi?
+Иммунитет витамины сколько стоят?
+Доставка сколько? Yetkazib berish narxi?
+Термос цена? Termos narxi? Маникюрный набор сколько?
+Умный браслет цена? Aqlli bilakuzuk narxi? Фитнес браслет?
+Аэрогриль цена? Блендер сколько стоит? Соковыжималка цена?
+Рюкзак Healthy Lifestyle? Зонт BIOTACT? Жилетка цена?
+Техника для кухни цена? Oshxona texnikasi narxi?
+
+UZ:
+Bu bo'lim turli so'rovlar bo'yicha narxlar haqida ma'lumot topishga yordam beradi:
+
+Bifolak qancha turadi? Bifolak narxi? Bifolak nechi pul?
+Biotact vitaminlari narxi qancha? Mahsulotlar narxi?
+Biotact probiotiklari narxi? Sinbiotik qancha?
+Narxi qancha? Nechi sum turadi? Nechi pul?
+Magniy narxi? Stress vitaminlari narxi?
+Bolalar vitaminlari narxi? Bolalar uchun narx?
+Immunitet vitaminlari qancha turadi?
+Yetkazib berish qancha? Dostavka narxi?
+Termos narxi qancha? Manikur to'plami narxi?
+Aqlli bilakuzuk qancha? Fitnes bilakuzuk narxi?
+Aerogril narxi? Blender qancha turadi? Sharbat siqgich narxi?
+Ryukzak Healthy Lifestyle? Soyabon BIOTACT? Jilet narxi?
+Oshxona texnikasi narxi? Tehnika dlya kuhni?
+===/СЕКЦИЯ===

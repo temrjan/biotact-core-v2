@@ -1,0 +1,254 @@
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Mahsulot kartasi]
+Mahsulot: CALCIY TRIACTIVE D3
+
+MAQSAD: Suyaklar, tishlar, sochlar va tirnoqlarni mustahkamlash uchun uchlik aktiv formula. Kaltsiy sitrat + D3 vitamini + B guruh vitaminlari + 8 probiotik.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Stiklar 3 g, 30 dona qadoqda.
+YOSH: 6 oylikdan boshlab (chaqaloqlarga pediatr tavsiyasi bilan).
+KURS: 20-30 kun. Profilaktika: yiliga 2-3 kurs.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan.
+XUSUSIYAT: Homilador va emizikli ayollarga mos. 2 stik = 800 mg kaltsiy + 2000 XB D3.
+
+1 STIK TARKIBI (3 g):
+Kaltsiy (kaltsiy sitrat) — 400 mg (sitratning biosamaradorligi oksid va karbonatdan yuqori)
+D3 vitamini (xolekalsiferol) — 1000 XB (25 mkg)
+B3 vitamini (niatsin-nikotinamid) — 8 mg
+B5 vitamini (pantoten kislotasi) — 6 mg
+B6 vitamini (piridoksin) — 0,7 mg
+B7 vitamini (biotin) — 50 mkg
+B9 vitamini (foliy kislotasi) — 100 mkg
+Probiotiklar 8 shtamm, jami 50 mln KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+1 yoshgacha: 0,5 stik/kun (200 mg kaltsiy, 500 XB D3)
+1 yoshdan katta bolalar: 1 stik/kun (400 mg kaltsiy, 1000 XB D3)
+Kattalar: 2 stik/kun (800 mg kaltsiy, 2000 XB D3)
+20-50 ml sovutilgan suyuqlikka (suv, sut, bolalar ovqati) aralashtirish. Harorat 40 darajadan oshmasin, aks holda probiotiklar nobud bo'ladi.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Kaltsiy sitrat: suyak va tishlar uchun qurilish materiali, mushaklar va nervlar signalizatsiyasi, qon ivishi.
+D3 vitamini: kaltsiyning so'rilishi uchun juda muhim (D3 siz kaltsiyning faqat 10-15% i so'riladi), immunitetni mustahkamlaydi.
+B guruh vitaminlari: energiya almashinuvi, asab tizimi salomatligi, hujayralar o'sishi va bo'linishi.
+Probiotiklar: sog'lom ichak orqali kaltsiy so'rilishini yaxshilaydi, mikroflorani tiklaydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Suyaklar va bo'g'imlar]
+Mahsulot: Kaltsiy sitrat 400 mg + D3 vitamini 1000 XB + B vitaminlari + 8 probiotik, stiklar, 6 oylikdan boshlab.
+Mexanizm: Kaltsiy sitrat suyak to'qimasi uchun qurilish materiali bo'lib, D3 vitamini uning ichakda so'rilishini 3-4 baravar oshiradi. Probiotiklar sog'lom mikroflora orqali so'rilishni qo'shimcha yaxshilaydi.
+
+QACHON TAVSIYA ETILADI:
+suyaklar og'riydi, suyaklar sinadi, mo'rt suyaklar, sinishlar, tez-tez suyak sindiraman, osteoporoz, osteopeniya, suyaklarning siyraklashuvi, artrit, artroz, bo'g'imlar og'riydi, bo'g'imlar g'irchillaydi, tizzalar og'riydi, sinishdan keyin, suyaklarning bitishi, jarohatdan keyin reabilitatsiya, bel og'riydi, umurtqa pog'onasi og'riydi, belda og'riq, skolioz.
+
+Tibbiy terminlar: osteoporoz, osteopeniya, osteomalyatsiya, fibromialgiya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Tishlar]
+Mahsulot: Kaltsiy sitrat 400 mg + D3 vitamini 1000 XB + B vitaminlari + 8 probiotik, stiklar, 6 oylikdan boshlab.
+Mexanizm: Kaltsiy tish emalining va dentinning asosiy mineralidir. D3 vitamini kaltsiyning so'rilishini va tishlarning qattiq to'qimalariga joylashishini ta'minlaydi.
+
+QACHON TAVSIYA ETILADI:
+tishlar yemiriladi, tishlar buziladi, karies, bolada karies, tishlar mo'rt, milklar qon ketadi, tishlar tushadi, tish emali yupqalashgan, sezgir tishlar, tishlar og'riydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Talvasalar va mushaklar]
+Mahsulot: Kaltsiy sitrat 400 mg + D3 vitamini 1000 XB + B vitaminlari + 8 probiotik, stiklar, 6 oylikdan boshlab.
+Mexanizm: Kaltsiy nerv impulslarini uzatish va mushaklarning qisqarishida ishtirok etadi. Kaltsiy yetishmaganda nerv-mushak qo'zg'aluvchanligi ortadi, bu esa talvasalar va spazmlarga olib keladi.
+
+QACHON TAVSIYA ETILADI:
+oyoqlarda talvasalar, oyoqlarni tortadi, tungi talvasalar, mushaklar uchadi, tiklar, mushak spazmlari, oyoqlar og'riydi, boldir mushaklarini tortadi, qo'l va oyoqlarda sanchish, barmoqlarning uvishishi.
+
+Tibbiy terminlar: tetaniya, gipokaltsiyemiya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Bolalar o'sishi va rivojlanishi]
+Mahsulot: Kaltsiy sitrat 400 mg + D3 vitamini 1000 XB + B vitaminlari + 8 probiotik, stiklar, 6 oylikdan boshlab.
+Mexanizm: Kaltsiy va D3 vitamini bolalarda o'sayotgan suyaklarning mineralizatsiyasi uchun juda muhimdir. Erta yoshda D3 yetishmovchiligi raxit va o'sishning sekinlashishiga olib keladi.
+
+QACHON TAVSIYA ETILADI:
+bola yaxshi o'smayapti, o'sishning kechikishi, kam o'sadi, suyaklar zaif, raxit, bolaga kaltsiy kerak, sut tishlar kech chiqmoqda, doimiy tishlar o'smayapti, bola past bo'yli, ozg'in bola.
+
+Tibbiy terminlar: raxit, D gipovitaminozi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — Homiladorlik, soch va tirnoq, keksalar]
+Mahsulot: Kaltsiy sitrat 400 mg + D3 vitamini 1000 XB + B vitaminlari + 8 probiotik, stiklar, 6 oylikdan boshlab.
+Mexanizm: Homiladorlikda kaltsiyga ehtiyoj ortadi, homila onaning suyaklaridan kaltsiyni oladi. Keksalarda gormonal o'zgarishlar tufayli suyak zichligi kamayadi. Biotin va B vitaminlari soch va tirnoq salomatligini qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+homiladorlikda kaltsiy, homiladorman kaltsiy kerak, ko'krak bilan emizyapman, homiladorlikda tishlar yomonlashdi, homiladorlikda tirnoqlar qavatlanadi, preeklampsiya, toksikoz, homiladorlikda talvasalar, uchinchi trimestr, tirnoqlar qavatlanadi, tirnoqlar sinadi, tirnoqlar yupqa, sochlar sinadi, sochlar quruq, tirnoqlar sekin o'sadi, tirnoqlarda oq dog'lar, menopauzadan keyin osteoporoz, postmenopauza, keksalikda suyak mo'rtligi, son bo'yni sinishi, sinishlar profilaktikasi, keksalar yiqilishi, kaltsiy yetishmovchiligi, D vitamini yetishmovchiligi, quyosh yetishmasligi, avitaminoz, holsizlik, charchoq, energiya yo'q, vegetarian parhez, sutga notoqatlik.
+
+Tibbiy terminlar: gipokaltsiyemiya, D gipovitaminozi, osteoporoz, osteopeniya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: CALCIY TRIACTIVE D3 — kaltsiy 400 mg + D3 1000 XB + B3/B5/B6/B7/B9 + 50 mln probiotik, stiklar, 6 oylikdan boshlab.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Kaltsiy-D3-ichak o'qi: D3 vitamini kaltsiyning ichakda so'rilishini 3-4 baravar oshiradi, probiotiklar sog'lom mikroflora orqali so'rilishni qo'shimcha yaxshilaydi.
+Suyak-mushak o'qi: kaltsiy va D3 ham suyak mineralizatsiyasi, ham mushaklarning normal ishlashi uchun zarur.
+Suyak metabolizmi: kaltsiy + D3 + sink (boshqa mahsulotlardan) — maksimal suyak zichligi uchun uchlik formula.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. BOLA O'SISHI (suyaklar + o'sish):
+   CALCIY TRIACTIVE D3 + BIFOLAK ZINCUM
+   Suyaklar uchun kaltsiy + o'sish gormoni uchun sink. Faol o'sish uchun ideal juftlik. Bir vaqtda qabul qilish mumkin (CALCIY tarkibida sink yo'q).
+
+2. HOMILADORLIK VA EMIZISH:
+   CALCIY TRIACTIVE D3 + BIFOLAK MAGNIY
+   Ona va bola suyaklari uchun kaltsiy + mushaklar uchun magniy, talvasalarga qarshi. Bir vaqtda qabul qilish mumkin.
+
+3. OSTEOPOROZ / KEKSALAR:
+   CALCIY TRIACTIVE D3 + IMMUNOCOMPLEX
+   Suyaklar + immunitet. 65 yoshdan oshganlar uchun ayniqsa muhim. Bir vaqtda qabul qilish mumkin (CALCIY tarkibida sink yo'q).
+
+4. SINISHDAN KEYIN / JAROHAT:
+   CALCIY TRIACTIVE D3 + BIFOLAK ZINCUM+C+D3
+   Suyak bitishi uchun kaltsiy + to'qima tiklanishi uchun sink + qo'shimcha D3. Bir vaqtda qabul qilish mumkin.
+
+5. BOLALAR: IMMUNITET + SUYAKLAR (3 oylikdan):
+   CALCIY TRIACTIVE D3 + IMMUNOCOMPLEX KIDS
+   O'sish uchun kaltsiy + immunitet himoyasi. Bir vaqtda qabul qilish mumkin.
+
+6. MAKTAB O'QUVCHISI (7+ yosh, o'qish + suyaklar):
+   CALCIY TRIACTIVE D3 + NEUROCOMPLEX KIDS
+   O'sayotgan organizm uchun kaltsiy + miya uchun omega-3. Bir vaqtda qabul qilish mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: CALCIY TRIACTIVE D3 — kaltsiy 400 mg + D3 1000 XB + B3/B5/B6/B7/B9 + 50 mln probiotik, stiklar, 6 oylikdan boshlab.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+CALCIY TRIACTIVE D3 tarkibida sink yo'q va boshqa mahsulotlar bilan muhim kesishmalari yo'q. Barcha liniya mahsulotlari bilan birlashtirish mumkin.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Giperkaltsiyemiya (qonda kaltsiy darajasi oshgan).
+   Sabab: qonda darajasi oshgan holda qo'shimcha kaltsiy ko'ngil aynish, qusish, qabziyat, yurak ritmi buzilishiga olib kelishi mumkin.
+   Belgilari: tez-tez siydik ajratish, kuchli chanqoq, ko'ngil aynish, suyaklarda og'riq, holsizlik, qabziyat.
+   Skript: "Qonda kaltsiy darajasi oshgan holda kaltsiy qabul qilish mumkin emas. Avval endokrinolog yordamida giperkaltsiyemiya sababini aniqlang."
+
+2. Og'ir buyrak yetishmovchiligi va dializ.
+   Sabab: buyraklar ortiqcha kaltsiyni chiqaradi. Ular buzilganda kaltsiy to'planadi, bu yurak va tomir uchun xavfli. Shuningdek, D vitaminining faollashuvi buziladi.
+   Skript: "Buyrak bilan jiddiy muammolar bo'lsa yoki siz dializda bo'lsangiz, kaltsiy qabul qilish nefrolog nazoratida bo'lishi kerak."
+
+3. Buyrakda toshlar (kaltsiylik, kaltsiy-oksalatli).
+   Sabab: qo'shimcha kaltsiy yangi toshlar hosil bo'lish xavfini oshirishi mumkin, ayniqsa ovqatdan alohida qabul qilganda.
+   Skript: "Buyrakda tosh bo'lgan bo'lsa, kaltsiy qabul qilishdan oldin urolog bilan maslahatlashing. Ovqat bilan birga qabul qilish xavfni kamaytiradi, lekin qaror shifokorniki."
+
+4. D gipervitaminozi.
+   Sabab: D3 ortiqcha bo'lganda kaltsiy haddan tashqari faol so'riladi va tomirlar, buyraklar, yumshoq to'qimalarda cho'kadi.
+   Belgilari: holsizlik, ishtaha yo'qolishi, ko'ngil aynish, tez-tez siydik ajratish, mushaklarda og'riq.
+   Skript: "Agar siz allaqachon D vitaminining yuqori dozalarini qabul qilayotgan bo'lsangiz, qo'shimcha CALCIY TRIACTIVE D3 ortiqcha bo'lishi mumkin. Qonda 25(OH)D darajasini tekshiring."
+
+5. Tarkibiy qismlarga allergiya. Belgilari: toshma, qichishish, shish, nafas olish qiyinligi.
+
+6. O'tkir holatlar (38 darajadan yuqori harorat, qorinda kuchli og'riq, axlatda qon, to'xtamaydigan qusish, tutqanoq) — darhol shifokorga.
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Sarkoidoz va granulematoz kasalliklar. Organizm o'zi D3 ning ortiqcha aktiv shaklini ishlab chiqaradi, qo'shimchasi giperkaltsiyemiyani kuchaytirishi mumkin. Pulmonolog bilan maslahat.
+2. Yurak glikozidlari qabul qilish (digoksin). Kaltsiy digoksinning yurakka ta'sirini kuchaytiradi, aritmiya xavfi ortadi. Kardiolog nazorati majburiy.
+3. Boshqa manbalardan bir vaqtda yuqori dozada D vitamini qabul qilish. Umumiy doza kuniga 4000 XB dan oshmasligi kerak.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Ftorxinolon antibiotiklari (tsiprofloksatsin, levofloksatsin): kaltsiy erimaydigan komplekslar hosil qiladi, so'rilishni 30-50% ga kamaytiradi. Interval: antibiotikdan 2 soat OLDIN yoki 6 soat KEYIN.
+
+Tetrasiklin antibiotiklari (doksitsiklin, tetrasiklin): xuddi shunday, kaltsiy tetrasiklinlarni bog'laydi. Interval: antibiotikdan 2 soat OLDIN yoki 6 soat KEYIN.
+
+Qalqonsimon bez preparatlari (levotiroksin, L-tiroksin, eutiroksin): kaltsiy so'rilishni kamaytiradi. Levotiroksinni ertalab och qoringa, CALCIY TRIACTIVE D3 ni 4 soatdan keyin (tushlikda) qabul qilish.
+
+Tiazid diuretiklari (gidroxlorotiazid, indapamid): buyraklar orqali kaltsiy chiqarilishini kamaytiradi. Qonda kaltsiy darajasi oshishi mumkin. Qonda kaltsiy nazorati.
+
+Bisfosfonatlar (alendronat, rizedronat): kaltsiy so'rilishni kamaytiradi. Bisfosfonatlarni ertalab och qoringa, CALCIY ni 2 soatdan keyin qabul qilish.
+
+Temir preparatlari: kaltsiy temir so'rilishini kamaytiradi. Qabul qilish orasida 2-3 soat interval.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: CALCIY_TRIACTIVE_D3
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[CALCIY_TRIACTIVE_D3 — 4 dan 4-bo'lim: Tarkibiy qismlar me'yorlari va batafsil dozalash]
+Mahsulot: CALCIY TRIACTIVE D3 — kaltsiy 400 mg + D3 1000 XB + B3 8 mg + B5 6 mg + B6 0,7 mg + B7 50 mkg + B9 100 mkg + 50 mln probiotik, stiklar, 6 oylikdan boshlab.
+
+KALTSIY (1 stikda 400 mg)
+
+Kunlik me'yorlar (NIH, EFSA):
+Bolalar 0-6 oy: 200 mg. Bolalar 7-12 oy: 260 mg. Bolalar 1-3 yosh: 700 mg. Bolalar 4-8 yosh: 1000 mg. O'smirlar 9-18 yosh: 1300 mg. Kattalar 19-50 yosh: 1000 mg. 50 yoshdan oshgan ayollar: 1200 mg. 70 yoshdan oshgan erkaklar: 1200 mg.
+
+Yuqori xavfsiz daraja (UL):
+Kattalar 19-50 yosh: 2500 mg/sutka. 50 yoshdan oshgan kattalar: 2000 mg/sutka. Bolalar 9-18 yosh: 3000 mg/sutka. Bolalar 1-8 yosh: 2500 mg/sutka.
+
+Qoplanishi: bola 1-3 yosh (1 stik = 400 mg) = me'yorning 57%. Bola 4-8 yosh (1 stik) = me'yorning 40%. Katta (2 stik = 800 mg) = me'yorning 67-80%. Barcha dozalar UL dan ancha past.
+
+D3 VITAMINI (1 stikda 1000 XB = 25 mkg)
+
+Kunlik me'yorlar:
+Bolalar 0-12 oy: 400 XB. Bolalar 1-17 yosh: 600 XB. Kattalar 18-70 yosh: 600 XB. 70 yoshdan oshgan kattalar: 800 XB. Homilador va emiziklilar: 600 XB.
+
+Yuqori xavfsiz daraja (UL):
+1 yoshgacha chaqaloqlar: 1000 XB. Bolalar 1-10 yosh: 2000 XB. O'smirlar va kattalar: 4000 XB.
+
+Qoplanishi: bola (1 stik = 1000 XB) = me'yorning 167%. Katta (2 stik = 2000 XB) = me'yorning 333%. Hammasi UL doirasida.
+
+MUHIM: Kattalarda kuniga 4000 XB gacha D3 dozasi xavfsiz. Yetarli D3 siz kaltsiyning faqat 10-15% i so'riladi. D3 vitamini so'rilish uchun juda muhim.
+
+HOMILADORLIK VA EMIZISH:
+Homilador ayollar 19-50 yosh: kaltsiy me'yori 1000 mg/sutka. O'smirlar 14-18 yosh: 1300 mg. JSST past iste'molda 1,5-2 g tavsiya qiladi. CALCIY TRIACTIVE D3: 2 stik = 800 mg kaltsiy + 2000 XB D3 — xavfsiz va samarali qo'llab-quvvatlash.
+
+BATAFSIL DOZALASH:
+
+1 yoshgacha (pediatr tavsiyasi bilan): 0,5 stik/kun. 20 ml sovutilgan suyuqlikka aralashtirish.
+1 yoshdan katta bolalar: 1 stik/kun. 20-50 ml suyuqlikka aralashtirish.
+Kattalar: 2 stik/kun (ertalab va kechqurun 1 stikdan bo'lishi mumkin).
+Homilador va emiziklilar: 2 stik/kun.
+
+TARTIB: ovqat bilan birga, kunning istalgan vaqtida. Bir tekis so'rilish uchun ertalab va kechqurun 1 stikdan qabul qilish mumkin. Suyuqlik harorati 40 darajadan oshmasin (probiotiklar tirik qolishi uchun).
+
+KURS: 20-30 kun. Osteoporoz profilaktikasi: yiliga 2-3 kurs. Homiladorlik: 30 kunlik kurslar bilan, 2-4 hafta tanaffus bilan. Sinishdan keyin: 30 kunlik kurs, bir oydan keyin takrorlash.
+===/СЕКЦИЯ===

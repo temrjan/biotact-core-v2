@@ -1,0 +1,275 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Mahsulot kartasi]
+Mahsulot: BIFOLAK MAGNIY
+
+MAQSAD: Magniy + B guruh vitaminlari + 8 probiotik — stress bartaraf etish, uyquni yaxshilash, tirishishlarni yo'qotish va yurak hamda asab tizimini qo'llab-quvvatlash uchun. Homilador va emizikli ayollarga mos.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+
+IKKI CHIQARILISH SHAKLI:
+1. KAPSULALAR (0,5 g) — kattalar va 7 yoshdan bolalar uchun.
+2. STIKLAR (1,5 g) — butun oila uchun, tug'ilganidan boshlab bolalarga ham mos.
+
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan, diabetiklarga mos.
+XUSUSIYAT: Sink SAQLAMAYDI. Homilador va emizikli ayollarga mos. Lineyaning barcha mahsulotlari bilan xavfsiz kombinatsiyalash mumkin.
+
+1 KAPSULA TARKIBI (0,5 g):
+Magniy (magniy sitrat) — 60 mg
+Vitamin B1 (tiamin) — 0,4 mg
+Vitamin B2 (riboflavin) — 0,6 mg
+Vitamin B6 (piridoksin) — 4 mg
+Vitamin B9 (foliy kislota) — 120 mkg
+Probiotiklar 8 shtamm, jami 10 mlrd KOB
+Prebiotiklar: inulin, maltodekstrin
+
+1 STIK TARKIBI (1,5 g):
+Magniy (magniy sitrat) — 70 mg (kapsulaga nisbatan ko'proq)
+Vitamin B1 (tiamin) — 0,4 mg
+Vitamin B2 (riboflavin) — 0,6 mg
+Vitamin B6 (piridoksin) — 4 mg
+Vitamin B9 (foliy kislota) — 120 mkg
+Probiotiklar 8 shtamm, jami 10 mlrd KOB
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+Stiklar: 1 yoshgacha — pediatr tavsiyasi bilan, 1-6 yosh 1 stik/kun, 6+ yosh 2 stik/kun, kattalar 2-3 stik/kun. Kurs 20-30 kun.
+Kapsulalar: 7-12 yosh 1-2/kun, kattalar 2-3/kun. Kurs 10-20 kun. Kechqurun uxlashdan 1-2 soat oldin.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Magniy sitrat: yuqori biosamaradorlik. Mushaklarni bo'shashtirish, spazmlarni bartaraf etish, uyquni normallashtirish, yurak ritmini qo'llab-quvvatlash, antistress ta'sir.
+B6 (piridoksin) 4 mg: magniyning so'rilishini kuchaytiradi, serotonin va dofamin sintezida ishtirok etadi.
+B1 (tiamin): energetik almashinuv, asab tizimining ishlashi.
+B2 (riboflavin): antioksidant, teri va shilliq qavatlar salomatligi.
+B9 (foliy kislota): homiladorlikda homilaning asab naychasi rivojlanishi uchun juda muhim.
+Probiotiklar: ichak-miya o'qi, sog'lom mikroflora magniyning so'rilishi va kayfiyatni yaxshilaydi.
+
+Tibbiy terminlar: gipomagniemiya, magniy yetishmovchiligi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Stress, tashvish, charchoq]
+Mahsulot: BIFOLAK MAGNIY — magniy + B vitaminlar + probiotiklar. Kapsulalar (7+) va stiklar (tug'ilganidan boshlab).
+Mexanizm: magniy kortizol (stress gormoni) chiqarilishini sekinlashtiradi, B6 serotonin va dofamin (kayfiyat gormonlari) sintezida ishtirok etadi, probiotiklar ichak-miya o'qini qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+Asabiylashipman, stress, asabim chidamayapti, tinchlanolmayman, asabiylik, hammasi g'ashimga tegadi, agressiya, yaqinlarimga qo'pollik qilaman, depressiya, ruhiy tushkunlik, tashvish, xavotirlanish, panika, panik hujumlar, asabiy tik, ko'zim uchadi, qovoq uchadi, charchab ketaman, kuchim yo'q, surunkali charchoq, holsizlik, energiya yo'q, sustlik, apatiya, hamma narsa dangasa, kuyib ketish, emotsional kuyish.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Uyqu va uyqusizlik]
+Mahsulot: BIFOLAK MAGNIY — magniy + B vitaminlar + probiotiklar. Kapsulalar (7+) va stiklar (tug'ilganidan boshlab).
+Mexanizm: magniy mushaklarni bo'shashtiradi va parasimpatik asab tizimini (dam olish rejimi) faollashtiradi. Optimal qabul qilish — kechqurun uxlashdan 1-2 soat oldin.
+
+QACHON TAVSIYA ETILADI:
+Yomon uxlayman, uyqusizlik, uxlay olmayman, tunda uyg'onib ketaman, yuzaki uyqu, bezovta uyqu, yomon tushlar, kunduz uyqusiraydi, uxlab to'ymayman, kam uxlashdan surunkali charchoq, bruksizm, uxlayotganda tishlarini g'ichirlaydi.
+
+Tibbiy terminlar: insomniya, bruksizm.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Tirishishlar, mushaklar, yurak, bosh og'rig'i]
+Mahsulot: BIFOLAK MAGNIY — magniy + B vitaminlar + probiotiklar. Kapsulalar (7+) va stiklar (tug'ilganidan boshlab).
+Mexanizm: magniy sitrat neyromushak o'tkazuvchanligini boshqaradi, silliq va skelet muskulaturasini bo'shashtiradi, yurak ritmini barqarorlashtiradi, bosh miya tomirlari spazmini kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+Oyoqlarda tirishish, kechasi oyoqlar tortishadi, boldir tirishishidan uyg'onaman, mushaklar uchadi, mushak spazmlari, mushaklar tarang, qotib qolish, bo'yinda qotishlik, bo'yin uvishadi, yelkadagi taranglik, qo'l titrashi, qo'llar qaltiraydi, barmoqlar uvishishi, qo'l va oyoqlarda sanchish, yurak urib ketadi, tez yurak urishi, aritmiya, yurakda uzilishlar, yurak to'xtab qoladi, taxikardiya, ekstrasistolalar, bosim sakraydi, bosh og'riydi, migren, tez-tez bosh og'riq, bosh yoriladi, pulsatsiyalovchi bosh og'riq, bosh aylanishi, quloqda shovqin.
+
+Tibbiy terminlar: neyromushak qo'zg'aluvchanligi, mioklonus, kardialgiya, ekstrasistoliya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Homiladorlik, PMS, ayollar salomatligi]
+Mahsulot: BIFOLAK MAGNIY — magniy + B vitaminlar + probiotiklar. Kapsulalar (7+) va stiklar (tug'ilganidan boshlab). Homilador va emizikli ayollarga mos.
+Mexanizm: magniy bachadon tonusini va tirishishlarni bartaraf etadi, foliy kislota (B9) homilaning asab naychasi rivojlanishi uchun juda muhim, B6 toksikoz va PMSni yengillashtiradi.
+
+QACHON TAVSIYA ETILADI:
+Homiladorlikda magniy, homiladorlikda oyoqlar tortishadi, bachadon tonusi, tushish xavfi, muddatidan oldingi to'lg'oqlar, preeklampsiya, foliy kislota, homiladorlikda asabiylashipman, homiladorlikda uxlay olmayman, homiladorlikda tirishishlar, PMS, hayzdan oldin asabiy, hayz paytida og'riq, dismenoreya, endometrioz (qo'llab-quvvatlash), kayfiyat o'zgarishlari.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Bolalar]
+Mahsulot: BIFOLAK MAGNIY — magniy + B vitaminlar + probiotiklar. Stiklar tug'ilganidan boshlab, kapsulalar 7 yoshdan.
+Mexanizm: magniy bolaning asab tizimini tinchlantiradi, uyquni normallashtiradi, qo'zg'aluvchanlikni kamaytiradi. B vitaminlar miya rivojlanishini qo'llab-quvvatlaydi.
+
+QACHON TAVSIYA ETILADI:
+Bola asabiy, bola yomon uxlaydi, injiq bola, giperaktiv bola, bola tashvishli, bolada isterika, bolada tiklar, bola tishlarini g'ichirlaydi, bolada bruksizm.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Tavsiya etilgan kombinatsiyalar]
+Mahsulot: BIFOLAK MAGNIY — magniy 60-70 mg + B1/B2/B6/B9 + 10 mlrd probiotiklar, kapsulalar/stiklar. Sink saqlamaydi.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-miya o'qi (gut-brain): magniy + B vitaminlar + probiotiklar — sog'lom ichak orqali asab tizimiga uchlik ta'sir.
+Magniy-B6 o'qi: vitamin B6 magniyning hujayra ichidagi to'planishini 40% ga oshiradi, uning ta'sirini kuchaytiradi.
+Antistress o'qi: magniy kortizol (stress gormoni) chiqarilishini sekinlashtiradi, B vitaminlar serotonin sintezini qo'llab-quvvatlaydi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+MUHIM: BIFOLAK MAGNIY sink saqlamaydi. Bu uni lineyaning istalgan mahsuloti bilan bir vaqtda qabul qilish uchun ideal qiladi.
+
+1. STRESS + IMMUNITET (kattalar):
+   BIFOLAK MAGNIY + IMMUNOCOMPLEX
+   Asab tizimini qo'llab-quvvatlash + immun himoya. Bir vaqtda qabul qilish mumkin.
+
+2. HOMILADORLIK (to'liq qo'llab-quvvatlash):
+   BIFOLAK MAGNIY + CALCIY TRIACTIVE D3
+   Magniy tirishish va tonusdan + kaltsiy ona va chaqaloq suyaklari uchun. Bir vaqtda qabul qilish mumkin. Homiladorlar uchun ideal juftlik.
+
+3. UYQU + BOLA MIYASI:
+   BIFOLAK MAGNIY + NEUROCOMPLEX KIDS
+   Glitsin + magniy (ikki tomonlama tinchlantiruvchi ta'sir) + omega-3 miya uchun. Bir vaqtda qabul qilish mumkin.
+
+4. STRESS + GO'ZALLIK (ayollar):
+   BIFOLAK MAGNIY + DERMACOMPLEX
+   Antistress + teri va soch salomatligi. Bir vaqtda qabul qilish mumkin. Stress — go'zallikning asosiy dushmani.
+
+5. STRESS + KO'RISH (ofis xodimlari):
+   BIFOLAK MAGNIY + OPHTALMOCOMPLEX
+   Asab tizimi + ko'zlarni ekranlardan himoyalash. Bir vaqtda qabul qilish mumkin.
+
+6. KASALLIKDAN KEYIN TIKLANISH:
+   BIFOLAK MAGNIY + BIFOLAK ACTIVE
+   Magniy kuch uchun + 1 trillion probiotik OIT uchun. Bir vaqtda qabul qilish mumkin.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: BIFOLAK MAGNIY — magniy 60-70 mg + B1/B2/B6/B9 + 10 mlrd probiotiklar, kapsulalar/stiklar.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+BIFOLAK MAGNIY sink, vitamin A, selen saqlamaydi. Boshqa mahsulotlar bilan muhim kesishuvlar yo'q. Lineyaning barcha mahsulotlari bilan xavfsiz kombinatsiyalash mumkin.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Buyrak yetishmovchiligi (SBY istalgan bosqichi, dializ, SKF 60 dan past).
+   Sabab: magniy buyrak orqali chiqariladi. Buyrak funksiyasi buzilganda magniy qonda to'planadi (gipermagniemiya), bu yurak to'xtashiga olib kelishi mumkin.
+   Skript: "Buyrak bilan muammolar bo'lsa, magniy to'planishi mumkin va bu xavfli. Nefrolog bilan albatta maslahatlashing."
+
+2. Yurak bloklari (AV-blokada II-III daraja, bradikardiya 50 urish/min dan past, sinusli tugun zaiflik sindromi).
+   Sabab: magniy yurakning impuls o'tkazishini sekinlashtiradi va blokadani kuchaytiradi.
+   Skript: "Yurak ritmi buzilishlari bo'lsa, magniy qabul qilishdan oldin kardiolog bilan maslahatlashing."
+
+3. Miasteniya (Myasthenia gravis).
+   Sabab: magniy neyromushak o'tkazishni bloklaydi va mushak zaifligini kuchaytiradi.
+
+4. Tarkibiy qismlarga allergiya. Belgilari: toshma, qichishish, shish, nafas olish qiyinligi.
+
+5. O'tkir holatlar (harorat 38 darajadan yuqori, qorinda kuchli og'riq, axlatda qon, qusish, tutqanoq, hushdan ketish) — darhol shifokorga.
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan maslahat):
+
+1. Gipotoniya (arterial bosim 90/60 dan past). Magniy bosimni tushiradi. Kam dozadan boshlash (1 kapsula/stik), ovqat bilan, kechqurun emas.
+2. Faol diareya. Magniy sitrat yengil surgi ta'siriga ega. Najas normallashishini kutish yoki BIFOLAK ZINCUM ishlatish (sink diareya to'xtatadi).
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Ftorxinolon antibiotiklari (tsiprofloksatsin, levofloksatsin): magniy so'rilishini 60-90% ga kamaytiradi. Interval 3 soat. Sxema: antibiotik ertalab, magniy kechqurun.
+
+Tetratsklin antibiotiklari (doksitsiklin): erimaydigan komplekslar hosil bo'ladi. Interval 3 soat.
+
+Aminoglikozidlar (gentamitsin, amikatsin): magniy yetishmovchiligiga sabab bo'ladi. Magniy qoplash uchun kerak. Interval 2-3 soat.
+
+Qalqonsimon bez preparatlari (levotiroksin): magniy so'rilishini kamaytiradi. Interval 4 soat. Levotiroksin ertalab och qoringa, magniy kechqurun.
+
+Bisfosfonatlar (alendronat): interval 2 soat.
+
+Proton pompa ingibitorlari (omeprazol, pantoprazol): 1 yildan ortiq qabul qilish magniy yetishmovchiligiga olib keladi. Magniy parallel ravishda kerak. Interval talab etilmaydi.
+
+Diuretiklar (furosemid, gidxlorotiazid): magniyni chiqaradi. Magniy qoplash uchun majburiy. Birga qabul qilish mumkin.
+
+Bosimni tushiruvchi preparatlar: magniy gipotenizv ta'sirni kuchaytiradi. Bosimni nazorat qilish.
+
+Miorelaksantlar: magniy ularning ta'sirini kuchaytiradi. Ehtiyotkorlik.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK MAGNIY — Komponentlar me'yorlari va batafsil dozalash]
+Mahsulot: BIFOLAK MAGNIY — magniy 60 mg (kapsulalar) / 70 mg (stiklar) + B1 0,4 mg + B2 0,6 mg + B6 4 mg + B9 120 mkg + 10 mlrd probiotiklar.
+
+MAGNIY (60 mg kapsula / 70 mg stik)
+
+Kunlik me'yorlar (NIH, JSST):
+Bolalar 0-6 oy: 30 mg. 7-12 oy: 75 mg. 1-3 yosh: 80 mg. 4-8 yosh: 130 mg. 9-13 yosh: 240 mg.
+O'smirlar: yigitlar 14-18 yosh 410 mg, qizlar 360 mg.
+Kattalar: erkaklar 400-420 mg, ayollar 310-320 mg.
+Homiladorlar: 350-400 mg. Emiziklilar: 310-360 mg.
+
+Yuqori xavfsiz daraja BADlardan (UL):
+Kattalar: 350 mg/kun (qo'shimchalardan, ovqatni hisobga olmagan holda). Bolalar 1-3 yosh: 65 mg. Bolalar 4-8 yosh: 110 mg. Bolalar 9+: 350 mg.
+MUHIM: ovqatdagi magniy ortiqcha dozaga sabab bo'lmaydi, chegara faqat qo'shimchalar uchun.
+
+KAPSULALAR BILAN QOPLANISHI:
+2 kapsula (120 mg) = kattalar me'yorining 29-39%. 3 kapsula (180 mg) = me'yorning 43-58%. UL dan past.
+
+STIKLAR BILAN QOPLANISHI:
+1 stik (70 mg) = 1-3 yoshli bolalar me'yorining 88%. 2 stik (140 mg) = 4-8 yoshli bolalar me'yorining 54%. 3 stik (210 mg) = kattalar me'yorining 50-68%.
+
+YUQORI EHTIYOJ:
+Sportchilar: +10-20%, 500-600 mg/kungacha. Stress: 10 daqiqali stress kunlik magniy dozasini chiqaradi. Homiladorlik: +40 mg/kun, tirishishlar — yetishmovchilik belgisi. Diabet: diabetlarning 75% da yetishmovchilik bor. Keksalar 60+: so'rilish 30% ga kamayadi.
+
+VITAMIN B6 (har bir kapsula/stikda 4 mg)
+
+Kunlik me'yorlar: bolalar 1-3 yosh 0,5 mg, 4-8 yosh 0,6 mg, 9-13 yosh 1 mg, o'smirlar/kattalar 1,2-1,7 mg.
+UL: bolalar 30-60 mg, kattalar 100 mg.
+
+B6 magniyning so'rilishini kuchaytiradi, uning hujayra ichidagi to'planishini 40% ga oshiradi.
+
+QAYSI SHAKLNI TANLASH:
+STIKLAR: 7 yoshgacha bolalarga (tug'ilganidan boshlab!), homilador va emizikli ayollarga, kapsula yutish qiyin bo'lganda. Ko'proq magniy (70 mg va 60 mg). Kurs 20-30 kun.
+KAPSULALAR: kattalar va 7+ yoshdagi bolalarga, sayohat va xizmat safarlariga, qulayroq (eritish kerak emas). Kurs 10-20 kun.
+Ikkala shakl bir xil samarali. Kombinatsiyalash mumkin: uyda stiklar, safarda kapsulalar.
+
+BATAFSIL DOZALASH:
+
+STIKLAR (tug'ilganidan boshlab):
+1 yoshgacha: pediatr tavsiyasi bilan.
+1-6 yosh: 1 stik/kun (70 mg magniy), kechqurun ovqat bilan.
+6+ yosh: 2 stik/kun (140 mg).
+Kattalar: 2-3 stik/kun (140-210 mg).
+20-50 ml suyuqlikka aralashtirish, harorat 40 darajadan yuqori bo'lmasin.
+
+KAPSULALAR (7 yoshdan):
+7-12 yosh: 1-2 kapsula/kun (60-120 mg).
+12+ yosh va kattalar: 2-3 kapsula/kun (120-180 mg).
+Ovqatdan 1 soat keyin. Eng yaxshi vaqt — kechqurun uxlashdan 1-2 soat oldin.
+
+TARTIB: kechki qabul optimal (magniy mushaklarni bo'shashtiradi va uyquga yordam beradi). Tirishishlarda — kechqurun uxlashdan oldin. Stressda — 2 qabulga bo'lish mumkin (ertalab + kechqurun).
+
+KURS: stiklar 20-30 kun, kapsulalar 10-20 kun. Natijani mustahkamlash uchun — 2 kurs. Yaqqol yetishmovchilikda — 1-2 oygacha.
+===/СЕКЦИЯ===

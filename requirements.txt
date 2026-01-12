@@ -1,0 +1,6 @@
+
+aiogram>=3.0.0
+llama-index>=0.14.0
+llama-index-embeddings-openai
+llama-index-vector-stores-qdrant
+llama-index-llms-openai

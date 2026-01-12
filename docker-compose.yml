@@ -1,0 +1,75 @@
+# =============================================================================
+# Biotact Platform v2 - Local Development Environment
+# =============================================================================
+# Usage:
+#   docker compose up -d        # Start all services
+#   docker compose down         # Stop all services
+#   docker compose logs -f      # View logs
+#   docker compose ps           # Check status
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: biotact-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: biotact
+      POSTGRES_PASSWORD: biotact_dev_password
+      POSTGRES_DB: biotact
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U biotact -d biotact"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Qdrant Vector Database
+  # ---------------------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:v1.13.0
+    container_name: biotact-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"  # REST API
+      - "6334:6334"  # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      QDRANT__SERVICE__GRPC_PORT: 6334
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Redis (optional - for caching and rate limiting)
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: biotact-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    name: biotact_postgres_data
+  qdrant_data:
+    name: biotact_qdrant_data
+  redis_data:
+    name: biotact_redis_data

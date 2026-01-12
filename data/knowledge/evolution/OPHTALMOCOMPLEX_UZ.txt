@@ -1,0 +1,268 @@
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- Mahsulot kartasi]
+Mahsulot: OPHTALMOCOMPLEX
+
+MAQSAD: Ko'rish va ko'z salomatligini kompleks qo'llab-quvvatlash -- 11 ta maxsus nutrient, jumladan 7 ta antioksidant. Ikki kompleks: "O'tkir ko'rish" + AREDS2 Formula.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Kapsulalar 0,5 g, 30 dona. O'simlik kapsulalari.
+YOSH: 7 yoshdan va kattalar.
+KURS: 20-30 kun. Intensiv ko'rish yuklamasida: har 3-4 oyda kurslar.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan.
+XUSUSIYAT: Probiotik saqlamaydi. AREDS2 Formula -- yoshga bog'liq makula degeneratsiyasining oldini olish uchun ilmiy isbotlangan formula.
+
+1 KAPSULA TARKIBI (0,5 g):
+
+"O'tkir ko'rish" kompleksi:
+Omega-3 (DHA+ALA) -- 200 mg
+Rutin -- 50 mg (ko'z tomirlarini mustahkamlash)
+Selen -- 55 mkg (antioksidant)
+A vitamin (retinol) -- 1400 mkg
+C vitamin -- 100 mg
+B1 vitamin (tiamin) -- 1,1 mg
+B2 vitamin (riboflavin) -- 1,4 mg
+B3 vitamin (niatsin) -- 8 mg
+B6 vitamin (piridoksin) -- 1,4 mg
+B9 vitamin (fol kislota) -- 150 mkg
+
+AREDS2 Formula:
+Lyutein -- 5 mg (ko'k nurni filtrlaydi)
+Zeaksantin -- 1 mg (makula himoyasi)
+E vitamin -- 200 XB (antioksidant)
+Sink -- 12,5 mg
+Mis (mis oksidi) -- 1 mg (sink qabul qilganda yo'qotishlarni qoplash)
+
+DOZALASH:
+7-14 yoshdagi bolalarga: 1 kapsula/kun
+14 yoshdan katta o'smirlarga: 1-2 kapsula/kun
+Kattalarga: 2 kapsula/kun
+Yog' saqlovchi ovqat bilan qabul qilish (sariyog', yong'oq, avokado). Iliq suv bilan yutish.
+
+TARKIBIY QISMLARNING TA'SIRI:
+Lyutein + zeaksantin: ekranlar va quyoshning zararli ko'k nurini filtrlaydi, makulada (to'r pardaning markazida) to'planadi, degeneratsiyadan himoya qiladi.
+Omega-3 (DHA): to'r pardaning strukturaviy komponenti, ko'zga qon ta'minotini yaxshilaydi.
+A vitamin: rodopsin (ko'rish pigmenti) sintezi, qorong'ulikka moslashish, shox pardani namlash.
+Rutin: ko'z kapillyarlarini mustahkamlaydi, tomirlarning o'tkazuvchanligini kamaytiradi.
+E vitamin + C + selen: erkin radikallarga qarshi to'r pardaning uchlanchi antioksidant himoyasi.
+Sink + mis: sink to'r pardada A vitamin ishlashi uchun zarur, mis sinkdan kelib chiqadigan yo'qotishlarni qoplaydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- Ko'z charchashi va kompyuter]
+Mahsulot: AREDS2 Formula bilan ko'rish va ko'z salomatligini qo'llab-quvvatlash kompleksi (11 nutrient, 7 antioksidant).
+Mexanizm: Lyutein va zeaksantin ekranlarning zararli ko'k nurini filtrlaydi, makulada to'planadi. Omega-3 ko'z yoshi pardasini va shox pardaning namligini qo'llab-quvvatlaydi. Rutin ko'z kapillyarlarini mustahkamlaydi, qizarishni kamaytiradi.
+
+QACHON TAVSIYA ETILADI:
+ko'zlar charchaydi, kompyuterdan ko'zlar charchaydi, telefondan ko'zlar charchaydi, ekrandan ko'zlar og'riydi, ko'k nur, kompyuter ko'rish sindromi, monitordan ko'zlar quruq, kompyuterdan ko'zlar qizaradi, kun bo'yi kompyuterda ishlayman, quruq ko'zlar, ko'zlarda qum sezgisi, ko'zlar achishadi, ko'zlar kuydiradi, ko'zlarda rez, ko'z yoshi oqadi, ko'zlar yoshlanadi, qizil ko'zlar, ko'zlar qizarishi, ko'zlarning ta'sirlanishi, qovoqlar og'ir, qovoqlar shishgan
+
+Tibbiy terminlar: astenopiya, quruq ko'z sindromi, kseroftalmiya
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- Ko'rishning yomonlashishi]
+Mahsulot: AREDS2 Formula bilan ko'rish va ko'z salomatligini qo'llab-quvvatlash kompleksi (11 nutrient, 7 antioksidant).
+Mexanizm: A vitamin rodopsin (ko'rish pigmenti) sintezini va qorong'ulikka moslashishni ta'minlaydi. Sink to'r pardada A vitaminni tashish uchun zarur. Omega-3 (DHA) to'r pardaning strukturaviy komponenti hisoblanadi.
+
+QACHON TAVSIYA ETILADI:
+ko'rish tushdi, ko'rish yomonlashdi, yomonroq ko'ra boshladi, xiralashib ko'rinadi, loyqa ko'rinadi, ko'zlarda xiralashish, yaqindan ko'rmaslik, miyopiya, uzoqdan ko'rmaslik, astigmatizm, ko'rish minus, ko'rish plyus, bola yomonroq ko'ra boshladi, ko'zoynak, linzalar, bola ko'zini qisadi, bola televizorga yaqin o'tiradi, bola telefonda ko'p o'ynaydi, gadjetlar va ko'rish, yaqindan ko'rmaslikning oldini olish, bola ko'zlaridan shikoyat qiladi, ko'zlardan bosh og'rig'i, o'quvchi va ko'rish
+
+Tibbiy terminlar: miyopiya, gipermetropiya
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- Yoshga bog'liq o'zgarishlar]
+Mahsulot: AREDS2 Formula bilan ko'rish va ko'z salomatligini qo'llab-quvvatlash kompleksi (11 nutrient, 7 antioksidant).
+Mexanizm: AREDS2 formulasi (lyutein + zeaksantin + E vitamin + sink + mis) yoshga bog'liq makula degeneratsiyasini klinik jihatdan isbotlangan tarzda sekinlashtiradi. Uchlanchi antioksidant himoya (E vitamin + C + selen) to'r pardani erkin radikallardan himoya qiladi.
+
+QACHON TAVSIYA ETILADI:
+yosh bilan ko'rish, yoshga bog'liq uzoqdan ko'rmaslik, presbiopiya, makulodistrofiya, makula degeneratsiyasi, boshlang'ich katarakta, kataraktaning oldini olish, glaukoma, ko'z oldida pashsha, suzib yuruvchi nuqtalar, shishasimon tananing destruksiyasi
+
+Tibbiy terminlar: YMD (yoshga bog'liq makula degeneratsiyasi), presbiopiya, shishasimon tananing destruksiyasi
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- Kasblar va maxsus holatlar]
+Mahsulot: AREDS2 Formula bilan ko'rish va ko'z salomatligini qo'llab-quvvatlash kompleksi (11 nutrient, 7 antioksidant).
+Mexanizm: Rutin ko'z kapillyarlarini mustahkamlaydi, uzoq muddat ko'rish yuklamasida charchashni kamaytiradi. A vitamin tungi ko'rishni va qorong'ulikka moslashishni ta'minlaydi. Lyutein intensiv yorug'lik yuklamasida to'r pardani himoya qiladi.
+
+QACHON TAVSIYA ETILADI:
+dasturchi, dizayner, geymer, strim qilaman, ekran oldida ko'p o'tiraman, kompyuterda ishlash, haydovchi, tungi smenalar, payvandchi, ofis ishi, kitob o'qish, talaba, imtihonga tayyorgarlik, ko'z operatsiyasidan keyin, LASIK, ko'rishni tiklash, ko'z uchun vitaminlar, lyutein, chernika va ko'rish, qorong'uda yomon ko'raman, tungi ko'rlik, qorong'ulikka moslashish
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: OPHTALMOCOMPLEX -- omega-3 200 mg + lyutein 5 mg + zeaksantin 1 mg + A vitamin 1400 mkg + E 200 XB + C 100 mg + sink 12,5 mg + selen 55 mkg + mis 1 mg + rutin 50 mg + B1/B2/B3/B6/B9, kapsulalar, 7 yoshdan.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Antioksidant himoya: lyutein + zeaksantin + E vitamin + C + selen -- to'r pardani oksidativ stressdan ko'p darajali himoya.
+Ko'rish-tomir o'qi: rutin + omega-3 + C vitamin -- ko'z kapillyarlari va mikrosirkulyatsiyani qo'llab-quvvatlash.
+AREDS2 formulasi: yoshga bog'liq makula degeneratsiyasini klinik isbotlangan sekinlashtirish.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. KOMPYUTER + STRESS (ofis xodimi):
+   OPHTALMOCOMPLEX + BIFOLAK MAGNIY
+   Ko'zlarni ekranlardan himoya qilish + asab tizimini stressdan qo'llab-quvvatlash. Birga qabul qilish mumkin.
+
+2. KO'RISH + IMMUNITET (tez-tez kasallanadigan katta):
+   OPHTALMOCOMPLEX + IMMUNOCOMPLEX
+   Ko'z himoyasi + immunitetni qo'llab-quvvatlash. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 12,5+12,5=25 mg, va selen).
+
+3. KO'ZGA YUKLAMALI MAKTABGA BORUVCHI BOLA (7+ yosh):
+   OPHTALMOCOMPLEX + NEUROCOMPLEX KIDS
+   Ko'zlar + o'qish uchun miya. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink va omega-3 bor).
+
+4. KO'RISH + SUYAKLAR (keksalar):
+   OPHTALMOCOMPLEX + CALCIY TRIACTIVE D3
+   Ko'zlar + suyaklar. Birga qabul qilish mumkin (CALCIY tarkibida sink yo'q).
+
+5. KO'RISH + MIKROFLORA:
+   OPHTALMOCOMPLEX + BIFOLAK NEO
+   Ko'zlarni qo'llab-quvvatlash + nutrientlarning yaxshiroq so'rilishi uchun OITni tiklash. Birga qabul qilish mumkin.
+
+6. KO'Z OPERATSIYASIDAN KEYIN:
+   OPHTALMOCOMPLEX + BIFOLAK ZINCUM+C+D3
+   Ko'zlarni oziqlantirish + to'qimalarning tezkor bitishi. KETMA-KET kurslar bilan qabul qilish (ikkalasida ham sink bor: 12,5+25=37,5 mg).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: OPHTALMOCOMPLEX -- omega-3 200 mg + lyutein 5 mg + zeaksantin 1 mg + A vitamin 1400 mkg + E 200 XB + C 100 mg + sink 12,5 mg + selen 55 mkg + mis 1 mg + rutin 50 mg + B1/B2/B3/B6/B9, kapsulalar, 7 yoshdan.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. OPHTALMOCOMPLEX + DERMACOMPLEX = OGOHLANTIRISH
+   Sabab: ikkalasida ham A vitaminning yuqori dozalari (1400+1100=2500 mkg), sink (12,5+15=27,5 mg), selen (55+80=135 mkg) bor. Jami A vitamin UL 3000 mkgga yaqin.
+   Yechim: Bir vaqtda QATIYAN mumkin emas. Faqat KETMA-KET kurslar bilan, tanaffus bilan.
+
+2. OPHTALMOCOMPLEX + IMMUNOCOMPLEX = OGOHLANTIRISH
+   Sabab: ikkalasida ham sink (12,5+12,5=25 mg), selen (55+75=130 mkg) bor.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+3. OPHTALMOCOMPLEX + BIFOLAK ZINCUM+C+D3 = OGOHLANTIRISH
+   Sabab: jami sink 12,5+25=37,5 mg UL 40 mgga yaqin.
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT -- shifokorga):
+
+1. Homiladorlik (ayniqsa birinchi trimester).
+   Sabab: 1 kapsulada A vitamin 1400 mkg (2 kapsulada 2800 mkg) -- homiladorlar uchun UL 3000 mkgga yaqin. Birinchi 60 kunda retinolning ortiqchasi homila rivojlanish nuqsonlariga olib keladi: yurak, asab tizimi, yuz nuqsonlari.
+   Skript: "OPHTALMOCOMPLEX tarkibida A vitaminning yuqori dozasi bor, homiladorlikda qarshi ko'rsatilgan. Homiladorlar uchun maxsus vitaminlarni tanlang."
+
+2. Homiladorlikni rejalashtirish.
+   Sabab: A vitamin jigarda to'planadi va oylar davomida saqlanadi. Homilador bo'lishdan kamida 1-2 oy oldin qabul qilishni to'xtatish kerak.
+
+3. Emizish davri.
+   Sabab: A vitamin ko'krak sutigiga o'tadi. 2 kapsulada (2800 mkg) bola uchun xavfsiz darajadan oshishi mumkin. Shifokor bilan maslahat, 1 kapsula qabul qilish mumkin.
+
+4. Tarkibiy qismlarga allergiya. Mahsulot tarkibida omega-3 bor (dengiz manbalaridan bo'lishi mumkin). Dengiz mahsulotlariga allergiyada -- qarshi ko'rsatilgan.
+
+5. O'tkir ko'z yallig'lanish kasalliklari (konyunktivit, keratit, uveit o'tkir fazada). Avval oftalmolog davolashi kerak. BAD dori terapiyasini almashtirmaydi.
+
+6. Jigarning og'ir kasalliklari (sirroz, gepatit, jigar yetishmovchiligi). A vitamin jigarda to'planadi, yuqori dozalar toksik bo'lishi mumkin.
+
+7. 7 yoshgacha bolalar. Kichik yoshdagi bolalar uchun A va E vitaminning yuqori dozalarining xavfsizligi aniqlanmagan.
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik, shifokor bilan):
+
+1. Surunkali buyrak kasalliklari. Selen va sink buyrak orqali chiqariladi. Nefrolog bilan maslahat.
+2. Anamnezda A gipervitaminozi. Yuqori dozalarni qayta qabul qilish toksiklik retsidiviga olib kelishi mumkin. Retinolga qon tahlili.
+3. Gemoxromatoz (temirning ortiqchasi). C vitamin 100 mg temirning so'rilishini kuchaytiradi. Gematolog bilan maslahat.
+4. Siydik tosh kasalligi (oksalat toshlari). C vitamin oksalatlar hosil bo'lishini oshirishi mumkin. Urolog bilan maslahat.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antikoagulyantlar (varfarin, geparin): E vitamin 200 XB + omega-3 200 mg antikoagulyant ta'sirni kuchaytiradi. 2 kapsulada (400 XB E + 400 mg omega-3) klinik ahamiyatli xavf mavjud. Shifokorga xabar berish shart, MNO monitoringi.
+
+Tetratsiklinli antibiotiklar (doksitsiklin): sink 12,5 mg erimaydigan komplekslar hosil qiladi. Kamida 2 soat interval.
+
+Ftorxinolonli antibiotiklar (tsiprofloksatsin): sink so'rilishni kamaytiradi. 2-4 soat interval.
+
+Qalqonsimon bez preparatlari (levotiroksin): sink, selen, vitaminlar metabolizmga ta'sir qiladi. Levotiroksini ertalab och qoringa, OPHTHALMOCOMPLEXni 4 soatdan keyin qabul qilish.
+
+Retinoidlar (izotretinoin, tretinoin): bir vaqtda qabul qilish qatiyan tavsiya etilmaydi -- A gipervitaminozi xavfi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[OPHTALMOCOMPLEX -- 4 dan 4-bo'lim: Komponentlar me'yorlari va batafsil dozalash]
+Mahsulot: OPHTALMOCOMPLEX -- omega-3 200 mg + lyutein 5 mg + zeaksantin 1 mg + A vitamin 1400 mkg + E 200 XB + C 100 mg + sink 12,5 mg + selen 55 mkg + mis 1 mg + rutin 50 mg + B1/B2/B3/B6/B9, kapsulalar, 7 yoshdan.
+
+A VITAMIN (kapsulasiga 1400 mkg)
+
+Kunlik me'yorlar:
+Bolalar 7-10 yosh: 500 mkg. O'smirlar: 700-900 mkg. Katta erkaklar: 900 mkg. Ayollar: 700 mkg. Homiladorlar: 770 mkg. Emiziklilar: 1300 mkg.
+
+Yuqori xavfsiz daraja (UL):
+Bolalar 9-13 yosh: 1700 mkg. O'smirlar 14-18 yosh: 2800 mkg. Kattalar: 3000 mkg.
+
+Qoplash: 1 kapsula (1400 mkg) = me'yorning 156-280%, UL dan past. 2 kapsula (2800 mkg) = kattalar uchun UL 3000 mkgdan past.
+
+DIQQAT: 2 kapsula qabul qilganda jami A vitamin 2800 mkg. Boshqa A vitamin manbalari bilan bir vaqtda qabul qilmang.
+
+LYUTEIN + ZEAKSANTIN (kapsulasiga 5 mg + 1 mg)
+
+Belgilangan RDA yo'q. Oftalmologlar tavsiyasi: makulodistrofiyaning oldini olish uchun kuniga 6-10 mg lyutein (AREDS2 ma'lumotlariga ko'ra). 2 kapsula = 10 mg lyutein + 2 mg zeaksantin -- optimal doza.
+
+Xavfsizlik: kuniga 20 mg lyuteingacha xavfsiz (EFSA).
+
+SINK (kapsulasiga 12,5 mg)
+
+Kunlik me'yorlar: bolalar 9-13 yosh 8 mg, o'smirlar 9-11 mg, katta erkaklar 11 mg, ayollar 8 mg.
+UL: 9-13 yosh 23 mg, 14-18 yosh 34 mg, kattalar 40 mg.
+
+Qoplash: 1 kapsula (12,5 mg) = me'yorning 114-156%. 2 kapsula (25 mg) = barcha yoshlar uchun UL dan past.
+
+E VITAMIN (kapsulasiga 200 XB)
+
+Kunlik me'yorlar: bolalar 7-10 yosh 7 mg, o'smirlar 11 mg, kattalar 15 mg.
+UL: bolalar 300 mg, o'smirlar 600 mg, kattalar 1000 mg.
+
+Qoplash: 200 XB = 134 mg. UL dan ancha past. 2 kapsulada 400 XB = 268 mg -- xavfsiz.
+
+BATAFSIL DOZALASH:
+
+Bolalar 7-14 yosh: 1 kapsula/kun, ertalab ovqat bilan.
+O'smirlar 14-18 yosh: 1-2 kapsula/kun.
+Kattalar: 2 kapsula/kun (1 ertalab + 1 kechqurun, yoki ikkalasi tushlik bilan).
+
+TARTIB: yog' saqlovchi ovqat bilan qabul qilish (sariyog', yong'oq, avokado, sut mahsulotlari). Ertalab yoki kunduzi (B vitaminlar energiyani qo'llab-quvvatlaydi). 2 kapsulada ertalab/kechqurun bo'lib qabul qilish mumkin -- yaxshiroq ko'tarilish uchun.
+
+KURS VA DAVRIYLIK:
+Asosiy kurs: 20-30 kun.
+Kompyuterda ishlashda profilaktika: yiliga 2-3 kurs, har 3-4 oyda.
+Barqaror ta'sir uchun: muntazam kurslar -- lyutein va zeaksantin makulada asta-sekin to'planadi.
+Yuklamali maktab o'quvchilari: sentyabr va fevralda kurs.
+
+XAVF GURUHLARI: dasturchilar va IT-mutaxassislar, ofis xodimlari, geymerlar, talabalar, haydovchilar, ko'rishda boshlang'ich o'zgarishlari bo'lgan keksalar, lazer korreksiyasidan keyingi odamlar.
+===/СЕКЦИЯ===

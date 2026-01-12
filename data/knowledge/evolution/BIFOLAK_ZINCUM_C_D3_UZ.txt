@@ -1,0 +1,273 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: product_card
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — Mahsulot kartasi]
+Mahsulot: BIFOLAK ZINCUM+C+D3
+
+MAQSAD: Uch tomonlama immun himoya — sink + vitamin C + vitamin D3 + probiotiklar.
+ISHLAB CHIQARUVCHI: BIOTACT DEUTSCHLAND GmbH, DQS sertifikati (Germaniya), NEMev a'zosi.
+CHIQARILISH SHAKLI: Kapsulalar 0,5 g, 30 dona. O'simlik kapsulalari.
+YOSH: 15 yoshdan va kattalar.
+KURS: 10-20 kun. Shamollashda (kuchaytirilgan rejim): 2 kapsula/kun, 5-10 kun.
+STATUS: BAD (biologik aktiv qo'shimcha). Dori emas. Gipoallergenik: bo'yoqsiz, shakarsiz, laktozasiz, glyutensiz, stearatsiz. Halol, kosher, vegan, diabetiklarga mos.
+
+1 KAPSULA TARKIBI (0,5 g):
+Sink (sink sitrat) — 25 mg (biosamaradorlik 35%)
+Vitamin C (askorbin kislota) — 200 mg
+Vitamin D3 (xolekalsiferol) — 2000 XB (50 mkg)
+Probiotiklar 8 shtamm, jami 10 mlrd KOB:
+  Bifidobacterium bifidum 175, B. adolescentis 109, B. bifidum 108, Lactobacillus plantarum 174a, L. acidophilus 212, L. bulgaricus 210, Propionibacterium avidum 261, Streptococcus thermophilus 237
+Prebiotiklar: inulin, maltodekstrin
+
+DOZALASH:
+Kattalar va 15 yoshdan bolalar: 1 kapsula/kun
+Shamollashda (kuchaytirilgan rejim): 2 kapsula/kun, 5-10 kun
+Ovqatdan keyin qabul qilish, kechqurun yaxshiroq.
+
+Zn+C+D3 SINERGIYASI (Maggini S. et al., 2017):
+Sink: T-limfotsitlar va NK-hujayralarning rivojlanishi, to'siq funksiyasi.
+Vitamin C: fagotsitoz, interferon va antitelalar ishlab chiqarish, antioksidant, kollagen sintezi, charchoqni kamaytirish.
+Vitamin D3: antimikrob peptidlarni faollashtirish (katelitsidin), yallig'lanishni boshqarish, suyak va mushaklar salomatligi.
+Birgalikda: barcha darajalarda immunitetning uch tomonlama himoyasi + antioksidant himoya + yallig'lanishni boshqarish (tsitokin bo'ronining oldini olish).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — Tomoq va shamollash]
+Mahsulot: Sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik 10 mlrd KOB, kapsulalar, 15 yoshdan.
+Mexanizm: Sink tomoq shilliq qavatida viruslar replikatsiyasini bosadi. Vitamin C fagotsitoz va interferon ishlab chiqarishni kuchaytiradi, shamollash davomiyligini qisqartiradi. D3 antimikrob peptidlarni (katelitsidin) faollashtiradi.
+
+QACHON TAVSIYA ETILADI:
+Tomoq og'riydi, tomoqda qirilash, yutish og'riydi, ovoz bo'g'ildi, angina, faringit, laringit, tonzillit, burun oqishi, burun bitgan, yo'tal, bronxit, traxeit, harorat, isitma, qaltirash, tana og'riydi, ORVI, gripp, shamollash.
+
+Tibbiy terminlar: o'tkir respirator infeksiyalar.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — Immunitet va tiklanish]
+Mahsulot: Sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik 10 mlrd KOB, kapsulalar, 15 yoshdan.
+Mexanizm: Zn+C+D3 uch tomonlama sinergiyasi immunitetni barcha darajalarda kuchaytiradi: sink T-limfotsitlar va NK-hujayralar uchun, vitamin C fagotsitoz va antitelalar uchun, D3 yallig'lanishni boshqarish uchun. Probiotiklar antibiotikdan keyin mikroflorani tiklaydi.
+
+QACHON TAVSIYA ETILADI:
+Tez-tez kasal bo'ladi, immunitet past, tez-tez shamollash, nafas yo'llari infeksiyalari, shamollash mavsumi, bemor bilan aloqa, sovuq qotgandan keyin, jamoada ishlash, antibiotikdan keyin, kasallikdan keyin, ORVIdan keyin holsizlik, uzoq tuzalish, disbakterioz, surunkali yallig'lanishlar.
+
+Tibbiy terminlar: immunodefitsit.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — Teri, soch, tirnoq, vitamin C]
+Mahsulot: Sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik 10 mlrd KOB, kapsulalar, 15 yoshdan.
+Mexanizm: Sink yaralarning bitishi va teri salomatligida ishtirok etadi. Vitamin C kollagen sintezi, tomir devorini mustahkamlash va antioksidant himoya uchun zarur. Probiotiklar ichak-teri o'qi orqali ta'sir qiladi.
+
+QACHON TAVSIYA ETILADI:
+Soch to'kiladi, tirnoq sinadi, tirnoqda oq dog'lar, sivilchalar, akne, teri quruq, po'stlash, yaralar sekin bitadi, milklar qon ketadi, sabab bilmasdan ko'karishlar, burundan qon ketish, charchoq, toliqish, avitaminoz.
+
+Tibbiy terminlar: tsinga (C yetishmovchiligi).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: symptoms_search
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — Vitamin D3, suyaklar, erkak va ayol salomatligi]
+Mahsulot: Sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik 10 mlrd KOB, kapsulalar, 15 yoshdan.
+Mexanizm: Vitamin D3 kaltsiy so'rilishi va suyaklarning mineralizatsiyasini boshqaradi, kayfiyat va gormonal muvozanatga ta'sir qiladi. Sink testosteron sintezi va fertillik uchun zarur.
+
+QACHON TAVSIYA ETILADI:
+Suyaklar og'riydi, mushak holsizligi, oyoqlarda tortishish, qishki depressiya, qishda uyquchanlik, kayfiyat tushkunligi, kayfiyat o'zgarishlari, quyosh kam, kuz-qish davri, jinsiy mayl pasayishi, testosteron, fertillik, otalikni rejalashtirish, hayz, ishtaha yo'q, ovqat mazasiz, uyqusizlik, keksa yosh, vegetarian dieta.
+
+Tibbiy terminlar: osteomalyatsiya (D3 yetishmovchiligi).
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: combinations
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — 4 dan 2-bo'lim: Tavsiya etilgan kombinatsiyalar]
+Mahsulot: BIFOLAK ZINCUM+C+D3 — sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik, kapsulalar, 15 yoshdan.
+
+ILMIY O'ZARO TA'SIR O'QLARI:
+Ichak-immunitet o'qi (gut-immunity): probiotiklar + sink + D3 — immun javobni uch tomonlama kuchaytirish.
+Ichak-teri o'qi (gut-skin): probiotiklar + sink + vitamin C (kollagen) — terini kompleks qo'llab-quvvatlash.
+Ichak-suyak o'qi (gut-bone): D3 + sink + probiotiklar mineralizatsiyani yaxshilaydi.
+
+TAVSIYA ETILGAN KOMBINATSIYALAR:
+
+1. SHAMOLLASH / ORVI (faol himoya):
+   Asosiy: IMMUNOCOMPLEX + qo'shimcha: BIFOLAK ZINCUM+C+D3
+   Uch tomonlama immun qo'llab-quvvatlash. MUHIM: sinkning ortiqcha miqdori (25+12,5=37,5 mg, UL 40 mg ga yaqin) tufayli KETMA-KET kurslar bilan qabul qilish.
+
+2. TEZ-TEZ INFEKSIYALAR (profilaktika):
+   Asosiy: BIFOLAK ZINCUM+C+D3 + qo'shimcha: IMMUNOCOMPLEX
+   Tartib: avval BIFOLAK ZINCUM+C+D3 20 kun, keyin IMMUNOCOMPLEX 20 kun.
+
+3. LAKTATSIYA (emizikli onalar):
+   CALCIY TRIACTIVE D3 + BIFOLAK ZINCUM+C+D3
+   Ona suyaklari va sut uchun kaltsiy + immun qo'llab-quvvatlash. Mos keladi — bir vaqtda qabul qilish mumkin.
+
+4. TERI VA GO'ZALLIK (ayollar):
+   DERMACOMPLEX + BIFOLAK ZINCUM+C+D3
+   MUHIM: KETMA-KET kurslar bilan (sinkning ortiqcha miqdori: 25+15=40 mg = UL).
+
+MOSLIK QOIDASI:
+Agar ikkala mahsulot tarkibida sink bo'lsa — KETMA-KET qabul qilish (bir kursdan keyin ikkinchisi), bir vaqtda EMAS. Bu kuniga 40 mg UL dan oshishning oldini oladi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: contraindications
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — 4 dan 3-bo'lim: Nomuvofiqliklar va qarshi ko'rsatmalar]
+Mahsulot: BIFOLAK ZINCUM+C+D3 — sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik, kapsulalar, 15 yoshdan.
+
+BIOTACT MAHSULOTLARI BILAN NOMUVOFIQLIKLAR:
+
+1. BIFOLAK ZINCUM+C+D3 + IMMUNOCOMPLEX = OGOHLANTIRISH
+   Sabab: sinkning ortiqcha miqdori (25+12,5=37,5 mg, UL 40 mg ga yaqin).
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+2. BIFOLAK ZINCUM+C+D3 + DERMACOMPLEX = OGOHLANTIRISH
+   Sabab: sinkning ortiqcha miqdori (25+15=40 mg = yuqori chegara).
+   Yechim: KETMA-KET kurslar bilan qabul qilish.
+
+3. BIFOLAK ZINCUM+C+D3 + BIFOLAK MAGNIY diareya paytida = OGOHLANTIRISH
+   Sabab: magniy surgi ta'siriga ega, diareyani kuchaytiradi.
+   Yechim: diareya mavjud bo'lganda birga qo'llamaslik.
+
+MUTLAQ QARSHI KO'RSATMALAR (TO'XTAT — shifokorga):
+
+1. Giperkaltsiyemiya (qonda kaltsiy ko'tarilgan).
+   Sabab: D3 kaltsiy so'rilishini oshiradi, allaqachon ko'tarilgan darajada bu xavfli.
+   Alomatlar: ko'ngil aynash, holsizlik, qabziyat, tez-tez siydikka borish, chanqash.
+   Skript: "Qonda kaltsiy ko'tarilgan bo'lsa, vitamin D3 shifokor nazoratisiz tavsiya etilmaydi. Kaltsiy tahlilini topshiring."
+
+2. Buyrakning og'ir kasalliklari (SBY, dializ).
+   Sabab: vitamin D faollashishi buzilgan + sinkning chiqarilishi buzilgan, to'planishi, toksiklik.
+   Skript: "Buyrak bilan jiddiy muammolar bo'lsa — faqat nefrolog nazoratida."
+
+3. Sarkoidoz va granulomatoz kasalliklar.
+   Sabab: organizm o'zi ortiqcha faol vitamin D ishlab chiqaradi, giperkaltsiyemiya.
+
+4. Tarkibiy qismlarga individual notoqatlik.
+
+5. 15 yoshgacha bolalar.
+   Sabab: sink (25 mg) va D3 (2000 XB) ning yuqori dozalari kattalarga mo'ljallangan.
+   Skript: "Bu mahsulot kattalarga mo'ljallangan. Bolalar uchun BIOTACT bolalar shakllarini tavsiya etaman: BIFOLAK ZINCUM (stiklar)."
+
+NISBIY QARSHI KO'RSATMALAR (ehtiyotkorlik):
+
+1. Tiazid diuretiklari (gipotiazid, indapamid) — kaltsiy chiqarilishini kamaytiradi. D3 bilan birga giperkaltsiyemiya xavfi. Kaltsiyni nazorat qilish, ayniqsa 65+ yosh.
+2. Siydik tosh kasalligi (buyrakda tosh) — D3 kaltsiyni oshiradi, urolog bilan maslahat.
+3. Yurak glikozidlari (digoksin) — giperkaltsiyemiya toksiklikni kuchaytiradi, faqat kardiolog bilan.
+4. Vilson kasalligi — sink faqat shifokor nazoratida.
+5. Homiladorlik — D3 va sinkning yuqori dozalari, ginekolog bilan maslahat majburiy.
+
+DORILAR BILAN O'ZARO TA'SIR:
+
+Antibiotiklar (ftorxinolonlar: tsiprofloksatsin; tetratsiklinlar: doksitsiklin; tsefalosporinlar; penitsillin):
+Sink so'rilishni 60-90% ga kamaytiradi! Interval: 2 soat OLDIN yoki 4-6 soat KEYIN.
+Sxema: antibiotik ertalab 8:00, BIFOLAK ZINCUM+C+D3 kechqurun 20:00.
+
+Levotiroksin/eutiroksin (qalqonsimon bez): interval 4 soat. Gormon ertalab och qoringa, BIFOLAK kechqurun.
+Bisfosfonatlar (osteoporoz): interval 2 soat.
+Penitsillamin: interval 1 soat.
+OIV integrazalari: infeksionist bilan maslahat majburiy.
+Statinlar: ta'siri minimal, shifokorni xabardor qilish.
+Halqali diuretiklar (furosemid): sink chiqaradi — BIFOLAK ZINCUM+C+D3 qoplash uchun foydali.
+
+UZOQ MUDDATLI QABUL QILISH XAVFI (2-3 oydan ortiq): sinkning yuqori dozasi (25 mg) tufayli mis yetishmovchiligi.
+Alomatlar: anemiya, neytropeniya, qo'l-oyoqlarning uvushishi. Kurs 10-20 kun, 1 oy tanaffus.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM_C_D3
+doc_type: dosage_norms
+category: probiotiki-vitaminy-mineraly
+
+[BIFOLAK ZINCUM+C+D3 — 4 dan 4-bo'lim: Me'yorlar va batafsil dozalash]
+Mahsulot: BIFOLAK ZINCUM+C+D3 — sink 25 mg + vitamin C 200 mg + D3 2000 XB + 8 probiotik, kapsulalar, 15 yoshdan.
+
+SINK
+
+KUNLIK ME'YORLARI (EFSA, DGE Germaniya):
+Erkaklar: 9,4-16,3 mg/kun (dietadagi fitatlarga bog'liq)
+Ayollar: 7,5-12,7 mg/kun
+Homiladorlar: me'yorga +1,6 mg/kun
+Emiziklilar: me'yorga +2,9 mg/kun
+
+YUQORI XAVFSIZ DARAJA:
+EFSA: kattalar uchun 25 mg/kun
+BfR (Germaniya): qo'shimchalarda 25 mg gacha
+NIH (AQSh): barcha manbalardan 40 mg/kun
+
+MAHSULOT BILAN QOPLANISH: 1 kapsula (25 mg) = me'yorning 153-333%. Tez yetishmovchilikni qoplash va immunitetni qo'llab-quvvatlash uchun optimal terapevtik doza. Sitrat shakli — 35% biosamaradorlik.
+
+VITAMIN C
+
+KUNLIK ME'YORLARI (EFSA, D-A-CH):
+Erkaklar: 110 mg/kun
+Ayollar: 95 mg/kun
+Homiladorlar: 105 mg/kun
+Emiziklilar: 155 mg/kun
+Chekuvchilar: qo'shimcha +35 mg/kun
+
+YUQORI XAVFSIZ DARAJA:
+BfR (Germaniya): qo'shimchalarda 250 mg gacha
+EFSA mo'ljal: 1000 mg/kun gacha (suvda eriydigan, ortiqchasi chiqariladi)
+
+MAHSULOT BILAN QOPLANISH: 1 kapsula (200 mg) = me'yorning 129-211%. BfR Germaniya tavsiyalariga mos. Xavfsiz — vitamin C suvda eriydigan, ortiqchasi to'planmaydi.
+
+VITAMIN D3
+
+KUNLIK ME'YORLARI (EFSA, DGE Germaniya):
+1 yoshdan bolalar va kattalar: 800 XB (20 mkg)/kun — standart
+Quyosh yetishmasa: 1000-2000 XB/kun
+DGE Germaniya: teridagi sintez bo'lmaganda 800 XB/kun
+
+YUQORI XAVFSIZ DARAJA:
+EFSA, NHS: kattalar uchun 4000 XB (100 mkg)/kun
+1-10 yosh bolalar: 2000 XB/kun
+
+MAHSULOT BILAN QOPLANISH: 1 kapsula (2000 XB) = standart me'yorning (800 XB) 250%, quyosh yetishmaganda 100%. UL (4000 XB) ning yarmi — xavfsiz. Tadqiqotlar: 2000 XB optimal darajani saqlashda 1000 XB dan samaraliroq.
+
+BIFOLAK ZINCUM+C+D3 DOZALASH:
+
+Standart rejim: 1 kapsula/kun, kurs 10-20 kun.
+Kuchaytirilgan rejim (shamollashda): 2 kapsula/kun, 5-10 kun. Keyin 1 kapsula/kun.
+Profilaktika (shamollash mavsumi): 1 kapsula/kun, 20 kunlik kurslar 1 oy tanaffus bilan.
+
+REJIM: ovqatdan keyin, kechqurun yaxshiroq (D3 so'rilishi uchun ovqatdagi yog' kerak).
+
+MAVSUMIY PROFILAKTIKA SXEMASI:
+Sentyabr: 20 kunlik kurs. Oktyabr: tanaffus. Noyabr: 20 kunlik kurs. Dekabr: tanaffus. Yanvar: 20 kunlik kurs.
+
+ANTIBIOTIKDAN KEYIN:
+Antibiotik tugagandan keyingi kundan boshlash. Kurs 20 kun.
+Agar antibiotik hali qabul qilinayotgan bo'lsa: antibiotik ertalab, BIFOLAK kechqurun (4-6 soat interval).
+
+MAXSUS GURUHLAR:
+Keksalar (65+): optimal — D3 va sinkka ehtiyoj yuqori. 1 kapsula/kun.
+Emiziklilar: ginekolog bilan maslahat bilan ruxsat etiladi. 1 kapsula/kun.
+Chekuvchilar: vitamin C ga ehtiyoj yuqori. 1 kapsula/kun qoplaydi.
+Sportchilar: ter bilan sink yo'qolishi, mashg'ulotdan keyin foydali.
+Vegetarianlar: sink va D3 ga ehtiyoj yuqori.
+TAVSIYA ETILMAYDI: ginekolog bilan maslahatsiz homiladorlarga, 15 yoshgacha bolalarga.
+
+KUCHAYTIRILGAN REJIMDA (2 kapsula/kun): sink 50 mg (UL 40 mg dan oshadi) — faqat o'tkir shamollashda qisqa muddatga (5-10 kun). 10 kundan oshmasin!
+===/СЕКЦИЯ===
