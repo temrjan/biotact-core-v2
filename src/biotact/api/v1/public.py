@@ -161,7 +161,7 @@ async def is_order_already_sent(user_id: str) -> bool:
     """Check if an order was already sent for this user in the last hour."""
     try:
         r = await get_redis()
-        return await r.exists(f"public:{user_id}:order_sent") == 1
+        return bool(await r.exists(f"public:{user_id}:order_sent"))
     except Exception as e:
         logger.warning(f"Redis order check error: {e}")
         return False
@@ -306,7 +306,7 @@ def extract_phone(text: str) -> str | None:
     return None
 
 
-def detect_order(text: str, history: list[dict[str, str]]) -> dict | None:
+def detect_order(text: str, history: list[dict[str, str]]) -> dict[str, Any] | None:
     """Detect if message contains order data."""
     phone = extract_phone(text)
     if not phone:
@@ -369,7 +369,10 @@ async def parse_order_with_llm(
             temperature=0,
             max_tokens=500,
         )
-        resp_content = response.choices[0].message.content.strip()
+        raw_content = response.choices[0].message.content
+        if raw_content is None:
+            return None
+        resp_content = raw_content.strip()
         parsed = json.loads(resp_content)
 
         if parsed.get("products"):
@@ -382,7 +385,7 @@ async def parse_order_with_llm(
                     })
             parsed["products"] = valid_products
 
-        return parsed
+        return parsed  # type: ignore[no-any-return]
     except Exception as e:
         logger.warning(f"Order parsing failed: {e}")
         return None
@@ -436,7 +439,7 @@ def format_order_for_sales(
 
 
 async def send_order_to_sales(
-    order_data: dict,
+    order_data: dict[str, Any],
     user_id: str,
     history: list[dict[str, str]],
     first_name: str | None = None,
@@ -553,7 +556,7 @@ async def process_rag_query(
         query_vector = await embedding_service.embed_text(enriched_message)
         search_results = await qdrant_service.search(
             query_vector=query_vector,
-            department_id=config.department_filter,
+            department_id=config.department_filter or "",
             limit=config.rag_limit,
             score_threshold=config.score_threshold,
         )

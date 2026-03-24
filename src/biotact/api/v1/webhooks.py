@@ -544,7 +544,10 @@ async def parse_order_with_llm(
             temperature=0,
             max_tokens=500,
         )
-        content = response.choices[0].message.content.strip()
+        raw_content = response.choices[0].message.content
+        if raw_content is None:
+            return None
+        content = raw_content.strip()
         parsed = json.loads(content)
 
         # Validate products exist in PRODUCT_PRICES
@@ -558,7 +561,7 @@ async def parse_order_with_llm(
                     })
             parsed["products"] = valid_products
 
-        return parsed
+        return parsed  # type: ignore[no-any-return]
     except Exception as e:
         logger.warning("Order parsing failed", extra={"error": str(e), "raw_text": raw_text[:200]})
         return None
@@ -996,7 +999,7 @@ async def process_rag_query(
         query_vector = await embedding_service.embed_text(message)
         search_results = await qdrant_service.search(
             query_vector=query_vector,
-            department_id=config.department_filter,
+            department_id=config.department_filter or "",
             limit=config.rag_limit,
             score_threshold=config.score_threshold,
         )

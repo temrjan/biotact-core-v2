@@ -11,6 +11,7 @@ from biotact.core.config import Settings, get_settings
 from biotact.core.database import get_session
 from biotact.core.security import TokenError, decode_access_token
 from biotact.models.user import User
+from biotact.modules.command.base import BaseCommandService
 from biotact.modules.dashboard.config import dashboard_config
 from biotact.modules.dashboard.service import DashboardService
 from biotact.repositories.chat_repo import ChatRepository
@@ -124,8 +125,8 @@ async def get_chat_service(
 ) -> ChatService:
     """Get ChatService instance with RAG and command dependencies."""
     # Register command services by department
-    command_services = {
-        "dashboard": dashboard_service,
+    command_services: dict[str, BaseCommandService] = {
+        "dashboard": dashboard_service,  # type: ignore[dict-item]
     }
 
     return ChatService(

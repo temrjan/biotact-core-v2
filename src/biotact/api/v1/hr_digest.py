@@ -54,7 +54,7 @@ async def get_digest_history(
         List of digest responses.
     """
     service = get_digest_service()
-    return await service.get_digest_history(db, limit=limit, offset=offset)
+    return await service.get_digest_history(limit=limit, offset=offset, db=db)
 
 
 @router.get("/{date}", response_model=DigestResponse)
@@ -75,7 +75,7 @@ async def get_digest_by_date(
         HTTPException: If digest not found for this date.
     """
     service = get_digest_service()
-    digest = await service.get_digest_by_date(db, date)
+    digest = await service.get_digest_by_date(date, db)
 
     if not digest:
         raise HTTPException(
@@ -114,7 +114,7 @@ async def generate_digest_manual(
     )
 
     # Convert to response model
-    digest = await service.get_digest_by_date(db, db_digest.date.date())
+    digest = await service.get_digest_by_date(db_digest.date.date(), db)
 
     if not digest:
         raise HTTPException(

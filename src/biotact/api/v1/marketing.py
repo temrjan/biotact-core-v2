@@ -62,11 +62,11 @@ async def generate_content(
                 json=req.model_dump(exclude_none=True),
             )
             response.raise_for_status()
-    except httpx.TimeoutException:
+    except httpx.TimeoutException as e:
         raise HTTPException(
             status_code=504,
             detail="Content generation timed out. Try again.",
-        )
+        ) from e
     except httpx.HTTPError as e:
         logger.exception("content-agent-api request failed")
         raise HTTPException(

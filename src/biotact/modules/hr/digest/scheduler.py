@@ -2,7 +2,7 @@
 
 import logging
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler  # type: ignore[import-untyped]
 
 logger = logging.getLogger(__name__)
 

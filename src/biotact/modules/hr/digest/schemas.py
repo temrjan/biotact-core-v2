@@ -1,6 +1,7 @@
 """Pydantic schemas for HR Digest."""
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -86,7 +87,7 @@ class DigestCreate(BaseModel):
 
     date: datetime = Field(default_factory=datetime.now)
     content_markdown: str
-    content_json: dict
+    content_json: dict[str, Any]
     news_count: int
     generated_by: str = Field(default="auto", description="auto | manual")
 

@@ -14,6 +14,7 @@ import asyncio
 import json
 import logging
 from datetime import datetime, timezone
+from typing import Any
 
 from openai import AsyncOpenAI
 from sqlalchemy import select, update
@@ -88,7 +89,7 @@ class ExtractionAgent:
         user_message: str,
         assistant_message: str,
         current_summary: str | None = None,
-    ) -> dict | None:
+    ) -> dict[str, Any] | None:
         """Extract entities from a message pair.
 
         Args:
@@ -132,7 +133,7 @@ class ExtractionAgent:
                     if any(p.upper().startswith(v.upper()) for v in VALID_PRODUCTS)
                 ]
 
-            return data
+            return data  # type: ignore[no-any-return]
 
         except json.JSONDecodeError as e:
             logger.warning(f"Extraction JSON parse error: {e}, raw: {raw[:200]}")
@@ -179,7 +180,7 @@ class ExtractionAgent:
 
     async def _get_active_insight(
         self, session: AsyncSession, telegram_id: int,
-    ) -> dict | None:
+    ) -> dict[str, Any] | None:
         """Get active conversation insight for a user."""
         result = await session.execute(
             select(_conversation_insights).where(
@@ -196,8 +197,8 @@ class ExtractionAgent:
         self,
         session: AsyncSession,
         telegram_id: int,
-        data: dict,
-        current: dict | None,
+        data: dict[str, Any],
+        current: dict[str, Any] | None,
     ) -> None:
         """Insert or update conversation insight."""
         now = datetime.now(timezone.utc)
@@ -259,8 +260,8 @@ class ExtractionAgent:
             )
 
     def _merge_family(
-        self, existing: list[dict], new: list[dict],
-    ) -> list[dict]:
+        self, existing: list[dict[str, Any]], new: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
         """Merge family members by relation."""
         by_relation = {}
         for member in existing:
@@ -309,7 +310,7 @@ def sa_table(name: str) -> Table:
     return _conversation_insights
 
 
-def sa_col(name: str) -> Column:
+def sa_col(name: str) -> Column[Any]:
     """Get column from conversation_insights table."""
     return _conversation_insights.c[name]
 
@@ -317,7 +318,7 @@ def sa_col(name: str) -> Column:
 # ---------------------------------------------------------------------------
 # Helper: read active insight (for use in enrichment, outside agent)
 # ---------------------------------------------------------------------------
-async def get_active_insight(telegram_id: int) -> dict | None:
+async def get_active_insight(telegram_id: int) -> dict[str, Any] | None:
     """Read active conversation insight for enrichment.
 
     Returns dict with products, symptoms, semantic_summary etc. or None.

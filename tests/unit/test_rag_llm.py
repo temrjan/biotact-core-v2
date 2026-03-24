@@ -13,7 +13,8 @@ def mock_settings() -> MagicMock:
     """Create mock settings."""
     settings = MagicMock()
     settings.openai_api_key = "test-api-key"
-    settings.openai_model = "gpt-4o"
+    settings.llm_model = "gpt-4o"
+    settings.llm_provider = "openai"
     return settings
 
 

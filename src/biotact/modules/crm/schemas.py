@@ -1,6 +1,7 @@
 """Pydantic schemas for CRM module."""
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -81,7 +82,7 @@ class CustomerResponse(BaseModel):
     language_code: str
     phone: str | None
     problems: list[str]
-    family: list[dict]
+    family: list[dict[str, Any]]
     purchased_products: list[str]
     ai_notes: str | None
     created_at: datetime
@@ -97,7 +98,7 @@ class CustomerBriefResponse(BaseModel):
     first_name: str | None
     phone: str | None
     problems: list[str]
-    family: list[dict]
+    family: list[dict[str, Any]]
     purchased_products: list[str]
     ai_notes: str | None
 

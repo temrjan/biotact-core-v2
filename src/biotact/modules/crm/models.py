@@ -1,6 +1,7 @@
 """SQLAlchemy models for CRM module."""
 
 from datetime import datetime
+from typing import Any
 
 from sqlalchemy import BigInteger, DateTime, String, Text, func
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
@@ -48,7 +49,7 @@ class TelegramCustomer(Base):
     )
     
     # Family members: [{"name": "Алия", "relation": "дочь", "age": 5, "problems": ["immunity"]}]
-    family: Mapped[list[dict]] = mapped_column(
+    family: Mapped[list[dict[str, Any]]] = mapped_column(
         JSONB,
         default=list,
         server_default="[]",

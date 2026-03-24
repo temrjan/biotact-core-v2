@@ -88,7 +88,7 @@ class DigestService:
 
         logger.info(f"Digest saved to database: ID={db_digest.id}")
 
-        return db_digest.id
+        return db_digest.id  # type: ignore[return-value]
 
     async def get_latest_digest(self, db: AsyncSession) -> DigestResponse | None:
         """Get latest digest from database.
@@ -149,6 +149,9 @@ class DigestService:
             List of digests, most recent first.
         """
         from biotact.models import HRDigest
+
+        if db is None:
+            raise ValueError("Database session is required")
 
         result = await db.execute(
             select(HRDigest)
@@ -255,7 +258,7 @@ class DigestService:
         )
         await db.commit()
 
-        deleted_count = result.rowcount
+        deleted_count: int = result.rowcount  # type: ignore[assignment]
         logger.info(f"Cleaned up {deleted_count} old digests and their news items")
 
         return deleted_count

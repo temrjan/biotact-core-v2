@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import httpx
-from telethon import TelegramClient
+from telethon import TelegramClient  # type: ignore[import-untyped]
 
 from biotact.core.config import Settings
 from biotact.modules.hr.digest.config import TELEGRAM_CHANNELS, WEB_SOURCES

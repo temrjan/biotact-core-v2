@@ -14,7 +14,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler  # type: ignore[import-untyped]
 
 from biotact.core.config import get_settings
 from biotact.core.database import AsyncSessionLocal
@@ -158,7 +158,7 @@ from typing import Callable, Dict, Any, Awaitable
 class AuthMiddleware(BaseMiddleware):
     """Middleware to restrict bot access to allowed users."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         logger.info(f"Auth middleware initialized. Allowed users: {get_allowed_users()}")
 
@@ -196,6 +196,7 @@ class AuthMiddleware(BaseMiddleware):
 @dp.message(CommandStart())
 async def cmd_start(message: Message) -> None:
     """Handle /start command."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     await message.answer(
@@ -215,6 +216,7 @@ async def cmd_start(message: Message) -> None:
 @dp.message(Command("help"))
 async def cmd_help(message: Message) -> None:
     """Handle /help command."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     help_text = (
@@ -245,6 +247,7 @@ async def cmd_help(message: Message) -> None:
 @dp.message(Command("digest"))
 async def cmd_digest(message: Message) -> None:
     """Handle /digest command - show latest digest."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     try:
@@ -297,6 +300,7 @@ async def cmd_digest(message: Message) -> None:
 @dp.message(Command("history"))
 async def cmd_history(message: Message) -> None:
     """Handle /history command - show digest history."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     try:
@@ -330,6 +334,7 @@ async def cmd_history(message: Message) -> None:
 @dp.message(Command("generate"))
 async def cmd_generate(message: Message) -> None:
     """Handle /generate command - manually generate digest."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     try:
@@ -360,6 +365,7 @@ async def cmd_generate(message: Message) -> None:
 @dp.message(Command("cleanup"))
 async def cmd_cleanup(message: Message) -> None:
     """Handle /cleanup command - manually cleanup old digests (admin only)."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     if not user_is_admin:
@@ -402,6 +408,7 @@ async def cmd_cleanup(message: Message) -> None:
 @dp.message(F.text == "➕ Добавить пользователя")
 async def btn_add_user(message: Message, state: FSMContext) -> None:
     """Handle 'Добавить пользователя' button - admin only."""
+    assert message.from_user is not None
     if not is_admin(message.from_user.id):
         await message.answer("❌ Только администратор может добавлять пользователей")
         return
@@ -419,6 +426,7 @@ async def btn_add_user(message: Message, state: FSMContext) -> None:
 @dp.message(AddUserStates.waiting_for_user_id)
 async def process_new_user_id(message: Message, state: FSMContext) -> None:
     """Process user ID input."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     if message.text == "/cancel":
@@ -428,7 +436,7 @@ async def process_new_user_id(message: Message, state: FSMContext) -> None:
 
     # Validate ID
     try:
-        new_user_id = int(message.text.strip())
+        new_user_id = int((message.text or "").strip())
     except ValueError:
         await message.answer(
             "❌ Неверный формат!\n\n"
@@ -464,9 +472,10 @@ async def process_new_user_id(message: Message, state: FSMContext) -> None:
 @dp.message(AddUserStates.waiting_for_confirmation)
 async def process_confirmation(message: Message, state: FSMContext) -> None:
     """Process confirmation."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
-    answer = message.text.strip().lower()
+    answer = (message.text or "").strip().lower()
 
     if answer not in ['да', 'нет', 'yes', 'no']:
         await message.answer(
@@ -482,7 +491,7 @@ async def process_confirmation(message: Message, state: FSMContext) -> None:
 
     # Get saved user ID
     data = await state.get_data()
-    new_user_id = data.get('new_user_id')
+    new_user_id: int = data['new_user_id']
 
     # Add user
     success = add_user_to_allowed(new_user_id)
@@ -508,6 +517,7 @@ async def process_confirmation(message: Message, state: FSMContext) -> None:
 @dp.message(F.text == "👥 Список пользователей")
 async def btn_list_users(message: Message) -> None:
     """Handle 'Список пользователей' button - admin only."""
+    assert message.from_user is not None
     user_is_admin = is_admin(message.from_user.id)
 
     if not user_is_admin:
@@ -633,7 +643,7 @@ async def start_bot() -> None:
     logger.info(f"Allowed users: {get_allowed_users()}")
 
     # Setup authentication middleware
-    dp.message.middleware(AuthMiddleware())
+    dp.message.middleware(AuthMiddleware())  # type: ignore[no-untyped-call]
 
     # Setup bot commands menu
     await setup_bot_commands(bot)

@@ -1,6 +1,7 @@
 """LLM service for generating responses (OpenAI or Anthropic)."""
 
 from anthropic import AsyncAnthropic
+from anthropic.types import TextBlock
 from openai import AsyncOpenAI
 
 from biotact.core.config import Settings
@@ -26,10 +27,13 @@ class LLMService:
         self.provider = settings.llm_provider
         self.model = settings.llm_model
 
+        self._anthropic_client: AsyncAnthropic | None = None
+        self._openai_client: AsyncOpenAI | None = None
+
         if self.provider == "anthropic":
-            self.client = AsyncAnthropic(api_key=settings.anthropic_api_key)
+            self._anthropic_client = AsyncAnthropic(api_key=settings.anthropic_api_key)
         else:  # openai
-            self.client = AsyncOpenAI(api_key=settings.openai_api_key)
+            self._openai_client = AsyncOpenAI(api_key=settings.openai_api_key)
 
     async def generate_response(
         self,
@@ -98,22 +102,25 @@ class LLMService:
         temperature: float,
     ) -> str:
         """Generate response using Anthropic Claude."""
-        messages = []
+        assert self._anthropic_client is not None
+
+        messages: list[dict[str, str]] = []
 
         if chat_history:
             messages.extend(chat_history[-10:])
 
         messages.append({"role": "user", "content": user_message})
 
-        response = await self.client.messages.create(
+        response = await self._anthropic_client.messages.create(
             model=self.model,
             system=system_prompt,
-            messages=messages,
+            messages=messages,  # type: ignore[arg-type]
             max_tokens=max_tokens,
             temperature=temperature,
         )
 
-        return response.content[0].text
+        text_block = next(b for b in response.content if isinstance(b, TextBlock))
+        return text_block.text
 
     async def _generate_openai(
         self,
@@ -124,6 +131,8 @@ class LLMService:
         temperature: float,
     ) -> str:
         """Generate response using OpenAI."""
+        assert self._openai_client is not None
+
         messages: list[dict[str, str]] = [
             {"role": "system", "content": system_prompt},
         ]
@@ -137,14 +146,14 @@ class LLMService:
         # Reasoning models use tokens for internal reasoning, so need higher limit
         new_api = self._needs_new_token_param()
         effective_tokens = max_tokens * 3 if new_api else max_tokens
-        params: dict = {
+        params: dict[str, object] = {
             "model": self.model,
             "messages": messages,
         }
         params["max_completion_tokens" if new_api else "max_tokens"] = effective_tokens
         if not new_api:
             params["temperature"] = temperature
-        response = await self.client.chat.completions.create(**params)
+        response = await self._openai_client.chat.completions.create(**params)  # type: ignore[arg-type]
 
         return response.choices[0].message.content or ""
 
@@ -170,17 +179,22 @@ class LLMService:
         system_text = "Создай короткий заголовок (3-5 слов) для чата на основе первого сообщения. Отвечай только заголовком, без кавычек."
 
         if self.provider == "anthropic":
-            response = await self.client.messages.create(
+            assert self._anthropic_client is not None
+            anthropic_response = await self._anthropic_client.messages.create(
                 model=self.model,
                 system=system_text,
-                messages=[{"role": "user", "content": first_message}],
+                messages=[{"role": "user", "content": first_message}],  # type: ignore[arg-type]
                 max_tokens=20,
                 temperature=0.5,
             )
-            title = response.content[0].text
+            text_block = next(
+                b for b in anthropic_response.content if isinstance(b, TextBlock)
+            )
+            title = text_block.text
         else:  # openai
+            assert self._openai_client is not None
             new_api = self._needs_new_token_param()
-            params2: dict = {
+            params2: dict[str, object] = {
                 "model": self.model,
                 "messages": [
                     {"role": "system", "content": system_text},
@@ -190,7 +204,7 @@ class LLMService:
             params2["max_completion_tokens" if new_api else "max_tokens"] = 200 if new_api else 20
             if not new_api:
                 params2["temperature"] = 0.5
-            response = await self.client.chat.completions.create(**params2)
-            title = response.choices[0].message.content or first_message[:50]
+            openai_response = await self._openai_client.chat.completions.create(**params2)  # type: ignore[arg-type]
+            title = openai_response.choices[0].message.content or first_message[:50]
 
         return title.strip()
