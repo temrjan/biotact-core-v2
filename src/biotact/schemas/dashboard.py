@@ -2,20 +2,20 @@
 
 from datetime import date, datetime
 from decimal import Decimal
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel, Field
 
 
-class TransactionType(str, Enum):
+class TransactionType(StrEnum):
     """Transaction type enum."""
 
     EXPENSE = "expense"
     INCOME = "income"
 
 
-class Category(str, Enum):
+class Category(StrEnum):
     """Financial category enum."""
 
     HOSTING = "hosting"
@@ -28,7 +28,7 @@ class Category(str, Enum):
     SALES = "sales"
 
 
-class Period(str, Enum):
+class Period(StrEnum):
     """Accounting period enum."""
 
     MONTHLY = "monthly"

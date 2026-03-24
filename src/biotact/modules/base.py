@@ -8,11 +8,11 @@ There are two types of modules:
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 
-class ModuleType(str, Enum):
+class ModuleType(StrEnum):
     """Type of module processing."""
 
     COMMAND = "command"  # Function Calling → SQL actions
