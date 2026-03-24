@@ -304,6 +304,7 @@ class ExtractionAgent:
 # SQLAlchemy table/column helpers (raw SQL approach, no ORM model needed)
 # ---------------------------------------------------------------------------
 from sqlalchemy import (
+    JSON,
     BigInteger,
     Boolean,
     Column,
@@ -322,10 +323,16 @@ _conversation_insights = Table(
     _metadata,
     Column("id", Integer, primary_key=True),
     Column("telegram_id", BigInteger, nullable=False),
-    Column("products", ARRAY(String), nullable=False),
-    Column("symptoms", ARRAY(String), nullable=False),
-    Column("constraints", ARRAY(String), nullable=False),
-    Column("family_members", JSONB, nullable=False),
+    Column(
+        "products", JSON().with_variant(ARRAY(String), "postgresql"), nullable=False
+    ),
+    Column(
+        "symptoms", JSON().with_variant(ARRAY(String), "postgresql"), nullable=False
+    ),
+    Column(
+        "constraints", JSON().with_variant(ARRAY(String), "postgresql"), nullable=False
+    ),
+    Column("family_members", JSON().with_variant(JSONB, "postgresql"), nullable=False),
     Column("client_age", Integer),
     Column("intent", String(30)),
     Column("phone", String(20)),

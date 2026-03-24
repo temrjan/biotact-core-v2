@@ -64,21 +64,32 @@ def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
 
 @pytest_asyncio.fixture(scope="function")
 async def test_engine() -> AsyncGenerator[AsyncEngine, None]:
-    """Create test database engine with SQLite in-memory."""
-    # Use SQLite for fast integration tests
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-        echo=False,
-    )
+    """Create test database engine.
 
-    # Enable foreign keys for SQLite
-    @event.listens_for(engine.sync_engine, "connect")
-    def set_sqlite_pragma(dbapi_conn: Any, _connection_record: Any) -> None:
-        cursor = dbapi_conn.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.close()
+    Uses PostgreSQL when DATABASE_URL is set (CI), SQLite otherwise (local dev).
+    """
+    import os
+
+    database_url = os.environ.get("DATABASE_URL")
+
+    if database_url:
+        # CI: use PostgreSQL service container
+        engine = create_async_engine(database_url, echo=False)
+    else:
+        # Local: use SQLite in-memory
+        engine = create_async_engine(
+            "sqlite+aiosqlite:///:memory:",
+            connect_args={"check_same_thread": False},
+            poolclass=StaticPool,
+            echo=False,
+        )
+
+        # Enable foreign keys for SQLite
+        @event.listens_for(engine.sync_engine, "connect")
+        def set_sqlite_pragma(dbapi_conn: Any, _connection_record: Any) -> None:
+            cursor = dbapi_conn.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            cursor.close()
 
     # Create all tables
     async with engine.begin() as conn:

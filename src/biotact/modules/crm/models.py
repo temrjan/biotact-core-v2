@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import BigInteger, DateTime, String, Text, func
+from sqlalchemy import JSON, BigInteger, DateTime, String, Text, func
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -43,23 +43,23 @@ class TelegramCustomer(Base):
 
     # Health problems/tags: ["immunity", "gut", "stress", "skin"]
     problems: Mapped[list[str]] = mapped_column(
-        ARRAY(String),
+        JSON().with_variant(ARRAY(String), "postgresql"),
         default=list,
-        server_default="{}",
+        server_default="[]",
     )
 
     # Family members: [{"name": "Алия", "relation": "дочь", "age": 5, "problems": ["immunity"]}]
     family: Mapped[list[dict[str, Any]]] = mapped_column(
-        JSONB,
+        JSON().with_variant(JSONB, "postgresql"),
         default=list,
         server_default="[]",
     )
 
     # Purchased products: ["IMMUNOCOMPLEX KIDS", "BIFOLAK ACTIVE"]
     purchased_products: Mapped[list[str]] = mapped_column(
-        ARRAY(String),
+        JSON().with_variant(ARRAY(String), "postgresql"),
         default=list,
-        server_default="{}",
+        server_default="[]",
     )
 
     # Free-form AI notes about the customer
