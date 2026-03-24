@@ -75,3 +75,47 @@ async def generate_content(
         ) from e
 
     return GenerateResponse(**response.json())
+
+
+class HistoryItem(BaseModel):
+    """Single history entry."""
+
+    id: int
+    product: str
+    context: str | None
+    variant_1: str
+    variant_2: str | None
+    model_used: str | None
+    warnings: list[str]
+    channel: str
+    user_id: str | None
+    created_at: str
+
+
+@router.get("/history", response_model=list[HistoryItem])
+async def get_history(
+    current_user: CurrentUserDep,
+    product: str | None = None,
+    days: int | None = None,
+    limit: int = 50,
+    offset: int = 0,
+) -> list[HistoryItem]:
+    """Get content generation history. Proxies to content-agent-api."""
+    params: dict[str, str | int] = {"limit": limit, "offset": offset}
+    if product:
+        params["product"] = product
+    if days:
+        params["days"] = days
+
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(
+                f"{CONTENT_AGENT_URL}/history",
+                params=params,
+            )
+            response.raise_for_status()
+    except httpx.HTTPError as e:
+        logger.exception("content-agent-api history request failed")
+        raise HTTPException(status_code=502, detail="History unavailable.") from e
+
+    return [HistoryItem(**item) for item in response.json()]

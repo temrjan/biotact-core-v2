@@ -242,3 +242,21 @@ export async function generateContent(product, context = null) {
     body: JSON.stringify(body),
   });
 }
+
+/**
+ * Get content generation history
+ * @param {Object} options - Filter options
+ * @param {string|null} options.product - Filter by product name
+ * @param {number|null} options.days - Filter by last N days
+ * @param {number} options.limit - Max results (default 50)
+ * @returns {Promise<Array>}
+ */
+export async function getContentHistory({ product, days, limit = 50 } = {}) {
+  const params = new URLSearchParams();
+  if (product) params.append('product', product);
+  if (days) params.append('days', days);
+  if (limit) params.append('limit', limit);
+
+  const query = params.toString() ? `?${params.toString()}` : '';
+  return apiRequest(`/marketing/history${query}`);
+}

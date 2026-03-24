@@ -427,6 +427,7 @@ function Dashboard({ onLogout }) {
   const [askLoading, setAskLoading] = useState(false);
 
   // Marketing — Content Generator
+  const [mktTab, setMktTab] = useState('generate'); // 'generate' | 'history'
   const [mktProduct, setMktProduct] = useState('');
   const [mktContext, setMktContext] = useState('');
   const [mktVariants, setMktVariants] = useState([]);
@@ -434,6 +435,10 @@ function Dashboard({ onLogout }) {
   const [mktError, setMktError] = useState(null);
   const [mktModel, setMktModel] = useState('');
   const [copiedIdx, setCopiedIdx] = useState(null);
+  const [mktHistory, setMktHistory] = useState([]);
+  const [mktHistoryLoading, setMktHistoryLoading] = useState(false);
+  const [mktHistoryFilter, setMktHistoryFilter] = useState('');
+  const [mktExpandedId, setMktExpandedId] = useState(null);
 
   const handleGenerate = useCallback(async () => {
     if (!mktProduct.trim()) return;
@@ -461,6 +466,33 @@ function Dashboard({ onLogout }) {
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 2000);
   }, []);
+
+  const loadHistory = useCallback(async () => {
+    setMktHistoryLoading(true);
+    try {
+      const data = await api.getContentHistory({
+        product: mktHistoryFilter || undefined,
+      });
+      setMktHistory(data);
+    } catch (e) {
+      console.error('Failed to load history:', e);
+    } finally {
+      setMktHistoryLoading(false);
+    }
+  }, [mktHistoryFilter]);
+
+  // Load history when switching to history tab
+  useEffect(() => {
+    if (section === 'marketing' && mktTab === 'history') {
+      loadHistory();
+    }
+  }, [section, mktTab, loadHistory]);
+
+  // Reload history after generation
+  const handleGenerateAndSave = useCallback(async () => {
+    await handleGenerate();
+    if (mktTab === 'history') loadHistory();
+  }, [handleGenerate, mktTab, loadHistory]);
 
   const askEndRef = useRef(null);
   const askInputRef = useRef(null);
@@ -920,11 +952,33 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         </div>
         )}
 
-        {/* Marketing — Content Generator */}
+        {/* Marketing — Content Generator + History */}
         {section === 'marketing' && (
         <div className="flex-1 overflow-auto p-8">
           <div className="max-w-3xl mx-auto space-y-6">
-            {/* Input Form */}
+            {/* Tabs */}
+            <div className="flex gap-1 p-1 rounded-xl" style={{ backgroundColor: theme.bg.elevated }}>
+              {[
+                { id: 'generate', label: 'Генератор', icon: Sparkles },
+                { id: 'history', label: 'История', icon: FileText },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setMktTab(tab.id)}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                  style={{
+                    backgroundColor: mktTab === tab.id ? theme.bg.card : 'transparent',
+                    color: mktTab === tab.id ? theme.text.primary : theme.text.muted,
+                    boxShadow: mktTab === tab.id ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                  }}
+                >
+                  <tab.icon size={14} /> {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* ── Generate Tab ── */}
+            {mktTab === 'generate' && (<>
             <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
               <div className="space-y-4">
                 <div>
@@ -968,7 +1022,6 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
 
-            {/* Error */}
             {mktError && (
               <div className="rounded-xl p-4 flex items-center gap-3" style={{ backgroundColor: theme.bg.elevated }}>
                 <AlertCircle size={18} style={{ color: '#ef4444' }} />
@@ -976,7 +1029,6 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             )}
 
-            {/* Results */}
             {mktVariants.map((v, idx) => (
               <div key={idx} className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: v.is_blocked ? '#ef4444' : theme.border.default }}>
                 <div className="flex items-center justify-between">
@@ -1008,24 +1060,104 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             ))}
 
-            {/* Regenerate */}
             {mktVariants.length > 0 && (
               <div className="flex gap-3">
-                <button
-                  onClick={handleGenerate}
-                  disabled={mktLoading}
+                <button onClick={handleGenerate} disabled={mktLoading}
                   className="flex-1 py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 border transition-colors"
-                  style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
-                >
+                  style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}>
                   <RefreshCw size={14} /> Переделать
                 </button>
               </div>
             )}
 
-            {/* Model info */}
             {mktModel && mktVariants.length > 0 && (
               <p className="text-center text-xs" style={{ color: theme.text.muted }}>Модель: {mktModel}</p>
             )}
+            </>)}
+
+            {/* ── History Tab ── */}
+            {mktTab === 'history' && (<>
+            {/* Filter */}
+            <div className="flex gap-3">
+              <input
+                type="text"
+                value={mktHistoryFilter}
+                onChange={e => setMktHistoryFilter(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && loadHistory()}
+                placeholder="Фильтр по продукту..."
+                className="flex-1 px-4 py-2.5 rounded-xl text-sm border outline-none"
+                style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default, color: theme.text.primary }}
+              />
+              <button onClick={loadHistory} className="px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 border"
+                style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}>
+                {mktHistoryLoading ? <Loader2 size={14} className="animate-spin" /> : <RefreshCw size={14} />} Обновить
+              </button>
+            </div>
+
+            {/* History List */}
+            {mktHistory.length === 0 && !mktHistoryLoading && (
+              <div className="text-center py-12">
+                <FileText size={32} style={{ color: theme.text.muted }} className="mx-auto mb-3" />
+                <p className="text-sm" style={{ color: theme.text.muted }}>История пуста</p>
+              </div>
+            )}
+
+            {mktHistory.map(item => (
+              <div key={item.id} className="rounded-2xl border overflow-hidden" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+                {/* Header — always visible */}
+                <button
+                  onClick={() => setMktExpandedId(mktExpandedId === item.id ? null : item.id)}
+                  className="w-full px-5 py-4 flex items-center justify-between text-left"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold" style={{ color: theme.text.primary }}>{item.product}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
+                        backgroundColor: item.channel === 'telegram' ? '#e0f2fe' : theme.bg.elevated,
+                        color: item.channel === 'telegram' ? '#0284c7' : theme.text.muted,
+                      }}>{item.channel}</span>
+                    </div>
+                    <div className="flex items-center gap-3 mt-1">
+                      <span className="text-xs" style={{ color: theme.text.muted }}>
+                        {new Date(item.created_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                      {item.context && <span className="text-xs" style={{ color: theme.text.muted }}>{item.context}</span>}
+                    </div>
+                  </div>
+                  <ChevronRight size={16} style={{ color: theme.text.muted, transform: mktExpandedId === item.id ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                </button>
+
+                {/* Expanded content */}
+                {mktExpandedId === item.id && (
+                  <div className="px-5 pb-5 space-y-4 border-t" style={{ borderColor: theme.border.default }}>
+                    <div className="pt-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-medium" style={{ color: theme.text.muted }}>Вариант 1</span>
+                        <button onClick={() => handleCopy(item.variant_1, `h1-${item.id}`)}
+                          className="text-xs flex items-center gap-1" style={{ color: theme.text.muted }}>
+                          {copiedIdx === `h1-${item.id}` ? <><Check size={10} /> Скопировано</> : <><Copy size={10} /> Копировать</>}
+                        </button>
+                      </div>
+                      <div className="text-sm leading-relaxed whitespace-pre-wrap p-3 rounded-lg" style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}>{item.variant_1}</div>
+                    </div>
+                    {item.variant_2 && (
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs font-medium" style={{ color: theme.text.muted }}>Вариант 2</span>
+                          <button onClick={() => handleCopy(item.variant_2, `h2-${item.id}`)}
+                            className="text-xs flex items-center gap-1" style={{ color: theme.text.muted }}>
+                            {copiedIdx === `h2-${item.id}` ? <><Check size={10} /> Скопировано</> : <><Copy size={10} /> Копировать</>}
+                          </button>
+                        </div>
+                        <div className="text-sm leading-relaxed whitespace-pre-wrap p-3 rounded-lg" style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}>{item.variant_2}</div>
+                      </div>
+                    )}
+                    {item.model_used && <p className="text-xs" style={{ color: theme.text.muted }}>Модель: {item.model_used}</p>}
+                  </div>
+                )}
+              </div>
+            ))}
+            </>)}
           </div>
         </div>
         )}
