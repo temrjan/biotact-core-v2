@@ -1,6 +1,6 @@
 """SQLAlchemy models for HR Digest."""
 
-from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Column, Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -16,7 +16,7 @@ class HRDigest(Base):
     id = Column(Integer, primary_key=True, index=True)
     date = Column(Date, nullable=False, unique=True, index=True)
     content_markdown = Column(Text, nullable=False)
-    content_json = Column(JSONB, nullable=False)
+    content_json = Column(JSON().with_variant(JSONB, "postgresql"), nullable=False)
     news_count = Column(Integer, nullable=False)
     created_at = Column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
