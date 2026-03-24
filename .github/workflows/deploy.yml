@@ -32,7 +32,7 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
 
-            # Pull latest code
+            # Pull latest code (preserve node_modules)
             git fetch origin main
             git reset --hard origin/main
 
@@ -41,10 +41,11 @@ jobs:
 
             # Rebuild frontend
             cd frontend/dashboard
-            chmod +x node_modules/.bin/vite node_modules/@esbuild/linux-x64/bin/esbuild
-            node_modules/.bin/vite build
+            npm ci --prefer-offline
+            npm run build
             rm -rf /var/www/dashboard/assets/*
             cp -r dist/* /var/www/dashboard/
+            nginx -s reload
             cd ../..
 
             # Health check
