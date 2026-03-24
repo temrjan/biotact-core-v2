@@ -160,6 +160,8 @@ ignore_missing_imports = false
 module = [
     "qdrant_client.*",
     "jose.*",
+    "apscheduler.*",
+    "telethon.*",
 ]
 ignore_missing_imports = true
 

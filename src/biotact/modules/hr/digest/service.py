@@ -264,7 +264,7 @@ class DigestService:
         result = await db.execute(delete(HRDigest).where(HRDigest.date < cutoff_date))
         await db.commit()
 
-        deleted_count: int = result.rowcount  # type: ignore[assignment]
+        deleted_count: int = result.rowcount  # type: ignore[attr-defined]
         logger.info(f"Cleaned up {deleted_count} old digests and their news items")
 
         return deleted_count

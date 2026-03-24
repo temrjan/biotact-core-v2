@@ -154,7 +154,7 @@ class LLMService:
         params["max_completion_tokens" if new_api else "max_tokens"] = effective_tokens
         if not new_api:
             params["temperature"] = temperature
-        response = await self._openai_client.chat.completions.create(**params)  # type: ignore[arg-type]
+        response = await self._openai_client.chat.completions.create(**params)  # type: ignore[call-overload]
 
         return response.choices[0].message.content or ""
 
@@ -184,7 +184,7 @@ class LLMService:
             anthropic_response = await self._anthropic_client.messages.create(
                 model=self.model,
                 system=system_text,
-                messages=[{"role": "user", "content": first_message}],  # type: ignore[arg-type]
+                messages=[{"role": "user", "content": first_message}],
                 max_tokens=20,
                 temperature=0.5,
             )
@@ -209,7 +209,7 @@ class LLMService:
                 params2["temperature"] = 0.5
             openai_response = await self._openai_client.chat.completions.create(
                 **params2
-            )  # type: ignore[arg-type]
+            )  # type: ignore[call-overload]
             title = openai_response.choices[0].message.content or first_message[:50]
 
         return title.strip()

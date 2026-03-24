@@ -128,7 +128,7 @@ async def get_chat_service(
     """Get ChatService instance with RAG and command dependencies."""
     # Register command services by department
     command_services: dict[str, BaseCommandService] = {
-        "dashboard": dashboard_service,  # type: ignore[dict-item]
+        "dashboard": dashboard_service,
     }
 
     return ChatService(

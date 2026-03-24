@@ -17,9 +17,7 @@ from aiogram.types import (
     Message,
     ReplyKeyboardMarkup,
 )
-from apscheduler.schedulers.asyncio import (
-    AsyncIOScheduler,  # type: ignore[import-untyped]
-)
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from biotact.core.config import get_settings
 from biotact.core.database import AsyncSessionLocal
@@ -685,7 +683,7 @@ async def start_bot() -> None:
     logger.info(f"Allowed users: {get_allowed_users()}")
 
     # Setup authentication middleware
-    dp.message.middleware(AuthMiddleware())  # type: ignore[no-untyped-call]
+    dp.message.middleware(AuthMiddleware())
 
     # Setup bot commands menu
     await setup_bot_commands(bot)
