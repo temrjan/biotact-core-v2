@@ -220,3 +220,25 @@ export async function updatePrompt(name, content) {
 export async function listPrompts() {
   return apiRequest('/prompts/');
 }
+
+// ═══════════════════════════════════════════════════════════════
+// MARKETING — Content Generation
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Generate 2 post variants for a BIOTACT product
+ * @param {string} product - Product name
+ * @param {string|null} context - Optional context (audience, season, trend)
+ * @returns {Promise<{variants: Array, model_used: string, error: string|null}>}
+ */
+export async function generateContent(product, context = null) {
+  const body = { product };
+  if (context) {
+    body.context = context;
+  }
+
+  return apiRequest('/marketing/generate', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}

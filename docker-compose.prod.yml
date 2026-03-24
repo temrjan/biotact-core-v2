@@ -48,7 +48,7 @@ services:
       REDIS_PORT: 6379
 
       # CORS
-      CORS_ORIGINS: '["https://biotact.uz","https://app.biotact.uz"]'
+      CORS_ORIGINS: '["https://biotact.uz","https://app.biotact.uz","https://core.biotact.uz"]'
 
       # Telegram Bot
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}

@@ -425,6 +425,43 @@ function Dashboard({ onLogout }) {
   ]);
   const [askInput, setAskInput] = useState('');
   const [askLoading, setAskLoading] = useState(false);
+
+  // Marketing — Content Generator
+  const [mktProduct, setMktProduct] = useState('');
+  const [mktContext, setMktContext] = useState('');
+  const [mktVariants, setMktVariants] = useState([]);
+  const [mktLoading, setMktLoading] = useState(false);
+  const [mktError, setMktError] = useState(null);
+  const [mktModel, setMktModel] = useState('');
+  const [copiedIdx, setCopiedIdx] = useState(null);
+
+  const handleGenerate = useCallback(async () => {
+    if (!mktProduct.trim()) return;
+    setMktLoading(true);
+    setMktError(null);
+    setMktVariants([]);
+    setCopiedIdx(null);
+    try {
+      const data = await api.generateContent(mktProduct.trim(), mktContext.trim() || null);
+      if (data.error) {
+        setMktError(data.error);
+      } else {
+        setMktVariants(data.variants);
+        setMktModel(data.model_used);
+      }
+    } catch (e) {
+      setMktError(e.message || 'Error');
+    } finally {
+      setMktLoading(false);
+    }
+  }, [mktProduct, mktContext]);
+
+  const handleCopy = useCallback(async (text, idx) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 2000);
+  }, []);
+
   const askEndRef = useRef(null);
   const askInputRef = useRef(null);
 
@@ -582,7 +619,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 {section === 'hr' && 'HR / Кадры'}
               </h1>
               <p className="text-xs" style={{ color: theme.text.muted }}>
-                {section === 'askbiotact' ? 'AI Консультант' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
+                {section === 'askbiotact' ? 'AI Консультант' : section === 'marketing' ? 'Генератор контента' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -883,16 +920,124 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         </div>
         )}
 
-        {/* Marketing & HR Placeholder */}
-        {(section === 'marketing' || section === 'hr') && (
+        {/* Marketing — Content Generator */}
+        {section === 'marketing' && (
+        <div className="flex-1 overflow-auto p-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            {/* Input Form */}
+            <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: theme.text.primary }}>Продукт</label>
+                  <input
+                    type="text"
+                    value={mktProduct}
+                    onChange={e => setMktProduct(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && !mktLoading && handleGenerate()}
+                    placeholder="Иммунокомплекс, Бифолак Нео, Кальций Триактив Д3..."
+                    className="w-full px-4 py-3 rounded-xl text-sm border outline-none transition-colors"
+                    style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: theme.text.muted }}>
+                    Контекст <span className="font-normal">(опционально)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={mktContext}
+                    onChange={e => setMktContext(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && !mktLoading && handleGenerate()}
+                    placeholder="для мам, осень, тренд — иммунитет детей"
+                    className="w-full px-4 py-3 rounded-xl text-sm border outline-none transition-colors"
+                    style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                  />
+                </div>
+                <button
+                  onClick={handleGenerate}
+                  disabled={mktLoading || !mktProduct.trim()}
+                  className="w-full py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2"
+                  style={{
+                    backgroundColor: mktLoading || !mktProduct.trim() ? theme.bg.elevated : theme.bg.accent,
+                    color: mktLoading || !mktProduct.trim() ? theme.text.muted : '#fff',
+                    cursor: mktLoading || !mktProduct.trim() ? 'not-allowed' : 'pointer',
+                  }}
+                >
+                  {mktLoading ? <><Loader2 size={16} className="animate-spin" /> Генерирую...</> : <><Sparkles size={16} /> Сгенерировать посты</>}
+                </button>
+              </div>
+            </div>
+
+            {/* Error */}
+            {mktError && (
+              <div className="rounded-xl p-4 flex items-center gap-3" style={{ backgroundColor: theme.bg.elevated }}>
+                <AlertCircle size={18} style={{ color: '#ef4444' }} />
+                <span className="text-sm" style={{ color: '#ef4444' }}>{mktError}</span>
+              </div>
+            )}
+
+            {/* Results */}
+            {mktVariants.map((v, idx) => (
+              <div key={idx} className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: v.is_blocked ? '#ef4444' : theme.border.default }}>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Вариант {idx + 1}</h3>
+                  <button
+                    onClick={() => handleCopy(v.text, idx)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors"
+                    style={{ backgroundColor: theme.bg.elevated, color: copiedIdx === idx ? theme.text.success : theme.text.muted }}
+                  >
+                    {copiedIdx === idx ? <><Check size={12} /> Скопировано</> : <><Copy size={12} /> Копировать</>}
+                  </button>
+                </div>
+                <div className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: theme.text.secondary }}>{v.text}</div>
+                {v.is_blocked && (
+                  <div className="rounded-lg p-3 text-xs flex items-center gap-2" style={{ backgroundColor: '#fef2f2', color: '#ef4444' }}>
+                    <AlertCircle size={14} /> Заблокировано: {v.stop_words_found.join(', ')}
+                  </div>
+                )}
+                {v.warnings.length > 0 && (
+                  <div className="rounded-lg p-3 text-xs" style={{ backgroundColor: theme.bg.elevated, color: theme.text.muted }}>
+                    Проверьте: {v.warnings.join(', ')}
+                  </div>
+                )}
+                {v.replacements_made.length > 0 && (
+                  <div className="rounded-lg p-3 text-xs" style={{ backgroundColor: theme.bg.elevated, color: theme.text.muted }}>
+                    Автозамены: {v.replacements_made.join(', ')}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Regenerate */}
+            {mktVariants.length > 0 && (
+              <div className="flex gap-3">
+                <button
+                  onClick={handleGenerate}
+                  disabled={mktLoading}
+                  className="flex-1 py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 border transition-colors"
+                  style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+                >
+                  <RefreshCw size={14} /> Переделать
+                </button>
+              </div>
+            )}
+
+            {/* Model info */}
+            {mktModel && mktVariants.length > 0 && (
+              <p className="text-center text-xs" style={{ color: theme.text.muted }}>Модель: {mktModel}</p>
+            )}
+          </div>
+        </div>
+        )}
+
+        {/* HR Placeholder */}
+        {section === 'hr' && (
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: theme.bg.elevated }}>
-              {section === 'marketing' ? <Megaphone size={28} style={{ color: theme.text.muted }} /> : <Briefcase size={28} style={{ color: theme.text.muted }} />}
+              <Briefcase size={28} style={{ color: theme.text.muted }} />
             </div>
-            <h2 className="text-lg font-semibold mb-2" style={{ color: theme.text.primary }}>
-              {section === 'marketing' ? 'Маркетинг' : 'HR / Кадры'}
-            </h2>
+            <h2 className="text-lg font-semibold mb-2" style={{ color: theme.text.primary }}>HR / Кадры</h2>
             <p className="text-sm" style={{ color: theme.text.muted }}>Раздел в разработке</p>
           </div>
         </div>
