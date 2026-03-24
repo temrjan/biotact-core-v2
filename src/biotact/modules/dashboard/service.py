@@ -113,7 +113,7 @@ class DashboardService(BaseCommandService):
 
             # Validate enums
             try:
-                trans_type = TransactionType(type_str)
+                trans_type = TransactionType(str(type_str))
             except ValueError:
                 return CommandResult(
                     success=False,
@@ -121,7 +121,7 @@ class DashboardService(BaseCommandService):
                 )
 
             try:
-                category = Category(category_str)
+                category = Category(str(category_str))
             except ValueError:
                 valid_categories = ", ".join(c.value for c in Category)
                 return CommandResult(
