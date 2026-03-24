@@ -449,44 +449,6 @@ function Dashboard({ onLogout }) {
   const mktChatEndRef = useRef(null);
   const mktChatInputRef = useRef(null);
 
-  const sendMktChat = useCallback(async () => {
-    const text = mktChatInput.trim();
-    if (!text || mktChatLoading) return;
-    setMktChatInput('');
-    const userMsg = { id: Date.now(), role: 'user', text };
-    setMktChatMsgs(prev => [...prev, userMsg]);
-    setMktChatLoading(true);
-
-    try {
-      const history = mktChatMsgs.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.text }));
-      const data = await api.marketingChat(text, history.length > 1 ? history.slice(-10) : null);
-
-      const aiMsg = { id: Date.now() + 1, role: 'assistant', text: data.message };
-      setMktChatMsgs(prev => [...prev, aiMsg]);
-
-      // Apply action to central area
-      if (data.action) {
-        if (data.action.type === 'filter_history') {
-          setMktTab('history');
-          if (data.action.params?.product) setMktHistoryFilter(data.action.params.product);
-          loadHistory();
-        } else if (data.action.type === 'show_generation') {
-          setMktTab('generate');
-          if (data.action.data?.variants) {
-            setMktVariants(data.action.data.variants.map(v => ({
-              text: v.text, is_blocked: false, stop_words_found: [], warnings: v.warnings || [], replacements_made: [],
-            })));
-            setMktModel(data.action.data.model_used || '');
-          }
-        }
-      }
-    } catch (e) {
-      setMktChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
-    } finally {
-      setMktChatLoading(false);
-    }
-  }, [mktChatInput, mktChatLoading, mktChatMsgs, loadHistory]);
-
   const handleGenerate = useCallback(async () => {
     if (!mktProduct.trim()) return;
     setMktLoading(true);
@@ -540,6 +502,44 @@ function Dashboard({ onLogout }) {
     await handleGenerate();
     if (mktTab === 'history') loadHistory();
   }, [handleGenerate, mktTab, loadHistory]);
+
+  const sendMktChat = useCallback(async () => {
+    const text = mktChatInput.trim();
+    if (!text || mktChatLoading) return;
+    setMktChatInput('');
+    const userMsg = { id: Date.now(), role: 'user', text };
+    setMktChatMsgs(prev => [...prev, userMsg]);
+    setMktChatLoading(true);
+
+    try {
+      const chatHistory = mktChatMsgs.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.text }));
+      const data = await api.marketingChat(text, chatHistory.length > 1 ? chatHistory.slice(-10) : null);
+
+      const aiMsg = { id: Date.now() + 1, role: 'assistant', text: data.message };
+      setMktChatMsgs(prev => [...prev, aiMsg]);
+
+      // Apply action to central area
+      if (data.action) {
+        if (data.action.type === 'filter_history') {
+          setMktTab('history');
+          if (data.action.params?.product) setMktHistoryFilter(data.action.params.product);
+          loadHistory();
+        } else if (data.action.type === 'show_generation') {
+          setMktTab('generate');
+          if (data.action.data?.variants) {
+            setMktVariants(data.action.data.variants.map(v => ({
+              text: v.text, is_blocked: false, stop_words_found: [], warnings: v.warnings || [], replacements_made: [],
+            })));
+            setMktModel(data.action.data.model_used || '');
+          }
+        }
+      }
+    } catch (e) {
+      setMktChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
+    } finally {
+      setMktChatLoading(false);
+    }
+  }, [mktChatInput, mktChatLoading, mktChatMsgs, loadHistory]);
 
   const askEndRef = useRef(null);
   const askInputRef = useRef(null);
