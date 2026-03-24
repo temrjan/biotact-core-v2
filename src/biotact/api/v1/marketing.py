@@ -119,3 +119,62 @@ async def get_history(
         raise HTTPException(status_code=502, detail="History unavailable.") from e
 
     return [HistoryItem(**item) for item in response.json()]
+
+
+class ChatMessage(BaseModel):
+    """Chat message."""
+
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    """Marketing chat request."""
+
+    message: str = Field(min_length=1, max_length=1000)
+    history: list[ChatMessage] | None = None
+
+
+class ChatAction(BaseModel):
+    """Action for frontend."""
+
+    type: str
+    params: dict[str, object] | None = None
+    data: dict[str, object] | None = None
+
+
+class ChatResponse(BaseModel):
+    """Chat response."""
+
+    message: str
+    action: ChatAction | None = None
+
+
+@router.post("/chat", response_model=ChatResponse)
+async def marketing_chat(
+    current_user: CurrentUserDep,
+    req: ChatRequest,
+) -> ChatResponse:
+    """Marketing AI chat with function calling. Proxies to content-agent-api."""
+    logger.info("Marketing chat: user=%s message=%r", current_user.email, req.message[:50])
+
+    body: dict[str, object] = {"message": req.message}
+    if req.history:
+        body["history"] = [h.model_dump() for h in req.history]
+
+    try:
+        async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT) as client:
+            response = await client.post(
+                f"{CONTENT_AGENT_URL}/chat",
+                json=body,
+            )
+            response.raise_for_status()
+    except httpx.TimeoutException as e:
+        raise HTTPException(status_code=504, detail="Chat timed out.") from e
+    except httpx.HTTPError as e:
+        logger.exception("content-agent-api chat failed")
+        raise HTTPException(status_code=502, detail="Chat unavailable.") from e
+
+    data = response.json()
+    action = ChatAction(**data["action"]) if data.get("action") else None
+    return ChatResponse(message=data["message"], action=action)

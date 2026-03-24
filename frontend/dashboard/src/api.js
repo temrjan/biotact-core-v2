@@ -260,3 +260,21 @@ export async function getContentHistory({ product, days, limit = 50 } = {}) {
   const query = params.toString() ? `?${params.toString()}` : '';
   return apiRequest(`/marketing/history${query}`);
 }
+
+/**
+ * Send marketing chat message (AI with function calling)
+ * @param {string} message - User message
+ * @param {Array|null} history - Chat history [{role, content}]
+ * @returns {Promise<{message: string, action: Object|null}>}
+ */
+export async function marketingChat(message, history = null) {
+  const body = { message };
+  if (history) {
+    body.history = history;
+  }
+
+  return apiRequest('/marketing/chat', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}

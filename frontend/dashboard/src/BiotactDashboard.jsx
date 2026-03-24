@@ -440,6 +440,53 @@ function Dashboard({ onLogout }) {
   const [mktHistoryFilter, setMktHistoryFilter] = useState('');
   const [mktExpandedId, setMktExpandedId] = useState(null);
 
+  // Marketing Chat
+  const [mktChatMsgs, setMktChatMsgs] = useState([
+    { id: 1, role: 'assistant', text: 'Привет! Я помогу с контентом. Спросите что угодно: найти пост, сгенерировать новый, показать статистику.' },
+  ]);
+  const [mktChatInput, setMktChatInput] = useState('');
+  const [mktChatLoading, setMktChatLoading] = useState(false);
+  const mktChatEndRef = useRef(null);
+  const mktChatInputRef = useRef(null);
+
+  const sendMktChat = useCallback(async () => {
+    const text = mktChatInput.trim();
+    if (!text || mktChatLoading) return;
+    setMktChatInput('');
+    const userMsg = { id: Date.now(), role: 'user', text };
+    setMktChatMsgs(prev => [...prev, userMsg]);
+    setMktChatLoading(true);
+
+    try {
+      const history = mktChatMsgs.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.text }));
+      const data = await api.marketingChat(text, history.length > 1 ? history.slice(-10) : null);
+
+      const aiMsg = { id: Date.now() + 1, role: 'assistant', text: data.message };
+      setMktChatMsgs(prev => [...prev, aiMsg]);
+
+      // Apply action to central area
+      if (data.action) {
+        if (data.action.type === 'filter_history') {
+          setMktTab('history');
+          if (data.action.params?.product) setMktHistoryFilter(data.action.params.product);
+          loadHistory();
+        } else if (data.action.type === 'show_generation') {
+          setMktTab('generate');
+          if (data.action.data?.variants) {
+            setMktVariants(data.action.data.variants.map(v => ({
+              text: v.text, is_blocked: false, stop_words_found: [], warnings: v.warnings || [], replacements_made: [],
+            })));
+            setMktModel(data.action.data.model_used || '');
+          }
+        }
+      }
+    } catch (e) {
+      setMktChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
+    } finally {
+      setMktChatLoading(false);
+    }
+  }, [mktChatInput, mktChatLoading, mktChatMsgs, loadHistory]);
+
   const handleGenerate = useCallback(async () => {
     if (!mktProduct.trim()) return;
     setMktLoading(true);
@@ -1188,18 +1235,18 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
           <div className="flex-1">
             <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>
-              {section === 'askbiotact' ? 'Тест консультанта' : 'AI Ассистент'}
+              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : 'AI Ассистент'}
             </div>
             <div className="text-[11px] flex items-center gap-1" style={{ color: theme.text.success }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.text.success }} />
-              {section === 'askbiotact' ? 'Промпт загружен' : 'Подключён к API'}
+              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : 'Подключён к API'}
             </div>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-auto p-4 space-y-4">
-          {(section === 'askbiotact' ? askMsgs : msgs).map(m => (
+          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : msgs).map(m => (
             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
                 className="max-w-[85%] px-4 py-3 text-sm leading-relaxed"
@@ -1223,7 +1270,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           ))}
-          {(section === 'askbiotact' ? askLoading : loading) && (
+          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : loading) && (
             <div className="flex justify-start">
               <div className="px-4 py-3 rounded-2xl" style={{ backgroundColor: theme.bg.aiBubble }}>
                 <div className="flex items-center gap-1">
@@ -1234,7 +1281,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           )}
-          <div ref={section === 'askbiotact' ? askEndRef : endRef} />
+          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : endRef} />
         </div>
 
         {/* Quick Actions */}
@@ -1242,6 +1289,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           <div className="flex gap-2 flex-wrap">
             {(section === 'askbiotact'
               ? ['У ребенка живот болит', 'После антибиотиков', 'Сколько стоит?']
+              : section === 'marketing'
+              ? ['Сгенерируй пост про Иммунокомплекс', 'Найди посты за эту неделю', 'Покажи статистику']
               : ['Расход 5 млн на маркетинг', 'Доход 10 млн', 'Покажи отчёт']
             ).map(a => (
               <button
@@ -1250,6 +1299,9 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                   if (section === 'askbiotact') {
                     setAskInput(a);
                     askInputRef.current?.focus();
+                  } else if (section === 'marketing') {
+                    setMktChatInput(a);
+                    mktChatInputRef.current?.focus();
                   } else {
                     setInput(a);
                     inputRef.current?.focus();
@@ -1268,13 +1320,13 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         <div className="p-4 border-t" style={{ borderColor: theme.border.default }}>
           <div className="flex gap-2">
             <input
-              ref={section === 'askbiotact' ? askInputRef : inputRef}
+              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : inputRef}
               type="text"
-              value={section === 'askbiotact' ? askInput : input}
-              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : send())}
-              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : 'Напишите команду...'}
-              disabled={section === 'askbiotact' ? askLoading : loading}
+              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : input}
+              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : send())}
+              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : 'Напишите команду...'}
+              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : loading}
               className="flex-1 border-0 rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2"
               style={{
                 backgroundColor: theme.bg.input,
@@ -1283,8 +1335,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               }}
             />
             <button
-              onClick={section === 'askbiotact' ? sendAskMessage : send}
-              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : (!input.trim() || loading)}
+              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : send}
+              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : (!input.trim() || loading)}
               className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
               style={{ backgroundColor: theme.bg.accent }}
             >
