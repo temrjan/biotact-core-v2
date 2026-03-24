@@ -111,22 +111,22 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # HR Digest Bot
     # -------------------------------------------------------------------------
-    hr_digest_bot_token: SecretStr = SecretStr('')
-    hr_digest_chat_id: str = ''
-    allowed_users: str = ''
+    hr_digest_bot_token: SecretStr = SecretStr("")
+    hr_digest_chat_id: str = ""
+    allowed_users: str = ""
     digest_retention_days: int = 7
 
     # -------------------------------------------------------------------------
     # Firecrawl (Web Scraper)
     # -------------------------------------------------------------------------
-    firecrawl_api_key: str = ''
+    firecrawl_api_key: str = ""
 
     # -------------------------------------------------------------------------
     # Telegram Scraper (Telethon)
     # -------------------------------------------------------------------------
     telegram_api_id: int = 0
-    telegram_api_hash: SecretStr = SecretStr('')
-    telegram_phone: str = ''
+    telegram_api_hash: SecretStr = SecretStr("")
+    telegram_phone: str = ""
 
     # -------------------------------------------------------------------------
     # Anthropic

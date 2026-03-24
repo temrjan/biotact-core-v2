@@ -246,7 +246,10 @@ class CommandExecutor:
                 max_tokens=100,
                 temperature=0.5,
             )
-            return response.choices[0].message.content or f"Уточните: {', '.join(missing_fields)}"
+            return (
+                response.choices[0].message.content
+                or f"Уточните: {', '.join(missing_fields)}"
+            )
         except Exception as e:
             logger.error(f"Failed to generate clarification: {e}")
             return f"Пожалуйста, уточните: {', '.join(missing_fields)}"

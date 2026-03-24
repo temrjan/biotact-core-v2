@@ -23,13 +23,11 @@ def llm_service(mock_settings: MagicMock) -> LLMService:
     """Create LLMService with mocked OpenAI client."""
     with patch("biotact.services.rag.llm.AsyncOpenAI"):
         service = LLMService(mock_settings)
-        service.client = MagicMock()
+        service._openai_client = MagicMock()
         return service
 
 
-def create_search_result(
-    content: str, source: str, score: float = 0.9
-) -> SearchResult:
+def create_search_result(content: str, source: str, score: float = 0.9) -> SearchResult:
     """Create a SearchResult for testing."""
     return SearchResult(
         content=content,
@@ -50,7 +48,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Test answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -73,7 +71,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -84,7 +82,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         assert call_kwargs["model"] == "gpt-4o"
 
     @pytest.mark.unit
@@ -95,7 +95,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -106,7 +106,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         messages = call_kwargs["messages"]
         assert messages[0]["role"] == "system"
         assert "Biotact" in messages[0]["content"]
@@ -119,7 +121,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -135,7 +137,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         messages = call_kwargs["messages"]
         user_message = messages[-1]["content"]
         assert "First doc content" in user_message
@@ -150,7 +154,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -167,7 +171,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         messages = call_kwargs["messages"]
         # Should have: system, history (2), user
         assert len(messages) == 4
@@ -182,7 +188,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -200,7 +206,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         messages = call_kwargs["messages"]
         # Should have: system + 10 history + user = 12
         assert len(messages) == 12
@@ -213,7 +221,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -225,7 +233,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         assert call_kwargs["max_tokens"] == 500
 
     @pytest.mark.unit
@@ -236,7 +246,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Answer"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -248,7 +258,9 @@ class TestLLMService:
         )
 
         # Assert
-        call_kwargs = llm_service.client.chat.completions.create.call_args.kwargs
+        call_kwargs = (
+            llm_service._openai_client.chat.completions.create.call_args.kwargs
+        )
         assert call_kwargs["temperature"] == 0.7
 
     @pytest.mark.unit
@@ -259,7 +271,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content=None))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -280,7 +292,7 @@ class TestLLMService:
         # Arrange
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content="Price inquiry"))]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -300,7 +312,7 @@ class TestLLMService:
         mock_response.choices = [
             MagicMock(message=MagicMock(content="  Title with spaces  "))
         ]
-        llm_service.client.chat.completions.create = AsyncMock(
+        llm_service._openai_client.chat.completions.create = AsyncMock(
             return_value=mock_response
         )
 
@@ -326,9 +338,7 @@ class TestLLMService:
         assert "[Источник: doc_b.pdf]" in result
 
     @pytest.mark.unit
-    def test_build_context_empty_returns_message(
-        self, llm_service: LLMService
-    ) -> None:
+    def test_build_context_empty_returns_message(self, llm_service: LLMService) -> None:
         """_build_context with empty list should return message."""
         result = llm_service._build_context([])
         assert "не найден" in result.lower()

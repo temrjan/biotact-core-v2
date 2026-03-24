@@ -81,12 +81,7 @@ class BaseRAGService(ABC):
             Filter dictionary for Qdrant search.
         """
         return {
-            "must": [
-                {
-                    "key": "department",
-                    "match": {"value": self.department_filter}
-                }
-            ]
+            "must": [{"key": "department", "match": {"value": self.department_filter}}]
         }
 
     def build_context_prompt(self, sources: list[SearchResult]) -> str:
@@ -199,5 +194,7 @@ class BaseRAGService(ABC):
         return RAGResult(
             answer="",  # Will be filled by LLM
             sources=filtered_sources,
-            confidence=max(s.score for s in filtered_sources) if filtered_sources else 0.0,
+            confidence=max(s.score for s in filtered_sources)
+            if filtered_sources
+            else 0.0,
         )

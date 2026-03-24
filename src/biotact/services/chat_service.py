@@ -171,8 +171,7 @@ class ChatService:
             limit=10,
         )
         chat_history = [
-            {"role": msg.role, "content": msg.content}
-            for msg in messages[:-1]
+            {"role": msg.role, "content": msg.content} for msg in messages[:-1]
         ]
 
         # Get context from service
@@ -209,7 +208,9 @@ class ChatService:
                     "type": tool_call.name,
                     "success": result.success,
                     "data": result.data,
-                } if result.success else None,
+                }
+                if result.success
+                else None,
             }
 
         return {"answer": "Обработчик команд не найден для этого отдела"}
@@ -262,8 +263,7 @@ class ChatService:
             limit=10,
         )
         chat_history = [
-            {"role": msg.role, "content": msg.content}
-            for msg in messages[:-1]
+            {"role": msg.role, "content": msg.content} for msg in messages[:-1]
         ]
 
         # Generate response with module-specific system prompt

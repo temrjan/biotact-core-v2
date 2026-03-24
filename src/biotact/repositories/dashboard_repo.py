@@ -218,10 +218,7 @@ class DashboardRepository:
         query = query.group_by(FinancialTransaction.category)
         result = await self.session.execute(query)
 
-        return {
-            row.category: Decimal(str(row.total or 0))
-            for row in result.all()
-        }
+        return {row.category: Decimal(str(row.total or 0)) for row in result.all()}
 
     async def delete_transaction(
         self,

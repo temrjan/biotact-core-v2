@@ -1,6 +1,7 @@
 """Public API endpoints for external bot integration."""
 
 import asyncio
+import contextlib
 import json
 import logging
 import os
@@ -11,9 +12,8 @@ from typing import Any
 import httpx
 import redis.asyncio as aioredis
 from fastapi import APIRouter, Header, HTTPException, status
-from pydantic import BaseModel, Field
-
 from openai import AsyncOpenAI
+from pydantic import BaseModel, Field
 
 from biotact.core.config import get_settings
 from biotact.core.database import get_session_context
@@ -24,7 +24,11 @@ from biotact.core.dependencies import (
 )
 from biotact.modules.askbiotact.config import askbiotact_config
 from biotact.modules.crm.service import CRMService
-from biotact.services.extraction_agent import ExtractionAgent, get_active_insight, archive_insight
+from biotact.services.extraction_agent import (
+    ExtractionAgent,
+    archive_insight,
+    get_active_insight,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/public", tags=["public"])
@@ -36,11 +40,14 @@ REDIS_HOST = settings.redis_host
 # Extraction Agent (async, GPT-4o-mini)
 _extraction_agent: ExtractionAgent | None = None
 
+
 def get_extraction_agent() -> ExtractionAgent:
     global _extraction_agent
     if _extraction_agent is None:
         _extraction_agent = ExtractionAgent()
     return _extraction_agent
+
+
 REDIS_PORT = settings.redis_port
 MAX_HISTORY = 10
 HISTORY_TTL = 86400
@@ -57,11 +64,19 @@ PHONE_PATTERNS = [
 
 # Product names for context extraction
 PRODUCT_NAMES = [
-    "BIFOLAK ACTIVE", "BIFOLAK NEO", "BIFOLAK MAGNIY", "BIFOLAK ZINCUM", "BIFOLAK",
-    "IMMUNOCOMPLEX KIDS", "IMMUNOCOMPLEX",
-    "NEUROCOMPLEX KIDS", "NEUROCOMPLEX",
-    "DERMACOMPLEX", "OPHTALMOCOMPLEX",
-    "CALCIY TRIACTIVE", "CALCIY",
+    "BIFOLAK ACTIVE",
+    "BIFOLAK NEO",
+    "BIFOLAK MAGNIY",
+    "BIFOLAK ZINCUM",
+    "BIFOLAK",
+    "IMMUNOCOMPLEX KIDS",
+    "IMMUNOCOMPLEX",
+    "NEUROCOMPLEX KIDS",
+    "NEUROCOMPLEX",
+    "DERMACOMPLEX",
+    "OPHTALMOCOMPLEX",
+    "CALCIY TRIACTIVE",
+    "CALCIY",
 ]
 
 # Product prices in UZS (synced with webhooks.py)
@@ -89,14 +104,33 @@ PRODUCT_PRICES: dict[str, int] = {
 # Semantic core for price queries (RU + UZ)
 PRICE_TRIGGERS = [
     # Russian
-    "цена", "стоимость", "сколько стоит", "почем", "прайс", "стоит",
-    "дорого", "дешево", "купить", "заказать", "оплата",
+    "цена",
+    "стоимость",
+    "сколько стоит",
+    "почем",
+    "прайс",
+    "стоит",
+    "дорого",
+    "дешево",
+    "купить",
+    "заказать",
+    "оплата",
     # Uzbek
-    "narx", "qancha", "qimmat", "arzon", "sotib olish", "buyurtma",
-    "tolov", "pul", "som", "sum",
+    "narx",
+    "qancha",
+    "qimmat",
+    "arzon",
+    "sotib olish",
+    "buyurtma",
+    "tolov",
+    "pul",
+    "som",
+    "sum",
 ]
 
-PRICE_ENRICHMENT = "цены на продукты BIOTACT прайс-лист стоимость narxlar BIOTACT mahsulotlari"
+PRICE_ENRICHMENT = (
+    "цены на продукты BIOTACT прайс-лист стоимость narxlar BIOTACT mahsulotlari"
+)
 
 # AskBiotact: clean user message template (data only, no instructions)
 # All instructions are in the system prompt (askbiotact.txt)
@@ -114,8 +148,12 @@ ASKBIOTACT_USER_TEMPLATE = """Данные из базы знаний:
 class AskRequest(BaseModel):
     user_id: str = Field(..., min_length=1, max_length=100)
     message: str = Field(..., min_length=1, max_length=4000)
-    first_name: str | None = Field(None, max_length=100, description="User's first name from Telegram")
-    username: str | None = Field(None, max_length=100, description="User's @username from Telegram")
+    first_name: str | None = Field(
+        None, max_length=100, description="User's first name from Telegram"
+    )
+    username: str | None = Field(
+        None, max_length=100, description="User's @username from Telegram"
+    )
 
 
 class AskResponse(BaseModel):
@@ -151,8 +189,12 @@ async def get_chat_history(user_id: str) -> list[dict[str, str]]:
 async def save_chat_history(user_id: str, history: list[dict[str, str]]) -> None:
     try:
         r = await get_redis()
-        trimmed = history[-(MAX_HISTORY * 2):]
-        await r.set(f"public:{user_id}:history", json.dumps(trimmed, ensure_ascii=False), ex=HISTORY_TTL)
+        trimmed = history[-(MAX_HISTORY * 2) :]
+        await r.set(
+            f"public:{user_id}:history",
+            json.dumps(trimmed, ensure_ascii=False),
+            ex=HISTORY_TTL,
+        )
     except Exception as e:
         logger.warning(f"Redis save error: {e}")
 
@@ -187,7 +229,7 @@ async def get_customer_context(
     username: str | None = None,
 ) -> str | None:
     """Load customer profile and format for AI context.
-    
+
     Creates new customer record if not exists.
     Returns formatted context string or None.
     """
@@ -199,17 +241,17 @@ async def get_customer_context(
                 first_name=first_name,
                 username=username,
             )
-            
+
             if created:
                 logger.info(f"Created new CRM customer: {telegram_id}")
                 return None  # New customer, no context yet
-            
+
             # Format context for prompt
             context = service.format_context_for_prompt(customer)
             if context and context != f"Клиент: {first_name or 'Клиент'}":
                 logger.info(f"CRM context for {telegram_id}: {context[:100]}...")
                 return context
-            
+
             return None
     except Exception as e:
         logger.warning(f"CRM context error: {e}")
@@ -236,11 +278,11 @@ def extract_products_from_history(history: list[dict[str, str]]) -> list[str]:
     found_products = []
     text = " ".join([m.get("content", "") for m in history[-6:]])
     text_upper = text.upper()
-    
+
     for product in PRODUCT_NAMES:
         if product.upper() in text_upper:
             found_products.append(product)
-    
+
     return found_products
 
 
@@ -257,13 +299,13 @@ def is_short_query(message: str) -> bool:
 
 def enrich_query_with_context(message: str, history: list[dict[str, str]]) -> str:
     """Enrich queries with context for better RAG search.
-    
+
     1. Short/ambiguous queries: prepend last user messages from history
     2. Price queries: add price semantic core for matching prices.txt
     """
     message_lower = message.lower()
     enriched = message
-    
+
     # STEP 1: For short queries, enrich with product names from history (both roles)
     # "да, сколько стоит" -> "BIFOLAK NEO да, сколько стоит"
     if is_short_query(message) and history:
@@ -276,20 +318,19 @@ def enrich_query_with_context(message: str, history: list[dict[str, str]]) -> st
         else:
             # Fallback: prepend last user messages (original behavior)
             recent_user_msgs = [
-                m["content"] for m in history[-6:]
-                if m.get("role") == "user"
+                m["content"] for m in history[-6:] if m.get("role") == "user"
             ][-2:]
             if recent_user_msgs:
                 context_prefix = " ".join(recent_user_msgs)
                 enriched = f"{context_prefix} {message}"
                 logger.info(f"History-enriched query: {enriched[:80]}...")
-    
+
     # STEP 2: Price queries - add semantic core for prices.txt matching
     is_price_query = any(trigger in message_lower for trigger in PRICE_TRIGGERS)
     if is_price_query:
         enriched = f"{enriched} {PRICE_ENRICHMENT}"
         logger.info(f"Price query enriched: {message[:50]}...")
-    
+
     return enriched
 
 
@@ -311,14 +352,14 @@ def detect_order(text: str, history: list[dict[str, str]]) -> dict[str, Any] | N
     phone = extract_phone(text)
     if not phone:
         return None
-    
+
     # Check if recent conversation was about ordering
     recent_texts = " ".join([m["content"].lower() for m in history[-4:]])
     order_keywords = ["заказ", "купить", "оформ", "доставк", "адрес", "телефон", "имя"]
-    
+
     if any(kw in recent_texts for kw in order_keywords):
         return {"raw_text": text, "phone": phone}
-    
+
     return None
 
 
@@ -379,10 +420,12 @@ async def parse_order_with_llm(
             valid_products = []
             for p in parsed["products"]:
                 if p.get("name") in PRODUCT_PRICES:
-                    valid_products.append({
-                        "name": p["name"],
-                        "qty": max(1, int(p.get("qty", 1))),
-                    })
+                    valid_products.append(
+                        {
+                            "name": p["name"],
+                            "qty": max(1, int(p.get("qty", 1))),
+                        }
+                    )
             parsed["products"] = valid_products
 
         return parsed  # type: ignore[no-any-return]
@@ -409,7 +452,9 @@ def format_order_for_sales(
             subtotal = price * qty
             total += subtotal
             if qty > 1:
-                lines.append(f"📦 {name} — {qty} шт. ({subtotal:,} сум)".replace(",", " "))
+                lines.append(
+                    f"📦 {name} — {qty} шт. ({subtotal:,} сум)".replace(",", " ")
+                )
             else:
                 lines.append(f"📦 {name} — 1 шт. ({price:,} сум)".replace(",", " "))
         lines.append(f"💰 Итого: {total:,} сум".replace(",", " "))
@@ -471,7 +516,14 @@ async def send_order_to_sales(
         # Fallback: raw text format
         logger.warning(f"Order parsing failed, using raw text for {user_id}")
         products = set()
-        product_names = ["BIFOLAK", "IMMUNOCOMPLEX", "NEUROCOMPLEX", "DERMACOMPLEX", "OPHTALMOCOMPLEX", "CALCIY"]
+        product_names = [
+            "BIFOLAK",
+            "IMMUNOCOMPLEX",
+            "NEUROCOMPLEX",
+            "DERMACOMPLEX",
+            "OPHTALMOCOMPLEX",
+            "CALCIY",
+        ]
         for msg in history:
             msg_content = msg.get("content", "").upper()
             for product in product_names:
@@ -518,7 +570,6 @@ async def send_order_to_sales(
         return False
 
 
-
 # =============================================================================
 # RAG Processing
 # =============================================================================
@@ -561,7 +612,9 @@ async def process_rag_query(
             score_threshold=config.score_threshold,
         )
 
-        logger.info(f"RAG search: query='{enriched_message[:50]}...', results={len(search_results)}")
+        logger.info(
+            f"RAG search: query='{enriched_message[:50]}...', results={len(search_results)}"
+        )
 
         # Build system prompt with customer context
         system_prompt = config.system_prompt
@@ -578,7 +631,7 @@ async def process_rag_query(
                 "НИКОГДА не рекомендуй продукты, несовместимые с этими ограничениями."
             )
             logger.info(f"Constraints injected for {telegram_id}: {constraints}")
-        
+
         answer = await llm_service.generate_response(
             question=message,  # Original message for LLM
             context=search_results,
@@ -604,11 +657,13 @@ async def ask(
 ) -> AskResponse:
     """Process a question through AskBiotact RAG system."""
     if x_api_key != settings.askbiotact_api_key:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
-    
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key"
+        )
+
     history = await get_chat_history(request.user_id)
     history.append({"role": "user", "content": request.message})
-    
+
     # Load CRM customer context
     customer_context = None
     try:
@@ -620,31 +675,38 @@ async def ask(
         )
     except ValueError:
         pass  # user_id is not a valid telegram_id
-    
+
     # Check for order (with dedup: skip if already sent in the last hour)
     order_sent = False
     if not await is_order_already_sent(request.user_id):
         order_data = detect_order(request.message, history)
         if order_data:
-            order_sent = await send_order_to_sales(order_data, request.user_id, history, request.first_name, request.username)
+            order_sent = await send_order_to_sales(
+                order_data,
+                request.user_id,
+                history,
+                request.first_name,
+                request.username,
+            )
             if order_sent:
                 await mark_order_sent(request.user_id)
-    
+
     # Process through RAG with customer context
     telegram_id_int = None
-    try:
+    with contextlib.suppress(ValueError):
         telegram_id_int = int(request.user_id)
-    except ValueError:
-        pass
-    
+
     answer = await process_rag_query(
-        request.message, history, customer_context, telegram_id=telegram_id_int,
+        request.message,
+        history,
+        customer_context,
+        telegram_id=telegram_id_int,
     )
-    
+
     # Save history
     history.append({"role": "assistant", "content": answer})
     await save_chat_history(request.user_id, history)
-    
+
     # ASYNC: Fire extraction agent (does NOT block response)
     if telegram_id_int:
         try:
@@ -654,7 +716,7 @@ async def ask(
             )
         except Exception as e:
             logger.warning(f"Extraction agent fire error: {e}")
-    
+
     return AskResponse(answer=answer, user_id=request.user_id, order_sent=order_sent)
 
 
@@ -665,8 +727,10 @@ async def reset_history(
 ) -> dict[str, Any]:
     """Reset chat history for a user."""
     if x_api_key != settings.askbiotact_api_key:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
-    
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key"
+        )
+
     try:
         # Archive conversation insights before clearing history
         try:

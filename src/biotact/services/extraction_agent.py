@@ -10,10 +10,9 @@ Updates conversation_insights table for:
 - Analytics (intent tracking, conversation summaries)
 """
 
-import asyncio
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from openai import AsyncOpenAI
@@ -27,13 +26,26 @@ logger = logging.getLogger(__name__)
 
 # Valid product names — agent can ONLY record these
 VALID_PRODUCTS = {
-    "BIFOLAK ACTIVE", "BIFOLAK NEO", "BIFOLAK ZINCUM", "BIFOLAK ZINCUM+C+D3",
-    "BIFOLAK MAGNIY", "IMMUNOCOMPLEX", "IMMUNOCOMPLEX KIDS",
-    "NEUROCOMPLEX", "NEUROCOMPLEX KIDS", "DERMACOMPLEX", "OPHTALMOCOMPLEX",
+    "BIFOLAK ACTIVE",
+    "BIFOLAK NEO",
+    "BIFOLAK ZINCUM",
+    "BIFOLAK ZINCUM+C+D3",
+    "BIFOLAK MAGNIY",
+    "IMMUNOCOMPLEX",
+    "IMMUNOCOMPLEX KIDS",
+    "NEUROCOMPLEX",
+    "NEUROCOMPLEX KIDS",
+    "DERMACOMPLEX",
+    "OPHTALMOCOMPLEX",
     "CALCIY TRIACTIVE",
     # Tech
-    "Аэрогриль BIOTACT", "Блендер BIOTACT", "Соковыжималка BIOTACT",
-    "Пароварка BIOTACT", "Тостер BIOTACT", "Чайник BIOTACT", "Мясорубка BIOTACT",
+    "Аэрогриль BIOTACT",
+    "Блендер BIOTACT",
+    "Соковыжималка BIOTACT",
+    "Пароварка BIOTACT",
+    "Тостер BIOTACT",
+    "Чайник BIOTACT",
+    "Мясорубка BIOTACT",
 }
 
 EXTRACTION_PROMPT = """Ты аналитик диалогов BIOTACT. Извлеки сущности из нового обмена.
@@ -129,7 +141,8 @@ class ExtractionAgent:
             # Validate products against whitelist
             if "products" in data:
                 data["products"] = [
-                    p for p in data["products"]
+                    p
+                    for p in data["products"]
                     if any(p.upper().startswith(v.upper()) for v in VALID_PRODUCTS)
                 ]
 
@@ -160,7 +173,9 @@ class ExtractionAgent:
                 current_summary = current["semantic_summary"] if current else None
 
                 # Extract entities
-                data = await self.extract(user_message, assistant_message, current_summary)
+                data = await self.extract(
+                    user_message, assistant_message, current_summary
+                )
                 if not data:
                     logger.warning(f"Extraction returned None for {telegram_id}")
                     return
@@ -179,7 +194,9 @@ class ExtractionAgent:
             logger.error(f"Extraction process_and_save error: {e}")
 
     async def _get_active_insight(
-        self, session: AsyncSession, telegram_id: int,
+        self,
+        session: AsyncSession,
+        telegram_id: int,
     ) -> dict[str, Any] | None:
         """Get active conversation insight for a user."""
         result = await session.execute(
@@ -201,19 +218,21 @@ class ExtractionAgent:
         current: dict[str, Any] | None,
     ) -> None:
         """Insert or update conversation insight."""
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
 
         if current:
             # Merge arrays (deduplicate)
             new_products = data.get("products") or []
             products = new_products if new_products else (current.get("products") or [])
-            symptoms = list(set(
-                (current.get("symptoms") or []) + (data.get("symptoms") or [])
-            ))
+            symptoms = list(
+                set((current.get("symptoms") or []) + (data.get("symptoms") or []))
+            )
             # constraints accumulate — never overwrite with empty
-            constraints = list(set(
-                (current.get("constraints") or []) + (data.get("constraints") or [])
-            ))
+            constraints = list(
+                set(
+                    (current.get("constraints") or []) + (data.get("constraints") or [])
+                )
+            )
 
             # Merge family (by relation)
             existing_family = current.get("family_members") or []
@@ -234,7 +253,8 @@ class ExtractionAgent:
                     client_age=data.get("client_age") or current.get("client_age"),
                     intent=data.get("intent") or current.get("intent"),
                     phone=data.get("phone") or current.get("phone"),
-                    semantic_summary=data.get("summary") or current.get("semantic_summary"),
+                    semantic_summary=data.get("summary")
+                    or current.get("semantic_summary"),
                     message_count=(current.get("message_count") or 0) + 1,
                     updated_at=now,
                 )
@@ -260,7 +280,9 @@ class ExtractionAgent:
             )
 
     def _merge_family(
-        self, existing: list[dict[str, Any]], new: list[dict[str, Any]],
+        self,
+        existing: list[dict[str, Any]],
+        new: list[dict[str, Any]],
     ) -> list[dict[str, Any]]:
         """Merge family members by relation."""
         by_relation = {}
@@ -281,7 +303,17 @@ class ExtractionAgent:
 # ---------------------------------------------------------------------------
 # SQLAlchemy table/column helpers (raw SQL approach, no ORM model needed)
 # ---------------------------------------------------------------------------
-from sqlalchemy import Table, Column, MetaData, Integer, BigInteger, String, Text, Boolean, DateTime, text
+from sqlalchemy import (
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    Text,
+)
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 
 _metadata = MetaData()
@@ -351,7 +383,7 @@ async def archive_insight(telegram_id: int) -> None:
                     _conversation_insights.c.telegram_id == telegram_id,
                     _conversation_insights.c.is_active == True,  # noqa: E712
                 )
-                .values(is_active=False, updated_at=datetime.now(timezone.utc))
+                .values(is_active=False, updated_at=datetime.now(UTC))
             )
     except Exception as e:
         logger.warning(f"archive_insight error: {e}")

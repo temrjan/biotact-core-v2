@@ -9,7 +9,12 @@ from openai import AsyncOpenAI
 
 from biotact.core.config import Settings
 from biotact.modules.hr.digest.config import DIGEST_SYSTEM_PROMPT
-from biotact.modules.hr.digest.schemas import Digest, DigestItem, DigestSection, NewsItem
+from biotact.modules.hr.digest.schemas import (
+    Digest,
+    DigestItem,
+    DigestSection,
+    NewsItem,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -102,7 +107,7 @@ class DigestSummarizer:
             logger.error(f"Error summarizing: {e}")
             return self._create_fallback_digest(news_items)
 
-    def _parse_response(self, response: str, news_items: list[NewsItem]) -> Digest:
+    def _parse_response(self, response: str, news_items: list[NewsItem]) -> Digest:  # noqa: ARG002
         """Parse LLM JSON response into Digest."""
         response = response.strip()
         if response.startswith("```"):

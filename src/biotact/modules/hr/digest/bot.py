@@ -3,18 +3,23 @@
 import asyncio
 import logging
 import os
-from datetime import datetime
 
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import Command, CommandStart, StateFilter
-from aiogram.types import Message, BotCommand, BotCommandScopeDefault, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-
-from apscheduler.schedulers.asyncio import AsyncIOScheduler  # type: ignore[import-untyped]
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.types import (
+    BotCommandScopeDefault,
+    KeyboardButton,
+    Message,
+    ReplyKeyboardMarkup,
+)
+from apscheduler.schedulers.asyncio import (
+    AsyncIOScheduler,  # type: ignore[import-untyped]
+)
 
 from biotact.core.config import get_settings
 from biotact.core.database import AsyncSessionLocal
@@ -36,8 +41,10 @@ dp = Dispatcher(storage=storage)
 # FSM States for User Management
 # ============================================================================
 
+
 class AddUserStates(StatesGroup):
     """States for adding new user."""
+
     waiting_for_user_id = State()
     waiting_for_confirmation = State()
 
@@ -45,6 +52,7 @@ class AddUserStates(StatesGroup):
 # ============================================================================
 # Reply Keyboard
 # ============================================================================
+
 
 def get_main_keyboard(is_admin: bool = False) -> ReplyKeyboardMarkup:
     """Get main reply keyboard with icons.
@@ -65,10 +73,12 @@ def get_main_keyboard(is_admin: bool = False) -> ReplyKeyboardMarkup:
 
     # Add admin row
     if is_admin:
-        keyboard.append([
-            KeyboardButton(text="➕ Добавить пользователя"),
-            KeyboardButton(text="👥 Список пользователей"),
-        ])
+        keyboard.append(
+            [
+                KeyboardButton(text="➕ Добавить пользователя"),
+                KeyboardButton(text="👥 Список пользователей"),
+            ]
+        )
 
     return ReplyKeyboardMarkup(
         keyboard=keyboard,
@@ -79,7 +89,7 @@ def get_main_keyboard(is_admin: bool = False) -> ReplyKeyboardMarkup:
 
 def is_admin(user_id: int) -> bool:
     """Check if user is admin (first in allowed_users list)."""
-    allowed = settings.allowed_users.split(',')
+    allowed = settings.allowed_users.split(",")
     if not allowed or not allowed[0].strip():
         return False
     admin_id = int(allowed[0].strip())
@@ -88,7 +98,7 @@ def is_admin(user_id: int) -> bool:
 
 def get_allowed_users() -> list[int]:
     """Get list of allowed user IDs."""
-    allowed = settings.allowed_users.split(',')
+    allowed = settings.allowed_users.split(",")
     return [int(uid.strip()) for uid in allowed if uid.strip()]
 
 
@@ -107,18 +117,18 @@ def add_user_to_allowed(new_user_id: int) -> bool:
         return False
 
     current_users.append(new_user_id)
-    new_allowed_str = ','.join(str(uid) for uid in current_users)
+    new_allowed_str = ",".join(str(uid) for uid in current_users)
 
     # Update settings in memory
     settings.allowed_users = new_allowed_str
 
     # Save to persistent file (in mounted volume)
-    users_file = '/app/.sessions/allowed_users.txt'
+    users_file = "/app/.sessions/allowed_users.txt"
 
     try:
         os.makedirs(os.path.dirname(users_file), exist_ok=True)
 
-        with open(users_file, 'w') as f:
+        with open(users_file, "w") as f:
             f.write(new_allowed_str)
 
         logger.info(f"Added user {new_user_id} to allowed list (saved to {users_file})")
@@ -133,11 +143,11 @@ def add_user_to_allowed(new_user_id: int) -> bool:
 
 def load_users_from_file() -> None:
     """Load allowed users from persistent file if exists."""
-    users_file = '/app/.sessions/allowed_users.txt'
+    users_file = "/app/.sessions/allowed_users.txt"
 
     try:
         if os.path.exists(users_file):
-            with open(users_file, 'r') as f:
+            with open(users_file) as f:
                 content = f.read().strip()
                 if content:
                     settings.allowed_users = content
@@ -150,9 +160,11 @@ def load_users_from_file() -> None:
 # Middleware for access control
 # ============================================================================
 
+from collections.abc import Awaitable, Callable
+from typing import Any
+
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
-from typing import Callable, Dict, Any, Awaitable
 
 
 class AuthMiddleware(BaseMiddleware):
@@ -160,13 +172,15 @@ class AuthMiddleware(BaseMiddleware):
 
     def __init__(self) -> None:
         super().__init__()
-        logger.info(f"Auth middleware initialized. Allowed users: {get_allowed_users()}")
+        logger.info(
+            f"Auth middleware initialized. Allowed users: {get_allowed_users()}"
+        )
 
     async def __call__(
         self,
-        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+        handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
         event: TelegramObject,
-        data: Dict[str, Any],
+        data: dict[str, Any],
     ) -> Any:
         """Check if user is allowed."""
         user_id = None
@@ -193,6 +207,7 @@ class AuthMiddleware(BaseMiddleware):
 # Command Handlers
 # ============================================================================
 
+
 @dp.message(CommandStart())
 async def cmd_start(message: Message) -> None:
     """Handle /start command."""
@@ -209,7 +224,7 @@ async def cmd_start(message: Message) -> None:
         "/help — справка\n\n"
         "📰 Каждый день в 08:00 я автоматически отправляю\n"
         "дайджест с новостями из 7 источников.",
-        reply_markup=get_main_keyboard(user_is_admin)
+        reply_markup=get_main_keyboard(user_is_admin),
     )
 
 
@@ -255,11 +270,14 @@ async def cmd_digest(message: Message) -> None:
             digest = await digest_service.get_latest_digest(db)
 
             if not digest:
-                await message.answer("❌ Дайджесты ещё не создавались", reply_markup=get_main_keyboard(user_is_admin))
+                await message.answer(
+                    "❌ Дайджесты ещё не создавались",
+                    reply_markup=get_main_keyboard(user_is_admin),
+                )
                 return
 
             # Format date
-            date_str = digest.date.strftime('%d.%m.%Y')
+            date_str = digest.date.strftime("%d.%m.%Y")
 
             # Send header
             header = (
@@ -282,19 +300,29 @@ async def cmd_digest(message: Message) -> None:
                     else:
                         section_text = f"## {section}"
                         if len(section_text) > 4000:
-                            chunks = [section_text[i:i+4000] for i in range(0, len(section_text), 4000)]
+                            chunks = [
+                                section_text[i : i + 4000]
+                                for i in range(0, len(section_text), 4000)
+                            ]
                             for chunk in chunks:
                                 await message.answer(chunk)
                         else:
                             await message.answer(section_text)
 
-                await message.answer("---", reply_markup=get_main_keyboard(user_is_admin))
+                await message.answer(
+                    "---", reply_markup=get_main_keyboard(user_is_admin)
+                )
             else:
-                await message.answer(full_text, reply_markup=get_main_keyboard(user_is_admin))
+                await message.answer(
+                    full_text, reply_markup=get_main_keyboard(user_is_admin)
+                )
 
     except Exception as e:
         logger.exception(f"Error in /digest command: {e}")
-        await message.answer(f"❌ Ошибка при получении дайджеста: {e}", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            f"❌ Ошибка при получении дайджеста: {e}",
+            reply_markup=get_main_keyboard(user_is_admin),
+        )
 
 
 @dp.message(Command("history"))
@@ -308,14 +336,17 @@ async def cmd_history(message: Message) -> None:
             digests = await digest_service.get_digest_history(limit=5, db=db)
 
             if not digests:
-                await message.answer("❌ История дайджестов пуста", reply_markup=get_main_keyboard(user_is_admin))
+                await message.answer(
+                    "❌ История дайджестов пуста",
+                    reply_markup=get_main_keyboard(user_is_admin),
+                )
                 return
 
             history_text = "📚 *История дайджестов (последние 5)*\n\n"
 
             for digest in digests:
-                date_str = digest.date.strftime('%d.%m.%Y')
-                time_str = digest.created_at.strftime('%H:%M')
+                date_str = digest.date.strftime("%d.%m.%Y")
+                time_str = digest.created_at.strftime("%H:%M")
                 history_text += (
                     f"🗓 *{date_str}* ({time_str})\n"
                     f"   📊 {digest.news_count} новостей\n"
@@ -324,11 +355,15 @@ async def cmd_history(message: Message) -> None:
 
             history_text += "\nИспользуй 📋 Дайджест для просмотра последнего"
 
-            await message.answer(history_text, reply_markup=get_main_keyboard(user_is_admin))
+            await message.answer(
+                history_text, reply_markup=get_main_keyboard(user_is_admin)
+            )
 
     except Exception as e:
         logger.exception(f"Error in /history command: {e}")
-        await message.answer(f"❌ Ошибка: {e}", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            f"❌ Ошибка: {e}", reply_markup=get_main_keyboard(user_is_admin)
+        )
 
 
 @dp.message(Command("generate"))
@@ -342,24 +377,25 @@ async def cmd_generate(message: Message) -> None:
 
         async with AsyncSessionLocal() as db:
             digest = await digest_service.generate_and_save(
-                db=db,
-                hours=24,
-                generated_by=f"user_{message.from_user.id}"
+                db=db, hours=24, generated_by=f"user_{message.from_user.id}"
             )
 
-            date_str = digest.date.strftime('%d.%m.%Y')
+            date_str = digest.date.strftime("%d.%m.%Y")
 
             await message.answer(
                 f"✅ *Дайджест создан!*\n\n"
                 f"📅 Дата: {date_str}\n"
                 f"📊 Новостей: {digest.news_count}\n\n"
                 f"Используй 📋 Дайджест для просмотра",
-                reply_markup=get_main_keyboard(user_is_admin)
+                reply_markup=get_main_keyboard(user_is_admin),
             )
 
     except Exception as e:
         logger.exception(f"Error in /generate command: {e}")
-        await message.answer(f"❌ Ошибка при создании дайджеста: {e}", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            f"❌ Ошибка при создании дайджеста: {e}",
+            reply_markup=get_main_keyboard(user_is_admin),
+        )
 
 
 @dp.message(Command("cleanup"))
@@ -369,7 +405,10 @@ async def cmd_cleanup(message: Message) -> None:
     user_is_admin = is_admin(message.from_user.id)
 
     if not user_is_admin:
-        await message.answer("❌ Только администратор может запускать очистку", reply_markup=get_main_keyboard(False))
+        await message.answer(
+            "❌ Только администратор может запускать очистку",
+            reply_markup=get_main_keyboard(False),
+        )
         return
 
     try:
@@ -377,8 +416,7 @@ async def cmd_cleanup(message: Message) -> None:
 
         async with AsyncSessionLocal() as db:
             deleted_count = await digest_service.cleanup_old_digests(
-                db=db,
-                retention_days=settings.digest_retention_days
+                db=db, retention_days=settings.digest_retention_days
             )
 
             if deleted_count > 0:
@@ -387,23 +425,26 @@ async def cmd_cleanup(message: Message) -> None:
                     f"🗑️ Удалено дайджестов: {deleted_count}\n"
                     f"📅 Хранятся за: {settings.digest_retention_days} дней\n\n"
                     f"_Новости удалены автоматически (cascade)_",
-                    reply_markup=get_main_keyboard(user_is_admin)
+                    reply_markup=get_main_keyboard(user_is_admin),
                 )
             else:
                 await message.answer(
                     f"✅ Нечего удалять!\n\n"
                     f"Все дайджесты моложе {settings.digest_retention_days} дней.",
-                    reply_markup=get_main_keyboard(user_is_admin)
+                    reply_markup=get_main_keyboard(user_is_admin),
                 )
 
     except Exception as e:
         logger.exception(f"Error in /cleanup command: {e}")
-        await message.answer(f"❌ Ошибка при очистке: {e}", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            f"❌ Ошибка при очистке: {e}", reply_markup=get_main_keyboard(user_is_admin)
+        )
 
 
 # ============================================================================
 # User Management (Admin Only)
 # ============================================================================
+
 
 @dp.message(F.text == "➕ Добавить пользователя")
 async def btn_add_user(message: Message, state: FSMContext) -> None:
@@ -431,7 +472,9 @@ async def process_new_user_id(message: Message, state: FSMContext) -> None:
 
     if message.text == "/cancel":
         await state.clear()
-        await message.answer("❌ Отменено", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            "❌ Отменено", reply_markup=get_main_keyboard(user_is_admin)
+        )
         return
 
     # Validate ID
@@ -451,7 +494,7 @@ async def process_new_user_id(message: Message, state: FSMContext) -> None:
         await state.clear()
         await message.answer(
             f"ℹ️ Пользователь `{new_user_id}` уже имеет доступ к боту!",
-            reply_markup=get_main_keyboard(user_is_admin)
+            reply_markup=get_main_keyboard(user_is_admin),
         )
         return
 
@@ -477,21 +520,20 @@ async def process_confirmation(message: Message, state: FSMContext) -> None:
 
     answer = (message.text or "").strip().lower()
 
-    if answer not in ['да', 'нет', 'yes', 'no']:
-        await message.answer(
-            "❌ Непонятный ответ!\n\n"
-            "Отправь *Да* или *Нет*"
-        )
+    if answer not in ["да", "нет", "yes", "no"]:
+        await message.answer("❌ Непонятный ответ!\n\nОтправь *Да* или *Нет*")
         return
 
-    if answer in ['нет', 'no']:
+    if answer in ["нет", "no"]:
         await state.clear()
-        await message.answer("❌ Отменено", reply_markup=get_main_keyboard(user_is_admin))
+        await message.answer(
+            "❌ Отменено", reply_markup=get_main_keyboard(user_is_admin)
+        )
         return
 
     # Get saved user ID
     data = await state.get_data()
-    new_user_id: int = data['new_user_id']
+    new_user_id: int = data["new_user_id"]
 
     # Add user
     success = add_user_to_allowed(new_user_id)
@@ -503,14 +545,13 @@ async def process_confirmation(message: Message, state: FSMContext) -> None:
             f"✅ *Пользователь добавлен!*\n\n"
             f"ID: `{new_user_id}`\n\n"
             f"Теперь он может использовать бота.",
-            reply_markup=get_main_keyboard(user_is_admin)
+            reply_markup=get_main_keyboard(user_is_admin),
         )
         logger.info(f"Admin {message.from_user.id} added user {new_user_id}")
     else:
         await message.answer(
-            f"❌ Не удалось добавить пользователя.\n\n"
-            f"Проверь логи или попробуй позже.",
-            reply_markup=get_main_keyboard(user_is_admin)
+            "❌ Не удалось добавить пользователя.\n\nПроверь логи или попробуй позже.",
+            reply_markup=get_main_keyboard(user_is_admin),
         )
 
 
@@ -528,8 +569,7 @@ async def btn_list_users(message: Message) -> None:
 
     if not users:
         await message.answer(
-            "ℹ️ Список пользователей пуст",
-            reply_markup=get_main_keyboard(user_is_admin)
+            "ℹ️ Список пользователей пуст", reply_markup=get_main_keyboard(user_is_admin)
         )
         return
 
@@ -549,6 +589,7 @@ async def btn_list_users(message: Message) -> None:
 # ============================================================================
 # Button Handlers (Reply Keyboard)
 # ============================================================================
+
 
 @dp.message(F.text == "📋 Дайджест")
 async def btn_digest(message: Message) -> None:
@@ -578,6 +619,7 @@ async def btn_help(message: Message) -> None:
 # Main
 # ============================================================================
 
+
 async def setup_bot_commands(bot: Bot) -> None:
     """Setup bot commands menu (disabled - using Reply Keyboard instead)."""
     # Remove commands menu - using Reply Keyboard instead
@@ -603,7 +645,7 @@ async def send_daily_digest() -> None:
             for i in range(0, len(text), 4000):
                 await bot.send_message(
                     chat_id=settings.hr_digest_chat_id,
-                    text=text[i:i+4000],
+                    text=text[i : i + 4000],
                     parse_mode="Markdown",
                 )
         else:

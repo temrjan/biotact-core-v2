@@ -41,7 +41,9 @@ async def get_latest_digest(
 async def get_digest_history(
     db: SessionDep,
     current_user: CurrentUserDep,
-    limit: int = Query(default=10, ge=1, le=50, description="Number of digests to return"),
+    limit: int = Query(
+        default=10, ge=1, le=50, description="Number of digests to return"
+    ),
     offset: int = Query(default=0, ge=0, description="Number of digests to skip"),
 ) -> list[DigestResponse]:
     """Get digest history with pagination.
@@ -90,7 +92,9 @@ async def get_digest_by_date(
 async def generate_digest_manual(
     db: SessionDep,
     current_user: CurrentUserDep,
-    hours: int = Query(default=24, ge=1, le=168, description="Hours back to scrape (1-168)"),
+    hours: int = Query(
+        default=24, ge=1, le=168, description="Hours back to scrape (1-168)"
+    ),
 ) -> DigestResponse:
     """Manually generate a new digest.
 

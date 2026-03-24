@@ -8,10 +8,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from biotact.core.config import get_settings
 from biotact.core.database import get_session
 from biotact.modules.crm.schemas import (
-    CustomersListResponse,
-    CustomersStatsResponse,
     CustomerCreate,
     CustomerResponse,
+    CustomersListResponse,
+    CustomersStatsResponse,
     CustomerUpdate,
     FamilyUpdate,
     ProblemsUpdate,
@@ -56,13 +56,13 @@ async def get_customer(
     """Get customer profile by Telegram ID."""
     service = CRMService(db)
     customer = await service.get_by_telegram_id(telegram_id)
-    
+
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Customer not found",
         )
-    
+
     return CustomerResponse.model_validate(customer)
 
 
@@ -97,13 +97,13 @@ async def update_customer(
     """Partially update customer fields."""
     service = CRMService(db)
     customer = await service.update(telegram_id, data)
-    
+
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Customer not found",
         )
-    
+
     return CustomerResponse.model_validate(customer)
 
 
@@ -121,13 +121,13 @@ async def add_problems(
     """Add problem tags to customer profile."""
     service = CRMService(db)
     customer = await service.add_problems(telegram_id, data.problems)
-    
+
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Customer not found",
         )
-    
+
     return CustomerResponse.model_validate(customer)
 
 
@@ -145,13 +145,13 @@ async def add_family_member(
     """Add or update family member."""
     service = CRMService(db)
     customer = await service.add_family_member(telegram_id, data.member)
-    
+
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Customer not found",
         )
-    
+
     return CustomerResponse.model_validate(customer)
 
 
@@ -169,13 +169,13 @@ async def add_purchase(
     """Add purchased product to customer profile."""
     service = CRMService(db)
     customer = await service.add_purchase(telegram_id, data.product)
-    
+
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Customer not found",
         )
-    
+
     return CustomerResponse.model_validate(customer)
 
 
@@ -198,7 +198,7 @@ async def get_customers(
     problem: str | None = None,
 ) -> CustomersListResponse:
     """Get paginated list of customers with optional filters.
-    
+
     Args:
         page: Page number (default: 1)
         size: Items per page (default: 20, max: 100)
@@ -207,7 +207,7 @@ async def get_customers(
     """
     # Limit size
     size = min(size, 100)
-    
+
     service = CRMService(db)
     customers, total = await service.get_customers_paginated(
         page=page,
@@ -215,9 +215,9 @@ async def get_customers(
         search=search,
         problem=problem,
     )
-    
+
     pages = (total + size - 1) // size if size > 0 else 0
-    
+
     return CustomersListResponse(
         items=[CustomerResponse.model_validate(c) for c in customers],
         total=total,

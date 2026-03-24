@@ -45,9 +45,7 @@ class TestQdrantService:
     """Tests for QdrantService."""
 
     @pytest.mark.unit
-    async def test_search_returns_results(
-        self, qdrant_service: QdrantService
-    ) -> None:
+    async def test_search_returns_results(self, qdrant_service: QdrantService) -> None:
         """search should return SearchResult list."""
         # Arrange
         mock_points = [
@@ -117,12 +115,12 @@ class TestQdrantService:
 
         # Assert
         call_kwargs = qdrant_service.client.query_points.call_args.kwargs
-        assert "query_filter" not in call_kwargs or call_kwargs.get("query_filter") is None
+        assert (
+            "query_filter" not in call_kwargs or call_kwargs.get("query_filter") is None
+        )
 
     @pytest.mark.unit
-    async def test_search_respects_limit(
-        self, qdrant_service: QdrantService
-    ) -> None:
+    async def test_search_respects_limit(self, qdrant_service: QdrantService) -> None:
         """search should pass limit to Qdrant."""
         # Arrange
         mock_response = MagicMock()

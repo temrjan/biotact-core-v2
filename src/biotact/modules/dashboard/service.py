@@ -311,7 +311,9 @@ class DashboardService(BaseCommandService):
 
         # Build period label
         if start_date and end_date:
-            period_label = f"{start_date.strftime('%d.%m.%Y')} — {end_date.strftime('%d.%m.%Y')}"
+            period_label = (
+                f"{start_date.strftime('%d.%m.%Y')} — {end_date.strftime('%d.%m.%Y')}"
+            )
         else:
             period_label = "Все время"
 

@@ -224,9 +224,7 @@ class TestDashboardTransactions:
         assert response.json()["deleted"] is True
 
         # Verify it's gone
-        list_response = await authenticated_client.get(
-            "/api/v1/dashboard/transactions"
-        )
+        list_response = await authenticated_client.get("/api/v1/dashboard/transactions")
         assert list_response.json() == []
 
     async def test_delete_nonexistent_transaction(

@@ -2,7 +2,7 @@
 
 import asyncio
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import httpx
@@ -75,7 +75,7 @@ class WebScraper:
                 title=None,
                 content=markdown[:5000],  # Limit content size
                 url=url,
-                published_at=datetime.now(timezone.utc),
+                published_at=datetime.now(UTC),
             )
 
         except httpx.HTTPError as e:
@@ -133,7 +133,7 @@ class TelegramScraper:
             List of NewsItems from channel.
         """
         items = []
-        cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+        cutoff = datetime.now(UTC) - timedelta(hours=hours)
 
         try:
             logger.info(f"Scraping Telegram channel: {channel}")

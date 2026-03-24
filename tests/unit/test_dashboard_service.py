@@ -153,7 +153,10 @@ class TestDashboardServiceExecuteTool:
         result = await dashboard_service.execute_tool(tool_call)
 
         assert result.success is False
-        assert "invalid_category" in result.message.lower() or "категория" in result.message.lower()
+        assert (
+            "invalid_category" in result.message.lower()
+            or "категория" in result.message.lower()
+        )
 
     @pytest.mark.unit
     async def test_execute_tool_get_report_success(
@@ -186,7 +189,10 @@ class TestDashboardServiceExecuteTool:
         result = await dashboard_service.execute_tool(tool_call)
 
         assert result.success is False
-        assert "unknown_tool" in result.message.lower() or "неизвестн" in result.message.lower()
+        assert (
+            "unknown_tool" in result.message.lower()
+            or "неизвестн" in result.message.lower()
+        )
 
 
 class TestDashboardServiceAddTransaction:

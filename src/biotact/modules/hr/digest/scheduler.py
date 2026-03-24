@@ -2,7 +2,9 @@
 
 import logging
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler  # type: ignore[import-untyped]
+from apscheduler.schedulers.asyncio import (
+    AsyncIOScheduler,  # type: ignore[import-untyped]
+)
 
 logger = logging.getLogger(__name__)
 
@@ -29,9 +31,7 @@ async def generate_daily_digest() -> None:
                 db=db, hours=24, generated_by="auto"
             )
 
-        logger.info(
-            f"✅ Digest generated: {digest_response.news_count} items"
-        )
+        logger.info(f"✅ Digest generated: {digest_response.news_count} items")
 
         # Send to Telegram
         bot = Bot(token=settings.hr_digest_bot_token.get_secret_value())
@@ -100,8 +100,7 @@ async def cleanup_old_data() -> None:
     try:
         async with AsyncSessionLocal() as db:
             deleted_count = await digest_service.cleanup_old_digests(
-                db=db,
-                retention_days=settings.digest_retention_days
+                db=db, retention_days=settings.digest_retention_days
             )
 
             if deleted_count > 0:

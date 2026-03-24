@@ -1,7 +1,5 @@
 """SQLAlchemy models for HR Digest."""
 
-from datetime import datetime
-
 from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
@@ -20,11 +18,15 @@ class HRDigest(Base):
     content_markdown = Column(Text, nullable=False)
     content_json = Column(JSONB, nullable=False)
     news_count = Column(Integer, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    created_at = Column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
     generated_by = Column(String(50), default="auto", nullable=False)
 
     # Relationship
-    news_items = relationship("HRNewsItem", back_populates="digest", cascade="all, delete-orphan")
+    news_items = relationship(
+        "HRNewsItem", back_populates="digest", cascade="all, delete-orphan"
+    )
 
 
 class HRNewsItem(Base):
@@ -33,13 +35,17 @@ class HRNewsItem(Base):
     __tablename__ = "hr_news_items"
 
     id = Column(Integer, primary_key=True, index=True)
-    digest_id = Column(Integer, ForeignKey("hr_digests.id", ondelete="CASCADE"), nullable=False)
+    digest_id = Column(
+        Integer, ForeignKey("hr_digests.id", ondelete="CASCADE"), nullable=False
+    )
     source = Column(String(100), nullable=False, index=True)
     title = Column(Text)
     content = Column(Text, nullable=False)
     url = Column(Text)
     published_at = Column(DateTime(timezone=True))
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    created_at = Column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
 
     # Relationship
     digest = relationship("HRDigest", back_populates="news_items")

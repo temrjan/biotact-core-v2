@@ -49,9 +49,7 @@ class ModuleRegistry:
             ValueError: If module with same department_id already registered.
         """
         if config.department_id in self._modules:
-            raise ValueError(
-                f"Module '{config.department_id}' is already registered"
-            )
+            raise ValueError(f"Module '{config.department_id}' is already registered")
         self._modules[config.department_id] = config
 
     def get(self, department_id: str) -> BaseModuleConfig | None:
@@ -143,10 +141,7 @@ class ModuleRegistry:
         Returns:
             List of command module configurations.
         """
-        return [
-            m for m in self._modules.values()
-            if isinstance(m, CommandModuleConfig)
-        ]
+        return [m for m in self._modules.values() if isinstance(m, CommandModuleConfig)]
 
     def rag_modules(self) -> list[RAGModuleConfig]:
         """Get all RAG-type modules.
@@ -154,10 +149,7 @@ class ModuleRegistry:
         Returns:
             List of RAG module configurations.
         """
-        return [
-            m for m in self._modules.values()
-            if isinstance(m, RAGModuleConfig)
-        ]
+        return [m for m in self._modules.values() if isinstance(m, RAGModuleConfig)]
 
     def unregister(self, department_id: str) -> bool:
         """Unregister a module (mainly for testing).

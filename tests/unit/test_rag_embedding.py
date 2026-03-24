@@ -59,9 +59,7 @@ class TestEmbeddingService:
         # Arrange
         mock_embeddings = [[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]]
         mock_response = MagicMock()
-        mock_response.data = [
-            MagicMock(embedding=emb) for emb in mock_embeddings
-        ]
+        mock_response.data = [MagicMock(embedding=emb) for emb in mock_embeddings]
         embedding_service.client.embeddings.create = AsyncMock(
             return_value=mock_response
         )

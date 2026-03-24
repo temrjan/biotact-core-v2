@@ -237,9 +237,7 @@ class TestChatServiceQuery:
         assert assistant_call.kwargs["content"] == "Generated answer"
 
     @pytest.mark.unit
-    async def test_query_returns_response(
-        self, chat_service: ChatService
-    ) -> None:
+    async def test_query_returns_response(self, chat_service: ChatService) -> None:
         """query should return ChatQueryResponse."""
         result = await chat_service.query(
             user_id=1,

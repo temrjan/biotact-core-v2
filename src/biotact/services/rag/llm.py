@@ -64,7 +64,8 @@ class LLMService:
             context_text = self._build_context(context)
             if user_message_template:
                 user_message = user_message_template.format(
-                    context=context_text, question=question,
+                    context=context_text,
+                    question=question,
                 )
             else:
                 user_message = f"""Контекст:
@@ -201,10 +202,14 @@ class LLMService:
                     {"role": "user", "content": first_message},
                 ],
             }
-            params2["max_completion_tokens" if new_api else "max_tokens"] = 200 if new_api else 20
+            params2["max_completion_tokens" if new_api else "max_tokens"] = (
+                200 if new_api else 20
+            )
             if not new_api:
                 params2["temperature"] = 0.5
-            openai_response = await self._openai_client.chat.completions.create(**params2)  # type: ignore[arg-type]
+            openai_response = await self._openai_client.chat.completions.create(
+                **params2
+            )  # type: ignore[arg-type]
             title = openai_response.choices[0].message.content or first_message[:50]
 
         return title.strip()

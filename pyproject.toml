@@ -117,9 +117,12 @@ select = [
     "RUF",    # Ruff-specific
 ]
 ignore = [
-    "E501",   # line too long (handled by formatter)
+    "E501",    # line too long (handled by formatter)
     "PLR0913", # too many arguments
     "PLR2004", # magic value comparison
+    "RUF001",  # ambiguous Unicode (Cyrillic in Russian project)
+    "RUF003",  # ambiguous Unicode in comments
+    "PLC0415", # import outside top-level (used in lazy loading patterns)
 ]
 
 [tool.ruff.lint.isort]
@@ -128,10 +131,11 @@ known-first-party = ["biotact"]
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*" = ["ARG", "PLR2004"]
 "**/rag/*.py" = ["RUF001"]  # Allow Cyrillic in Russian prompts
-"**/modules/**/*.py" = ["RUF001", "RUF002"]  # Allow Cyrillic in module prompts
+"**/modules/**/*.py" = ["RUF001", "RUF002", "E402", "PTH"]  # Allow Cyrillic + legacy patterns
 "**/services/command_executor.py" = ["RUF001", "ARG002"]  # Allow Cyrillic + reserved params
 "**/services/chat_service.py" = ["RUF001"]  # Allow Cyrillic in error messages
-"**/api/**/*.py" = ["B008"]  # Allow Query/Depends in function defaults (FastAPI pattern)
+"**/services/extraction_agent.py" = ["E402", "ARG001"]  # Legacy lazy imports + unused args
+"**/api/**/*.py" = ["B008", "ARG001", "PLW0603", "PLR0911", "PLR0912", "PLR0915", "RUF006"]  # FastAPI patterns + legacy complexity
 
 # ============================================================================
 # MYPY - Type Checking

@@ -7,7 +7,9 @@ from biotact.modules.base import RAGModuleConfig
 
 def _load_prompt() -> str:
     """Load system prompt from file."""
-    prompt_path = Path(__file__).parent.parent.parent.parent.parent / "prompts" / "askbiotact.txt"
+    prompt_path = (
+        Path(__file__).parent.parent.parent.parent.parent / "prompts" / "askbiotact.txt"
+    )
     if prompt_path.exists():
         return prompt_path.read_text(encoding="utf-8")
     return ""

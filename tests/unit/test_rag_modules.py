@@ -82,7 +82,9 @@ class TestHRConfig:
     def test_hr_config_has_system_prompt(self) -> None:
         """HR config should have system prompt."""
         assert len(hr_config.system_prompt) > 100
-        assert "HR" in hr_config.system_prompt or "кадр" in hr_config.system_prompt.lower()
+        assert (
+            "HR" in hr_config.system_prompt or "кадр" in hr_config.system_prompt.lower()
+        )
 
     @pytest.mark.unit
     def test_hr_config_mentions_confidentiality(self) -> None:

@@ -25,13 +25,7 @@ from biotact.core.dependencies import (
     get_qdrant_service,
 )
 from biotact.modules.askbiotact.config import askbiotact_config
-from biotact.api.v1.public import (
-    process_rag_query as public_process_rag_query,
-    get_extraction_agent,
-    get_customer_context,
-)
 from biotact.services.extraction_agent import archive_insight
-import asyncio
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
@@ -61,6 +55,7 @@ PHONE_PATTERNS: list[str] = [
 # ═══════════════════════════════════════════════════════════════════
 # Product Catalog
 # ═══════════════════════════════════════════════════════════════════
+
 
 @dataclass(frozen=True, slots=True)
 class Product:
@@ -215,8 +210,7 @@ PRODUCTS: dict[str, Product] = {
         price=320_000,
         category="kitchen",
         description=(
-            "Компактный ручной блендер для смузи, супов-пюре "
-            "и детского питания."
+            "Компактный ручной блендер для смузи, супов-пюре и детского питания."
         ),
         image_url="",
     ),
@@ -225,8 +219,7 @@ PRODUCTS: dict[str, Product] = {
         price=320_000,
         category="kitchen",
         description=(
-            "Стационарный блендер с мощным мотором для смузи, "
-            "коктейлей и измельчения."
+            "Стационарный блендер с мощным мотором для смузи, коктейлей и измельчения."
         ),
         image_url="",
     ),
@@ -235,8 +228,7 @@ PRODUCTS: dict[str, Product] = {
         price=255_000,
         category="kitchen",
         description=(
-            "Стильный тостер с регулировкой прожарки "
-            "для идеальных тостов каждое утро."
+            "Стильный тостер с регулировкой прожарки для идеальных тостов каждое утро."
         ),
         image_url="",
     ),
@@ -255,8 +247,7 @@ PRODUCTS: dict[str, Product] = {
         price=160_000,
         category="kitchen",
         description=(
-            "Быстрый электрический чайник из нержавеющей стали "
-            "с автоотключением."
+            "Быстрый электрический чайник из нержавеющей стали с автоотключением."
         ),
         image_url="",
     ),
@@ -280,6 +271,7 @@ MAIN_KEYBOARD: dict[str, Any] = {
 # ═══════════════════════════════════════════════════════════════════
 # Pydantic Schemas
 # ═══════════════════════════════════════════════════════════════════
+
 
 class WebhookResponse(BaseModel):
     """Response model for webhook endpoints."""
@@ -322,6 +314,7 @@ async def get_redis() -> aioredis.Redis:
 # ═══════════════════════════════════════════════════════════════════
 # Chat History Management
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def get_chat_history(chat_id: int) -> list[dict[str, str]]:
     """Retrieve chat history from Redis.
@@ -370,6 +363,7 @@ async def save_chat_history(chat_id: int, history: list[dict[str, str]]) -> None
 # ═══════════════════════════════════════════════════════════════════
 # Pending Order Management
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def save_pending_order(chat_id: int, order_data: dict[str, Any]) -> None:
     """Save pending order to Redis for confirmation.
@@ -433,6 +427,7 @@ async def clear_pending_order(chat_id: int) -> None:
 # Utility Functions
 # ═══════════════════════════════════════════════════════════════════
 
+
 def extract_phone(text: str) -> str | None:
     """Extract phone number from text using Uzbekistan patterns.
 
@@ -460,11 +455,7 @@ def format_product_card(product: Product) -> str:
         HTML-formatted product card string.
     """
     price_fmt = f"{product.price:,}".replace(",", " ")
-    return (
-        f"<b>{product.name}</b>\n\n"
-        f"{product.description}\n\n"
-        f"💰 {price_fmt} сум"
-    )
+    return f"<b>{product.name}</b>\n\n{product.description}\n\n💰 {price_fmt} сум"
 
 
 def _get_slug_by_product_name(name: str) -> str | None:
@@ -485,6 +476,7 @@ def _get_slug_by_product_name(name: str) -> str | None:
 # ═══════════════════════════════════════════════════════════════════
 # Order Parsing (LLM)
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def parse_order_with_llm(
     raw_text: str,
@@ -555,15 +547,19 @@ async def parse_order_with_llm(
             valid_products = []
             for p in parsed["products"]:
                 if p.get("name") in PRODUCT_PRICES:
-                    valid_products.append({
-                        "name": p["name"],
-                        "qty": max(1, int(p.get("qty", 1))),
-                    })
+                    valid_products.append(
+                        {
+                            "name": p["name"],
+                            "qty": max(1, int(p.get("qty", 1))),
+                        }
+                    )
             parsed["products"] = valid_products
 
         return parsed  # type: ignore[no-any-return]
     except Exception as e:
-        logger.warning("Order parsing failed", extra={"error": str(e), "raw_text": raw_text[:200]})
+        logger.warning(
+            "Order parsing failed", extra={"error": str(e), "raw_text": raw_text[:200]}
+        )
         return None
 
 
@@ -589,7 +585,11 @@ def format_order_confirmation(parsed: dict[str, Any], phone: str) -> str:
             subtotal = price * qty
             total += subtotal
             if qty > 1:
-                lines.append(f"📦 {name} — {qty} шт. ({price:,} × {qty} = {subtotal:,} сум)".replace(",", " "))
+                lines.append(
+                    f"📦 {name} — {qty} шт. ({price:,} × {qty} = {subtotal:,} сум)".replace(
+                        ",", " "
+                    )
+                )
             else:
                 lines.append(f"📦 {name} — 1 шт. ({price:,} сум)".replace(",", " "))
         lines.append(f"\n💰 Итого: {total:,} сум".replace(",", " "))
@@ -637,7 +637,9 @@ def format_order_for_sales(
             subtotal = price * qty
             total += subtotal
             if qty > 1:
-                lines.append(f"📦 {name} — {qty} шт. ({subtotal:,} сум)".replace(",", " "))
+                lines.append(
+                    f"📦 {name} — {qty} шт. ({subtotal:,} сум)".replace(",", " ")
+                )
             else:
                 lines.append(f"📦 {name} — 1 шт. ({price:,} сум)".replace(",", " "))
         lines.append(f"💰 Итого: {total:,} сум".replace(",", " "))
@@ -668,6 +670,7 @@ def format_order_for_sales(
 # ═══════════════════════════════════════════════════════════════════
 # Telegram API Functions
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def send_telegram_message(
     chat_id: int,
@@ -906,6 +909,7 @@ async def register_bot_commands() -> None:
 # Order Processing
 # ═══════════════════════════════════════════════════════════════════
 
+
 async def send_order_to_sales(
     order_data: dict[str, Any],
     user_info: dict[str, Any],
@@ -962,7 +966,10 @@ async def send_order_to_sales(
             if success:
                 logger.info(
                     "Order sent to sales",
-                    extra={"user_id": user_info.get("id"), "username": user_info.get("username")},
+                    extra={
+                        "user_id": user_info.get("id"),
+                        "username": user_info.get("username"),
+                    },
                 )
             return success
     except httpx.HTTPError as e:
@@ -976,6 +983,7 @@ async def send_order_to_sales(
 # ═══════════════════════════════════════════════════════════════════
 # RAG Processing
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def process_rag_query(
     message: str,
@@ -1022,6 +1030,7 @@ async def process_rag_query(
 # Catalog Navigation Helpers
 # ═══════════════════════════════════════════════════════════════════
 
+
 def build_catalog_keyboard() -> dict[str, Any]:
     """Build inline keyboard with product categories.
 
@@ -1049,10 +1058,14 @@ def build_category_keyboard(category: str) -> dict[str, Any]:
     for slug, product in PRODUCTS.items():
         if product.category == category:
             price_fmt = f"{product.price:,}".replace(",", " ")
-            buttons.append([{
-                "text": f"{product.name} — {price_fmt} сум",
-                "callback_data": f"prod:{slug}",
-            }])
+            buttons.append(
+                [
+                    {
+                        "text": f"{product.name} — {price_fmt} сум",
+                        "callback_data": f"prod:{slug}",
+                    }
+                ]
+            )
     buttons.append([{"text": "⬅️ К категориям", "callback_data": "catalog"}])
     return {"inline_keyboard": buttons}
 
@@ -1078,6 +1091,7 @@ def build_product_keyboard(slug: str, product: Product) -> dict[str, Any]:
 # ═══════════════════════════════════════════════════════════════════
 # Callback Query Handler
 # ═══════════════════════════════════════════════════════════════════
+
 
 async def handle_callback(callback: dict[str, Any]) -> WebhookResponse:
     """Handle Telegram callback query (button press).
@@ -1220,6 +1234,7 @@ async def handle_callback(callback: dict[str, Any]) -> WebhookResponse:
 # ═══════════════════════════════════════════════════════════════════
 # Webhook Endpoints
 # ═══════════════════════════════════════════════════════════════════
+
 
 @router.post("/telegram", response_model=WebhookResponse)
 async def telegram_webhook(request: Request) -> WebhookResponse:

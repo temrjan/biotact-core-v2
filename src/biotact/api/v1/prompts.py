@@ -39,7 +39,7 @@ async def get_prompt(name: str) -> PromptResponse:
         content = prompt_path.read_text(encoding="utf-8")
         return PromptResponse(name=safe_name, content=content)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.put("/{name}", response_model=PromptResponse)
@@ -61,7 +61,7 @@ async def update_prompt(name: str, request: PromptUpdateRequest) -> PromptRespon
         prompt_path.write_text(request.content, encoding="utf-8")
         return PromptResponse(name=safe_name, content=request.content)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/", response_model=list[PromptResponse])

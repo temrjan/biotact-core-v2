@@ -99,7 +99,9 @@ class QdrantService:
 
         logger.info(f"Qdrant search: found {len(response.points)} points")
         for p in response.points:
-            logger.info(f"  Point score: {p.score}, payload keys: {list(p.payload.keys()) if p.payload else 'None'}")
+            logger.info(
+                f"  Point score: {p.score}, payload keys: {list(p.payload.keys()) if p.payload else 'None'}"
+            )
 
         return [self._point_to_result(point) for point in response.points]
 
@@ -125,7 +127,9 @@ class QdrantService:
             content = str(payload["text"])
 
         # Get source from different formats
-        source = payload.get("source", payload.get("source_file", payload.get("file_name", "unknown")))
+        source = payload.get(
+            "source", payload.get("source_file", payload.get("file_name", "unknown"))
+        )
 
         return SearchResult(
             content=content,

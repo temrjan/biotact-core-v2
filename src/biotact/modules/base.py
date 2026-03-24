@@ -114,6 +114,8 @@ class RAGModuleConfig(BaseModuleConfig):
         if context and "retrieved_docs" in context:
             # Add retrieved documents summary
             docs_count = len(context["retrieved_docs"])
-            base_prompt += f"\n\nИспользуй {docs_count} найденных документов для ответа."
+            base_prompt += (
+                f"\n\nИспользуй {docs_count} найденных документов для ответа."
+            )
 
         return base_prompt

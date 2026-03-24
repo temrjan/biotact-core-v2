@@ -1,7 +1,7 @@
 """FastAPI dependencies for dependency injection."""
 
 from functools import lru_cache
-from typing import Annotated
+from typing import TYPE_CHECKING, Annotated
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -11,7 +11,6 @@ from biotact.core.config import Settings, get_settings
 from biotact.core.database import get_session
 from biotact.core.security import TokenError, decode_access_token
 from biotact.models.user import User
-from biotact.modules.command.base import BaseCommandService
 from biotact.modules.dashboard.config import dashboard_config
 from biotact.modules.dashboard.service import DashboardService
 from biotact.repositories.chat_repo import ChatRepository
@@ -21,6 +20,9 @@ from biotact.services.auth_service import AuthService
 from biotact.services.chat_service import ChatService
 from biotact.services.command_executor import CommandExecutor
 from biotact.services.rag import EmbeddingService, LLMService, QdrantService
+
+if TYPE_CHECKING:
+    from biotact.modules.command.base import BaseCommandService
 
 # Security scheme
 security = HTTPBearer()

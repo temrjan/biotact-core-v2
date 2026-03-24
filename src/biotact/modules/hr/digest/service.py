@@ -26,7 +26,9 @@ class DigestService:
         self.settings = settings or get_settings()
 
     async def generate_digest(
-        self, hours: int = 24, generated_by: str = "auto"
+        self,
+        hours: int = 24,
+        generated_by: str = "auto",  # noqa: ARG002
     ) -> Digest:
         """Generate new digest from fresh news.
 
@@ -125,9 +127,7 @@ class DigestService:
         """
         from biotact.models import HRDigest
 
-        result = await db.execute(
-            select(HRDigest).where(HRDigest.date == target_date)
-        )
+        result = await db.execute(select(HRDigest).where(HRDigest.date == target_date))
         digest = result.scalar_one_or_none()
 
         if digest:
@@ -154,10 +154,7 @@ class DigestService:
             raise ValueError("Database session is required")
 
         result = await db.execute(
-            select(HRDigest)
-            .order_by(HRDigest.date.desc())
-            .limit(limit)
-            .offset(offset)
+            select(HRDigest).order_by(HRDigest.date.desc()).limit(limit).offset(offset)
         )
         digests = result.scalars().all()
 
@@ -182,7 +179,9 @@ class DigestService:
         target_date = digest.date.date()
         existing = await self.get_digest_by_date(target_date, db)
         if existing:
-            logger.info(f"Digest for {target_date} already exists (id={existing.id}), updating")
+            logger.info(
+                f"Digest for {target_date} already exists (id={existing.id}), updating"
+            )
             await self._update_digest(existing.id, digest, db, generated_by)
         else:
             await self.save_digest(digest, db, generated_by=generated_by)
@@ -192,8 +191,13 @@ class DigestService:
             raise RuntimeError("Failed to retrieve saved digest")
 
         return saved
+
     async def _update_digest(
-        self, digest_id: int, digest: Digest, db: AsyncSession, generated_by: str = "auto"
+        self,
+        digest_id: int,
+        digest: Digest,
+        db: AsyncSession,
+        generated_by: str = "auto",
     ) -> None:
         """Update existing digest in database.
 
@@ -204,6 +208,7 @@ class DigestService:
             generated_by: Generator identifier.
         """
         from sqlalchemy import update as sa_update
+
         from biotact.models import HRDigest
 
         await db.execute(
@@ -236,11 +241,14 @@ class DigestService:
             Number of digests deleted.
         """
         from datetime import timedelta
+
         from biotact.models import HRDigest
 
         cutoff_date = datetime.now().date() - timedelta(days=retention_days)
 
-        logger.info(f"Cleaning up digests older than {cutoff_date} (retention: {retention_days} days)")
+        logger.info(
+            f"Cleaning up digests older than {cutoff_date} (retention: {retention_days} days)"
+        )
 
         # Count before deletion
         count_result = await db.execute(
@@ -253,16 +261,13 @@ class DigestService:
             return 0
 
         # Delete old digests (news_items will be deleted via CASCADE)
-        result = await db.execute(
-            delete(HRDigest).where(HRDigest.date < cutoff_date)
-        )
+        result = await db.execute(delete(HRDigest).where(HRDigest.date < cutoff_date))
         await db.commit()
 
         deleted_count: int = result.rowcount  # type: ignore[assignment]
         logger.info(f"Cleaned up {deleted_count} old digests and their news items")
 
         return deleted_count
-
 
 
 # Singleton instance
