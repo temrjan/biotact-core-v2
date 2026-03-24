@@ -45,21 +45,18 @@ class TelegramCustomer(Base):
     problems: Mapped[list[str]] = mapped_column(
         JSON().with_variant(ARRAY(String), "postgresql"),
         default=list,
-        server_default="[]",
     )
 
     # Family members: [{"name": "Алия", "relation": "дочь", "age": 5, "problems": ["immunity"]}]
     family: Mapped[list[dict[str, Any]]] = mapped_column(
         JSON().with_variant(JSONB, "postgresql"),
         default=list,
-        server_default="[]",
     )
 
     # Purchased products: ["IMMUNOCOMPLEX KIDS", "BIFOLAK ACTIVE"]
     purchased_products: Mapped[list[str]] = mapped_column(
         JSON().with_variant(ARRAY(String), "postgresql"),
         default=list,
-        server_default="[]",
     )
 
     # Free-form AI notes about the customer
