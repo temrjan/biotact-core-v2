@@ -242,7 +242,8 @@ async def transcribe_voice(file_id: str) -> str | None:
                 timeout=30.0,
             )
             if resp.status_code == 200:
-                return resp.json().get("text")
+                result: str | None = resp.json().get("text")
+                return result
             logger.error("Voice-service STT error: %d", resp.status_code)
     except Exception:
         logger.exception("Voice transcription failed")
