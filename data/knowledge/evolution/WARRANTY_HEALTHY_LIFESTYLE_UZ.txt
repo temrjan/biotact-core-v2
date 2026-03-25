@@ -1,0 +1,79 @@
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Umumiy ma'lumot]
+
+BIOTACT kafolat taloni. Kompaniya: MChJ BIOTACT (TM BIOTACT DEUTSCHLAND, Germaniya). Mahsulotlar qatori: HEALTHY LIFESTYLE. Amal qilish hududi: O'zbekiston Respublikasi. Tillar: ruscha, o'zbekcha. Ishonch telefoni: +998 93 555 17 47.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Kafolat shartlari]
+
+BIOTACT ning barcha mayda maishiy texnikasi (MMT) uchun kafolat muddati sotilgan sanadan boshlab 90 kalendar kun.
+
+MChJ BIOTACT MMT ning zavod nuqsonlarini quyidagi usullar bilan bepul bartaraf etishni o'z zimmasiga oladi: ta'mirlash va ehtiyot qismlarni almashtirish, MMT ni bir xil yoki o'xshash tovar bilan almashtirish (ta'mirlash imkoni bo'lmaganda).
+
+Kafolat ta'mirlash iste'molchi tomonidan talab qo'yilgan paytdan boshlab 20 kalendar kun ichida amalga oshiriladi. Kafolat majburiyatlari O'zbekiston Respublikasi hududidagi MChJ BIOTACT ning Vakolatli Servis markazlari tomonidan bajariladi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Talonga qo'yiladigan talablar]
+
+Kafolat taloni quyidagi ma'lumotlar mavjud bo'lganda amal qiladi: MMT modeli, MMT seriya raqami (agar tegishli bo'lsa), sotilgan sana, savdo tashkilotining asl muhri, savdo tashkilotining imzosi, xaridorning imzosi.
+
+Murojaat uchun MChJ BIOTACT ning kassa yoki tovar cheki va ushbu kafolat taloni zarur.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Kafolat cheklovlari]
+
+Kafolat quyidagi hollarga taalluqli emas. Sarf materiallari va aksessuarlar: olinadigan va aylanadigan detallar, sarf materiallari va aksessuarlar (filtrlar, to'rlar, pichoqlar, kartridjlar, nasadkalar va h.k.). Mexanik shikastlanishlar: yoriqlar, sinishlar, sindirishlar va MMT ning noto'g'ri foydalanish natijasida yuzaga kelgan boshqa shikastlanishlar. Maqsadga nomuvofiq foydalanish: maishiy ehtiyojlardan tashqari maqsadlarda foydalanish natijasida yuzaga kelgan shikastlanishlar va nuqsonlar. Suv sifati bilan bog'liq muammolar: suvning nomuvofiq sifati va qatlama to'planishi natijasida yuzaga kelgan shikastlanishlar va nuqsonlar. Qatlama tozalash kafolat xizmatiga kirmaydi va xaridor tomonidan muntazam ravishda mustaqil amalga oshirilishi kerak.
+
+Shuningdek kafolat foydalanish buzilishlariga taalluqli emas: uskunaning ortiqcha yuklanishi, elektr tarmoq kuchlanishining nomuvofqligi, noto'g'ri yoki e'tiborsiz foydalanish, suyuqliklar, chang, hasharotlar va begona jismlarning MMT ichiga kirib qolishi, plastmassa va issiqlikka chidamsiz qismlarga yuqori harorat ta'siri, yengilmas kuch harakati.
+
+Kafolat MMT konstruksiyasi yoki markirovkasiga ruxsatsiz o'zgartirishlar kiritilganda, vakolatsiz ta'mirlash amalga oshirilganda, markirovka (model nomi va/yoki identifikatsiya raqami) mavjud bo'lmaganda, fors-major holatlarda (yong'in, tabiiy ofat, xaridorning va/yoki uchinchi shaxslarning qasddan yoki ehtiyotsizlik bilan qilgan harakatlari), shuningdek normal foydalanish rejimida detallar, tugunlar va agregatlarning tabiiy eskirishida amal qilmaydi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Nuqson bo'lmagan holatlar]
+
+Quyidagi holatlar MMT ning kamchiligi (nuqsoni) hisoblanmaydi: tashqi va ichki pardozlash detallarining tabiiy eskirishi, tabiiy shovqinlar va tebranishlar mavjudligi, bo'yoq qoplamaning rangsizlanishi va so'nishi, ifloslanishlar, ishqalanishlar va deformatsiyalar.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: HEALTHY_LIFESTYLE
+doc_type: warranty
+category: melkaya-bytovaya-tehnika
+language: uz
+
+[HEALTHY LIFESTYLE -- Kafolat taloni. Javobgarlik va xaridorning huquqlari]
+
+MChJ BIOTACT foydalanish qoidalariga rioya etilmaganda odamlar, uy hayvonlari yoki mulkga yetkazilgan zarar, iste'molchi yoki uchinchi shaxslarning qasddan yoki ehtiyotsizlik bilan qilgan harakatlaridan ko'rilgan zarar, bilvosita va tasodifiy zarar, iqtisodiy va nomoddiy yo'qotishlar, daromad, foyda, axborot ma'lumotlarini yo'qotish uchun javobgarlikni o'z zimmasiga olmaydi.
+
+Kafolat talonini qabul qilishda quyidagilar tasdiqlanadi: xaridor sotib olingan MMT va uning iste'mol xususiyatlari haqida to'liq ma'lumot olgan (Iste'molchilar huquqlarini himoya qilish to'g'risidagi Qonunning 6-moddasi), xaridor ruscha va o'zbekcha tillarida foydalanish bo'yicha ko'rsatma olgan, xaridor kafolat xizmati shartlari bilan tanishgan va rozi, xaridor MMT ning tashqi ko'rinishi, to'liqligi va sifati bo'yicha da'volar bildirmaydi.
+
+Tegishli sifatdagi MMT qaytarish yoki almashtirishga taalluqli emas. Sotib olishda sizning huzuringizda MMT ishga layoqatligini tekshirishni talab qiling. Tashqi ko'rinish va to'liqligini tekshiring. Hujjatlarning to'g'ri to'ldirilganligiga ishonch hosil qiling. Ruscha va o'zbekcha matnlar o'rtasida ziddiyat bo'lgan taqdirda ruscha matn ustun turadi.
+===/СЕКЦИЯ===

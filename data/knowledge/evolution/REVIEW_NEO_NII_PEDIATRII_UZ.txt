@@ -1,0 +1,85 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Umumiy ma'lumot]
+
+Respublika pediatriya ilmiy-tadqiqot institutidan (Pediatriya ITI) Bifolak-Neo preparati haqida sharh.
+
+Tibbiy muassasa: Respublika pediatriya ilmiy-tadqiqot instituti (Pediatriya ITI). Bosh shifokor: t.f.n. Tsoy S.N.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Ichak disbiozi va OIchI]
+
+2-darajali ichak disbiozi bilan kasallangan bolalarni davolash. Bemorlarning yoshi: 3 oylikdan 5 yoshgacha. Bifolak-Neo probiotikini qo'llashda davolashning barqaror ijobiy dinamikasi kuzatildi, bolalarda yaxshi vaznda ortish qayd etildi.
+
+O'tkir ichak infeksiyalarini davolash. Yangi tug'ilgan chaqaloqlar patologiyasi bo'limida bolalarning 70% da ichak disbiozi rivojlanishining oldini olish mumkin bo'ldi. Hayotining birinchi yilidagi o'tkir ichak infeksiyali bolalarda Bifolak-Neo probiotikini kompleks davolashda yoki alohida qo'llashda, hatto uzoq muddatli ichak buzilishlari bo'lgan bolalarda ham erta muddatlarda ich kelishining barqaror normallashuvi kuzatildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Hayotining birinchi yilidagi bolalarni davolash]
+
+Hayotining birinchi yilidagi bolalarda qo'llash ko'rsatmalari gastroenterologik holatlar (dispepsiya, kolienteritlar, enteritlar), allergik holatlar va yangi tug'ilgan chaqaloqlarning yiringli-septik kasalliklarini o'z ichiga oladi.
+
+Bifolak-Neo probiotikini qabul qilish davrida klinik manzara yaxshilandi. Bakteriologik tadqiqotlar ichak biotsenozining tiklanishi va shartli patogen mikrofloraning yo'qolishini tasdiqladi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Bakteriya tashuvchilik va disbakterioz]
+
+Ichak infeksiyalari qo'zg'atuvchilarini tashuvchi bolalarni davolash (salmonellyoz, shigellyoz, protey infeksiyasi). 10 kun davomida Bifolak-Neo probiotikini qo'llash ichak infeksiyasini o'tkazgan qaysarlik bilan bakteriya ajratuvchilarning eliminatsiyasiga yordam berdi. Umuman olganda, 60% hollarda muvaffaqiyatli eliminatsiyaga erishildi.
+
+Disbakterioz sindromi bilan kechadigan kasalliklarda tez-tez va uzoq muddatli kasallanadigan bolalarda (TUKaB), oshqozon-ichak trakti kasalliklari va parazitolarda barqaror ijobiy natijalar qayd etildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Gastroduodenitlar va kolitlar]
+
+Bolalardagi gastroduodenitlarni kompleks terapiyasida Bifolak-Neo probiotikini qo'llashda kasallik simptomlari ertaroq muddatlarda yo'qoladi va mikrobiotsenoz normallashadi.
+
+Distal kolitni davolash kompleksiga Bifolak-Neo probiotikini kiritish kasallikning klinik ko'rinishlarining dinamikasiga, klinik ko'rinishlarning barqarorlashuviga va ichak mikroflorasi tarkibiga ijobiy ta'sir ko'rsatadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Pediatriya ITI (Respublika pediatriya ilmiy-tadqiqot instituti)
+language: uz
+
+[BIFOLAK NEO -- Pediatriya ITI sharhi. Umumiy baho va xulosa]
+
+Klinik tajriba asosida preparatning quyidagi ta'sirlari tasdiqlandi: mikrobiotsenozning tiklanishi (bakteriologik tadqiqotlar bilan tasdiqlangan), patogen floraning eliminatsiyasi (shartli patogen mikrofloraning yo'qolishi, 10 kunda qaysarlik bilan bakteriya ajratuvchilarning 60% da eliminatsiyasi), klinik ko'rinishlarning normallashuvi (ich kelishining erta muddatlarda barqaror normallashuvi, simptomlarning ertaroq muddatlarda yo'qolishi, klinik manzaraning yaxshilanishi), jismoniy rivojlanishning yaxshilanishi (disbiozli bolalarda yaxshi vaznda ortish).
+
+Bifolak-Neo preparati pediatriya amaliyotida 7 ta asosiy yo'nalish bo'yicha yuqori samaradorlik ko'rsatdi: ichak disbiozi, o'tkir ichak infeksiyalari, hayotining birinchi yilidagi bolalarning oshqozon-ichak trakti kasalliklari, bakteriya tashuvchilik (salmonellyoz, shigellyoz, protey infeksiyasi), turli kasalliklardagi disbakterioz sindromi, gastroduodenitlar, distal kolitlar. Alohida samaradorlik: yangi tug'ilgan chaqaloqlarda OIchI da disbiozning 70% profilaktikasi, 10 kunda bakteriya ajratuvchilarning 60% eliminatsiyasi.
+
+Bosh shifokor t.f.n. Tsoy S.N. Hujjat muassasa muhri bilan tasdiqlangan.
+===/СЕКЦИЯ===

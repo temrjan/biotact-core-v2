@@ -1,0 +1,76 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Toshkent pediatriya tibbiyot instituti
+date: 2015-11-17
+language: uz
+
+[BIFOLAK ACTIVE -- Pediatriya sharhi. Umumiy ma'lumot]
+
+Bolalardagi allergik dermatozlarni kompleks davolashda Bifolak-Active preparatining samaradorligi haqida sharh.
+
+Muassasa: Toshkent pediatriya tibbiyot instituti. Sana: 2015-yil 17-noyabr. Muallif: t.f.n., dotsent Xo'jaeva S.M.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Toshkent pediatriya tibbiyot instituti
+date: 2015-11-17
+language: uz
+
+[BIFOLAK ACTIVE -- Pediatriya sharhi. Muammo dolzarbligi]
+
+Allergik dermatozlar Toshkent pediatriya tibbiyot instituti bemorlarining bolalari orasida keng tarqalgan kasalliklardir. Kasallikning kechishi va bemorning tuzalish tezligi ko'p jihatdan bemorning ichak mikroflorasining holati va begona patogen hamda shartli patogen mikrofloraning kolonizatsiyasiga qarshilik darajasiga bog'liq.
+
+Allergik dermatozlar bilan kasallangan bolalarning taxminan 50-90% da ichak disbakteriozi kuzatiladi. Ichak mikroflorasi qanchalik sog'lom bo'lsa, allergik dermatozli bemorning tuzalishi shunchalik tez sodir bo'ladi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Toshkent pediatriya tibbiyot instituti
+date: 2015-11-17
+language: uz
+
+[BIFOLAK ACTIVE -- Pediatriya sharhi. Samaradorlik tadqiqoti]
+
+Ichak sog'lig'ini yaxshilash va uning mikroflorasini normallashtirish maqsadida, bolalardagi allergik dermatozlarni kompleks terapiyasida kombinatsiyalangan probiotik Bifolak-Active qo'llanildi. Preparat tarkibida bir trilliondan ortiq foydali bakteriyalar mavjud.
+
+Tadqiqot parametrlari: 50 bemor, korreksiya davomiyligi 20 dan 40 kungacha (disbakterioz darajasiga qarab). Ichak mikrobiotsenozining buzilishini korreksiyalash disbakterioz darajasiga qarab amalga oshirildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Toshkent pediatriya tibbiyot instituti
+date: 2015-11-17
+language: uz
+
+[BIFOLAK ACTIVE -- Pediatriya sharhi. Qo'llash natijalari]
+
+Bifolak-Active preparatini qo'llash natijasida allergik dermatozlarning asosiy klinik simptomlarining tezroq bartaraf etilishi, bemorlarda teri holatining sezilarli yaxshilanishi, ich kelishining normallashuvi va ichak mikroflorasining normallashuvi kuzatildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Toshkent pediatriya tibbiyot instituti
+date: 2015-11-17
+language: uz
+
+[BIFOLAK ACTIVE -- Pediatriya sharhi. Tavsiyalar va xulosalar]
+
+Ichak sog'lig'ini yaxshilash, mikroflorani tiklash, hazm qilishni normallashtirish, shuningdek shifokor tayinlovi bo'yicha maxsus preparatlar bilan birgalikda allergik dermatozlarni davolashda bolalar va kattalarga kombinatsiyalangan probiotik Bifolak-Active ni qo'llash tavsiya etiladi.
+
+Bifolak-Active preparati bolalardagi allergik dermatozlarni kompleks terapiyasida samarali. Ichak mikroflorasining holati va allergik dermatozlar kechishi o'rtasidagi bog'liqlik isbotlangan. Allergik dermatozli bolalarning 50-90% da ichak disbakteriozi mavjud. Probiotikni qo'llash tuzalishni tezlashtiradi va klinik ko'rsatkichlarni yaxshilaydi. Kurs davomiyligi disbakterioz darajasiga qarab 20 dan 40 kungacha. Preparat xavfsiz va bolalar hamda kattalarda qo'llanilishi mumkin.
+
+Preparat allergik dermatozlarda (kompleks terapiyada), turli darajadagi ichak disbakteriozida, ichak mikrobiotsenozining buzilishida, profilaktika va ichak sog'lig'ini yaxshilashda ko'rsatilgan. Ta'sir mexanizmi ichak normal mikroflorasini tiklash, patogen mikrofloraga qarshilikni oshirish, ichakning to'siq funksiyasini yaxshilash va immunitet javobini normallashtirishni o'z ichiga oladi.
+
+T.f.n., dotsent Xo'jaeva S.M. Toshkent pediatriya tibbiyot instituti. 2015-yil 17-noyabr.
+===/СЕКЦИЯ===

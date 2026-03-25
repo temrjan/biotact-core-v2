@@ -1,0 +1,127 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Umumiy ma'lumot]
+
+Bronx-o'pka patologiyasi bo'lgan bolalarda Bifolak-Tsinkum preparatining klinik samaradorligi va o'zlashtirilishini tadqiqot etish mavzusidagi ilmiy-tadqiqot ishi hisoboti. Tadqiqot RSNPMTs Pediatriya SSV pulmonologiya bo'limi bazasida o'tkazildi. Mas'ul ijrochi: RSNPMTs Pediatriya SSV pulmonologiya bo'limi rahbari, t.f.d., professor Shamsiev F.M. Tadqiqotda obstruktiv, retsidivlovchi bronxitlar va bronxial astma bilan 80 bola ishtirok etdi. Bifolak-Tsinkum terapiyasining samaradorligi bolalarning 85,3% da a'lo deb baholandi. Barcha bolalar terapiyaning yaxshi o'zlashtirilishini qayd etdilar, biron-bir nojo'ya hodisalar rivojlanishi holatlari aniqlanmadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Tadqiqot dizayni va guruhlar]
+
+Kuzatuvda 1 yoshdan 15 yoshgacha 75 bola bo'ldi. Bronxit bilan kasallangan 50 bemor: obstruktiv bronxit (OB) 25 bola, retsidivlovchi bronxit (RB) 25 bola. Bronxial astma (BA) bilan 25 bola. Solishtirish guruhi: xuddi shu yoshdagi o'tkir bronxit bilan 20 bola. Bemorlar 2 guruhga bo'lingan: I guruh (nazorat) 20 bola umumqabul qilingan bazis terapiyani oldi. II guruh (asosiy) 75 bola bazis terapiyasi fonida Bifolak-Tsinkum ni 1 gr. dozada oldi (1 sashe tarkibida 15,54 mg rux sulfat mavjud): 1 yoshdan 5 yoshgacha bolalarga kuniga 1 marta bir yarim paketcha, 5 yoshdan 12 yoshgacha kuniga 2 marta 1 paketcha, 10-14 kun davomida.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Kasallangan bolalarda rux defitsiti]
+
+Qon tarkibidagi mikroelementlarni tahlil qilishda OB, RB va BA bilan tekshirilgan barcha bolalarda gipomikroelementozlar aniqlandi. Rux defitsiti 100% hollarda aniqlandi. Shuningdek kaltsiy defitsiti 94,7%, selen 82,7%, yod 78,6%, margants 74,7% da aniqlandi. Kelganda sochdagi rux darajasi sezilarli pasaygan edi. Norma taxminan 200 mkg/g. OB: 132,4 plus-minus 17,1 mkg/g (P 0,05 dan kam). RB: 102,6 plus-minus 16,2 mkg/g (P 0,01 dan kam). BA: 97,4 plus-minus 18,4 mkg/g (P 0,01 dan kam). Bemorlarda asabiylik, charchash, giperaktivlik, tana vaznining kamayishi, tez-tez shamollash kasalliklari, kamqonlik kuzatildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Biokimyoviy buzilishlar]
+
+OB, RB va BA bilan kasallangan bolalarda lipidlarning peroksidatsiyasi yanada sezilarli buzilgan. Dien konyugatlar (DK): sog'lom bolalar 1,1 plus-minus 0,04 nmol/ml; OB 2,0 nmol/ml; RB 2,8 nmol/ml; BA 3,1 nmol/ml (barcha guruhlar uchun P 0,01 dan kam). Malon dialdegid (MDA): sog'lom 2,9 nmol/ml; OB 4,4; RB 6,2; BA 8,7 nmol/ml (P 0,01 dan kam). Superoksiddismutaza (SOD): sog'lom 2,4 Br/mg oqsil; OB 1,6; RB 1,4; BA 1,1 (P 0,01 dan kam). Katalaza (KT): sog'lom 11,5 mkmol/mg; OB 8,1; RB 7,5; BA 6,5 (P 0,01 dan kam). Natijalar ushbu patologiyada erkin radikal oksidlanishining faollashuvi va antioksidant himoyaning pasayishini ko'rsatadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Immunologik buzilishlar]
+
+OB, RB va BA bilan kasallangan bolalarda CD3+-limfotsitlar tarkibining ishonchli pasayishi aniqlandi (P 0,01 dan kam), CD4+-limfotsitlar immunoregulyator subpopulyatsiyalar (P 0,01 dan kam), CD8+-limfotsitlar (P 0,05 dan kam). Barcha guruh bemorlarida CD20+-limfotsitlar tarkibi o'tkir bronxitli bolalarga qaraganda ishonchli yuqori edi (P 0,01 dan kam). Neytrofillarning fagotsitar faolligi ishonchli pasaygan (P 0,001 dan kam). Barcha guruh kasallangan bolalarda IgA va IgG kontsentratsiyasi pasaydi, IgM tarkibi ko'tarildi. BA da: IgA 85,2 mg% gacha pasaydi, IgG 950 mg% gacha pasaydi, IgM 167,5 mg% gacha ko'tarildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Davolash klinik samaradorligi]
+
+Bifolak-Tsinkum qabul qilish fonida tadqiqot davrida sezilarli klinik yaxshilanish qayd etildi. Intoksikatsiya simptomlari: II guruh Bifolak-Tsinkum bilan 4,7 plus-minus 0,3 kun, I guruh nazorat 7,6 plus-minus 0,5 kun, 1,6 marta qisqarish (P 0,05 dan kam). Ho'l yo'tal: II guruh 6,5 plus-minus 0,4 kun, I guruh 9,6 plus-minus 0,7 kun, 1,5 marta qisqarish (P 0,05 dan kam). Qisqaroq muddatlarda intoksikatsiya ko'rinishlari bartaraf etildi. Tana harorati davolashning 3-kuniga normallashdi. Quruq va ho'l yo'tal davomiyligi qisqardi. O'pkalardagi ho'l xirillashlar davomiyligi qisqarishi va obstruktiv sindromning bartaraf etilishi qayd etildi. Dispeptik buzilishlar kamaydi, ich kelish xarakteri va ichak mikroflorasi tarkibi normallashdi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Rux darajasi va POL-AOS dinamikasi]
+
+Davolash kompleksiga Bifolak-Tsinkum preparatini kiritish asosiy guruh bemorlarida rux kontsentratsiyasining ko'tarilishiga yordam berdi. Davolashdan keyin sochdagi rux tarkibi: norma taxminan 200 mkg/g. I guruh nazorat OB 140, II guruh Bifolak-Tsinkum OB 184,5 (P 0,05 dan kam). I guruh RB 110, II guruh RB 156,8 (P 0,05 dan kam). I guruh BA 105, II guruh BA 154,7 (P 0,05 dan kam). Bifolak-Tsinkumni terapiya kompleksiga kiritish POL-AOS ko'rsatkichlariga ijobiy ta'sir ko'rsatdi. Davolashdan oldin va keyingi MDA va DK darajalarining farqi II guruh bolalarida ishonchli edi (P 0,01 dan kam), I guruhda esa bu ko'rsatkichlar ishonchli farqqa ega emas edi. Bifolak-Tsinkum qabul qilish fonida POL-AOS tiklanishi 2 marta tez-tezroq sodir bo'ldi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Immunologik ko'rsatkichlar dinamikasi]
+
+Immunologik ko'rsatkichlarni tahlil qilish Bifolak-Tsinkumning immunitet tizimiga ijobiy ta'sirini ko'rsatdi. CD3+-limfotsitlarning ishonchli ko'tarilishi (P 0,01 dan kam), CD8+-limfotsitlar (P 0,05 dan kam), CD4+-limfotsitlar (P 0,01 dan kam). CD20+-limfotsitlarning ishonchli pasayishi (P 0,01 dan kam). Zardobdagi IgM tarkibi pasaydi (P 0,05 dan kam). IgA tarkibi ko'tarildi (P 0,05 dan kam). Tabiiy o'ldiruvchi hujayralar CD16+ tarkibi oshdi (P 0,05 dan kam). Neytrofillarning fagotsitar faolligi ko'tarildi (P 0,05 dan kam). Immunologik korreksiya ta'siri an'anaviy davolashga qaraganda yaxshiroq bo'ldi. Bifolak-Tsinkumni kiritish rux darajasini oshirish orqali immunitet tizimiga bilvosita ta'sir ko'rsatadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya SSV, pulmonologiya bo'limi
+author: t.f.d., professor Shamsiev F.M.
+date: 2016
+language: uz
+
+[BIFOLAK ZINCUM -- Bolalarda tadqiqot. Samaradorlikni baholash va xulosa]
+
+Bifolak-Tsinkum qabul qilish fonidagi II guruh bemorlarida davolanish samarasi 85,3% bemorlarda a'lo, 13,3% da yaxshi, faqat 1,4% da qoniqarli deb baholandi. Solishtirish uchun nazorat guruhida: a'lo baho 0%, yaxshi 55,5%, qoniqarli 45%. Barcha bolalar terapiyaning yaxshi o'zlashtirilishini qayd etdilar, preparat toksik emas va nojo'ya dori reaktsiyalarini keltirib chiqarmaydi. Bifolak-Tsinkum obstruktiv, retsidivlovchi bronxitlar va bronxial astma bilan kasallangan bolalarda tanlash preparati sifatida tavsiya etilishi mumkin. Preparat nafaqat ichak mikroflorasini yaxshilash va oshqozon-ichak trakti mikrobiotsenozini normallashtirish, balki bolalarda rux defitsitini korreksiyalashda ham samarali bo'lib, bu o'sish, rivojlanish, immunologik himoyani shakllantirish va peroksidatsiya jarayonlarini yaxshilash uchun muhim.
+
+Mas'ul ijrochi: pulmonologiya bo'limi rahbari t.f.d., prof. Shamsiev F.M. Ijrochi: pulmonologiya bo'limi katta ilmiy xodimi t.f.n. Musadjonova R.A. RSNPMTs Pediatriya SSV, 2016 y.
+===/СЕКЦИЯ===

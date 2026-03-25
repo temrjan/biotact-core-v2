@@ -1,0 +1,48 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Buxoro davlat tibbiyot instituti
+date: 2015-12-03
+language: uz
+
+[BIFOLAK ACTIVE -- Buxoro tibbiyot instituti sharhi. Umumiy ma'lumot]
+
+Bifolak-Active preparati haqida sharh.
+
+Muassasa: Buxoro davlat tibbiyot instituti, pediatriya va neonatologiya bo'limi. Sana: 03.12.2015. Rahbar: Sh.T. Muxitdinov, magistr, pediatriya va neonatologiya kafedrasi dotsenti.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Buxoro davlat tibbiyot instituti
+date: 2015-12-03
+language: uz
+
+[BIFOLAK ACTIVE -- Buxoro tibbiyot instituti sharhi. Tadqiqot tavsifi]
+
+Buxoro davlat tibbiyot institutining pediatriya va neonatologiya bo'limida 60 nafar yangi tug'ilgan chaqaloqlarda tadqiqot o'tkazildi.
+
+Tadqiqot guruhi: 30 nafar yangi tug'ilgan chaqaloqlar Bifolak-Active preparatini kuniga 1 marta 1 kapsula dozada 10 kun davomida qabul qildi. Nazorat guruhi: 30 nafar yangi tug'ilgan chaqaloqlar Bifolak-Active preparatini qabul qilmadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Buxoro davlat tibbiyot instituti
+date: 2015-12-03
+language: uz
+
+[BIFOLAK ACTIVE -- Buxoro tibbiyot instituti sharhi. Natijalar va xulosalar]
+
+Bifolak-Active qabul qilgan guruhda ichak mikroflorasining yaxshilanishi tufayli quyidagi fiziologik holatlar faqat 5% hollarda kuzatildi: qorin dam olishi, ichak sanchig'i, ichak g'urilashi, ozuqni qaytarish, shilimshiq paydo bo'lishi.
+
+Nazorat guruhida (preparatsiz) yuqoridagi klinik belgilar 80% hollarda kuzatildi.
+
+Har kuni Bifolak-Active preparatini qabul qilgan bolalarda fiziologik noqulay holatlar (qorin dam olishi, ichak sanchig'i, ichak g'urilashi, ozuqni qaytarish, shilimshiq paydo bo'lishi) sezilarli darajada kamaydi. Bifolak-Active preparatini chaqaloqlarga hayotining birinchi kunlaridan boshlab tayinlash tavsiya etiladi.
+
+Sh.T. Muxitdinov, magistr, pediatriya va neonatologiya kafedrasi dotsenti, Buxoro davlat tibbiyot instituti. Hujjat institut muhri bilan tasdiqlangan. Sana: 03.12.2015.
+===/СЕКЦИЯ===

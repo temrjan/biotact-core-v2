@@ -1,0 +1,85 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Obshchaya informaciya]
+
+Akt vnedreniya nomer 77 Samarkandskogo filiala RNCEHMP. Nazvanie predlozheniya: primenenie Bifolak-Cinkum v kompleksnoj terapii neotlozhnyh sostoyanij u detej. Avtory predlozheniya: Nuralieva R.M. i Shakarov F.R. Data vnedreniya: 20 aprelya 2018 goda. Utverzhdeno direktorom Samarkandskogo filiala RNCEHMP d.m.n. Tilyakovym A.B. Forma vnedreniya: racionalizatorskoe predlozhenie v sfere zdravoohraneniya, mestnyj uroven. Mesto ispolzovaniya: Samarkandskij filial RNCEHMP. Kolichestvo nablyudenij v kotoryh primeneno predlozhenie: 42 nablyudeniya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Rol cinka kak mikroehlementa]
+
+Cink yavlyaetsya biologicheski znachimym mikroehlementom. Znachenie cinka dlya cheloveka opredelyaetsya tem, chto on vhodit v sostav vseh sushchestvuyushchih fermentnyh sistem organizma i yavlyaetsya komponentom bolee 300 metallofermentov, uchastvuyushchih v obmene belkov, zhirov, uglevodov, nukleinovyh kislot. Cink uchastvuet v roste kletok, delenii kletok, differencirovke kletok, chto obuslovleno ego vliyaniem na belkovyj obmen, nukleinovyj obmen i rabotu geneticheskogo apparata kletki. Cink vhodit v sostav kostnoj shchelochnoj fosfatazy, svyazan s kalcifikaciej skeleta i uchastvuet v formirovanii gidroksipatita, chto opredelyaet ego rol v sozrevanii kostnoj sistemy. Cink vazhen dlya realizacii linejnogo rosta cheloveka kak vnutriutrobno, tak i postnatalno. Otmechaetsya vysokaya aktivnost cinka v processe regeneracii tkanej posle ranenij i ozhogov.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Deficit cinka i ego posledstviya u detej]
+
+Nedostatochnost cinka vnutriutrobno otricatelno vliyaet na funkciyu zhelez vnutrennej sekrecii, gipofiz, ehndokrinnyj apparat podzheludochnoj zhelezy. Pri deficite cinka v antenatalnom periode ugnetaetsya transport materinskih antitel cherez placentu, podavlyaetsya kletochnyj immunitet, narushaetsya struktura i metabolizm limfocitov, snizhaetsya fagocitarnaya aktivnost, umenshayutsya razmery timusa. Oslabevayut barernye funkcii ehpiteliya respiratornogo trakta i zheludochno-kishechnogo trakta, povrezhdaetsya ehpidermalnyj ehpitelij. Deti v silu aktivnosti rostovyh processov osobenno chuvstvitelny k deficitu mikroehlementa. Deficit cinka naibolee opasen v kriticheskie periody razvitiya mozga: antenatalnyj ehtap i vozrast ot rozhdeniya do trekh let. Pri deficite cinka medlennee vyrabatyvayutsya uslovnye refleksy, snizhaetsya sposobnost k obucheniyu, narushaetsya strukturnoe sozrevanie mozzhechka.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Vliyanie deficita cinka na immunuyu sistemu]
+
+U detej s deficitom cinka posle rozhdeniya chasto sohranyaetsya nedostatochnost kletochnogo immuniteta, snizhenie fagocitarnoj aktivnosti, snizhenie baryernyh svojstv ehpiteliya respiratornogo i zheludochnogo trakta, gipogammaglobulinemiya, snizhenie sinteza interlejkinov. Narushaetsya obrazovanie vsego spektra mediatorov mezhkletochnogo vzaimodejstviya, transformaciya timulina v aktivnuyu formu, ehkspressiya glavnogo kompleksa gistosovmestimosti na makrofagah, kontrol za vysvobozhdeniem gistamina bazrofilami i tuchnymi kletkami. Narushaetsya rabota gumoralnogo zvena immuniteta. Pri tyazhelom deficite cinka nablyudaetsya umenshenie limfoidnoj tkani: atrofiya timusa, mindalin, limfaticheskih uzlov, selezyonki. Poskolku cink vhodit v sostav sistemy antioksidantnoj zashchity organizma, ego deficit neblagopriyatno vliyaet na morfofunkcionalnoe sostoyanie endokrinnoj, immunnoj, nervnoj i reproduktivnoj sistem.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Harakteristika preparata i dozirovki]
+
+Preparat Bifolak-Cinkum vypuskaetsya v vide paketikov sashe, proizvoditsya v Respublike Uzbekistan. Sostav 1 gramma poroshka: cinka sulfat 15,54 mg, sublimirovannyj kompleks probioticheskih kultur (poleznyh bakterij), vspomogatelnye veshchestva mikrokristallicheskaya cellyuloza i krahmal kukuruznyj ili kartofelnyj. Dozirovka po vozrastam: do 1 goda po 0,5-1 paketiku 1 raz v den; ot 1 do 5 let po 1-1,5 sashe 1 raz v den; ot 5 do 12 let po 1 sashe 2 raza v den; dlya detej starshe 12 let i vzroslyh po 1 sashe 3 raza v den. 1 paketik sashe razbavlyaetsya v 10-50 ml kipyachyonoj ohlazhdyonnoj zhidkosti. Dlitelnost priema sostavlyaet ne menee 10-14 dnej. Preparat rekomenduetsya prinimat vo vremya edy.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Samarkandskij filial RNCEHMP
+authors: Nuralieva R.M., Shakarov F.R.
+date: 2018-04-20
+language: ru
+
+[BIFOLAK ZINCUM -- Akt vnedreniya. Preimushchestva i zaklyuchenie]
+
+Bioaktivnyj cink Bifolak-Cinkum imeet vysokuyu biodostupnost. Poleznye bakterii preparata obespechivayut zdorovoe funkcionirovanie kishechnika i sposobstvuyut khoroshemu vsasyvaniyu cinka, obespechivaya nasyshchenie organizma ego adekvatnym kolichestvom. Predlozheniya i zamechaniya uchrezhdeniya osushchestvlyayushchego vnedrenie: net. Akt podpisan zamestitelem direktora po lechebnoj rabote Bahromovym A.A. Preparat uspeshno primenyon v 42 nablyudeniyah v Samarkandskom filiale RNCEHMP dlya kompleksnoj terapii neotlozhnyh sostoyanij u detej.
+
+Data vnedreniya: 20 aprelya 2018 goda. Samarkandskij filial RNCEHMP.
+===/СЕКЦИЯ===

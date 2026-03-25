@@ -1,0 +1,127 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Obshchaya informaciya]
+
+Otchet o nauchno-issledovatelskoj rabote po teme Issledovanie klinicheskoj effektivnosti i perenosimosti preparata Bifolak-Cinkum u detej s bronholegochnoj patologiej. Issledovanie provodilos na baze RSNPMC Pediatrii MZ RUz v otdelenii pulmonologii. Otvetstvennyj ispolnitel: rukovoditel otdela pulmonologii RSNPMC Pediatrii MZ RUz, d.m.n., professor Shamsiev F.M. V issledovanii uchastvovali 80 detej s obstruktivnymi, recidiviruyushchimi bronhitami i bronhialnoj astmoj. Effektivnost terapii Bifolak-Cinkum ocenena kak otlichnaya u 85,3% detej. Vse deti otmechali horoshuyu perenosimost terapii, ne bylo vyyavleno sluchaev razvitiya kakih-libo nezhelatelnyh yavlenij.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Dizajn issledovaniya i gruppy]
+
+Pod nablyudeniem nahodilis 75 detej v vozraste ot 1 goda do 15 let. 50 bolnyh bronhitom: obstruktivnyj bronhit (OB) 25 detej, recidiviruyushchij bronhit (RB) 25 detej. 25 detej s bronhialnoj astmoj (BA). Gruppa sravneniya: 20 detej s ostrym bronhitom togo zhe vozrasta. Bolnye razdeleny na 2 gruppy: I gruppa (kontrolnaya) 20 detej poluchali obshcheprinyatuyu bazisnyj terapiyu. II gruppa (osnovnaya) 75 detej na fone bazisnoj terapii poluchali Bifolak-Cinkum v doze 1 gr. (1 sashe soderzhit 15,54 mg cinka sulfat): detyam ot 1 do 5 let po odnomu poltora paketika 1 raz v den, ot 5 let do 12 let po 1 paketiku 2 raza v den, v techenie 10-14 dnej.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Deficit cinka u bolnyh detej]
+
+Pri analize soderzhaniya mikroehlementov v krovi gipomikroehlementozy obnaruzheny u vseh obsleduemyh detej s OB, RB i BA. Deficit cinka vyyavlen v 100% sluchaev. Takzhe obnaruzheny deficit kalciya u 94,7%, selena u 82,7%, joda u 78,6%, marganca u 74,7%. Uroven cinka v volosah pri postuplenii byl znachitelno snizhen. Norma okolo 200 mkg/g. OB: 132,4 plus-minus 17,1 mkg/g (P menee 0,05). RB: 102,6 plus-minus 16,2 mkg/g (P menee 0,01). BA: 97,4 plus-minus 18,4 mkg/g (P menee 0,01). U bolnyh nablyudalis razdrazhitelnost, utomlyaemost, giperaktivnost, umenshenie massy tela, chastye prostudnye zabolevaniya, anemiya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Biohimicheskie narusheniya]
+
+U detej s OB, RB i BA nablyudaetsya bolee znachitelnoe narushenie pereksidacii lipidov. Dienovye konyugaty (DK): zdorovye deti 1,1 plus-minus 0,04 nmol/ml; OB 2,0 nmol/ml; RB 2,8 nmol/ml; BA 3,1 nmol/ml (P menee 0,01 dlya vseh grupp). Malonovyj dialdegid (MDA): zdorovye 2,9 nmol/ml; OB 4,4; RB 6,2; BA 8,7 nmol/ml (P menee 0,01). Superoksiddismutaza (SOD): zdorovye 2,4 Ed/mg bel; OB 1,6; RB 1,4; BA 1,1 (P menee 0,01). Katalaza (KT): zdorovye 11,5 mkmol/mg; OB 8,1; RB 7,5; BA 6,5 (P menee 0,01). Rezultaty svidetelstvuyut ob aktivacii svobodnoradikalnogo okisleniya i snizhenii antioksidantnoj zashchity pri dannoj patologii.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Immunologicheskie narusheniya]
+
+U detej s OB, RB i BA opredelyaetsya dostovernoe snizhenie soderzhaniya CD3+-limfocitov (P menee 0,01), CD4+-limfocitov immunoregulyatornye subpopulyacii (P menee 0,01), CD8+-limfocitov (P menee 0,05). Soderzhanie CD20+-limfocitov u bolnyh vseh grupp bylo dostoverno vyshe, chem u detej s ostrym bronhitom (P menee 0,01). Fagocitarnaya aktivnost nejtrofilov dostoverno snizhena (P menee 0,001). U detej bolnyh vseh grupp snizhalas koncentraciya IgA i IgG, soderzhanie IgM povyshalos. Pri BA: IgA snizilsya do 85,2 mg%, IgG do 950 mg%, IgM povyshaetsya do 167,5 mg%.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Klinicheskaya effektivnost lecheniya]
+
+Na fone priema Bifolak-Cinkum za issleduemyj period otmechalos znachitelnoe klinicheskoe uluchshenie. Simptomy intoksikacii: II gruppa s Bifolak-Cinkum 4,7 plus-minus 0,3 dnej, I gruppa kontrolnaya 7,6 plus-minus 0,5 dnej, sokrashchenie v 1,6 raza (P menee 0,05). Vlazhnyj kashel: II gruppa 6,5 plus-minus 0,4 dnej, I gruppa 9,6 plus-minus 0,7 dnej, sokrashchenie v 1,5 raza (P menee 0,05). V bolee korotkie sroki kupirovalis proyavleniya intoksikacii. Normalizaciya temperatury tela uzhe k 3-mu dnyu lecheniya. Umenshalas dlitelnost suhogo i vlazhnogo kashlya. Otmechalos sokrashchenie prodolzhitelnosti vlazhnyh hripov v legkih i kupirovanie obstruktivnogo sindroma. Umenshenie dispepticheskih rasstrojstv, normalizaciya haraktera stula i sostava kishechnoj mikroflory.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Dinamika urovnya cinka i POL-AOS]
+
+Vklyuchenie v kompleks lecheniya preparata Bifolak-Cinkum sposobstvovalo povysheniyu koncentracii cinka u bolnyh osnovnoj gruppy. Soderzhanie cinka v volosah posle lecheniya: norma okolo 200 mkg/g. I gruppa kontrol OB 140, II gruppa Bifolak-Cinkum OB 184,5 (P menee 0,05). I gruppa RB 110, II gruppa RB 156,8 (P menee 0,05). I gruppa BA 105, II gruppa BA 154,7 (P menee 0,05). Vklyuchenie Bifolak-Cinkum v kompleks terapii okazyvalo polozhitelnyj ehffekt na pokazateli POL-AOS. Raznica v urovnyah MDA i DK do i posle lecheniya byla dostovernoj vo II gruppe detej (P menee 0,01), v to vremya kak v I gruppe ehti pokazateli ne imeli dostovernoj raznicy. Vosstanovlenie POL-AOS proiskhodilo v 2 raza chashche na fone priema Bifolak-Cinkum.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Dinamika immunologicheskih pokazatelej]
+
+Analiz immunologicheskih pokazatelej ukazal na polozhitelnoe vliyanie Bifolak-Cinkum na immunuyu sistemu. Dostovernoe povyshenie CD3+-limfocitov (P menee 0,01), CD8+-limfocitov (P menee 0,05), CD4+-limfocitov (P menee 0,01). Dostovernoe snizhenie CD20+-limfocitov (P menee 0,01). Soderzhanie syvorotochnogo IgM snizilos (P menee 0,05). Soderzhanie IgA povyshalos (P menee 0,05). Soderzhanie estestvennyh killerov CD16+ vozroslo (P menee 0,05). Fagocitarnaya aktivnost nejtrofilov povysilas (P menee 0,05). Effekt immunologicheskoj korrekcii byl luchshe, chem pri tradicionnom lechenii. Vklyuchenie Bifolak-Cinkum okazyvaet oposredovannoe vliyanie na immunuyu sistemu cherez povyshenie urovnya cinka.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ZINCUM
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMC Pediatrii MZ RUz, otdelenie pulmonologii
+author: d.m.n., professor Shamsiev F.M.
+date: 2016
+language: ru
+
+[BIFOLAK ZINCUM -- Issledovanie u detej. Ocenka effektivnosti i zaklyuchenie]
+
+U bolnyh II gruppy na fone priema Bifolak-Cinkum lechebnyj ehffekt ocenen kak otlichnyj u 85,3% bolnyh, kak horoshij u 13,3%, kak udovletvoritelnyj tolko u 1,4%. Dlya sravneniya v kontrolnoj gruppe: otlichnaya ocenka 0%, horoshaya 55,5%, udovletvortielnaya 45%. Vse deti otmechali horoshuyu perenosimost terapii, preparat ne toksichen i ne vyzyvaet razvitie nezhelatelnyh lekarstvennyh reakcij. Bifolak-Cinkum mozhet byt rekomendovan v kachestve preparata vybora u detej s obstruktivnymi, recidiviruyushchimi bronhitami i bronhialnoj astmoj. Preparat effektiven ne tolko v uluchshenii mikroflory kishechnika i normalizacii mikrobiocenoza ZhKT, no i v korrekcii nedostatka cinka u detej, chto vazhno dlya rosta, razvitiya, formirovaniya immunologicheskoj zashchity i uluchsheniya processov peroksidacii.
+
+Otvetstvennyj ispolnitel: rukovoditel otdela pulmonologii d.m.n., prof. Shamsiev F.M. Ispolnitel: v.n.s. otdela pulmonologii k.m.n. Musadzhanova R.A. RSNPMC Pediatrii MZ RUz, 2016 g.
+===/СЕКЦИЯ===

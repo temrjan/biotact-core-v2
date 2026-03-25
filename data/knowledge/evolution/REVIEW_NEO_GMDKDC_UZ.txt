@@ -1,0 +1,61 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ShKBMDM (Shahar ko'p tarmoqli bolalar konsultativ diagnostika markazi)
+date: 2010-10-29
+language: uz
+
+[BIFOLAK NEO -- ShKBMDM sharhi. Umumiy ma'lumot]
+
+Neomed-prod farmatsevtika firmasining Bifolak-Neo farmakologik preparati haqida sharh.
+
+Tibbiy muassasa: Shahar ko'p tarmoqli bolalar konsultativ diagnostika markazi (ShKBMDM), Birinchi konsultativ bo'lim. Bo'lim mudirasi: Izmaylova A.Ya. Sharh sanasi: 29.10.2010 yil.
+
+Klinik qo'llash davri: 20.10.2010 dan 28.10.2010 gacha.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ShKBMDM (Shahar ko'p tarmoqli bolalar konsultativ diagnostika markazi)
+date: 2010-10-29
+language: uz
+
+[BIFOLAK NEO -- ShKBMDM sharhi. Mutaxassislar va qo'llash hajmi]
+
+ShKBMDM ning birinchi konsultativ bo'limi bazasida terapiya tayinlashda Bifolak-Neo preparati qo'llanildi. Ishda 13 nafar mutaxassisdan iborat ko'p tarmoqli jamoa ishtirok etdi: 3 gastroenterolog shifokor, 3 pediatr, 2 allergolog va 5 nevrolog.
+
+Jami 2250 ta paketcha miqdorida preparat tayinlandi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ShKBMDM (Shahar ko'p tarmoqli bolalar konsultativ diagnostika markazi)
+date: 2010-10-29
+language: uz
+
+[BIFOLAK NEO -- ShKBMDM sharhi. Klinik samaradorlik va ko'rsatmalar]
+
+Bolalarda Bifolak-Neo preparatining yuqori farmakologik va terapevtik faolligini ta'kidlash lozim.
+
+Preparat quyidagi holatlarda samaradorlik ko'rsatdi. Gastroenterologiyada: ichak disbakteriozi, ichakning funksional buzilishlari (qabziyat, sanchiq va boshqalar). Immunologiyada: tez-tez kasallanadigan bolalar (qo'shimcha terapiya sifatida). Pediatrik holatlarda: kamqonlik, raxit, gipotrofiya, jismoniy rivojlanishning orqada qolishi, motorik rivojlanishning orqada qolishi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ShKBMDM (Shahar ko'p tarmoqli bolalar konsultativ diagnostika markazi)
+date: 2010-10-29
+language: uz
+
+[BIFOLAK NEO -- ShKBMDM sharhi. Xulosa]
+
+Keyinchalik bo'lim mutaxassislari Bifolak-Neo preparatini o'z amaliyotida keng qo'llashni rejalashtirmoqda.
+
+ShKBMDM 1-konsultativ bo'lim mudirasi Izmaylova A.Ya. 29.10.10 yil. Hujjat muassasa muhri bilan tasdiqlangan.
+===/СЕКЦИЯ===

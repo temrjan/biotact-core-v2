@@ -1,0 +1,136 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Obshchaya informaciya]
+
+Otchet klinicheskogo issledovaniya effektivnosti i perenosimosti preparatov BIFOLAK ZINCUM+C+D3, BIFOLAK MAGNIY i BIFOLAK ACTIVE pri yazvennom kolite. Issledovanie provodilos v period 2021-2023 godov na baze MChZh CELL MEDICINE i Mnogoprofilnoj kliniki centra razvitiya professionalnoj kvalifikacii medicinskih rabotnikov nomer 1. Proekt utverzhdyon direktorom MChZh CELL MEDICINE, zav.kaf. Vnutrennih boleznej, VOP i terapii, gematologii TMATF d.m.n., professorom M.I. Proizvoditel preparatov: Biotact Deutschland GmbH (Germaniya), OOO Biotact.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Dizajn issledovaniya i pacienty]
+
+Tip issledovaniya: prospektivnoe, diagnosticheskoe i klinicheskoe. Osnovnaya gruppa sostavila 53 bolnyh yazvennym kolitom do operacii i konservativnoj terapii. Kontrolnaya gruppa: 20 zdorovyh lic bez zhalob so storony ZhKT i hronicheskih zabolevanij. Vozrastnaya i polovaya struktura obeih grupp odnotypna, dostovernye otlichiya otsutstvuyut. Diagnostika provodilas standartnymi klinicheskimi, endoskopicheskimi i radiograficheskimi metodami. Tyazhost ocenivalas po Monrealskoj klassifikacii YAK i shkale Mayo Clinic po 4 pokazatelyam: chastota stula, rektalnoe krovotechenie, pokazateli proktosigmoidoskopii, funkcionalnoe sostoyanie pacienta.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Narusheniya mikrobioty pri yazvennom kolite]
+
+U bolnyh yazvennym kolitom obnaruzheno znachitelnoe snizhenie bifido- i laktobakterij, citratsinteziruyushchih enterobakterij. Povyshenie obshchego kolichestva ehsherihij, laktozootricatelnyh gemoliticheskih form, enterokokkov, stafilokokkov i drozhzhepodobnyh gribov. U bolnyh YAK obligatnye vidy sostavlyayut 42,7% pri norme 65,5%. Dolya uslovno-patogennyh i tranzitornyh vidov vozrastaet do 36,7 i 25,7% pri norme 14,0 i 14,9%. Uslovno-patogennaya flora vstrechaetsya prakticheski u vseh bolnyh YAK, v to vremya kak u zdorovyh tolko v 24,5%. U bolnyh YAK v srednem obnaruzhivaetsya 2,1 vida uslovno-patogennyh organizmov pri norme 0,4, to est v 5,25 raza bolshe. Koncentraciya u bolnyh YAK: lg 6,4, u zdorovyh lg 2,7.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Effektivnost indukcii remissii pri aktivnom YAK]
+
+Sravnenie probiotikov BIFOLAK s 5-ASK (mesalazin) v indukcii remissii pri aktivnom yazvennom kolite. V issledovanie vklyucheno 37 pacientov, dlitelnost lecheniya 2 nedeli. Remissii ne dostigli 18 (31,6%) iz 37 pacientov, poluchavshih probiotiki. Remissii ne dostigli 15 (25,4%) pacientov, poluchavshih 5-ASK. Otnositelnyj risk ne dostich remissii: 1,24 (95% DI 0,70-2,22). Vyvod: probiotiki BIFOLAK pokazali sravnimuyu effektivnost s 5-ASK v indukcii remissii pri aktivnom YAK. Preparat sposobstvuet inducirovaniyu remissii pri aktivnom yazvennom kolite.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Protivorecidivnaya effektivnost]
+
+Sravnenie s 5-ASK: vklyucheno 55 pacientov s klinicheskoj remissiej YAK, 27 poluchali probiotiki, 28 poluchali 5-ASK. Recidiv proizoshel u 11 (39,7%) iz 27 na probiotikah, u 10 (49,2%) iz 28 na 5-ASK. Otnositelnyj risk recidiva: 1,02 (95% DI 0,85-1,23). Placebo-kontroliruemoe issledovanie: vklyucheno 22 pacienta s klinicheskoj remissiej YAK. Recidiv u 5 (23,3%) pacientov na probiotikah, u 17 (76,7%) iz gruppy placebo. Otnositelnyj risk: 0,62 (95% DI 0,33-1,16). Probiotiki BIFOLAK mogut byt stol zhe effektivnymi, kak 5-ASK v predotvrashchenii recidiva YAK v stadii remissii.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Fekalnyj kalprotektin i vospalitelnye markery]
+
+Fekalnyj kalprotektin u bolnyh YAK: 1756,21 mkg/ml, kontrol: 45 mkg/ml, uvelichenie v 39 raz. Ehlastaza nejtrofilnaya u bolnyh YAK: 694 ng/ml, kontrol: 29,7 ng/ml, uvelichenie v 23 raza. Ehlastaza pankreaticheskaya u bolnyh YAK: 407,01 mkg, kontrol: 313,7 mkg. Antitela ANCA IgG: 1,48 pri norme do 1,00. ASCA IgA: 3,61 E/mL pri norme do 10,0 E/mL. ASCA IgG: 8,11 E/mL pri norme do 10,0 E/mL. Vazhnyj vyvod: patogeneticheskaya terapiya ne privela k sushchestvennomu snizheniyu urovnya fekalnogo kalprotektina u bolnyh YAK, chto ukazyvaet na neobhodimost primeneniya alternativnyh metodov lecheniya, v tom chisle probiotikoterapii.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Immunnyj status i mikrobiota]
+
+Naibolee vyrazhennymi izmeneniyami immunnogo statusa u bolnyh YAK byli: povyshenie urovnya syvorotochnyh IgG i IgE, povyshenie provospalitelnyh citokinov FNO-alfa, IL-6 i IL-1beta, snizhenie protivovospalitelnogo citokina IL-4. Soputstvuyushchie parazitozy sushchestvenno ne vliyali na dinamiku immunologicheskih sdvigov, za isklyucheniem Blastocystis sp., dostoverno povyshayushchih uroven obshchego syvorotochnogo IgE i FNO-alfa v 1,4 i 1,6 raza sootvetstvenno. Dobavlenie probiotikov k standartnomu lecheniyu privelo k uluchsheniyu klinicheskih i immunologicheskih pokazatelej, chto podtverzhdaet rol mikrobioty v patogeneze zabolevaniya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Dozirovki i rekomendacii]
+
+Effektivnye dozy probiotikov v issledovanii. BIFOLAK ACTIVE: dozirovka 1 trillion KOE, 8 shtammov. BIFOLAK ZINCUM+C+D3: dozirovka 10 milliardov KOE, 8 shtammov. BIFOLAK MAGNIY: dozirovka 10 milliardov KOE, 8 shtammov. Nachalnyj kurs: 10 dnej, effektivnost dokazana. Rekomenduemyj kurs: prodlit priem probiotikov do 12 nedel dlya prodleniya poluchennyh rezultatov u bolnyh s autoimmunnymi zabolevaniyami kishechnika. Pokazaniya: aktivnyj yazvennyj kolit dlya indukcii remissii, podderzhanie remissii pri YAK dlya profilaktiki recidivov, kompleksnaya terapiya vospalitelnyh zabolevanij kishechnika, disbioz kishechnika u bolnyh YAK.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_ACTIVE,BIFOLAK_MAGNIY,BIFOLAK_ZINCUM_C_D3
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: MCH CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoy kvalifikacii medicinskih rabotnikov
+project: Innovacionnyj proekt Ministerstva Innovacionnogo razvitiya Razrabotka kletochnoj tekhnologii personalizirovannogo lecheniya yazvennyh kolitov
+period: 2021-2023
+date: 2023
+language: ru
+
+[BIFOLAK ACTIVE, BIFOLAK MAGNIY, BIFOLAK ZINCUM C D3 -- Klinicheskoe issledovanie. Zaklyuchenie]
+
+Klinicheskoe issledovanie prodemonstrirovalo, chto probiotiki BIFOLAK ZINCUM+C+D3, BIFOLAK MAGNIY i BIFOLAK ACTIVE, izgotovlennye po licenzii Biotact Deutschland GmbH (Germaniya) OOO Biotact: effektivny dlya indukcii remissii pri aktivnom yazvennom kolite; effektivny dlya podderzhaniya remissii i predotvrashcheniya recidivov YAK; sravnimy po effektivnosti s 5-ASK (mesalazinom), standartnoj terapiej pervoj linii; polozhitelno vliyayut na mikrobiotu kishechnika, vosstanavlivaya balans obligatnoj flory; uluchshayut immunologicheskie pokazateli u bolnyh YAK; bezopasny v primenenii pri dlitelnom ispolzovanii. Rezultaty podtverzhdayut vazhnost narushenij kishechnoj mikrobioty v patogeneze yazvennogo kolita i obosnovyvayut primenenie probiotikoterapii v kompleksnom lechenii vospalitelnyh zabolevanij kishechnika. Rekomenduetsya primenenie probiotikov BIFOLAK kursom do 12 nedel.
+
+Organizaciya-ispolnitel: MChZh CELL MEDICINE, Mnogoprofilnaya klinika centra razvitiya professionalnoj kvalifikacii medicinskih rabotnikov nomer 1. Data sostavleniya otcheta: 2023 g.
+===/СЕКЦИЯ===

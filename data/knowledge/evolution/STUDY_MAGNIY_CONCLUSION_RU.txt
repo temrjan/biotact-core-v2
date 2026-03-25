@@ -1,0 +1,85 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Obshchaya informaciya]
+
+Zaklyuchenie o vozmozhnosti primeneniya BAD k pishche Bifolak-Magnij, mestnogo proizvoditelya NEOMED PROD. Vydano Respublikanskim specializirovannym nauchno-prakticheskim medicinskim centrom pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan. Avtor: starshij nauchnyj sotrudnik otdela gastroehterologii RSNPMCP MZ RUz, kandidat medicinskih nauk Abdullaeva D.A. Preparat yavlyaetsya sobstvennoj razrabotkoj predpriyatiya i yavlyaetsya zamenitelem analogom ryada importnyh preparatov. V otlichie ot importnyh preparatov dannyj produkt soderzhit probioticheskie kultury, kotorye uluchshayut funkcionalnuyu aktivnost kishechnika i povyshayut biodostupnost imeyushchihsya v preparate magniya i vitamina B6.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Sostav preparata]
+
+Bifolak-Magnij soderzhit v odnom sashe: magnij v forme citrata magniya 350 mg, chto sostavlyaet primerno 50 mg ehlementarnogo Mg2+; vitamin B6 pirioksin 2 mg; probioticheskij kompleks v sostave bifidobakterij i laktobakterij, molochno-kislye streptokokki i propionobakterii v koncentracii 3 na 10 v devyatoj stepeni KOE na gramm. Forma vypuska: sashe poroshok. Tip: biologicheski aktivnaya dobavka k pishche BAD.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Rol magniya v organizme]
+
+Magnij ehto makroehlment, kotoryj igraet nemalovazhnuyu rol v organizme cheloveka. V organizme cheloveka ne sinteziruetsya i mozhet byt poluchen tolko izvne: s produktami pitaniya, vodoj ili lekarstvennymi preparatami. Magnij uchastvuet v formirovanii kostnoj tkani, peredache nervno-myshechnyh impulsov, regulyacii deyatelnosti mnogih fermentov, obladaet antistressovym dejstviem. V usloviyah sovremennoj zhizni deti podverzheny chastym stressam, i dlya togo chtoby legche spravlyatsya s nimi, organizmu neobhodim dostatochnyj zapas magniya. Naibolee ostro ehta problema otrazhayetsya v adaptacionnom periode u detej: privykanie k detskomu sadu, shkole, institutu, a takzhe v period gormonalnoj revolyucii u podrostkov.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Simptomy deficita magniya u detej]
+
+Pri deficite magniya v pervuyu ochered stradayet povedenie: povyshennaya razdrazhitelnost, drachlivost, chastye konflikty, poyavlenie vrednyh privychek. Ehmocionalnyj fon nestabilen: povyshennaya plaksivost, chastye isteriki, nochnye koshmary, pristupy toski i trevogi. Kognitivnye narusheniya: nevnimatelnost, uhudshenie pamyati, deti nachinayut ploho uchitsya v shkole. Sutkochnaya potrebnost v magnii u detej: ot rozhdeniya do polovogo sozrevaniya 10-30 mg na kg v sutki; pozzhe posle stabilizacii rosta myshc i kostej 6 mg na kg v sutki. Vazhno vovremya vyyavit deficit magniya chtoby ne dopustit opasnyh posledstvij.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Sinergizm komponentov i mekhanizm dejstviya]
+
+Vitamin B6 uchastvuet vo mnogih metabolicheskih processah i v regulyacii metabolizma nervnoj sistemy. Vitamin B6 uluchshayet vsasyvaniye magniya iz zheludochno-kishechnogo trakta i uluchshayet proniknovenie magniya v kletki. Probiotiki uluchshayut funkcionalnuyu aktivnost kishechnika, povyshayut biodostupnost magniya i vitamina B6, uluchshayut pishchevarenie i vsasyvaniye v kishechnike. Kompleksnoe vozdejstvie preparata: magnij formiruyet kostnuyu tkan, peredayet nervno-myshechnye impulsy, reguliruyet fermenty, okazyvayet antistressovoe dejstvie, snizhayet nervnuyu vozbudimost i umenshayet myshechnyj spazm.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMCP MZ RUz (Respublikanskij specializirovannyj nauchno-prakticheskij medicinskij centr pediatrii Ministerstva zdravoohraneniya Respubliki Uzbekistan)
+author: k.m.n. Abdullaeva D.A., starshij nauchnyj sotrudnik otdela gastroehterologii
+manufacturer: NEOMED PROD
+language: ru
+
+[BIFOLAK MAGNIY -- Zaklyuchenie RSNPMCP. Pokazaniya i rekomendacii]
+
+Preparat rekomenduyetsya detyam nachinaya s rozhdeniya, dlya primeneniya v pediatricheskoj praktike nachinaya s godovalogo vozrasta. Pokazaniya: deficit magniya i vitamina B6; snizhenie nervnoj vozbudimosti; umenshenie myshechnogo spazma; uluchshenie pishchevareniya; uluchshenie vsasyvaniya v kishechnike. Rekomenduemye dozirovki pokryvayut sutochnuyu potrebnost v magnii i vitamina B6. Probioticheskij sostav yavlyaetsya celesoobraznm dlya rastushchego organizma. Zaklyuchenie yavlyaetsya oficialnym medicinskim dokumentom ot RSNPMCP MZ RUz, podtverzhdayushchim vozmozhnost i celesoobraznost primeneniya preparata Bifolak-Magnij v pediatricheskoj praktike.
+
+Kandidat medicinskih nauk Abdullaeva D.A. RSNPMCP MZ RUz.
+===/СЕКЦИЯ===

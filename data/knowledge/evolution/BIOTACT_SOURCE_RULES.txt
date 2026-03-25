@@ -1,0 +1,61 @@
+===СЕКЦИЯ===
+Title: Правила источников — Белый список
+doc_type: corporate_standard
+category: source-rules
+
+ПРАВИЛА ВЫБОРА ИСТОЧНИКОВ BIOTACT DEUTSCHLAND (Promotion 2026)
+
+Источники — только профессиональные и проверенные.
+Точные названия и рабочие ссылки.
+
+ПРИОРИТЕТ:
+1. Dr. Berg и его источники — ТОЛЬКО официальный YouTube канал (youtube.com/@drberg)
+2. Материалы BIOTACT DEUTSCHLAND
+3. WHO, CDC, NIH, NCBI/PMC, крупные университеты
+4. Профессиональные ассоциации (ESPGHAN, AAP и др.)
+
+TIER 1 — ОБЯЗАТЕЛЬНО (минимум 3 источника):
+- PubMed/NCBI: pubmed.ncbi.nlm.nih.gov
+- WHO (Всемирная организация здравоохранения): who.int
+- NIH (National Institutes of Health): nih.gov
+- Cochrane Library: cochranelibrary.com
+
+TIER 2 — ЖЕЛАТЕЛЬНО:
+- Mayo Clinic: mayoclinic.org
+- Cleveland Clinic: my.clevelandclinic.org
+- Harvard Health: health.harvard.edu
+- European Medicines Agency (EMA): ema.europa.eu
+
+TIER 3 — ДОПУСТИМО:
+- Peer-reviewed journals (Nature, Lancet, JAMA, BMJ, Springer, Wiley, ScienceDirect)
+- Government health agencies (CDC, FDA, BfArM)
+- University medical centers
+
+КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО:
+- Любые .ru/.рф домены
+- Блоги, форумы, соцсети (Medium, WordPress, LiveJournal, Яндекс.Дзен, VK, Pikabu)
+- Коммерческие клиники и магазины
+- Статьи без указания автора или организации
+- Источники старше 7 лет (кроме фундаментальных исследований)
+- Сайты народной медицины, детские порталы, родительские форумы
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+Title: Правила источников — Проверка
+doc_type: corporate_standard
+category: source-rules
+
+ПРОВЕРКА ПЕРЕД ИСПОЛЬЗОВАНИЕМ ИСТОЧНИКА:
+1. Домен в списке Tier 1-3?
+2. Автор указан? (организация, исследователь)
+3. Дата публикации? (не старше 7 лет)
+4. Peer-reviewed? (для исследований)
+5. НЕ .ru/.рф домен?
+
+Если источник не проходит хотя бы один пункт — НЕ используй!
+
+Минимум 5 источников с рабочими URL:
+- Минимум 3 из Tier 1 (PubMed, WHO, NIH, Cochrane)
+- Максимум 2 из Tier 2-3
+- Для видео Dr. Berg: прямые ссылки на YouTube
+===/СЕКЦИЯ===

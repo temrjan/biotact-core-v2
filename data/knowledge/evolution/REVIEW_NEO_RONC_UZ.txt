@@ -1,0 +1,41 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV sharhi. Umumiy ma'lumot]
+
+Neomed-prod farmatsevtika firmasining Bifolak-Neo farmakologik preparati haqida sharh.
+
+Tibbiy muassasa: O'zbekiston Respublikasi Sog'liqni saqlash vazirligi Respublika onkologiya ilmiy markazi (ROIM SSV), kimyoterapiya bo'limi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV sharhi. Klinik qo'llash]
+
+ROIM SSV kimyoterapiya bo'limi bazasida Neomed-prod farmatsevtika firmasining Bifolak-Neo preparati ko'rsatmalariga muvofiq klinik amaliyotda qo'llanildi. Preparat turli onkologik kasalliklar bilan 57 statsionar bemor va 45 ambulatoriya bemorga tayinlandi. Jami 631 qadoq ishlatildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV sharhi. Natijalar va xulosa]
+
+Kimyoterapiya kurslaridan keyin bemorlarda disbakteriozni profilaktika va davolash maqsadida preparatni qo'llash samarali bo'ldi. Preparatning o'zlashtirilishini baholashda yaqqol nojo'ya ta'sirlarning paydo bo'lishi kuzatilmadi.
+
+Davolashning dastlabki natijalari asosida shunday xulosa qilish mumkinki, Neomed-prod farmatsevtika firmasining Bifolak-Neo preparati keng qo'llash uchun tavsiya etilishi mumkin.
+
+ROIM SSV kimyoterapiya bo'limi rahbari, t.f.d. Pulatov D.A. Hujjat muassasa muhri bilan tasdiqlangan.
+===/СЕКЦИЯ===

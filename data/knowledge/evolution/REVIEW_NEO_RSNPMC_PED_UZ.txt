@@ -1,0 +1,59 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya (Respublika ixtisoslashtirilgan ilmiy-amaliy tibbiyot markazi Pediatriya)
+date: 2010-07-20
+language: uz
+
+[BIFOLAK NEO -- RSNPMTs Pediatriya sharhi. Umumiy ma'lumot]
+
+Neomed-prod farmatsevtika firmasining Bifolak-Neo farmakologik preparati haqida sharh.
+
+Tibbiy muassasa: Respublika ixtisoslashtirilgan ilmiy-amaliy tibbiyot markazi Pediatriya (RSNPMTs Pediatriya), gastroenterologiya statsionar bo'limi. Klinik qo'llash davri: 20.07.2010 dan 20.09.2010 gacha.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya (Respublika ixtisoslashtirilgan ilmiy-amaliy tibbiyot markazi Pediatriya)
+date: 2010-07-20
+language: uz
+
+[BIFOLAK NEO -- RSNPMTs Pediatriya sharhi. Mutaxassislar va qo'llash hajmi]
+
+RSNPMTs Pediatriya huzuridagi gastroenterologiya statsionar bo'limi bazasida Bifolak-Neo preparati pediatr-gastroenterologlar tomonidan muvaffaqiyatli qo'llanildi. Ishda 8 mutaxassis ishtirok etdi: fanlar nomzodlari, professorlar, oliy toifali shifokorlar.
+
+Jami 3472 dan ortiq qadoq tayinlandi. Preparat 238 statsionar bemor va 642 ambulatoriya bemorda qo'llanildi, jami 880 bola.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya (Respublika ixtisoslashtirilgan ilmiy-amaliy tibbiyot markazi Pediatriya)
+date: 2010-07-20
+language: uz
+
+[BIFOLAK NEO -- RSNPMTs Pediatriya sharhi. Klinik samaradorlik]
+
+Bifolak-Neo preparati quyidagi kasalliklari bo'lgan bolalarda yuqori farmakologik va terapevtik faolligini ko'rsatdi: ichak disbakteriozi, enterokolit, tseliakiya, gastroduodenitlar, ichakning funksional buzilishlari (qabziyat, sanchiq va boshqalar).
+
+Bifolak-Neo preparatini qo'llashda nojo'ya ta'sirlar aniqlanmadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: RSNPMTs Pediatriya (Respublika ixtisoslashtirilgan ilmiy-amaliy tibbiyot markazi Pediatriya)
+date: 2010-07-20
+language: uz
+
+[BIFOLAK NEO -- RSNPMTs Pediatriya sharhi. Xulosa]
+
+Keyinchalik bo'lim mutaxassislari Bifolak-Neo preparatini o'z amaliyotida qo'llashni davom ettirishni rejalashtirmoqda.
+
+RSNPMTs Pediatriya gastroenterologiya va nutritsiologiya bo'limi rahbari, prof. Kamilova A.T. RSNPMTs Pediatriya bosh shifokori, t.f.n. Tsoy S.N. Hujjat muassasa muhri bilan tasdiqlangan.
+===/СЕКЦИЯ===

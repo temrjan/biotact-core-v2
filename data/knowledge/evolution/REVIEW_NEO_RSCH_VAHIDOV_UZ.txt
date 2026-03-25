@@ -1,0 +1,63 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Akademik V. Vaxidov nomidagi RIChM (Respublika ixtisoslashtirilgan xirurgiya markazi)
+language: uz
+
+[BIFOLAK NEO -- Akademik V. Vaxidov nomidagi RIChM sharhi. Umumiy ma'lumot]
+
+Bifolak-Neo preparati haqida sharh.
+
+Tibbiy muassasa: Akademik V. Vaxidov nomidagi Respublika ixtisoslashtirilgan xirurgiya markazi (RIChM), qizilo'ngach va oshqozon xirurgiyasi bo'limi. Bo'lim rahbari: t.f.d., prof. Nizamxo'jaev Zayniddin Maxamatovich.
+
+Bifolak-Neo -- mahalliy ishlab chiqarishning probiotiki bo'lib, eng yangi ishlanmadir. Tarkibida bifido- va laktobakteriyalarni saqlaydigan probiotiklar -- gastroenterologiya va qizilo'ngach hamda oshqozon xirurgiyasida oshqozon-ichak trakti turli kasalliklarini profilaktika va davolashda qo'llaniladigan davolashning ajralmas qismidir.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Akademik V. Vaxidov nomidagi RIChM (Respublika ixtisoslashtirilgan xirurgiya markazi)
+language: uz
+
+[BIFOLAK NEO -- Akademik V. Vaxidov nomidagi RIChM sharhi. Klinik qo'llash sohalari]
+
+Preparat gastroenterologiya va xirurgiya amaliyotida quyidagi holatlarda qo'llanildi. Gastroenterologik kasalliklar: gastroduodenitlar, yara kasalligi, enterokolit, ichakning turli surunkali kasalliklari, gelmintozlar. Gepatobiliar tizim: xolangioxoletsistit, pankreatit.
+
+Xirurgiya amaliyotida preparat operatsiyadan keyingi asoratlar sonini kamaytirish, ichak mikrobiotsenozini normallashtirish, operatsiyadan oldingi tayyorgarlikda, antibiotik terapiyasi davrida operatsiyadan keyingi davrda va antibiotiklar kursini tugatgandan keyin qo'llanildi.
+
+Preparatning yuqori samarali ta'siri baholandi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Akademik V. Vaxidov nomidagi RIChM (Respublika ixtisoslashtirilgan xirurgiya markazi)
+language: uz
+
+[BIFOLAK NEO -- Akademik V. Vaxidov nomidagi RIChM sharhi. Afzalliklar va xususiyatlar]
+
+Bifolak-Neo ni qo'llashda quyidagi afzalliklar va xususiyatlar hisobga olingan. Hazm qilish jarayonida ishtirok etishi, vitaminlarni sintez qilish va o'zlashtirish, hayotiy muhim aminokislotalar va fermentlarni sintez qilish. Immunomodulyator bo'lib, organizmning himoya kuchlarini faollashtiradi. Mikro- va makroelementlar, ayniqsa temir va kaltsiy hamda boshqa biologik faol moddalar almashinuvini normallashtirish uchun zarur. Tarkibida kaliy va yod mavjud bo'lib, ushbu elementlarning muvozanatini ta'minlaydi.
+
+Mikroflora boshqa foydali mikroorganizmlarining o'sishi va rivojlanishiga yordam beradi va patogen florani siqib chiqaradi. Oshqozonning agressiv muhitida tirik qoladi, oshqozon-ichak trakti sharoitlariga yaxshiroq moslashish uchun yuqori hayotchanlikka ega (pH 4 muhitda), himoya hisobiga biopardani hosil qiladi.
+
+Kantserogenlar bilan kurashish muammosini yengillashtiradi va detoksikatsiyalovchi ta'sir ko'rsatadi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: Akademik V. Vaxidov nomidagi RIChM (Respublika ixtisoslashtirilgan xirurgiya markazi)
+language: uz
+
+[BIFOLAK NEO -- Akademik V. Vaxidov nomidagi RIChM sharhi. Maxsus qo'llash va xulosa]
+
+Bifolak-Neo preparati antibiotik terapiya davomida va undan keyin disbioz profilaktikasi, shuningdek parenximatoz organlarni himoya qilish uchun muvaffaqiyatli qo'llanildi.
+
+Bifolak-Neo preparati gastroenterologiya va xirurgiya amaliyotida yuqori samaradorlik ko'rsatdi, ko'plab afzalliklarga ega va oshqozon-ichak trakti kasalliklarini kompleks terapiyasining muhim komponentidir.
+
+Akademik V. Vaxidov nomidagi Respublika ixtisoslashtirilgan xirurgiya markazi qizilo'ngach va oshqozon xirurgiyasi bo'limi rahbari, t.f.d., prof. Nizamxo'jaev Zayniddin Maxamatovich. Hujjat bo'lim rahbari tomonidan imzolangan.
+===/СЕКЦИЯ===

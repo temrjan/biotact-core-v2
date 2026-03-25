@@ -1,0 +1,113 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Obshchaya informaciya]
+
+Statya Ehffektivnost preparata magniya pri ishemicheskoj bolezni serdca. Opublikovana v zhurnale Terapevticheskij vestnik Uzbekistana, nomer 2, 2017. Avtory: Tulaboeva G.M. i Nuralieva D.M., Tashkentskij institut usovershenstvovaniya vrachej, Uzbekistan. V rabote izuchayetsya vliyanie preparata magniya Bifolak-Magnij na kliniko-gemodinamicheskie pokazateli, tolerantnost k fizicheskoj nagruzke, ehndotelialnuyu funkciyu, kachestvo zhizni, lipidnyj obmen u pacientov s IBS starshego vozrasta.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Dizajn issledovaniya]
+
+V issledovanie vklyucheny 80 pacientov so stabilnoj stenokaardiej napryzheniya II-III FK v vozraste ot 60 do 72 let. Pacienty randomizirovany na 2 gruppy metodom sluchajnoj vyborki. 1-ya gruppa (n=40): na fone bazisnoj terapii poluchali Bifolak-Magnij 1 sashe 3 raza v den v techenie 2 mesyacev. 2-ya gruppa (n=40): poluchali tolko bazisnuyu terapiyu. Baza issledovaniya: otdelenie ehkstrennoj kardiologii GKB nomer 7 g. Tashkent. Dlitelnost IBS u pacientov: 3,2 plus-minus 1,5 let. Kriteriem vklyucheniya yavlyalos nalichie dokazatelstva IBS v vide polozhitelnoj proby s fizicheskoj nagruzkoj.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Rol magniya v kardiologii]
+
+Ehksperimentalnye i klinicheskie issledovaniya poslednih let pokazyvayut chto ehlektrolityj disbalans imeet vazhnejshee znachenie v vozniknovenii i progressirovanii serdechno-sosudistoj patologii. Dokazana rol latentnogo i yavnogo deficita magniya v patogeneze serdechno-sosudistyh zabolevanij. Uroven magniya v syvorotke obratno svyazan s faktorami riska: arterialnyj gipertenziya, saharnyj diabet 2-go tipa, metabolicheskij sindrom, IBS. Povyshenie urovnya magniya potencialno zashchishchayet ot serdechno-sosudistyh zabolevanij. Pri posmertyoj ocenke soderzhaniya magniya u pacientov pogibshih ot IBS uroven magniya byl nizhe chem pri gibeli ot drugih prichin. U pacientov perenesshih infarkt miokarda znachitelno chashche vyyavlyaetsya deficit magniya.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Magnij i ateroskleroz]
+
+Sushchestvuyut dokazatelstva vzaimosvyazi deficita magniya i ateroskleroza. Deficit magniya associiruyetsya s povysheniem urovnya obshchego holesterina, lipidov nizkoj plotnosti, trigliceridov, snizheniem aktivnosti lecitin-holesterol-aminotransferazy i lipoproteinlipazy, povysheniem aktivnosti GMK-KoA-reduktazy. V ehksperimentalnyh issledovaniyah na zhivotyh pokazano chto na fone priema magniya dazhe v sochetanii s aterogennoj dietoj progress ateroskleroza zamedlyalsya po sravneniyu s kontrolnoj gruppoj nezavisimo ot urovnya holesterina. Issledovanie po ocenke korrelyacii urovnya magniya i vnezapnoj serdechnoj smerti vyyavilo znachitelnoe snizhenie riska vnezapnoj serdechnoj smerti pri povyshenii urovnya syvorotochnogo magniya nezavisimo ot drugih faktorov.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Kardioprotektivnye ehffekty magniya]
+
+Magnij yavlyaetsya vazhnym vnutrikletochnym kationom, kofaktorom bolee 300 fermentativnyh reakcij, uchastnikom ehnergeticheskogo metabolizma, regulyatorom sosudistogo tonusa, modulyatorom funkcii ehdoteliya. Kardioprotektivnye ehffekty magniya: antiaritmicheskij ehffekt stabiliziruyet membrany kardiomiotsitov; antiishemicheskij ehffekt uluchshayet koronarnyj krovotok; antiatero-skleroticheskij ehffekt vliyayet na lipidnyj obmen; vazodilatiruyushchij ehffekt rasshiryayet sosudy; antitromboticheskij ehffekt snizhayet agregaciyu trombocitov; antioksidantnyj ehffekt zashchishchayet ot okislitelnogo stressa.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Rezultaty i vyvody]
+
+Poluchennye dannye pozvolyayut rekomendovat Bifolak-Magnij na fone bazisnoj terapii IBS. Preparat dostoverno snizhayet chislo serdechnyh sokrashchenij. Okazyvayet antianginalnij ehffekt, umenshayet chastotu pristupov stenokardii. Okazyvayet antiishemicheskij ehffekt, uluchshayet krovosnabzhenie miokarda. Okazyvayet gipolipedemicheskij ehffekt, snizhayet uroven holesterina i aterogennyh lipidov. Uvelichivaetsya tolerantnost miokarda k fizicheskoj nagruzke, pacienty mogut perenosit bolshuyu fizicheskuyu aktivnost bez pristupov stenokardii. Uluchshayetsya kachestvo zhizni pacientov starshego vozrasta s IBS.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_MAGNIY
+doc_type: clinical_study
+category: probiotiki-vitaminy-mineraly
+institution: Tashkentskij institut usovershenstvovaniya vrachej
+authors: Tulaboeva G.M., Nuralieva D.M.
+journal: Terapevticheskij vestnik Uzbekistana / Ozbekiston Terapiya Axborotnomasi
+issue: nomer 2, 2017
+issn: 2181-5887
+language: ru
+
+[BIFOLAK MAGNIY -- Issledovanie pri IBS. Prakticheskie rekomendacii]
+
+Preparat Bifolak-Magnij rekomenduetsya: pacientam s IBS starshego vozrasta 60-72 let; so stabilnoj stenokaardiej napryzheniya II-III FK; na fone bazisnoj terapii kak dopolnitelnoe sredstvo. Kurs lecheniya: 1 sashe 3 raza v den v techenie 2 mesyacev. Preimushchestva preparata: mnogofaktornoe dejstvie vliyayet na razlichnye zvenya patogeneza IBS; khoroshaya perenosimost mozhet primenyatsya u pacientov starshego vozrasta; usilivayet ehffekt bazisnoj terapii; uluchshayet kachestvo zhizni povyshayet tolerantnost k fizicheskoj nagruzke; vliyayet na prognoz snizhayet risk serdechno-sosudistyh oslozhnenij.
+
+Statya opublikovana v zhurnale Terapevticheskij vestnik Uzbekistana nomer 2, 2017. ISSN 2181-5887.
+===/СЕКЦИЯ===

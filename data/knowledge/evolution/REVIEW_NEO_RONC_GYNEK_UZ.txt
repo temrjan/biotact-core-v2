@@ -1,0 +1,59 @@
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi, ginekologiya bo'limi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV ginekologiya sharhi. Umumiy ma'lumot]
+
+Bifolak-Neo farmakologik preparati haqida sharh.
+
+Tibbiy muassasa: O'zbekiston Respublikasi Sog'liqni saqlash vazirligi Respublika onkologiya ilmiy markazi (ROIM SSV), ginekologiya bo'limi. Manzil: 100174, Toshkent, Farobiy ko'chasi, 383.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi, ginekologiya bo'limi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV ginekologiya sharhi. Klinik approbatsiya]
+
+ROIM ginekologiya bo'limida 152 bemorda Bifolak-Neo preparatining approbatsiyasi o'tkazildi.
+
+Preparat ichak disbakteriozi, o'tkir ichak infeksiyalari (OIchI) va ichakning funksional buzilishlarida samarali.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi, ginekologiya bo'limi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV ginekologiya sharhi. Alohida klinik holatlar]
+
+Preparatning eng qulay ta'siri operatsiyadan oldingi neoadyuvant polikimyoterapiya va adyuvant polikimyoterapiya olgan bemorlarda qayd etildi.
+
+Preparat antibakterial terapiya qabul qilish davrida operatsiyadan keyingi davrda samarali. U ichak mikroflorasini korreksiyalash, oshqozon-ichak trakti mikrobiotsenozini normallashtirish, hazm qilish tizimi funksional faoliyatini rag'batlantirish va organizmning immunitet himoyasini oshirishni ta'minlaydi.
+
+Uyga chiqarishda bemorlarga oshqozon-ichak trakti funksiyasi to'liq tiklanguncha preparat qabul qilishni davom ettirish tavsiya etildi.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: BIFOLAK_NEO
+doc_type: clinical_review
+category: probiotiki-vitaminy-mineraly
+institution: ROIM SSV (Respublika onkologiya ilmiy markazi, ginekologiya bo'limi)
+language: uz
+
+[BIFOLAK NEO -- ROIM SSV ginekologiya sharhi. Xavfsizlik va xulosa]
+
+Bo'lim shifokorlari tomonidan preparatning nojo'ya ta'sirlari va preparat qabul qilishdan biron-bir asoratlar aniqlanmadi.
+
+Preparat qabul qilish uchun qulay, saqlash uchun qulay va mavjud.
+
+ROIM SSV ginekologiya bo'limi rahbari, prof. Yuldasheva N.Sh. Hujjat muassasaning rasmiy blankasida rasmiylashtirilgan.
+===/СЕКЦИЯ===
