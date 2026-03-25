@@ -36,6 +36,7 @@ router = APIRouter(prefix="/webhooks", tags=["webhooks"])
 
 TELEGRAM_BOT_TOKEN: str | None = os.getenv("TELEGRAM_BOT_TOKEN")
 MESSAGE_MAX_LENGTH: int = 4000
+TTS_MAX_CHARS: int = 1000
 
 MAIN_KEYBOARD: dict[str, Any] = {
     "keyboard": [
@@ -183,6 +184,99 @@ async def send_telegram_photo(
     except httpx.HTTPError as e:
         logger.error("Failed to send photo: %s", e)
         return False
+
+
+async def send_telegram_voice(chat_id: int, audio_bytes: bytes) -> bool:
+    """Send voice message to Telegram chat."""
+    if not TELEGRAM_BOT_TOKEN:
+        return False
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendVoice",
+                data={"chat_id": chat_id},
+                files={"voice": ("response.ogg", audio_bytes, "audio/ogg")},
+                timeout=30.0,
+            )
+            return response.status_code == 200
+    except httpx.HTTPError as e:
+        logger.error("Failed to send voice: %s", e)
+        return False
+
+
+async def transcribe_voice(file_id: str) -> str | None:
+    """Download voice from Telegram and transcribe via voice-service."""
+    from biotact.core.config import get_settings
+
+    settings = get_settings()
+    if not settings.voice_enabled or not settings.voice_api_key:
+        return None
+
+    if not TELEGRAM_BOT_TOKEN:
+        return None
+
+    try:
+        # Download voice file from Telegram
+        async with httpx.AsyncClient() as client:
+            file_resp = await client.get(
+                f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile",
+                params={"file_id": file_id},
+                timeout=10.0,
+            )
+            file_path = file_resp.json().get("result", {}).get("file_path")
+            if not file_path:
+                return None
+
+            voice_resp = await client.get(
+                f"https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}",
+                timeout=30.0,
+            )
+            voice_bytes = voice_resp.content
+
+        # Transcribe via voice-service
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{settings.voice_service_url}/v1/transcribe",
+                headers={"X-API-Key": settings.voice_api_key},
+                files={"file": ("voice.ogg", voice_bytes, "audio/ogg")},
+                timeout=30.0,
+            )
+            if resp.status_code == 200:
+                return resp.json().get("text")
+            logger.error("Voice-service STT error: %d", resp.status_code)
+    except Exception:
+        logger.exception("Voice transcription failed")
+    return None
+
+
+async def synthesize_voice(text: str) -> bytes | None:
+    """Synthesize text to speech via voice-service."""
+    from biotact.core.config import get_settings
+
+    settings = get_settings()
+    if not settings.voice_enabled or not settings.voice_api_key:
+        return None
+
+    # Truncate for TTS
+    tts_text = text[:TTS_MAX_CHARS] if len(text) > TTS_MAX_CHARS else text
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{settings.voice_service_url}/v1/synthesize",
+                headers={
+                    "X-API-Key": settings.voice_api_key,
+                    "Content-Type": "application/json",
+                },
+                json={"text": tts_text, "voice": "xenia", "format": "ogg"},
+                timeout=30.0,
+            )
+            if resp.status_code == 200:
+                return resp.content
+            logger.error("Voice-service TTS error: %d", resp.status_code)
+    except Exception:
+        logger.exception("Voice synthesis failed")
+    return None
 
 
 async def edit_telegram_message(
@@ -529,6 +623,22 @@ async def telegram_webhook(request: Request) -> WebhookResponse:
         chat_id = message.get("chat", {}).get("id")
         text = message.get("text", "")
         user = message.get("from", {})
+        was_voice = False
+
+        # Voice message → transcribe to text
+        voice = message.get("voice")
+        if voice and chat_id:
+            transcript = await transcribe_voice(voice["file_id"])
+            if transcript:
+                text = transcript
+                was_voice = True
+            else:
+                await send_telegram_message(
+                    chat_id,
+                    "Не удалось распознать голос. Попробуйте текстом.",
+                    reply_markup=MAIN_KEYBOARD,
+                )
+                return WebhookResponse()
 
         if not chat_id or not text:
             return WebhookResponse()
@@ -639,6 +749,12 @@ async def telegram_webhook(request: Request) -> WebhookResponse:
             username=user.get("username"),
         )
         await send_telegram_message(chat_id, answer, reply_markup=MAIN_KEYBOARD)
+
+        # Voice in → voice out (mirror mode)
+        if was_voice:
+            audio = await synthesize_voice(answer)
+            if audio:
+                await send_telegram_voice(chat_id, audio)
 
         return WebhookResponse()
 

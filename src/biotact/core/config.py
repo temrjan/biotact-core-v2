@@ -97,6 +97,13 @@ class Settings(BaseSettings):
     openai_embedding_model: str = "text-embedding-3-large"
 
     # -------------------------------------------------------------------------
+    # Voice Service (STT/TTS)
+    # -------------------------------------------------------------------------
+    voice_enabled: bool = False
+    voice_service_url: str = "https://voice.biotact.uz"
+    voice_api_key: str = ""
+
+    # -------------------------------------------------------------------------
     # Redis
     # -------------------------------------------------------------------------
     redis_host: str = "localhost"
