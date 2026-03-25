@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -28,7 +28,9 @@ def service() -> AskBiotactService:
 class TestDetectOrder:
     """Tests for order detection logic."""
 
-    def test_detect_order_with_phone_and_keywords(self, service: AskBiotactService) -> None:
+    def test_detect_order_with_phone_and_keywords(
+        self, service: AskBiotactService
+    ) -> None:
         history = [
             {"role": "user", "content": "хочу купить биолак"},
             {"role": "assistant", "content": "отлично, напишите телефон"},
@@ -42,7 +44,9 @@ class TestDetectOrder:
         result = service.detect_order("просто текст", history)
         assert result is None
 
-    def test_detect_order_phone_but_no_keywords(self, service: AskBiotactService) -> None:
+    def test_detect_order_phone_but_no_keywords(
+        self, service: AskBiotactService
+    ) -> None:
         history = [
             {"role": "user", "content": "привет"},
             {"role": "assistant", "content": "здравствуйте"},

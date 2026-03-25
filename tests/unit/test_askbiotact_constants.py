@@ -82,7 +82,12 @@ class TestQueryEnrichment:
         # Long query with keyword "состав" still matches (by design: keyword patterns)
         assert is_short_query("Расскажите подробнее о составе Bifolak Active") is True
         # Long query without any keywords is NOT short
-        assert is_short_query("Мне нужна помощь с выбором продукта для всей семьи на длительный период") is False
+        assert (
+            is_short_query(
+                "Мне нужна помощь с выбором продукта для всей семьи на длительный период"
+            )
+            is False
+        )
 
     def test_is_price_query(self) -> None:
         assert is_price_query("сколько стоит биолак") is True
@@ -111,7 +116,9 @@ class TestQueryEnrichment:
     def test_enrich_no_keyword_query_unchanged(self) -> None:
         history = [{"role": "user", "content": "test"}]
         # Query without enrichment trigger keywords stays unchanged
-        long_msg = "Мне нужна помощь с выбором продукта для всей семьи на длительный период"
+        long_msg = (
+            "Мне нужна помощь с выбором продукта для всей семьи на длительный период"
+        )
         enriched = enrich_query(long_msg, history)
         assert enriched == long_msg
 
@@ -126,8 +133,5 @@ class TestQueryEnrichment:
 )
 def test_product_names_found_in_catalog(product_name: str) -> None:
     """Each PRODUCT_NAME should match at least one product in the catalog."""
-    found = any(
-        product_name.upper() in p.name.upper()
-        for p in PRODUCTS.values()
-    )
+    found = any(product_name.upper() in p.name.upper() for p in PRODUCTS.values())
     assert found, f"PRODUCT_NAME '{product_name}' not found in catalog"
