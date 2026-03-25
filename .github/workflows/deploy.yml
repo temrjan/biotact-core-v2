@@ -1,11 +1,12 @@
 # =============================================================================
 # CD - Deploy to Server
 # =============================================================================
-# Triggers after successful Tests on main branch
+# Triggers after successful Tests on main branch, or manually
 
 name: Deploy
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Tests"]
     types: [completed]
@@ -20,9 +21,12 @@ jobs:
     name: Deploy to Server
     runs-on: ubuntu-latest
     if: >
-      github.event.workflow_run.conclusion == 'success'
-      && github.event.workflow_run.head_branch == 'main'
-      && github.event.workflow_run.event == 'push'
+      github.event_name == 'workflow_dispatch'
+      || (
+        github.event.workflow_run.conclusion == 'success'
+        && github.event.workflow_run.head_branch == 'main'
+        && github.event.workflow_run.event == 'push'
+      )
 
     steps:
       - name: Deploy via SSH
@@ -32,11 +36,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          envs: DEPLOY_PATH
           script: |
             set -euo pipefail
-            cd "${{ secrets.DEPLOY_PATH }}"
+            cd /opt/biotact-core-v2
 
-            # Pull latest code (preserve node_modules)
+            # Pull latest code
             git fetch origin main
             git reset --hard origin/main
 
@@ -52,7 +57,7 @@ jobs:
             test -f dist/index.html || { echo "Build failed: no index.html"; exit 1; }
             ls dist/assets/*.js >/dev/null 2>&1 || { echo "Build failed: no JS assets"; exit 1; }
 
-            # Atomic deploy: copy new files first, then cleanup stale
+            # Atomic deploy
             rsync -a --delete-after dist/ /var/www/dashboard/
 
             nginx -s reload
@@ -61,3 +66,5 @@ jobs:
             # Health check
             sleep 5
             curl -f http://localhost:8000/api/v1/health || exit 1
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
