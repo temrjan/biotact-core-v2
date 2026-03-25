@@ -1,15 +1,19 @@
 # =============================================================================
 # CD - Deploy to Server
 # =============================================================================
-# Triggers after successful Lint + Tests on main branch
+# Triggers after successful Tests on main branch
 
 name: Deploy
 
 on:
   workflow_run:
-    workflows: ["Lint", "Tests"]
+    workflows: ["Tests"]
     types: [completed]
     branches: [main]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -30,6 +34,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            set -euo pipefail
             cd ${{ secrets.DEPLOY_PATH }}
 
             # Pull latest code (preserve node_modules)
@@ -39,12 +44,18 @@ jobs:
             # Restart API (source volume-mounted)
             docker compose -f docker-compose.prod.yml restart api
 
-            # Rebuild frontend
+            # Build frontend
             cd frontend/dashboard
             npm ci --prefer-offline
             npm run build
-            rm -rf /var/www/dashboard/assets/*
-            cp -r dist/* /var/www/dashboard/
+
+            # Verify build before deploying
+            test -f dist/index.html || { echo "Build failed: no index.html"; exit 1; }
+            ls dist/assets/*.js >/dev/null 2>&1 || { echo "Build failed: no JS assets"; exit 1; }
+
+            # Atomic deploy: copy new files first, then cleanup stale
+            rsync -a --delete-after dist/ /var/www/dashboard/
+
             nginx -s reload
             cd ../..
 
