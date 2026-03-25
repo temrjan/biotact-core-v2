@@ -156,7 +156,9 @@ async def marketing_chat(
     req: ChatRequest,
 ) -> ChatResponse:
     """Marketing AI chat with function calling. Proxies to content-agent-api."""
-    logger.info("Marketing chat: user=%s message=%r", current_user.email, req.message[:50])
+    logger.info(
+        "Marketing chat: user=%s message=%r", current_user.email, req.message[:50]
+    )
 
     body: dict[str, object] = {"message": req.message}
     if req.history:
