@@ -5,7 +5,8 @@ import {
   ArrowDownRight, ChevronLeft, ChevronRight,
   Server, Megaphone, Briefcase, ShoppingCart, Coffee,
   Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2,
-  Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText
+  Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText,
+  FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -412,6 +413,7 @@ function Dashboard({ onLogout }) {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
     { id: 'askbiotact', label: 'AskBiotact', icon: Bot },
     { id: 'marketing', label: 'Marketing', icon: Megaphone },
+    { id: 'documents', label: 'Документы', icon: FolderOpen },
     { id: 'hr', label: 'HR', icon: Briefcase },
   ];
 
@@ -448,6 +450,133 @@ function Dashboard({ onLogout }) {
   const [mktChatLoading, setMktChatLoading] = useState(false);
   const mktChatEndRef = useRef(null);
   const mktChatInputRef = useRef(null);
+
+  // ═══════════════════════════════════════════════════════════════
+  // Documents module state
+  // ═══════════════════════════════════════════════════════════════
+  const [docFolders, setDocFolders] = useState([]);
+  const [docFiles, setDocFiles] = useState([]);
+  const [docCurrentFolder, setDocCurrentFolder] = useState(null); // folder_id or null (root)
+  const [docBreadcrumbs, setDocBreadcrumbs] = useState([{ folder_id: null, name: 'Все документы' }]);
+  const [docStats, setDocStats] = useState({ total_files: 0, total_folders: 0, total_size: 0, indexed_files: 0 });
+  const [docUploading, setDocUploading] = useState(false);
+  const [docDragOver, setDocDragOver] = useState(false);
+  const [docShowNewFolder, setDocShowNewFolder] = useState(false);
+  const [docNewFolderName, setDocNewFolderName] = useState('');
+  const [docLoading, setDocLoading] = useState(false);
+  const docFileInputRef = useRef(null);
+
+  // Documents Chat
+  const [docChatMsgs, setDocChatMsgs] = useState([
+    { id: '0', role: 'ai', text: 'Здравствуйте! Я могу искать информацию по всем загруженным документам, сопоставлять данные и помогать с анализом. Спрашивайте!' },
+  ]);
+  const [docChatInput, setDocChatInput] = useState('');
+  const [docChatLoading, setDocChatLoading] = useState(false);
+  const docChatEndRef = useRef(null);
+  const docChatInputRef = useRef(null);
+
+  // Load documents data
+  const loadDocuments = useCallback(async () => {
+    setDocLoading(true);
+    try {
+      const [folders, files, stats] = await Promise.all([
+        api.listFolders(docCurrentFolder),
+        api.listFiles(docCurrentFolder),
+        api.getFileStats(),
+      ]);
+      setDocFolders(folders);
+      setDocFiles(files);
+      setDocStats(stats);
+
+      // Update breadcrumbs
+      if (docCurrentFolder) {
+        const crumbs = await api.getBreadcrumbs(docCurrentFolder);
+        setDocBreadcrumbs(crumbs);
+      } else {
+        setDocBreadcrumbs([{ folder_id: null, name: 'Все документы' }]);
+      }
+    } catch (err) {
+      console.error('Failed to load documents:', err);
+    } finally {
+      setDocLoading(false);
+    }
+  }, [docCurrentFolder]);
+
+  useEffect(() => {
+    if (section === 'documents') loadDocuments();
+  }, [section, docCurrentFolder, loadDocuments]);
+
+  const navigateToFolder = useCallback((folderId) => {
+    setDocCurrentFolder(folderId);
+  }, []);
+
+  const handleCreateFolder = useCallback(async () => {
+    if (!docNewFolderName.trim()) return;
+    try {
+      await api.createFolder(docNewFolderName.trim(), docCurrentFolder);
+      setDocNewFolderName('');
+      setDocShowNewFolder(false);
+      await loadDocuments();
+    } catch (err) {
+      console.error('Failed to create folder:', err);
+    }
+  }, [docNewFolderName, docCurrentFolder, loadDocuments]);
+
+  const handleUploadFiles = useCallback(async (fileList) => {
+    if (!fileList || fileList.length === 0) return;
+    setDocUploading(true);
+    try {
+      for (const file of fileList) {
+        await api.uploadFile(file, docCurrentFolder);
+      }
+      await loadDocuments();
+    } catch (err) {
+      console.error('Upload failed:', err);
+    } finally {
+      setDocUploading(false);
+    }
+  }, [docCurrentFolder, loadDocuments]);
+
+  const handleDeleteFile = useCallback(async (fileId) => {
+    try {
+      await api.deleteFile(fileId);
+      await loadDocuments();
+    } catch (err) {
+      console.error('Delete failed:', err);
+    }
+  }, [loadDocuments]);
+
+  const handleDeleteFolder = useCallback(async (folderId) => {
+    try {
+      await api.deleteFolder(folderId);
+      await loadDocuments();
+    } catch (err) {
+      console.error('Delete folder failed:', err);
+    }
+  }, [loadDocuments]);
+
+  const sendDocChat = useCallback(async () => {
+    if (!docChatInput.trim() || docChatLoading) return;
+    const msg = docChatInput.trim();
+    setDocChatInput('');
+    setDocChatMsgs(prev => [...prev, { id: Date.now(), role: 'user', text: msg }]);
+    setDocChatLoading(true);
+    try {
+      const history = docChatMsgs.filter(m => m.role !== 'ai' || m.id !== '0').map(m => ({
+        role: m.role === 'ai' ? 'assistant' : m.role,
+        content: m.text,
+      }));
+      const data = await api.filesChat(msg, history.length > 0 ? history : null);
+      const sources = data.sources && data.sources.length > 0
+        ? '\n\n' + data.sources.map(s => `📄 ${s.file_name}`).join('\n')
+        : '';
+      setDocChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'ai', text: data.answer + sources }]);
+    } catch (err) {
+      setDocChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'ai', text: `Ошибка: ${err.message}`, status: 'warning' }]);
+    } finally {
+      setDocChatLoading(false);
+    }
+  }, [docChatInput, docChatLoading, docChatMsgs]);
 
   const handleGenerate = useCallback(async () => {
     if (!mktProduct.trim()) return;
@@ -695,10 +824,11 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 {section === 'dashboard' && 'Главная панель'}
                 {section === 'askbiotact' && 'AskBiotact'}
                 {section === 'marketing' && 'Маркетинг'}
+                {section === 'documents' && 'Документы'}
                 {section === 'hr' && 'HR / Кадры'}
               </h1>
               <p className="text-xs" style={{ color: theme.text.muted }}>
-                {section === 'askbiotact' ? 'AI Консультант' : section === 'marketing' ? 'Генератор контента' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
+                {section === 'askbiotact' ? 'AI Консультант' : section === 'marketing' ? 'Генератор контента' : section === 'documents' ? 'Общая площадка обмена документами' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -1209,6 +1339,195 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         </div>
         )}
 
+        {/* ══════════ DOCUMENTS ══════════ */}
+        {section === 'documents' && (
+        <div className="flex-1 overflow-y-auto">
+          {/* Toolbar */}
+          <div className="px-8 py-4 flex items-center gap-3 border-b" style={{ borderColor: theme.border.subtle }}>
+            <button
+              onClick={() => docFileInputRef.current?.click()}
+              disabled={docUploading}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:shadow-lg"
+              style={{ backgroundColor: '#3584e4' }}
+            >
+              {docUploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+              {docUploading ? 'Загрузка...' : 'Загрузить'}
+            </button>
+            <input
+              ref={docFileInputRef}
+              type="file"
+              multiple
+              accept=".pdf,.docx,.doc,.txt,.md,.csv,.json,.xlsx,.xls"
+              className="hidden"
+              onChange={(e) => handleUploadFiles(e.target.files)}
+            />
+            <button
+              onClick={() => setDocShowNewFolder(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all"
+              style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+            >
+              <FolderPlus size={15} /> Папка
+            </button>
+
+            {/* Breadcrumbs */}
+            <div className="flex items-center gap-1 ml-4 text-sm">
+              {docBreadcrumbs.map((crumb, i) => (
+                <React.Fragment key={crumb.folder_id || 'root'}>
+                  {i > 0 && <span style={{ color: theme.text.muted }}>›</span>}
+                  <button
+                    onClick={() => navigateToFolder(crumb.folder_id)}
+                    className="px-2 py-1 rounded-md transition-colors"
+                    style={{
+                      color: i === docBreadcrumbs.length - 1 ? theme.text.primary : theme.text.muted,
+                      fontWeight: i === docBreadcrumbs.length - 1 ? 500 : 400,
+                    }}
+                  >
+                    {crumb.name}
+                  </button>
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Stats */}
+            <div className="ml-auto flex items-center gap-4 text-xs" style={{ color: theme.text.muted }}>
+              <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: theme.text.accent }}></span> {docStats.indexed_files} проиндексировано</span>
+              <span>{docStats.total_files} файлов • {(docStats.total_size / 1024 / 1024).toFixed(1)} MB</span>
+            </div>
+          </div>
+
+          {/* Create folder modal */}
+          {docShowNewFolder && (
+            <div className="px-8 py-3 flex items-center gap-2 border-b" style={{ borderColor: theme.border.subtle, backgroundColor: theme.bg.elevated }}>
+              <FolderPlus size={16} style={{ color: '#3584e4' }} />
+              <input
+                autoFocus
+                value={docNewFolderName}
+                onChange={(e) => setDocNewFolderName(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCreateFolder()}
+                placeholder="Имя папки..."
+                className="flex-1 px-3 py-1.5 rounded-lg text-sm border outline-none"
+                style={{ borderColor: theme.border.default, backgroundColor: theme.bg.card, color: theme.text.primary }}
+              />
+              <button onClick={handleCreateFolder} className="px-3 py-1.5 rounded-lg text-sm font-medium text-white" style={{ backgroundColor: '#3584e4' }}>Создать</button>
+              <button onClick={() => { setDocShowNewFolder(false); setDocNewFolderName(''); }} className="p-1.5 rounded-lg" style={{ color: theme.text.muted }}><X size={16} /></button>
+            </div>
+          )}
+
+          {/* Drag & drop overlay */}
+          <div
+            className="relative px-8 py-6"
+            onDragOver={(e) => { e.preventDefault(); setDocDragOver(true); }}
+            onDragLeave={() => setDocDragOver(false)}
+            onDrop={(e) => { e.preventDefault(); setDocDragOver(false); handleUploadFiles(e.dataTransfer.files); }}
+          >
+            {docDragOver && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed" style={{ borderColor: '#3584e4', backgroundColor: 'rgba(53,132,228,0.06)' }}>
+                <Upload size={40} style={{ color: '#3584e4', opacity: 0.5 }} />
+                <span className="mt-2 text-sm font-medium" style={{ color: '#3584e4' }}>Перетащите файлы сюда</span>
+              </div>
+            )}
+
+            {docLoading ? (
+              <div className="flex items-center justify-center py-20"><Loader2 size={24} className="animate-spin" style={{ color: theme.text.muted }} /></div>
+            ) : (
+              <>
+                {/* Folders */}
+                {docFolders.length > 0 && (
+                  <>
+                    <div className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: theme.text.muted }}>Папки</div>
+                    <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 mb-8">
+                      {docFolders.map(folder => (
+                        <div
+                          key={folder.folder_id}
+                          onClick={() => navigateToFolder(folder.folder_id)}
+                          className="group relative flex flex-col items-center p-4 rounded-2xl cursor-pointer transition-all hover:-translate-y-0.5"
+                          style={{ ':hover': { backgroundColor: theme.bg.elevated } }}
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = theme.bg.elevated; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
+                        >
+                          {/* GNOME-style folder SVG */}
+                          <svg width="56" height="46" viewBox="0 0 72 60" fill="none" style={{ filter: 'drop-shadow(0 4px 8px rgba(53,132,228,0.15))', marginBottom: 8 }}>
+                            <rect x="4" y="4" width="64" height="52" rx="2" fill={isDark ? '#3584e4' : '#1c71d8'} />
+                            <path d="M4 6C4 4.895 4.895 4 6 4H25.17c.53 0 1.04.21 1.41.59l2.83 2.83c.38.37.89.58 1.41.58H66c1.1 0 2 .9 2 2v2H4V6Z" fill={isDark ? '#3584e4' : '#1c71d8'} />
+                            <rect x="2" y="14" width="68" height="42" rx="2" fill={isDark ? '#62a0ea' : '#3584e4'} />
+                            <rect x="2" y="14" width="68" height="3" rx="1" fill="rgba(255,255,255,0.15)" />
+                          </svg>
+                          <div className="text-xs font-medium text-center truncate w-full" style={{ color: theme.text.primary }}>{folder.name}</div>
+                          <div className="text-[10px] mt-0.5" style={{ color: theme.text.muted }}>{folder.file_count || 0} файлов</div>
+                          {/* Delete button — only for owner */}
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleDeleteFolder(folder.folder_id); }}
+                            className="absolute top-2 right-2 p-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                            style={{ color: theme.text.muted }}
+                            title="Удалить"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* Files */}
+                {docFiles.length > 0 && (
+                  <>
+                    <div className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: theme.text.muted }}>Файлы</div>
+                    <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3">
+                      {docFiles.map(file => {
+                        const ext = file.name.split('.').pop()?.toLowerCase() || '';
+                        const typeColors = { pdf: '#e74c3c', docx: '#3498db', doc: '#3498db', xlsx: '#27ae60', xls: '#27ae60', txt: '#95a5a6', csv: '#f39c12', md: '#8e44ad', json: '#95a5a6' };
+                        const bgColor = typeColors[ext] || '#95a5a6';
+                        return (
+                          <div
+                            key={file.file_id}
+                            className="group relative flex items-center gap-3 p-3.5 rounded-xl border transition-all hover:-translate-y-0.5"
+                            style={{ borderColor: theme.border.default, backgroundColor: theme.bg.card }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3584e4'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(53,132,228,0.15)'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = theme.border.default; e.currentTarget.style.boxShadow = 'none'; }}
+                          >
+                            {/* Type badge */}
+                            <div className="w-9 h-9 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0" style={{ background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)` }}>
+                              {ext.toUpperCase().slice(0, 3)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium truncate" style={{ color: theme.text.primary }}>{file.name}</div>
+                              <div className="flex items-center gap-2 mt-0.5 text-[11px]" style={{ color: theme.text.muted }}>
+                                <span>{(file.size / 1024 / 1024).toFixed(1)} MB</span>
+                                <span>•</span>
+                                {file.is_indexed
+                                  ? <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold" style={{ backgroundColor: 'rgba(73,156,117,0.1)', color: theme.text.accent }}>✓ indexed</span>
+                                  : <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold animate-pulse" style={{ backgroundColor: 'rgba(53,132,228,0.1)', color: '#3584e4' }}>⏳ indexing</span>
+                                }
+                              </div>
+                              <div className="text-[10px] mt-0.5" style={{ color: theme.text.muted }}>{file.uploaded_by_name}</div>
+                            </div>
+                            {/* Actions */}
+                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button onClick={() => api.downloadFile(file.file_id, file.original_name)} className="p-1.5 rounded-md transition-colors" style={{ color: theme.text.muted }} title="Скачать"><Download size={14} /></button>
+                              <button onClick={() => handleDeleteFile(file.file_id)} className="p-1.5 rounded-md transition-colors hover:text-red-500" style={{ color: theme.text.muted }} title="Удалить"><Trash2 size={14} /></button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+
+                {/* Empty state */}
+                {docFolders.length === 0 && docFiles.length === 0 && (
+                  <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <FolderOpen size={48} strokeWidth={1} style={{ color: theme.text.muted, opacity: 0.3 }} />
+                    <div className="text-sm font-medium mt-4" style={{ color: theme.text.secondary }}>Пока нет документов</div>
+                    <div className="text-xs mt-1" style={{ color: theme.text.muted }}>Загрузите файлы или создайте папку</div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+        )}
+
         {/* HR Placeholder */}
         {section === 'hr' && (
         <div className="flex-1 flex items-center justify-center">
@@ -1230,23 +1549,23 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
       >
         {/* Header */}
         <div className="h-16 px-5 flex items-center gap-3 border-b" style={{ borderColor: theme.border.default }}>
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: isDark ? theme.bg.accent : theme.text.primary }}>
-            {section === 'askbiotact' ? <Bot size={16} style={{ color: theme.text.inverse }} /> : <Sparkles size={16} style={{ color: theme.text.inverse }} />}
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: section === 'documents' ? '#3584e4' : isDark ? theme.bg.accent : theme.text.primary }}>
+            {section === 'askbiotact' ? <Bot size={16} style={{ color: theme.text.inverse }} /> : section === 'documents' ? <FileText size={16} style={{ color: '#fff' }} /> : <Sparkles size={16} style={{ color: theme.text.inverse }} />}
           </div>
           <div className="flex-1">
             <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>
-              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : 'AI Ассистент'}
+              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : section === 'documents' ? 'Документы AI' : 'AI Ассистент'}
             </div>
             <div className="text-[11px] flex items-center gap-1" style={{ color: theme.text.success }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.text.success }} />
-              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : 'Подключён к API'}
+              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : section === 'documents' ? `${docStats.indexed_files} документов проиндексировано` : 'Подключён к API'}
             </div>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-auto p-4 space-y-4">
-          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : msgs).map(m => (
+          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : section === 'documents' ? docChatMsgs : msgs).map(m => (
             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
                 className="max-w-[85%] px-4 py-3 text-sm leading-relaxed"
@@ -1270,7 +1589,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           ))}
-          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : loading) && (
+          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : loading) && (
             <div className="flex justify-start">
               <div className="px-4 py-3 rounded-2xl" style={{ backgroundColor: theme.bg.aiBubble }}>
                 <div className="flex items-center gap-1">
@@ -1281,7 +1600,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           )}
-          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : endRef} />
+          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : section === 'documents' ? docChatEndRef : endRef} />
         </div>
 
         {/* Quick Actions */}
@@ -1291,6 +1610,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               ? ['У ребенка живот болит', 'После антибиотиков', 'Сколько стоит?']
               : section === 'marketing'
               ? ['Сгенерируй пост про Иммунокомплекс', 'Найди посты за эту неделю', 'Покажи статистику']
+              : section === 'documents'
+              ? ['Найди в документах...', 'Сравни два файла', 'Что нового загружено?']
               : ['Расход 5 млн на маркетинг', 'Доход 10 млн', 'Покажи отчёт']
             ).map(a => (
               <button
@@ -1302,6 +1623,9 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                   } else if (section === 'marketing') {
                     setMktChatInput(a);
                     mktChatInputRef.current?.focus();
+                  } else if (section === 'documents') {
+                    setDocChatInput(a);
+                    docChatInputRef.current?.focus();
                   } else {
                     setInput(a);
                     inputRef.current?.focus();
@@ -1320,13 +1644,13 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         <div className="p-4 border-t" style={{ borderColor: theme.border.default }}>
           <div className="flex gap-2">
             <input
-              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : inputRef}
+              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : section === 'documents' ? docChatInputRef : inputRef}
               type="text"
-              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : input}
-              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : send())}
-              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : 'Напишите команду...'}
-              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : loading}
+              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : section === 'documents' ? docChatInput : input}
+              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : section === 'documents' ? setDocChatInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : section === 'documents' ? sendDocChat() : send())}
+              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : section === 'documents' ? 'Спросите о документах...' : 'Напишите команду...'}
+              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : loading}
               className="flex-1 border-0 rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2"
               style={{
                 backgroundColor: theme.bg.input,
@@ -1335,8 +1659,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               }}
             />
             <button
-              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : send}
-              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : (!input.trim() || loading)}
+              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : send}
+              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : (!input.trim() || loading)}
               className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
               style={{ backgroundColor: theme.bg.accent }}
             >
