@@ -14,6 +14,7 @@ from biotact.core.database import close_db
 from biotact.modules import module_registry
 from biotact.modules.callcenter.config import callcenter_config
 from biotact.modules.dashboard.config import dashboard_config
+from biotact.modules.filestorage.vector_store import FileVectorStore
 from biotact.modules.hr.config import hr_config
 from biotact.modules.marketing.config import marketing_config
 
@@ -26,6 +27,10 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     module_registry.register(callcenter_config)
     module_registry.register(marketing_config)
     module_registry.register(hr_config)
+
+    # Ensure Qdrant collection for user files
+    vector_store = FileVectorStore(get_settings())
+    await vector_store.ensure_collection()
 
     # Register Telegram bot commands (/start, /new, /products, /contact)
     await register_bot_commands()

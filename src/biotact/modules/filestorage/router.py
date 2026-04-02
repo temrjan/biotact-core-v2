@@ -3,15 +3,19 @@
 import logging
 import uuid
 
-from fastapi import APIRouter, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, UploadFile, status
 from fastapi.responses import FileResponse
 
+from biotact.core.config import get_settings
 from biotact.core.dependencies import CurrentUserDep, SessionDep
 from biotact.modules.filestorage import file_service
+from biotact.modules.filestorage.chat_service import FilesChatService
 from biotact.modules.filestorage.models import File, Folder
 from biotact.modules.filestorage.repository import FileRepository
 from biotact.modules.filestorage.schemas import (
     BreadcrumbItem,
+    FilesChatRequest,
+    FilesChatResponse,
     FileStatsResponse,
     FolderCreateRequest,
     FolderRenameRequest,
@@ -20,6 +24,8 @@ from biotact.modules.filestorage.schemas import (
 from biotact.modules.filestorage.schemas import (
     FileResponse as FileResponseSchema,
 )
+from biotact.modules.filestorage.vector_store import FileVectorStore
+from biotact.services.rag.embedding import EmbeddingService
 
 logger = logging.getLogger(__name__)
 
@@ -123,7 +129,7 @@ async def delete_folder(
     folder = await _get_folder_or_404(repo, folder_id)
     _check_owner(folder.uploaded_by, current_user.id)
 
-    # Collect file paths for disk cleanup
+    # Collect file IDs and paths for cleanup
     file_ids = await repo.get_all_file_ids_in_folder(folder.id)
     storage_paths: list[str] = []
     for fid in file_ids:
@@ -133,6 +139,11 @@ async def delete_folder(
 
     # Delete from DB (CASCADE handles children + files)
     await repo.delete_folder(folder)
+
+    # Cleanup Qdrant vectors
+    settings = get_settings()
+    vector_store = FileVectorStore(settings)
+    await vector_store.delete_files_vectors(file_ids)
 
     # Cleanup disk
     file_service.delete_folder_from_disk(storage_paths)
@@ -148,9 +159,10 @@ async def upload_file(
     file: UploadFile,
     current_user: CurrentUserDep,
     session: SessionDep,
+    background_tasks: BackgroundTasks,
     folder_id: str | None = Query(default=None, description="folder_id куда загрузить"),
 ) -> FileResponseSchema:
-    """Upload a file. Optionally specify a folder."""
+    """Upload a file. Optionally specify a folder. Indexing runs in background."""
     repo = _get_repo(session)
 
     # Validate
@@ -183,6 +195,14 @@ async def upload_file(
         storage_path=storage_path,
         uploaded_by=current_user.id,
         folder_id=folder_pk,
+    )
+
+    # Schedule background indexing
+    background_tasks.add_task(
+        _index_file_background,
+        file_id=db_file.file_id,
+        file_name=db_file.name,
+        storage_path=db_file.storage_path,
     )
 
     return _file_to_response(db_file, current_user.full_name)
@@ -244,7 +264,15 @@ async def delete_file(
     _check_owner(db_file.uploaded_by, current_user.id)
 
     storage_path = db_file.storage_path
+    target_file_id = db_file.file_id
     await repo.delete_file(db_file)
+
+    # Cleanup Qdrant vectors
+    settings = get_settings()
+    vector_store = FileVectorStore(settings)
+    await vector_store.delete_file_vectors(target_file_id)
+
+    # Cleanup disk
     file_service.delete_file_from_disk(storage_path)
 
 
@@ -337,6 +365,69 @@ async def get_stats(
     repo = _get_repo(session)
     data = await repo.get_stats()
     return FileStatsResponse(**data)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Chat (LLM + RAG over documents)
+# ═══════════════════════════════════════════════════════════════════
+
+
+@router.post("/chat", response_model=FilesChatResponse)
+async def files_chat(
+    request: FilesChatRequest,
+    _current_user: CurrentUserDep,
+) -> FilesChatResponse:
+    """Chat with LLM about uploaded documents. Searches all shared files."""
+    settings = get_settings()
+    embedding_service = EmbeddingService(settings)
+    vector_store = FileVectorStore(settings)
+    chat_service = FilesChatService(settings, embedding_service, vector_store)
+
+    history = None
+    if request.history:
+        history = [{"role": m.role, "content": m.content} for m in request.history]
+
+    return await chat_service.query(
+        message=request.message,
+        history=history,
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Background tasks
+# ═══════════════════════════════════════════════════════════════════
+
+
+async def _index_file_background(
+    file_id: str,
+    file_name: str,
+    storage_path: str,
+) -> None:
+    """Background task: index a file after upload."""
+    from biotact.core.database import AsyncSessionLocal
+    from biotact.modules.filestorage import indexing_service
+
+    settings = get_settings()
+    embedding_service = EmbeddingService(settings)
+    vector_store = FileVectorStore(settings)
+
+    async def update_callback(is_indexed: bool, chunk_count: int) -> None:
+        """Update file index status in DB."""
+        async with AsyncSessionLocal() as session:
+            repo = FileRepository(session)
+            file = await repo.get_file_by_uuid(file_id)
+            if file:
+                await repo.update_index_status(file, is_indexed, chunk_count)
+                await session.commit()
+
+    await indexing_service.index_file(
+        file_id=file_id,
+        file_name=file_name,
+        storage_path=storage_path,
+        embedding_service=embedding_service,
+        vector_store=vector_store,
+        update_callback=update_callback,
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════
