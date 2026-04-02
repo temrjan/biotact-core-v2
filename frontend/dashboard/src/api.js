@@ -278,3 +278,119 @@ export async function marketingChat(message, history = null) {
     body: JSON.stringify(body),
   });
 }
+
+// ═══════════════════════════════════════════════════════════════
+// FILES — Document Storage
+// ═══════════════════════════════════════════════════════════════
+
+/** Create a folder */
+export async function createFolder(name, parentId = null) {
+  const body = { name };
+  if (parentId) body.parent_id = parentId;
+  return apiRequest('/files/folders', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+/** List folders (parentId=null → root) */
+export async function listFolders(parentId = null) {
+  const query = parentId ? `?parent_id=${parentId}` : '';
+  return apiRequest(`/files/folders${query}`);
+}
+
+/** Rename a folder */
+export async function renameFolder(folderId, name) {
+  return apiRequest(`/files/folders/${folderId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ name }),
+  });
+}
+
+/** Delete a folder */
+export async function deleteFolder(folderId) {
+  return apiRequest(`/files/folders/${folderId}`, { method: 'DELETE' });
+}
+
+/** Upload a file (multipart/form-data) */
+export async function uploadFile(file, folderId = null) {
+  const token = getAuthToken();
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const query = folderId ? `?folder_id=${folderId}` : '';
+  const response = await fetch(`${API_BASE}/files/upload${query}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  });
+
+  if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Upload failed' }));
+    throw new Error(err.detail || 'Upload failed');
+  }
+  return response.json();
+}
+
+/** List files (folderId=null → root) */
+export async function listFiles(folderId = null) {
+  const query = folderId ? `?folder_id=${folderId}` : '';
+  return apiRequest(`/files/${query}`);
+}
+
+/** Delete a file */
+export async function deleteFile(fileId) {
+  return apiRequest(`/files/${fileId}`, { method: 'DELETE' });
+}
+
+/** Get download URL for a file */
+export function getFileDownloadUrl(fileId) {
+  return `${API_BASE}/files/${fileId}/download`;
+}
+
+/** Download file (triggers browser download) */
+export async function downloadFile(fileId, fileName) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/files/${fileId}/download`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Download failed');
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/** Generate share link */
+export async function shareFile(fileId) {
+  return apiRequest(`/files/${fileId}/share`, { method: 'POST' });
+}
+
+/** Revoke share link */
+export async function unshareFile(fileId) {
+  return apiRequest(`/files/${fileId}/share`, { method: 'DELETE' });
+}
+
+/** Get breadcrumbs for a folder */
+export async function getBreadcrumbs(folderId) {
+  return apiRequest(`/files/breadcrumbs/${folderId}`);
+}
+
+/** Get storage stats */
+export async function getFileStats() {
+  return apiRequest('/files/stats');
+}
+
+/** Chat about documents (RAG) */
+export async function filesChat(message, history = null) {
+  const body = { message };
+  if (history) body.history = history;
+  return apiRequest('/files/chat', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
