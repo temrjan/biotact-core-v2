@@ -192,9 +192,9 @@ class FilesChatService:
         ]
 
         try:
-            answer_response = await self.client.chat.completions.create(  # type: ignore[arg-type]
+            answer_response = await self.client.chat.completions.create(
                 model=self.model,
-                messages=answer_messages,
+                messages=answer_messages,  # type: ignore[arg-type]
                 max_tokens=1000,
                 temperature=0.3,
             )

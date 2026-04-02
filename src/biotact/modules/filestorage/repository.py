@@ -186,7 +186,7 @@ class FileRepository:
         result = await self.session.execute(
             select(Folder.id).where(Folder.parent_id == folder_pk)
         )
-        child_ids: list[int] = list(result.scalars().all())
+        child_ids: list[int] = list(result.scalars().all())  # type: ignore[arg-type]
         for child_id in child_ids:
             file_ids.extend(await self.get_all_file_ids_in_folder(child_id))
 
