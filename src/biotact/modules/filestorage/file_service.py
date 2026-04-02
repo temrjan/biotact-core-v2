@@ -62,9 +62,7 @@ def validate_file(file: UploadFile) -> tuple[str, str]:
         )
 
     # Sanitize filename — keep only safe characters
-    safe_name = "".join(
-        c for c in file.filename if c.isalnum() or c in "._- "
-    ).strip()
+    safe_name = "".join(c for c in file.filename if c.isalnum() or c in "._- ").strip()
     if not safe_name:
         safe_name = f"file{ext}"
 

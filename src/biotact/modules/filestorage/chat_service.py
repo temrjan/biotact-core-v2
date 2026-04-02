@@ -97,7 +97,7 @@ class FilesChatService:
 
         # Step 1: Call LLM with tool
         try:
-            response = await self.client.chat.completions.create(
+            response = await self.client.chat.completions.create(  # type: ignore[call-overload]
                 model=self.model,
                 messages=messages,
                 tools=[SEARCH_TOOL],
@@ -192,7 +192,7 @@ class FilesChatService:
         ]
 
         try:
-            answer_response = await self.client.chat.completions.create(
+            answer_response = await self.client.chat.completions.create(  # type: ignore[arg-type]
                 model=self.model,
                 messages=answer_messages,
                 max_tokens=1000,

@@ -124,9 +124,7 @@ class FileRepository:
 
     async def get_file_by_uuid(self, file_id: str) -> File | None:
         """Get file by its UUID (file_id)."""
-        result = await self.session.execute(
-            select(File).where(File.file_id == file_id)
-        )
+        result = await self.session.execute(select(File).where(File.file_id == file_id))
         return result.scalar_one_or_none()
 
     async def get_file_by_share_token(self, token: str) -> File | None:
@@ -188,7 +186,7 @@ class FileRepository:
         result = await self.session.execute(
             select(Folder.id).where(Folder.parent_id == folder_pk)
         )
-        child_ids = list(result.scalars().all())
+        child_ids: list[int] = list(result.scalars().all())
         for child_id in child_ids:
             file_ids.extend(await self.get_all_file_ids_in_folder(child_id))
 
@@ -207,12 +205,8 @@ class FileRepository:
 
     async def get_stats(self) -> dict[str, int]:
         """Get storage statistics (all users, shared platform)."""
-        total_files_r = await self.session.execute(
-            select(func.count(File.id))
-        )
-        total_folders_r = await self.session.execute(
-            select(func.count(Folder.id))
-        )
+        total_files_r = await self.session.execute(select(func.count(File.id)))
+        total_folders_r = await self.session.execute(select(func.count(Folder.id)))
         total_size_r = await self.session.execute(
             select(func.coalesce(func.sum(File.size), 0))
         )

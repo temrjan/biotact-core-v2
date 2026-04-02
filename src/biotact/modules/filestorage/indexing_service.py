@@ -8,7 +8,9 @@ import asyncio
 import csv
 import json
 import logging
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 from biotact.modules.filestorage.vector_store import FileVectorStore
 from biotact.services.rag.embedding import EmbeddingService
@@ -53,7 +55,7 @@ def parse_json_to_text(file_path: Path) -> str:
 def parse_pdf(file_path: Path) -> str:
     """Parse PDF using pymupdf (PyMuPDF)."""
     try:
-        import pymupdf
+        import pymupdf  # type: ignore[import-not-found]
 
         doc = pymupdf.open(str(file_path))
         text_parts: list[str] = []
@@ -72,7 +74,7 @@ def parse_pdf(file_path: Path) -> str:
 def parse_docx(file_path: Path) -> str:
     """Parse DOCX using python-docx."""
     try:
-        from docx import Document
+        from docx import Document  # type: ignore[import-not-found]
 
         doc = Document(str(file_path))
         return "\n".join(p.text for p in doc.paragraphs if p.text.strip())
@@ -87,7 +89,7 @@ def parse_docx(file_path: Path) -> str:
 def parse_xlsx(file_path: Path) -> str:
     """Parse XLSX using openpyxl."""
     try:
-        from openpyxl import load_workbook
+        from openpyxl import load_workbook  # type: ignore[import-untyped]
 
         wb = load_workbook(str(file_path), read_only=True, data_only=True)
         text_parts: list[str] = []
@@ -109,7 +111,7 @@ def parse_xlsx(file_path: Path) -> str:
 
 
 # Parser dispatch by extension
-PARSERS: dict[str, callable] = {
+PARSERS: dict[str, Callable[..., str]] = {
     ".txt": parse_txt,
     ".md": parse_txt,
     ".csv": parse_csv_to_text,
@@ -203,7 +205,7 @@ async def index_file(
     storage_path: str,
     embedding_service: EmbeddingService,
     vector_store: FileVectorStore,
-    update_callback: callable | None = None,
+    update_callback: Callable[..., Any] | None = None,
 ) -> int:
     """Full indexing pipeline: parse → chunk → embed → upsert.
 

@@ -167,7 +167,9 @@ async def upload_file(
 
     # Validate
     safe_name, ext = file_service.validate_file(file)
-    mime = file.content_type or file_service.ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
+    mime = file.content_type or file_service.ALLOWED_EXTENSIONS.get(
+        ext, "application/octet-stream"
+    )
 
     # Resolve folder
     folder_pk: int | None = None
@@ -229,8 +231,7 @@ async def list_files(
 
     files = await repo.list_files(folder_id=folder_pk)
     return [
-        _file_to_response(f, f.creator.full_name if f.creator else "")
-        for f in files
+        _file_to_response(f, f.creator.full_name if f.creator else "") for f in files
     ]
 
 
