@@ -394,3 +394,72 @@ export async function filesChat(message, history = null) {
     body: JSON.stringify(body),
   });
 }
+
+// ═══════════════════════════════════════════════════════════════
+// HR MODULE
+// ═══════════════════════════════════════════════════════════════
+
+/** Upload HR template (DOCX/PDF/TXT) */
+export async function hrUploadTemplate(file, category) {
+  const token = getAuthToken();
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await fetch(`${API_BASE}/hr/library?category=${encodeURIComponent(category)}`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` },
+    body: formData,
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Upload failed' }));
+    throw new Error(err.detail || 'Upload failed');
+  }
+  return response.json();
+}
+
+/** List HR templates */
+export async function hrListTemplates(category = null) {
+  const params = category ? `?category=${encodeURIComponent(category)}` : '';
+  return apiRequest(`/hr/library${params}`);
+}
+
+/** Delete HR template */
+export async function hrDeleteTemplate(id) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/library/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Delete failed');
+  return true;
+}
+
+/** HR Chat — send message, get response + optional document */
+export async function hrChat(message, history = null) {
+  const body = { message };
+  if (history) body.history = history;
+  return apiRequest('/hr/chat/message', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+/** Download DOCX from text */
+export async function hrDownloadDocx(text, filename = 'document.docx') {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/documents/download-docx`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ text, filename }),
+  });
+  if (!response.ok) throw new Error('Download failed');
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}

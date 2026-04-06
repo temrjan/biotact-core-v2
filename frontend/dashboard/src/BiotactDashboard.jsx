@@ -475,6 +475,23 @@ function Dashboard({ onLogout }) {
   const docChatEndRef = useRef(null);
   const docChatInputRef = useRef(null);
 
+  // ═══════════════════════════════════════════════════════════════
+  // HR module state
+  // ═══════════════════════════════════════════════════════════════
+  const [hrTemplates, setHrTemplates] = useState([]);
+  const [hrUploading, setHrUploading] = useState(false);
+  const [hrDocResult, setHrDocResult] = useState(null); // generated document text
+  const hrFileInputRef = useRef(null);
+
+  // HR Chat
+  const [hrChatMsgs, setHrChatMsgs] = useState([
+    { id: 1, role: 'assistant', text: 'Здравствуйте! Я HR-ассистент. Напишите какой документ нужно создать — я найду образец и заполню данными.' },
+  ]);
+  const [hrChatInput, setHrChatInput] = useState('');
+  const [hrChatLoading, setHrChatLoading] = useState(false);
+  const hrChatEndRef = useRef(null);
+  const hrChatInputRef = useRef(null);
+
   // Load documents data
   const loadDocuments = useCallback(async () => {
     setDocLoading(true);
@@ -669,6 +686,76 @@ function Dashboard({ onLogout }) {
       setMktChatLoading(false);
     }
   }, [mktChatInput, mktChatLoading, mktChatMsgs, loadHistory]);
+
+  // ═══════════════════════════════════════════════════════════════
+  // HR module handlers
+  // ═══════════════════════════════════════════════════════════════
+
+  const loadHrTemplates = useCallback(async () => {
+    try {
+      const data = await api.hrListTemplates();
+      setHrTemplates(data.items || []);
+    } catch (e) {
+      console.error('Failed to load HR templates:', e);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (section === 'hr') loadHrTemplates();
+  }, [section, loadHrTemplates]);
+
+  const handleHrUpload = useCallback(async (files) => {
+    if (!files || files.length === 0) return;
+    setHrUploading(true);
+    try {
+      const category = prompt('Категория документа (например: трудовой_договор, приказ, должностная_инструкция):');
+      if (!category) { setHrUploading(false); return; }
+      for (const file of files) {
+        await api.hrUploadTemplate(file, category);
+      }
+      await loadHrTemplates();
+    } catch (e) {
+      console.error('HR upload failed:', e);
+    } finally {
+      setHrUploading(false);
+    }
+  }, [loadHrTemplates]);
+
+  const handleHrDeleteTemplate = useCallback(async (id) => {
+    if (!confirm('Удалить образец?')) return;
+    try {
+      await api.hrDeleteTemplate(id);
+      await loadHrTemplates();
+    } catch (e) {
+      console.error('HR delete failed:', e);
+    }
+  }, [loadHrTemplates]);
+
+  const sendHrChat = useCallback(async () => {
+    const text = hrChatInput.trim();
+    if (!text || hrChatLoading) return;
+    setHrChatInput('');
+    const userMsg = { id: Date.now(), role: 'user', text };
+    setHrChatMsgs(prev => [...prev, userMsg]);
+    setHrChatLoading(true);
+    setHrDocResult(null);
+
+    try {
+      const chatHistory = hrChatMsgs.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.text }));
+      const data = await api.hrChat(text, chatHistory.length > 1 ? chatHistory.slice(-10) : null);
+
+      const aiMsg = { id: Date.now() + 1, role: 'assistant', text: data.message };
+      setHrChatMsgs(prev => [...prev, aiMsg]);
+
+      if (data.document_text) {
+        setHrDocResult(data.document_text);
+      }
+    } catch (e) {
+      setHrChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
+    } finally {
+      setHrChatLoading(false);
+    }
+  }, [hrChatInput, hrChatLoading, hrChatMsgs]);
 
   const askEndRef = useRef(null);
   const askInputRef = useRef(null);
@@ -1528,15 +1615,92 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         </div>
         )}
 
-        {/* HR Placeholder */}
+        {/* ══════════ HR MODULE ══════════ */}
         {section === 'hr' && (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: theme.bg.elevated }}>
-              <Briefcase size={28} style={{ color: theme.text.muted }} />
+        <div className="flex-1 overflow-auto p-8">
+          <div className="max-w-4xl mx-auto space-y-6">
+
+            {/* Generated document result */}
+            {hrDocResult && (
+              <div className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: theme.bg.accent }}>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: theme.text.primary }}>
+                    <FileText size={16} /> Сгенерированный документ
+                  </h3>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { navigator.clipboard.writeText(hrDocResult); }}
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors"
+                      style={{ backgroundColor: theme.bg.elevated, color: theme.text.muted }}
+                    >
+                      <Copy size={12} /> Копировать
+                    </button>
+                    <button
+                      onClick={() => api.hrDownloadDocx(hrDocResult, 'hr_document.docx')}
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors text-white"
+                      style={{ backgroundColor: theme.bg.accent }}
+                    >
+                      <Download size={12} /> DOCX
+                    </button>
+                  </div>
+                </div>
+                <div className="text-sm leading-relaxed whitespace-pre-wrap p-4 rounded-lg max-h-96 overflow-auto" style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}>
+                  {hrDocResult}
+                </div>
+              </div>
+            )}
+
+            {/* Library — uploaded templates */}
+            <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Библиотека образцов</h3>
+                <button
+                  onClick={() => hrFileInputRef.current?.click()}
+                  disabled={hrUploading}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all"
+                  style={{ backgroundColor: theme.bg.accent }}
+                >
+                  {hrUploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+                  {hrUploading ? 'Загрузка...' : 'Загрузить образец'}
+                </button>
+                <input
+                  ref={hrFileInputRef}
+                  type="file"
+                  accept=".docx,.pdf,.txt"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => handleHrUpload(e.target.files)}
+                />
+              </div>
+
+              {hrTemplates.length === 0 ? (
+                <div className="text-center py-8">
+                  <Briefcase size={32} style={{ color: theme.text.muted }} className="mx-auto mb-3" />
+                  <p className="text-sm" style={{ color: theme.text.muted }}>Загрузите образцы документов (DOCX, PDF, TXT)</p>
+                  <p className="text-xs mt-1" style={{ color: theme.text.muted }}>Бот будет использовать их как шаблоны для создания документов</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {hrTemplates.map(t => (
+                    <div key={t.id} className="flex items-center justify-between p-3 rounded-lg border transition-all" style={{ borderColor: theme.border.default }}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white" style={{ backgroundColor: t.file_type === 'docx' ? '#3498db' : t.file_type === 'pdf' ? '#e74c3c' : '#95a5a6' }}>
+                          {t.file_type.toUpperCase()}
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium" style={{ color: theme.text.primary }}>{t.name}</div>
+                          <div className="text-xs" style={{ color: theme.text.muted }}>{t.category} · {(t.file_size / 1024).toFixed(0)} KB</div>
+                        </div>
+                      </div>
+                      <button onClick={() => handleHrDeleteTemplate(t.id)} className="p-1.5 rounded-md transition-colors hover:text-red-500" style={{ color: theme.text.muted }}>
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <h2 className="text-lg font-semibold mb-2" style={{ color: theme.text.primary }}>HR / Кадры</h2>
-            <p className="text-sm" style={{ color: theme.text.muted }}>Раздел в разработке</p>
+
           </div>
         </div>
         )}
@@ -1554,18 +1718,18 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
           <div className="flex-1">
             <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>
-              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : section === 'documents' ? 'Документы AI' : 'AI Ассистент'}
+              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : section === 'documents' ? 'Документы AI' : section === 'hr' ? 'HR Ассистент' : 'AI Ассистент'}
             </div>
             <div className="text-[11px] flex items-center gap-1" style={{ color: theme.text.success }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.text.success }} />
-              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : section === 'documents' ? `${docStats.indexed_files} документов проиндексировано` : 'Подключён к API'}
+              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : section === 'documents' ? `${docStats.indexed_files} документов проиндексировано` : section === 'hr' ? `${hrTemplates.length} образцов загружено` : 'Подключён к API'}
             </div>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-auto p-4 space-y-4">
-          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : section === 'documents' ? docChatMsgs : msgs).map(m => (
+          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : section === 'documents' ? docChatMsgs : section === 'hr' ? hrChatMsgs : msgs).map(m => (
             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
                 className="max-w-[85%] px-4 py-3 text-sm leading-relaxed"
@@ -1589,7 +1753,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           ))}
-          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : loading) && (
+          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : loading) && (
             <div className="flex justify-start">
               <div className="px-4 py-3 rounded-2xl" style={{ backgroundColor: theme.bg.aiBubble }}>
                 <div className="flex items-center gap-1">
@@ -1600,7 +1764,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           )}
-          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : section === 'documents' ? docChatEndRef : endRef} />
+          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : section === 'documents' ? docChatEndRef : section === 'hr' ? hrChatEndRef : endRef} />
         </div>
 
         {/* Quick Actions */}
@@ -1612,6 +1776,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               ? ['Сгенерируй пост про Иммунокомплекс', 'Найди посты за эту неделю', 'Покажи статистику']
               : section === 'documents'
               ? ['Найди в документах...', 'Сравни два файла', 'Что нового загружено?']
+              : section === 'hr'
+              ? ['Составь трудовой договор', 'Приказ о приёме', 'Какие образцы есть?']
               : ['Расход 5 млн на маркетинг', 'Доход 10 млн', 'Покажи отчёт']
             ).map(a => (
               <button
@@ -1626,6 +1792,9 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                   } else if (section === 'documents') {
                     setDocChatInput(a);
                     docChatInputRef.current?.focus();
+                  } else if (section === 'hr') {
+                    setHrChatInput(a);
+                    hrChatInputRef.current?.focus();
                   } else {
                     setInput(a);
                     inputRef.current?.focus();
@@ -1644,13 +1813,13 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         <div className="p-4 border-t" style={{ borderColor: theme.border.default }}>
           <div className="flex gap-2">
             <input
-              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : section === 'documents' ? docChatInputRef : inputRef}
+              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : section === 'documents' ? docChatInputRef : section === 'hr' ? hrChatInputRef : inputRef}
               type="text"
-              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : section === 'documents' ? docChatInput : input}
-              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : section === 'documents' ? setDocChatInput(e.target.value) : setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : section === 'documents' ? sendDocChat() : send())}
-              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : section === 'documents' ? 'Спросите о документах...' : 'Напишите команду...'}
-              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : loading}
+              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : section === 'documents' ? docChatInput : section === 'hr' ? hrChatInput : input}
+              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : section === 'documents' ? setDocChatInput(e.target.value) : section === 'hr' ? setHrChatInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : section === 'documents' ? sendDocChat() : section === 'hr' ? sendHrChat() : send())}
+              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : section === 'documents' ? 'Спросите о документах...' : section === 'hr' ? 'Какой документ создать?' : 'Напишите команду...'}
+              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : loading}
               className="flex-1 border-0 rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2"
               style={{
                 backgroundColor: theme.bg.input,
@@ -1660,7 +1829,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
             />
             <button
               onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : send}
-              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : (!input.trim() || loading)}
+              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : section === 'hr' ? (!hrChatInput.trim() || hrChatLoading) : (!input.trim() || loading)}
               className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
               style={{ backgroundColor: theme.bg.accent }}
             >
