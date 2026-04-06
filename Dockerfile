@@ -43,6 +43,9 @@ COPY --chown=biotact:biotact src/ ./src/
 COPY --chown=biotact:biotact alembic.ini ./
 COPY --chown=biotact:biotact migrations/ ./migrations/
 
+# Create data directory for uploads (owned by non-root user)
+RUN mkdir -p /app/data/hr_templates && chown -R biotact:biotact /app/data
+
 # Switch to non-root user
 USER biotact
 

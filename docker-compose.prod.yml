@@ -79,6 +79,7 @@ services:
       - ./prompts:/app/prompts
       - ./scripts:/app/scripts
       - ./data/telegram_sessions:/app/.sessions:rw
+      - ./data/hr_templates:/app/data/hr_templates:rw
       - ./.env:/app/.env:ro
     depends_on:
       postgres:
