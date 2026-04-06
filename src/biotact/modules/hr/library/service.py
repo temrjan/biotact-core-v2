@@ -6,12 +6,15 @@ import logging
 import os
 import uuid
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from fastapi import UploadFile
 from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.modules.hr.library.models import HRTemplate
+
+if TYPE_CHECKING:
+    from fastapi import UploadFile
+    from sqlalchemy.ext.asyncio import AsyncSession
 from biotact.modules.hr.library.schemas import (
     TemplateDetailResponse,
     TemplateListResponse,

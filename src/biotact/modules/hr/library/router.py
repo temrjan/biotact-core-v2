@@ -24,10 +24,10 @@ SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post("", response_model=TemplateResponse, status_code=status.HTTP_201_CREATED)
 async def upload_template(
+    current_user: CurrentUserDep,
+    db: SessionDep,
     file: UploadFile,
     category: str = Query(..., description="Template category: трудовой_договор, приказ, etc."),
-    current_user: CurrentUserDep = ...,
-    db: SessionDep = ...,
 ) -> TemplateResponse:
     """Upload a document template (DOCX/PDF/TXT)."""
     try:
@@ -43,6 +43,7 @@ async def list_templates(
     category: str | None = Query(None, description="Filter by category"),
 ) -> TemplateListResponse:
     """List all templates, optionally filtered by category."""
+    _ = current_user  # auth guard
     return await service.list_templates(db, category)
 
 
@@ -53,6 +54,7 @@ async def get_template(
     db: SessionDep,
 ) -> TemplateDetailResponse:
     """Get template details with extracted text."""
+    _ = current_user  # auth guard
     result = await service.get_template(db, template_id)
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template not found")
@@ -66,6 +68,7 @@ async def delete_template(
     db: SessionDep,
 ) -> None:
     """Delete a template."""
+    _ = current_user  # auth guard
     deleted = await service.delete_template(db, template_id)
     if not deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template not found")

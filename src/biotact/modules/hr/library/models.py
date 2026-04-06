@@ -23,7 +23,7 @@ class HRTemplate(TimestampMixin, Base):
     file_type: Mapped[str] = mapped_column(String(10), nullable=False)  # docx/pdf/txt
     file_size: Mapped[int] = mapped_column(Integer, nullable=False)
     extracted_text: Mapped[str | None] = mapped_column(Text)
-    extracted_styles: Mapped[dict | None] = mapped_column(JSONB)
+    extracted_styles: Mapped[dict[str, str] | None] = mapped_column(JSONB)
     uploaded_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,

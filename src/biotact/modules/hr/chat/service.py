@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING, Any, cast
 
 from anthropic import AsyncAnthropic
-from sqlalchemy.ext.asyncio import AsyncSession
+from anthropic.types import MessageParam, ToolParam
 
-from biotact.core.config import Settings
 from biotact.modules.hr.library.service import get_template_by_category, list_templates
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession
+
+    from biotact.core.config import Settings
 
 logger = logging.getLogger(__name__)
 
@@ -83,16 +87,17 @@ class HRChatService:
 
         Returns: {"message": str, "document_text": str | None}
         """
-        messages: list[dict[str, Any]] = []
+        messages: list[MessageParam] = []
 
         # Add history
         if history:
             for msg in history[-10:]:
-                messages.append({"role": msg["role"], "content": msg["content"]})
+                messages.append({"role": msg["role"], "content": msg["content"]})  # type: ignore[typeddict-item]
 
         messages.append({"role": "user", "content": message})
 
         document_text: str | None = None
+        tools = cast(list[ToolParam], HR_TOOLS)
 
         # Tool use loop (up to 5 rounds)
         for _ in range(5):
@@ -100,7 +105,7 @@ class HRChatService:
                 model=self.model,
                 max_tokens=8192,
                 system=SYSTEM_PROMPT,
-                tools=HR_TOOLS,
+                tools=tools,
                 messages=messages,
             )
 
@@ -115,12 +120,13 @@ class HRChatService:
                     break
 
                 # Execute the tool
+                tool_input = cast(dict[str, Any], tool_block.input)
                 tool_result = await self._execute_tool(
-                    tool_block.name, tool_block.input
+                    tool_block.name, tool_input
                 )
 
                 # Add assistant response + tool result to messages
-                messages.append({"role": "assistant", "content": response.content})
+                messages.append({"role": "assistant", "content": response.content})  # type: ignore[typeddict-item]
                 messages.append({
                     "role": "user",
                     "content": [
@@ -130,7 +136,7 @@ class HRChatService:
                             "content": tool_result,
                         }
                     ],
-                })
+                })  # type: ignore[typeddict-item]
                 continue
 
             # Model finished — extract text response
