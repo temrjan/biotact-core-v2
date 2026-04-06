@@ -1666,7 +1666,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 <input
                   ref={hrFileInputRef}
                   type="file"
-                  accept=".docx,.pdf,.txt"
+                  accept=".docx,.pdf,.txt,.md"
                   multiple
                   className="hidden"
                   onChange={(e) => handleHrUpload(e.target.files)}

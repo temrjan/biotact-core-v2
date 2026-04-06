@@ -62,6 +62,7 @@ def extract_text(file_path: str, file_type: str) -> str | None:
         "docx": _extract_text_docx,
         "pdf": _extract_text_pdf,
         "txt": _extract_text_txt,
+        "md": _extract_text_txt,
     }
     extractor = extractors.get(file_type)
     if not extractor:
@@ -86,8 +87,8 @@ async def upload_template(
     # Determine file type
     original_name = file.filename or "unknown"
     ext = original_name.rsplit(".", 1)[-1].lower() if "." in original_name else ""
-    if ext not in ("docx", "pdf", "txt"):
-        msg = f"Unsupported file type: {ext}. Use docx, pdf, or txt."
+    if ext not in ("docx", "pdf", "txt", "md"):
+        msg = f"Unsupported file type: {ext}. Use docx, pdf, txt, or md."
         raise ValueError(msg)
 
     # Save file to disk
