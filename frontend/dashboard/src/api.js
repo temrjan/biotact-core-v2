@@ -443,7 +443,7 @@ export async function hrChat(message, history = null) {
   });
 }
 
-/** Download DOCX from text */
+/** Download DOCX from text (legacy) */
 export async function hrDownloadDocx(text, filename = 'document.docx') {
   const token = getAuthToken();
   const response = await fetch(`${API_BASE}/hr/documents/download-docx`, {
@@ -460,6 +460,22 @@ export async function hrDownloadDocx(text, filename = 'document.docx') {
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/** Download rendered DOCX by URL path (from chat) */
+export async function hrDownloadRendered(documentUrl) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}${documentUrl.replace('/api/v1', '')}`, {
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Download failed');
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'document.docx';
   a.click();
   URL.revokeObjectURL(url);
 }

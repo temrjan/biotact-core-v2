@@ -100,6 +100,13 @@ async def upload_template(
     # Extract text
     extracted = extract_text(str(file_path), ext)
 
+    # Scan for {{ PLACEHOLDER }} fields in DOCX templates
+    fields: list[str] = []
+    if ext == "docx":
+        from biotact.modules.hr.library.scanner import scan_template_fields
+
+        fields = scan_template_fields(str(file_path))
+
     # Save to DB
     template = HRTemplate(
         name=original_name,
@@ -108,6 +115,7 @@ async def upload_template(
         file_type=ext,
         file_size=len(content),
         extracted_text=extracted,
+        template_fields=fields if fields else None,
         uploaded_by=user_id,
     )
     db.add(template)
@@ -115,10 +123,11 @@ async def upload_template(
     await db.refresh(template)
 
     logger.info(
-        "Template uploaded: id=%d name=%s category=%s chars=%d",
+        "Template uploaded: id=%d name=%s category=%s fields=%s chars=%d",
         template.id,
         original_name,
         category,
+        fields,
         len(extracted) if extracted else 0,
     )
     return TemplateResponse.model_validate(template)

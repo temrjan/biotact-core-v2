@@ -1,15 +1,20 @@
-"""HR Chat service — OpenAI function calling with Anthropic fallback."""
+"""HR Chat service — AI extracts data, docxtpl renders document."""
 
 from __future__ import annotations
 
 import json
 import logging
-import re
+import uuid
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from openai import AsyncOpenAI
 
-from biotact.modules.hr.library.service import get_template_by_category, list_templates
+from biotact.modules.hr.documents.renderer import render_template
+from biotact.modules.hr.library.service import (
+    get_template_by_category,
+    list_templates,
+)
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,72 +23,36 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+# Directory for rendered files (temporary)
+RENDER_DIR = Path("data/hr_rendered")
 
-def _strip_markdown(text: str) -> str:
-    """Remove Markdown formatting symbols from document text."""
-    # Remove code blocks
-    text = re.sub(r"```[\s\S]*?```", "", text)
-    # Remove inline code
-    text = re.sub(r"`([^`]+)`", r"\1", text)
-    # Remove bold **text** or __text__
-    text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
-    text = re.sub(r"__(.+?)__", r"\1", text)
-    # Remove italic *text* (but not in words)
-    text = re.sub(r"(?<!\w)\*(.+?)\*(?!\w)", r"\1", text)
-    # Remove heading markers
-    text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
-    # Remove blockquotes
-    text = re.sub(r"^>\s?", "", text, flags=re.MULTILINE)
-    # Remove horizontal rules
-    text = re.sub(r"^-{3,}$", "", text, flags=re.MULTILINE)
-    text = re.sub(r"^\*{3,}$", "", text, flags=re.MULTILINE)
-    # Replace bullet lists with spaces
-    text = re.sub(r"^[\-\*]\s+", "  ", text, flags=re.MULTILINE)
-    # Clean up multiple blank lines
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    return text.strip()
-
-
-# System prompt for the HR assistant
 SYSTEM_PROMPT = """\
-Ты — HR-ассистент компании BIOTACT. Твоя основная задача — создавать документы по образцам.
+Ты — HR-ассистент. Твоя задача — извлечь данные из запроса пользователя и создать документ по шаблону.
 
 Как ты работаешь:
-1. Пользователь просит создать документ (договор, приказ, инструкцию и т.д.)
-2. Ты ищешь подходящий образец в библиотеке через get_template
-3. Читаешь образец ЦЕЛИКОМ
-4. Подставляешь данные, которые дал пользователь
-5. Возвращаешь ГОТОВЫЙ текст документа
+1. Определи какой документ нужен → вызови find_template
+2. Получишь template_id и список полей шаблона
+3. Извлеки данные из текста пользователя для каждого поля
+4. Если каких-то обязательных данных не хватает (ФИО, паспорт, должность, оклад) — спроси пользователя
+5. Когда данные собраны → вызови generate_document с template_id и заполненными полями
 
 Правила:
-- ВСЕГДА сначала ищи образец через get_template. Не выдумывай формат документа.
-- Если образца нет — скажи пользователю загрузить образец в библиотеку.
-- Если пользователь не дал все нужные данные — спроси недостающее.
-- Сохраняй структуру и стиль образца. Меняй ТОЛЬКО персональные данные.
-- Отвечай на русском языке.
-
-КРИТИЧЕСКИ ВАЖНО — формат вывода гото��ого документа:
-- Выводи ЧИСТЫЙ ТЕКСТ. Никакого Markdown.
-- НЕ используй символы: # * ** ` ``` --- > -
-- Заголовки пиши ЗАГЛАВНЫМИ БУКВАМИ.
-- Нум��рацию пиши как: 1. 2. 3. или 1.1. 1.2.
-- Списки пиши через нумерацию, без тире и звёздочек.
-- ��ирный и к��рсив — не нужны, пиши обычным текстом.
-- О��разец может содержать Markdown-разметку — это только для структуры. В готовом документе её бы��ь НЕ ДОЛЖНО.
+- Отвечай коротко, по делу, на русском языке.
+- НЕ выдумывай данные. Если пользователь не дал — спроси.
+- Для SALARY_TEXT переведи число в текст прописью (напр. 8 000 000 → восемь миллионов).
+- Для FIO_SHORT сократи ФИО (Иванова Мария Петровна → Иванова М.П.)
 """
 
-# OpenAI function definitions
 OPENAI_TOOLS = [
     {
         "type": "function",
         "function": {
-            "name": "get_template",
+            "name": "find_template",
             "description": (
-                "Найти образец документа в библиотеке по категории. "
+                "Найти шаблон документа по категории. "
                 "Категории: трудовой_договор, гпд, приказ, должностная_инструкция, "
                 "мат_ответственность, соглашение_конфиденциальности, "
-                "соглашение_персданные, соглашение_возмещение, другое. "
-                "Возвращает ПОЛНЫЙ текст образца."
+                "соглашение_персданные, соглашение_возмещение, другое."
             ),
             "parameters": {
                 "type": "object",
@@ -100,19 +69,47 @@ OPENAI_TOOLS = [
     {
         "type": "function",
         "function": {
-            "name": "list_available_templates",
-            "description": "Показать список всех загруженных образцов документов в библиотеке.",
+            "name": "generate_document",
+            "description": (
+                "Сгенерировать документ по шаблону с заполненными данными. "
+                "Вызывай когда все обязательные поля заполнены."
+            ),
             "parameters": {
                 "type": "object",
-                "properties": {},
+                "properties": {
+                    "template_id": {
+                        "type": "integer",
+                        "description": "ID шаблона из find_template",
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": (
+                            "Данные для подстановки. Ключи — метки шаблона: "
+                            "FIO, FIO_SHORT, PASSPORT, PASSPORT_ISSUED_BY, PASSPORT_DATE, "
+                            "POSITION, DEPARTMENT, SALARY, SALARY_TEXT, "
+                            "CONTRACT_NUMBER, CONTRACT_DATE, START_DATE, "
+                            "PROBATION, HOURS_WEEK, HOURS_DAY, VACATION_DAYS, VACATION_DAYS_TEXT, "
+                            "ADDRESS, PHONE, PINFL, INN, WORK_TYPE, CONTRACT_TYPE, WORK_CHARACTER"
+                        ),
+                    },
+                },
+                "required": ["template_id", "data"],
             },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_available_templates",
+            "description": "Показать список всех загруженных шаблонов документов.",
+            "parameters": {"type": "object", "properties": {}},
         },
     },
 ]
 
 
 class HRChatService:
-    """HR Chat with OpenAI function calling (primary) for document generation."""
+    """HR Chat — AI extracts data from user text, docxtpl renders DOCX."""
 
     def __init__(self, settings: Settings, db: AsyncSession) -> None:
         self.openai = AsyncOpenAI(api_key=settings.openai_api_key)
@@ -124,58 +121,62 @@ class HRChatService:
         message: str,
         history: list[dict[str, str]] | None = None,
     ) -> dict[str, Any]:
-        """Process user message with function calling loop.
+        """Process user message.
 
-        Returns: {"message": str, "document_text": str | None}
+        Returns: {"message": str, "document_url": str | None}
         """
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": SYSTEM_PROMPT},
         ]
 
-        # Add history
         if history:
             for msg in history[-10:]:
                 messages.append({"role": msg["role"], "content": msg["content"]})
 
         messages.append({"role": "user", "content": message})
 
-        document_text: str | None = None
+        document_url: str | None = None
 
         # Function calling loop (up to 5 rounds)
         for round_num in range(5):
             try:
                 response = await self.openai.chat.completions.create(
                     model=self.model,
-                    max_completion_tokens=16384,
+                    max_completion_tokens=4096,
                     messages=messages,
                     tools=OPENAI_TOOLS,
                     tool_choice="auto",
                 )
             except Exception as e:
-                logger.exception("HR chat OpenAI error on round %d", round_num)
-                return {"message": f"Ошибка LLM: {e}", "document_text": None}
+                logger.exception("HR chat OpenAI error round=%d", round_num)
+                return {"message": f"Ошибка LLM: {e}", "document_url": None}
 
             choice = response.choices[0]
             logger.info(
-                "HR chat round=%d finish_reason=%s tool_calls=%s content_len=%d",
+                "HR chat round=%d finish=%s tools=%s",
                 round_num,
                 choice.finish_reason,
                 bool(choice.message.tool_calls),
-                len(choice.message.content or ""),
             )
 
-            # If the model wants to call a function
             if choice.message.tool_calls:
                 tool_call = choice.message.tool_calls[0]
                 func_name = tool_call.function.name
                 func_args = json.loads(tool_call.function.arguments)
-                logger.info("HR chat tool_call: %s(%s)", func_name, func_args)
+                logger.info("HR tool: %s(%s)", func_name, list(func_args.keys()))
 
-                # Execute the tool
                 tool_result = await self._execute_tool(func_name, func_args)
-                logger.info("HR chat tool_result len=%d", len(tool_result))
 
-                # Add assistant message + tool result
+                # If generate_document returned a URL, capture it
+                if func_name == "generate_document" and tool_result.startswith("/api/"):
+                    document_url = tool_result
+                    # Let the model generate a final message
+                    tool_result_for_model = (
+                        "Документ успешно создан и готов к скачиванию."
+                    )
+                else:
+                    tool_result_for_model = tool_result
+
                 messages.append(
                     {
                         "role": "assistant",
@@ -196,44 +197,78 @@ class HRChatService:
                     {
                         "role": "tool",
                         "tool_call_id": tool_call.id,
-                        "content": tool_result,
+                        "content": tool_result_for_model,
                     }
                 )
                 continue
 
-            # Model finished — extract text
+            # Model finished
             final_text = choice.message.content or ""
-            logger.info("HR chat final response len=%d", len(final_text))
+            return {"message": final_text, "document_url": document_url}
 
-            # Check if the response contains a generated document
-            if len(final_text) > 500:
-                document_text = _strip_markdown(final_text)
-
-            return {"message": final_text, "document_text": document_text}
-
-        logger.warning("HR chat exhausted 5 rounds without final response")
         return {
-            "message": "Документ слишком большой для одного запроса. Попробуйте ещё раз.",
-            "document_text": None,
+            "message": "Не удалось обработать запрос. Попробуйте ещё раз.",
+            "document_url": None,
         }
 
-    async def _execute_tool(self, name: str, args: dict[str, Any]) -> str:
-        """Execute a tool call and return result text."""
-        if name == "get_template":
+    async def _execute_tool(self, name: str, args: dict[str, Any]) -> str:  # noqa: PLR0911
+        """Execute a tool call."""
+        if name == "find_template":
             category = args.get("category", "")
             template = await get_template_by_category(self.db, category)
-            if not template or not template.extracted_text:
-                return (
-                    f"Образец для кат��гории '{category}' не найден в библиотеке. "
-                    f"Попросите ��ользователя загрузить образец."
-                )
-            return f"ОБРАЗЕЦ ДОКУМЕНТА ({template.name}):\n\n{template.extracted_text}"
+            if not template:
+                return f"Шаблон для категории '{category}' не найден. Попросите загрузить шаблон."
+            return json.dumps(
+                {
+                    "template_id": template.id,
+                    "name": template.name,
+                    "fields": template.template_fields or [],
+                },
+                ensure_ascii=False,
+            )
+
+        if name == "generate_document":
+            template_id = args.get("template_id")
+            data = args.get("data", {})
+
+            if not template_id:
+                return "Ошибка: не указан template_id"
+
+            # Get template file path
+            from sqlalchemy import select
+
+            from biotact.modules.hr.library.models import HRTemplate
+
+            result = await self.db.execute(
+                select(HRTemplate).where(HRTemplate.id == template_id)
+            )
+            db_template = result.scalar_one_or_none()
+            if not db_template:
+                return "Ошибка: шаблон не найден"
+
+            # Render DOCX
+            try:
+                RENDER_DIR.mkdir(parents=True, exist_ok=True)
+                file_id = uuid.uuid4().hex[:12]
+                out_path = RENDER_DIR / f"{file_id}.docx"
+
+                buffer = render_template(db_template.file_path, data)
+                out_path.write_bytes(buffer.read())
+
+                logger.info("Document rendered: %s fields=%d", out_path, len(data))
+                return f"/api/v1/hr/documents/download/{file_id}"
+            except Exception as e:
+                logger.exception("Render failed for template %d", template_id)
+                return f"Ошибка рендеринга: {e}"
 
         if name == "list_available_templates":
             result = await list_templates(self.db)
             if not result.items:
-                return "Библиотека пуста. Попросите пользователя загрузить образцы документов."
-            lines = [f"- {t.name} (к��тегория: {t.category})" for t in result.items]
-            return "Доступные образцы:\n" + "\n".join(lines)
+                return "Библиотека пуста. Загрузите шаблоны документов."
+            lines = [
+                f"- {t.name} (категория: {t.category}, полей: {len(t.template_fields or [])})"
+                for t in result.items
+            ]
+            return "Доступные шаблоны:\n" + "\n".join(lines)
 
-        return f"Неизвестный инструм��нт: {name}"
+        return f"Неизвестный инструмент: {name}"

@@ -24,6 +24,9 @@ class HRTemplate(TimestampMixin, Base):
     file_size: Mapped[int] = mapped_column(Integer, nullable=False)
     extracted_text: Mapped[str | None] = mapped_column(Text)
     extracted_styles: Mapped[dict[str, str] | None] = mapped_column(JSONB)
+    template_fields: Mapped[list[str] | None] = mapped_column(
+        JSONB, default=list, doc="List of {{ PLACEHOLDER }} names found in DOCX"
+    )
     uploaded_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,

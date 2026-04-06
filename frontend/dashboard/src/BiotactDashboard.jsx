@@ -752,8 +752,8 @@ function Dashboard({ onLogout }) {
       const aiMsg = { id: Date.now() + 1, role: 'assistant', text: data.message };
       setHrChatMsgs(prev => [...prev, aiMsg]);
 
-      if (data.document_text) {
-        setHrDocResult(data.document_text);
+      if (data.document_url) {
+        setHrDocResult(data.document_url);
       }
     } catch (e) {
       setHrChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
@@ -1625,33 +1625,24 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         <div className="flex-1 overflow-auto p-8">
           <div className="max-w-4xl mx-auto space-y-6">
 
-            {/* Generated document result */}
+            {/* Document ready for download */}
             {hrDocResult && (
               <div className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: theme.bg.accent }}>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: theme.text.primary }}>
-                    <FileText size={16} /> Сгенерированный документ
+                  <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: theme.text.success }}>
+                    <Check size={16} /> Документ готов
                   </h3>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => { navigator.clipboard.writeText(hrDocResult); }}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors"
-                      style={{ backgroundColor: theme.bg.elevated, color: theme.text.muted }}
-                    >
-                      <Copy size={12} /> Копировать
-                    </button>
-                    <button
-                      onClick={() => api.hrDownloadDocx(hrDocResult, 'hr_document.docx')}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors text-white"
-                      style={{ backgroundColor: theme.bg.accent }}
-                    >
-                      <Download size={12} /> DOCX
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => api.hrDownloadRendered(hrDocResult)}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-all hover:shadow-lg"
+                    style={{ backgroundColor: theme.bg.accent }}
+                  >
+                    <Download size={16} /> Скачать DOCX
+                  </button>
                 </div>
-                <div className="text-sm leading-relaxed whitespace-pre-wrap p-4 rounded-lg max-h-96 overflow-auto" style={{ backgroundColor: theme.bg.elevated, color: theme.text.secondary }}>
-                  {hrDocResult}
-                </div>
+                <p className="text-sm" style={{ color: theme.text.muted }}>
+                  Документ создан по шаблону с подставленными данными. Форматирование сохранено.
+                </p>
               </div>
             )}
 

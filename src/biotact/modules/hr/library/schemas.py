@@ -15,11 +15,12 @@ class TemplateResponse(BaseModel):
     category: str
     file_type: str
     file_size: int
+    template_fields: list[str] | None = None
     created_at: datetime
 
 
 class TemplateDetailResponse(TemplateResponse):
-    """Template with extracted text (for LLM)."""
+    """Template with extracted text and fields."""
 
     extracted_text: str | None = None
 
