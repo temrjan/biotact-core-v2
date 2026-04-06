@@ -152,9 +152,15 @@ class HRChatService:
             )
 
             choice = response.choices[0]
+            logger.info(
+                "HR chat response: finish_reason=%s, has_tool_calls=%s, content_len=%d",
+                choice.finish_reason,
+                bool(choice.message.tool_calls),
+                len(choice.message.content or ""),
+            )
 
             # If the model wants to call a function
-            if choice.finish_reason == "tool_calls" and choice.message.tool_calls:
+            if choice.message.tool_calls:
                 tool_call = choice.message.tool_calls[0]
                 func_name = tool_call.function.name
                 func_args = json.loads(tool_call.function.arguments)
