@@ -145,7 +145,7 @@ class HRChatService:
         for _ in range(5):
             response = await self.openai.chat.completions.create(
                 model=self.model,
-                max_tokens=8192,
+                max_completion_tokens=8192,
                 messages=messages,
                 tools=OPENAI_TOOLS,
                 tool_choice="auto",
