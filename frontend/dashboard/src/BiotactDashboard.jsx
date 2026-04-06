@@ -704,22 +704,27 @@ function Dashboard({ onLogout }) {
     if (section === 'hr') loadHrTemplates();
   }, [section, loadHrTemplates]);
 
+  const [hrUploadMsg, setHrUploadMsg] = useState(null); // {type: 'success'|'error', text}
+  const [hrSelectedCategory, setHrSelectedCategory] = useState('трудовой_договор');
+
   const handleHrUpload = useCallback(async (files) => {
     if (!files || files.length === 0) return;
     setHrUploading(true);
+    setHrUploadMsg(null);
     try {
-      const category = prompt('Категория документа (например: трудовой_договор, приказ, должностная_инструкция):');
-      if (!category) { setHrUploading(false); return; }
       for (const file of files) {
-        await api.hrUploadTemplate(file, category);
+        await api.hrUploadTemplate(file, hrSelectedCategory);
       }
       await loadHrTemplates();
+      setHrUploadMsg({ type: 'success', text: `Загружено: ${files.length} файл(ов) в категорию "${hrSelectedCategory}"` });
+      setTimeout(() => setHrUploadMsg(null), 5000);
     } catch (e) {
-      console.error('HR upload failed:', e);
+      setHrUploadMsg({ type: 'error', text: 'Ошибка загрузки: ' + (e.message || 'попробуйте позже') });
     } finally {
       setHrUploading(false);
+      if (hrFileInputRef.current) hrFileInputRef.current.value = '';
     }
-  }, [loadHrTemplates]);
+  }, [loadHrTemplates, hrSelectedCategory]);
 
   const handleHrDeleteTemplate = useCallback(async (id) => {
     if (!confirm('Удалить образец?')) return;
@@ -1650,19 +1655,47 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             )}
 
+            {/* Upload notification */}
+            {hrUploadMsg && (
+              <div className="rounded-xl p-4 flex items-center gap-3" style={{
+                backgroundColor: hrUploadMsg.type === 'success' ? 'rgba(73,156,117,0.1)' : 'rgba(239,68,68,0.1)',
+              }}>
+                {hrUploadMsg.type === 'success' ? <Check size={18} style={{ color: theme.text.success }} /> : <AlertCircle size={18} style={{ color: '#ef4444' }} />}
+                <span className="text-sm" style={{ color: hrUploadMsg.type === 'success' ? theme.text.success : '#ef4444' }}>{hrUploadMsg.text}</span>
+              </div>
+            )}
+
             {/* Library — uploaded templates */}
             <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Библиотека образцов</h3>
-                <button
-                  onClick={() => hrFileInputRef.current?.click()}
-                  disabled={hrUploading}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all"
-                  style={{ backgroundColor: theme.bg.accent }}
-                >
-                  {hrUploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
-                  {hrUploading ? 'Загрузка...' : 'Загрузить образец'}
-                </button>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={hrSelectedCategory}
+                    onChange={(e) => setHrSelectedCategory(e.target.value)}
+                    className="px-3 py-2 rounded-lg text-sm border outline-none"
+                    style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                  >
+                    <option value="трудовой_договор">Трудовой договор</option>
+                    <option value="гпд">ГПД</option>
+                    <option value="приказ">Приказ</option>
+                    <option value="должностная_инструкция">Должностная инструкция</option>
+                    <option value="мат_ответственность">Мат. ответственность</option>
+                    <option value="соглашение_конфиденциальности">NDA / Конфиденциальность</option>
+                    <option value="соглашение_персданные">Обработка перс. данных</option>
+                    <option value="соглашение_возмещение">Возмещение</option>
+                    <option value="другое">Другое</option>
+                  </select>
+                  <button
+                    onClick={() => hrFileInputRef.current?.click()}
+                    disabled={hrUploading}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all"
+                    style={{ backgroundColor: theme.bg.accent }}
+                  >
+                    {hrUploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+                    {hrUploading ? 'Загрузка...' : 'Загрузить'}
+                  </button>
+                </div>
                 <input
                   ref={hrFileInputRef}
                   type="file"
@@ -1676,8 +1709,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               {hrTemplates.length === 0 ? (
                 <div className="text-center py-8">
                   <Briefcase size={32} style={{ color: theme.text.muted }} className="mx-auto mb-3" />
-                  <p className="text-sm" style={{ color: theme.text.muted }}>Загрузите образцы документов (DOCX, PDF, TXT)</p>
-                  <p className="text-xs mt-1" style={{ color: theme.text.muted }}>Бот будет использовать их как шаблоны для создания документов</p>
+                  <p className="text-sm" style={{ color: theme.text.muted }}>Загрузите образцы документов (DOCX, PDF, TXT, MD)</p>
+                  <p className="text-xs mt-1" style={{ color: theme.text.muted }}>Выберите категорию, затем нажмите "Загрузить"</p>
                 </div>
               ) : (
                 <div className="space-y-2">
