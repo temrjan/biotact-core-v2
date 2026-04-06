@@ -74,7 +74,7 @@ def parse_pdf(file_path: Path) -> str:
 def parse_docx(file_path: Path) -> str:
     """Parse DOCX using python-docx."""
     try:
-        from docx import Document  # type: ignore[import-not-found]
+        from docx import Document
 
         doc = Document(str(file_path))
         return "\n".join(p.text for p in doc.paragraphs if p.text.strip())

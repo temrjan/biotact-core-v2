@@ -6,11 +6,11 @@ import logging
 from typing import TYPE_CHECKING, Any, cast
 
 from anthropic import AsyncAnthropic
-from anthropic.types import MessageParam, ToolParam
 
 from biotact.modules.hr.library.service import get_template_by_category, list_templates
 
 if TYPE_CHECKING:
+    from anthropic.types import MessageParam, ToolParam
     from sqlalchemy.ext.asyncio import AsyncSession
 
     from biotact.core.config import Settings
