@@ -142,18 +142,23 @@ class HRChatService:
         document_text: str | None = None
 
         # Function calling loop (up to 5 rounds)
-        for _ in range(5):
-            response = await self.openai.chat.completions.create(
-                model=self.model,
-                max_completion_tokens=8192,
-                messages=messages,
-                tools=OPENAI_TOOLS,
-                tool_choice="auto",
-            )
+        for round_num in range(5):
+            try:
+                response = await self.openai.chat.completions.create(
+                    model=self.model,
+                    max_completion_tokens=16384,
+                    messages=messages,
+                    tools=OPENAI_TOOLS,
+                    tool_choice="auto",
+                )
+            except Exception as e:
+                logger.exception("HR chat OpenAI error on round %d", round_num)
+                return {"message": f"Ошибка LLM: {e}", "document_text": None}
 
             choice = response.choices[0]
             logger.info(
-                "HR chat response: finish_reason=%s, has_tool_calls=%s, content_len=%d",
+                "HR chat round=%d finish_reason=%s tool_calls=%s content_len=%d",
+                round_num,
                 choice.finish_reason,
                 bool(choice.message.tool_calls),
                 len(choice.message.content or ""),
@@ -164,12 +169,29 @@ class HRChatService:
                 tool_call = choice.message.tool_calls[0]
                 func_name = tool_call.function.name
                 func_args = json.loads(tool_call.function.arguments)
+                logger.info("HR chat tool_call: %s(%s)", func_name, func_args)
 
                 # Execute the tool
                 tool_result = await self._execute_tool(func_name, func_args)
+                logger.info("HR chat tool_result len=%d", len(tool_result))
 
                 # Add assistant message + tool result
-                messages.append(choice.message.model_dump())
+                messages.append(
+                    {
+                        "role": "assistant",
+                        "content": choice.message.content or "",
+                        "tool_calls": [
+                            {
+                                "id": tool_call.id,
+                                "type": "function",
+                                "function": {
+                                    "name": func_name,
+                                    "arguments": tool_call.function.arguments,
+                                },
+                            }
+                        ],
+                    }
+                )
                 messages.append(
                     {
                         "role": "tool",
@@ -181,6 +203,7 @@ class HRChatService:
 
             # Model finished — extract text
             final_text = choice.message.content or ""
+            logger.info("HR chat final response len=%d", len(final_text))
 
             # Check if the response contains a generated document
             if len(final_text) > 500:
@@ -188,8 +211,9 @@ class HRChatService:
 
             return {"message": final_text, "document_text": document_text}
 
+        logger.warning("HR chat exhausted 5 rounds without final response")
         return {
-            "message": "Не удалось обработать запрос. Попробуйте ещё раз.",
+            "message": "Документ слишком большой для одного запроса. Попробуйте ещё раз.",
             "document_text": None,
         }
 
