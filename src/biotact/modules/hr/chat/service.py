@@ -97,7 +97,7 @@ class HRChatService:
         messages.append({"role": "user", "content": message})
 
         document_text: str | None = None
-        tools = cast(list[ToolParam], HR_TOOLS)
+        tools = cast("list[ToolParam]", HR_TOOLS)
 
         # Tool use loop (up to 5 rounds)
         for _ in range(5):
@@ -120,13 +120,13 @@ class HRChatService:
                     break
 
                 # Execute the tool
-                tool_input = cast(dict[str, Any], tool_block.input)
+                tool_input = cast("dict[str, Any]", tool_block.input)
                 tool_result = await self._execute_tool(
                     tool_block.name, tool_input
                 )
 
                 # Add assistant response + tool result to messages
-                messages.append({"role": "assistant", "content": response.content})  # type: ignore[typeddict-item]
+                messages.append({"role": "assistant", "content": response.content})
                 messages.append({
                     "role": "user",
                     "content": [
@@ -136,7 +136,7 @@ class HRChatService:
                             "content": tool_result,
                         }
                     ],
-                })  # type: ignore[typeddict-item]
+                })
                 continue
 
             # Model finished — extract text response
