@@ -140,11 +140,11 @@ class HRChatService:
         # Function calling loop (up to 5 rounds)
         for round_num in range(5):
             try:
-                response = await self.openai.chat.completions.create(
+                response = await self.openai.chat.completions.create(  # type: ignore[call-overload]
                     model=self.model,
                     max_completion_tokens=4096,
-                    messages=messages,  # type: ignore[arg-type]
-                    tools=OPENAI_TOOLS,  # type: ignore[arg-type]
+                    messages=messages,
+                    tools=OPENAI_TOOLS,
                     tool_choice="auto",
                 )
             except Exception as e:
