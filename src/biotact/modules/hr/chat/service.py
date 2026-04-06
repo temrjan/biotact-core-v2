@@ -116,7 +116,7 @@ class HRChatService:
 
     def __init__(self, settings: Settings, db: AsyncSession) -> None:
         self.openai = AsyncOpenAI(api_key=settings.openai_api_key)
-        self.model = "gpt-4.1-mini"
+        self.model = "gpt-5.4-mini"
         self.db = db
 
     async def process_message(
