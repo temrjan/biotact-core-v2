@@ -69,7 +69,7 @@ class TestSettings:
         settings = Settings()
 
         assert settings.jwt_algorithm == "HS256"
-        assert settings.jwt_expire_minutes == 60
+        assert settings.jwt_expire_minutes == 10080  # 7 days
 
 
 @pytest.mark.unit
