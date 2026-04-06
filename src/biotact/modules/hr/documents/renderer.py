@@ -5,7 +5,7 @@ from __future__ import annotations
 import io
 import logging
 
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate  # type: ignore[import-untyped]
 
 logger = logging.getLogger(__name__)
 

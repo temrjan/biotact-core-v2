@@ -143,8 +143,8 @@ class HRChatService:
                 response = await self.openai.chat.completions.create(
                     model=self.model,
                     max_completion_tokens=4096,
-                    messages=messages,
-                    tools=OPENAI_TOOLS,
+                    messages=messages,  # type: ignore[arg-type]
+                    tools=OPENAI_TOOLS,  # type: ignore[arg-type]
                     tool_choice="auto",
                 )
             except Exception as e:
@@ -262,12 +262,12 @@ class HRChatService:
                 return f"Ошибка рендеринга: {e}"
 
         if name == "list_available_templates":
-            result = await list_templates(self.db)
-            if not result.items:
+            templates_result = await list_templates(self.db)
+            if not templates_result.items:
                 return "Библиотека пуста. Загрузите шаблоны документов."
             lines = [
                 f"- {t.name} (категория: {t.category}, полей: {len(t.template_fields or [])})"
-                for t in result.items
+                for t in templates_result.items
             ]
             return "Доступные шаблоны:\n" + "\n".join(lines)
 

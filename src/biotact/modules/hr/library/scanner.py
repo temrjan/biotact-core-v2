@@ -17,7 +17,7 @@ def scan_template_fields(file_path: str) -> list[str]:
     Falls back to regex scan if docxtpl method fails.
     """
     try:
-        from docxtpl import DocxTemplate
+        from docxtpl import DocxTemplate  # type: ignore[import-untyped]
 
         doc = DocxTemplate(file_path)
         fields = sorted(doc.get_undeclared_template_variables())
