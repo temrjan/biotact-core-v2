@@ -40,7 +40,7 @@ class Settings(BaseSettings):
         description="Secret key for JWT signing",
     )
     jwt_algorithm: str = "HS256"
-    jwt_expire_minutes: int = 60
+    jwt_expire_minutes: int = 10080  # 7 days (internal dashboard, 2 users)
 
     # -------------------------------------------------------------------------
     # Database
