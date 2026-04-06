@@ -13,6 +13,9 @@ from biotact.api.v1.public import router as public_router
 from biotact.api.v1.webhooks import router as webhooks_router
 from biotact.modules.crm.router import router as crm_router
 from biotact.modules.filestorage.router import router as files_router
+from biotact.modules.hr.chat.router import router as hr_chat_router
+from biotact.modules.hr.documents.router import router as hr_documents_router
+from biotact.modules.hr.library.router import router as hr_library_router
 
 router = APIRouter(prefix="/api/v1")
 router.include_router(health_router)
@@ -26,5 +29,8 @@ router.include_router(webhooks_router)
 router.include_router(crm_router)
 router.include_router(marketing_router)
 router.include_router(files_router)
+router.include_router(hr_library_router)
+router.include_router(hr_chat_router)
+router.include_router(hr_documents_router)
 
 __all__ = ["router"]

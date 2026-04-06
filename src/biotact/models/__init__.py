@@ -6,6 +6,7 @@ from biotact.models.dashboard import FinancialTransaction
 from biotact.models.hr_digest import HRDigest, HRNewsItem
 from biotact.models.user import User
 from biotact.modules.filestorage.models import File, Folder
+from biotact.modules.hr.library.models import HRTemplate
 
 __all__ = [
     "Base",
@@ -16,6 +17,7 @@ __all__ = [
     "Folder",
     "HRDigest",
     "HRNewsItem",
+    "HRTemplate",
     "TimestampMixin",
     "User",
 ]
