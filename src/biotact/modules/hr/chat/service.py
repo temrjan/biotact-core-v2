@@ -17,6 +17,40 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+
+def _strip_markdown(text: str) -> str:
+    """Remove Markdown formatting symbols from document text.
+
+    Cleans: # headings, ** bold **, * italic *, ``` code blocks ```,
+    > blockquotes, --- separators, - list bullets.
+    Preserves numbered lists (1. 2. 3.) and plain text structure.
+    """
+    import re
+
+    # Remove code blocks
+    text = re.sub(r"```[\s\S]*?```", "", text)
+    # Remove inline code
+    text = re.sub(r"`([^`]+)`", r"\1", text)
+    # Remove bold **text** or __text__
+    text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
+    text = re.sub(r"__(.+?)__", r"\1", text)
+    # Remove italic *text* or _text_ (but not in words like файл_имя)
+    text = re.sub(r"(?<!\w)\*(.+?)\*(?!\w)", r"\1", text)
+    # Remove heading markers (# ## ### etc.)
+    text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
+    # Remove blockquotes
+    text = re.sub(r"^>\s?", "", text, flags=re.MULTILINE)
+    # Remove horizontal rules
+    text = re.sub(r"^-{3,}$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\*{3,}$", "", text, flags=re.MULTILINE)
+    # Replace bullet lists (- or *) with numbered-style
+    text = re.sub(r"^[\-\*]\s+", "  ", text, flags=re.MULTILINE)
+    # Clean up multiple blank lines
+    text = re.sub(r"\n{3,}", "\n\n", text)
+
+    return text.strip()
+
+
 # System prompt for the HR assistant
 SYSTEM_PROMPT = """\
 Ты — HR-ассистент компании BIOTACT. Твоя основная задача — создавать документы по образцам.
@@ -34,6 +68,15 @@ SYSTEM_PROMPT = """\
 - Если пользователь не дал все нужные данные — спроси недостающее.
 - Сохраняй структуру и стиль образца. Меняй ТОЛЬКО персональные данные.
 - Отвечай на русском языке.
+
+КРИТИЧЕСКИ ВАЖНО — формат вывода готового документа:
+- Выводи ЧИСТЫЙ ТЕКСТ. Никакого Markdown.
+- НЕ используй символы: # * ** ` ``` --- > -
+- Заголовки пиши ЗАГЛАВНЫМИ БУКВАМИ.
+- Нумерацию пиши как: 1. 2. 3. или 1.1. 1.2.
+- Списки пиши через нумерацию, без тире и звёздочек.
+- Жирный и курсив — не нужны, пиши обычным текстом.
+- Образец может содержать Markdown-разметку — это только для структуры. В готовом документе её быть НЕ ДОЛЖНО.
 """
 
 # Tools available to the LLM
@@ -146,7 +189,7 @@ class HRChatService:
             # Check if the response contains a generated document
             # (heuristic: if it's long and structured, it's a document)
             if len(final_text) > 500:
-                document_text = final_text
+                document_text = _strip_markdown(final_text)
 
             return {"message": final_text, "document_text": document_text}
 
