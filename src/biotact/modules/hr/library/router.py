@@ -27,13 +27,17 @@ async def upload_template(
     current_user: CurrentUserDep,
     db: SessionDep,
     file: UploadFile,
-    category: str = Query(..., description="Template category: трудовой_договор, приказ, etc."),
+    category: str = Query(
+        ..., description="Template category: трудовой_договор, приказ, etc."
+    ),
 ) -> TemplateResponse:
     """Upload a document template (DOCX/PDF/TXT)."""
     try:
         return await service.upload_template(db, file, category, current_user.id)
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        ) from e
 
 
 @router.get("", response_model=TemplateListResponse)
@@ -57,7 +61,9 @@ async def get_template(
     _ = current_user  # auth guard
     result = await service.get_template(db, template_id)
     if not result:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
+        )
     return result
 
 
@@ -71,4 +77,6 @@ async def delete_template(
     _ = current_user  # auth guard
     deleted = await service.delete_template(db, template_id)
     if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
+        )

@@ -151,9 +151,7 @@ async def get_template(
     template_id: int,
 ) -> TemplateDetailResponse | None:
     """Get template with extracted text by ID."""
-    result = await db.execute(
-        select(HRTemplate).where(HRTemplate.id == template_id)
-    )
+    result = await db.execute(select(HRTemplate).where(HRTemplate.id == template_id))
     template = result.scalar_one_or_none()
     if not template:
         return None
@@ -183,9 +181,7 @@ async def delete_template(
     template_id: int,
 ) -> bool:
     """Delete template and its file."""
-    result = await db.execute(
-        select(HRTemplate).where(HRTemplate.id == template_id)
-    )
+    result = await db.execute(select(HRTemplate).where(HRTemplate.id == template_id))
     template = result.scalar_one_or_none()
     if not template:
         return False

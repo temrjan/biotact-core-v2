@@ -121,22 +121,22 @@ class HRChatService:
 
                 # Execute the tool
                 tool_input = cast("dict[str, Any]", tool_block.input)
-                tool_result = await self._execute_tool(
-                    tool_block.name, tool_input
-                )
+                tool_result = await self._execute_tool(tool_block.name, tool_input)
 
                 # Add assistant response + tool result to messages
                 messages.append({"role": "assistant", "content": response.content})
-                messages.append({
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "tool_result",
-                            "tool_use_id": tool_block.id,
-                            "content": tool_result,
-                        }
-                    ],
-                })
+                messages.append(
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": tool_block.id,
+                                "content": tool_result,
+                            }
+                        ],
+                    }
+                )
                 continue
 
             # Model finished — extract text response
@@ -150,7 +150,10 @@ class HRChatService:
 
             return {"message": final_text, "document_text": document_text}
 
-        return {"message": "Не удалось обработать запрос. Попробуйте ещё раз.", "document_text": None}
+        return {
+            "message": "Не удалось обработать запрос. Попробуйте ещё раз.",
+            "document_text": None,
+        }
 
     async def _execute_tool(self, name: str, args: dict[str, Any]) -> str:
         """Execute a tool call and return result text."""
