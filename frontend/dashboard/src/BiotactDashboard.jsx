@@ -1861,7 +1861,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               }}
             />
             <button
-              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : send}
+              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : section === 'hr' ? sendHrChat : send}
               disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : section === 'hr' ? (!hrChatInput.trim() || hrChatLoading) : (!input.trim() || loading)}
               className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
               style={{ backgroundColor: theme.bg.accent }}
