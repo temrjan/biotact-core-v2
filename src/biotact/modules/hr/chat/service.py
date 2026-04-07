@@ -154,6 +154,29 @@ class HRChatService:
         self.model = "gpt-5.4-mini"
         self.db = db
 
+    async def _get_template_context(self) -> str:
+        """Pre-fetch available templates to inject into system prompt."""
+        try:
+            templates_result = await list_templates(self.db)
+            if not templates_result.items:
+                return ""
+            lines = []
+            for t in templates_result.items:
+                fields = t.template_fields or []
+                lines.append(
+                    f"- id={t.id} name={t.name} category={t.category} "
+                    f"fields={fields}"
+                )
+            return (
+                "\n\nДоступные шаблоны (уже загружены, find_template не нужен):\n"
+                + "\n".join(lines)
+                + "\n\nЕсли пользователь просит создать документ и все данные собраны, "
+                "сразу вызывай generate_document с нужным template_id и ВСЕМИ полями."
+            )
+        except Exception:
+            logger.exception("Failed to pre-fetch templates")
+            return ""
+
     async def process_message(
         self,
         message: str,
@@ -163,8 +186,11 @@ class HRChatService:
 
         Returns: {"message": str, "document_url": str | None}
         """
+        # Pre-fetch template context so AI always knows template_id + fields
+        template_ctx = await self._get_template_context()
+
         messages: list[dict[str, Any]] = [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": SYSTEM_PROMPT + template_ctx},
         ]
 
         if history:
