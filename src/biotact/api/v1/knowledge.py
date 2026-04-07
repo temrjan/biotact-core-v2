@@ -10,9 +10,6 @@ from typing import Any
 from fastapi import APIRouter, Header, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from qdrant_client import AsyncQdrantClient
-from qdrant_client.models import (
-    ScoredPoint,
-)
 
 from biotact.core.config import get_settings
 
@@ -129,7 +126,7 @@ def _extract_content(payload: dict[str, Any], config: dict[str, str]) -> str:
 
 
 def _point_to_result(
-    point: ScoredPoint, config: dict[str, str],
+    point: Any, config: dict[str, str],
 ) -> SearchResult:
     """Convert Qdrant point to SearchResult."""
     payload = point.payload or {}
@@ -187,13 +184,13 @@ async def search_knowledge(
 
     for _key, config in targets.items():
         try:
-            points = await qdrant.search(
+            response = await qdrant.query_points(
                 collection_name=config["name"],
-                query_vector=embedding,
+                query=embedding,
                 limit=limit,
                 score_threshold=threshold,
             )
-            for point in points:
+            for point in response.points:
                 all_results.append(_point_to_result(point, config))
         except Exception as e:
             logger.warning("Search failed for %s: %s", config["name"], e)
