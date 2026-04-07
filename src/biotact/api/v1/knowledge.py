@@ -5,6 +5,7 @@ Searches: knowledge-evolution, user_files, dr_berg in parallel.
 """
 
 import logging
+from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, Header, HTTPException, Query, status
@@ -104,6 +105,41 @@ def _get_qdrant() -> AsyncQdrantClient:
     )
 
 
+async def _translate_to_english(text: str) -> str:
+    """Translate query to English for English-only collections (dr_berg).
+
+    Costs ~$0.001 per query. Skips if already English.
+    """
+    from openai import AsyncOpenAI
+
+    # Quick heuristic: if mostly ASCII, probably already English
+    non_ascii = sum(1 for c in text if ord(c) > 127)
+    if non_ascii < len(text) * 0.3:
+        return text
+
+    settings = get_settings()
+    client = AsyncOpenAI(api_key=settings.openai_api_key)
+    try:
+        response = await client.chat.completions.create(
+            model="gpt-4.1-nano",
+            max_completion_tokens=200,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Translate the following search query to English. "
+                    "Return ONLY the translation, nothing else.",
+                },
+                {"role": "user", "content": text},
+            ],
+        )
+        translated = (response.choices[0].message.content or text).strip()
+        logger.info("Translated query: '%s' → '%s'", text, translated)
+        return translated
+    except Exception:
+        logger.warning("Translation failed, using original query")
+        return text
+
+
 async def _get_embedding(text: str) -> list[float]:
     """Get embedding via OpenAI."""
     from openai import AsyncOpenAI
@@ -169,20 +205,26 @@ async def search_knowledge(
     """
     _verify_api_key(x_api_key)
 
-    # Embed query
-    embedding = await _get_embedding(q)
-
     # Determine which collections to search
     if source and source in COLLECTIONS:
         targets = {source: COLLECTIONS[source]}
     else:
         targets = COLLECTIONS
 
-    # Search all collections in parallel
+    # Prepare embeddings: translated for English collections, original for Russian
+    query_en = await _translate_to_english(q) if q != q.encode("ascii", "ignore").decode() else q
+    embedding_original = await _get_embedding(q)
+    embedding_en = await _get_embedding(query_en) if query_en != q else embedding_original
+
+    # Search all collections
     qdrant = _get_qdrant()
     all_results: list[SearchResult] = []
 
     for _key, config in targets.items():
+        # Use English embedding for English collections, original for Russian
+        use_en = config["source_label"] == "dr_berg"
+        embedding = embedding_en if use_en else embedding_original
+
         try:
             response = await qdrant.query_points(
                 collection_name=config["name"],
@@ -250,3 +292,37 @@ async def list_collections(
             for key, config in COLLECTIONS.items()
         }
     }
+
+
+# Transcript directory on server
+TRANSCRIPT_DIR = Path("/opt/berg-knowledge/data/transcripts")
+
+
+@router.get("/transcript/{video_id}")
+async def get_transcript(
+    video_id: str,
+    x_api_key: str = Header(...),
+) -> dict[str, Any]:
+    """Get full transcript for a Dr. Berg video by video_id.
+
+    Full texts stored on disk, not in Qdrant (too large for chunks).
+    """
+    _verify_api_key(x_api_key)
+
+    # Try common filename patterns
+    for pattern in [f"*{video_id}*"]:
+        matches = list(TRANSCRIPT_DIR.glob(pattern)) if TRANSCRIPT_DIR.exists() else []
+        if matches:
+            file_path = matches[0]
+            text = file_path.read_text(encoding="utf-8", errors="replace")
+            return {
+                "video_id": video_id,
+                "file_name": file_path.name,
+                "content": text,
+                "size": len(text),
+            }
+
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"Transcript not found for video_id: {video_id}",
+    )
