@@ -464,6 +464,7 @@ function Dashboard({ onLogout }) {
   const [docShowNewFolder, setDocShowNewFolder] = useState(false);
   const [docNewFolderName, setDocNewFolderName] = useState('');
   const [docLoading, setDocLoading] = useState(false);
+  const [docUploadMsg, setDocUploadMsg] = useState(null);
   const docFileInputRef = useRef(null);
 
   // Documents Chat
@@ -550,16 +551,30 @@ function Dashboard({ onLogout }) {
     if (!fileList || fileList.length === 0) return;
     setDocUploading(true);
     try {
+      let uploaded = 0;
       for (const file of fileList) {
         await api.uploadFile(file, docCurrentFolder);
+        uploaded++;
       }
-      await loadDocuments();
+      // Force reload current folder contents
+      const [folders, files, stats] = await Promise.all([
+        api.listFolders(docCurrentFolder),
+        api.listFiles(docCurrentFolder),
+        api.getFileStats(),
+      ]);
+      setDocFolders(folders);
+      setDocFiles(files);
+      setDocStats(stats);
+      setDocUploadMsg({ type: 'success', text: `Загружено: ${uploaded} файл(ов)` });
+      setTimeout(() => setDocUploadMsg(null), 4000);
     } catch (err) {
       console.error('Upload failed:', err);
+      setDocUploadMsg({ type: 'error', text: 'Ошибка загрузки файла' });
+      setTimeout(() => setDocUploadMsg(null), 4000);
     } finally {
       setDocUploading(false);
     }
-  }, [docCurrentFolder, loadDocuments]);
+  }, [docCurrentFolder]);
 
   const handleDeleteFile = useCallback(async (fileId) => {
     if (!confirm('Удалить файл?')) return;
@@ -1501,8 +1516,21 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               <FolderPlus size={15} /> Папка
             </button>
 
-            {/* Breadcrumbs */}
+            {/* Back button + Breadcrumbs */}
             <div className="flex items-center gap-1 ml-4 text-sm">
+              {docCurrentFolder && (
+                <button
+                  onClick={() => {
+                    const parentCrumb = docBreadcrumbs.length >= 2 ? docBreadcrumbs[docBreadcrumbs.length - 2] : { folder_id: null };
+                    navigateToFolder(parentCrumb.folder_id);
+                  }}
+                  className="p-1.5 rounded-md transition-colors mr-1"
+                  style={{ color: theme.text.muted }}
+                  title="Назад"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+              )}
               {docBreadcrumbs.map((crumb, i) => (
                 <React.Fragment key={crumb.folder_id || 'root'}>
                   {i > 0 && <span style={{ color: theme.text.muted }}>›</span>}
@@ -1542,6 +1570,16 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               />
               <button onClick={handleCreateFolder} className="px-3 py-1.5 rounded-lg text-sm font-medium text-white" style={{ backgroundColor: '#3584e4' }}>Создать</button>
               <button onClick={() => { setDocShowNewFolder(false); setDocNewFolderName(''); }} className="p-1.5 rounded-lg" style={{ color: theme.text.muted }}><X size={16} /></button>
+            </div>
+          )}
+
+          {/* Upload notification */}
+          {docUploadMsg && (
+            <div className="mx-8 mt-2 rounded-xl p-3 flex items-center gap-2" style={{
+              backgroundColor: docUploadMsg.type === 'success' ? 'rgba(73,156,117,0.1)' : 'rgba(239,68,68,0.1)',
+            }}>
+              {docUploadMsg.type === 'success' ? <Check size={16} style={{ color: theme.text.success }} /> : <AlertCircle size={16} style={{ color: '#ef4444' }} />}
+              <span className="text-sm" style={{ color: docUploadMsg.type === 'success' ? theme.text.success : '#ef4444' }}>{docUploadMsg.text}</span>
             </div>
           )}
 
