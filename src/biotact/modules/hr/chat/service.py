@@ -149,10 +149,11 @@ OPENAI_TOOLS = [
 class HRChatService:
     """HR Chat — AI extracts data from user text, docxtpl renders DOCX."""
 
-    def __init__(self, settings: Settings, db: AsyncSession) -> None:
+    def __init__(self, settings: Settings, db: AsyncSession, *, user_id: int = 0) -> None:
         self.openai = AsyncOpenAI(api_key=settings.openai_api_key)
         self.model = "gpt-5.4-mini"
         self.db = db
+        self._user_id = user_id
 
     async def _get_template_context(self) -> str:
         """Pre-fetch available templates to inject into system prompt."""
@@ -380,13 +381,30 @@ class HRChatService:
                 out_path = RENDER_DIR / f"{file_id}.docx"
 
                 buffer = render_template(db_template.file_path, data)
-                out_path.write_bytes(buffer.read())
+                rendered_bytes = buffer.read()
+                out_path.write_bytes(rendered_bytes)
+
+                # Save to hr_documents for history
+                from biotact.modules.hr.library.models import HRDocument
+
+                employee = data.get("FIO") or data.get("FIO_LATIN") or "—"
+                hr_doc = HRDocument(
+                    file_id=file_id,
+                    template_id=db_template.id,
+                    template_name=db_template.name,
+                    employee_name=employee,
+                    file_path=str(out_path),
+                    file_size=len(rendered_bytes),
+                    created_by=self._user_id,
+                )
+                self.db.add(hr_doc)
+                await self.db.flush()
 
                 logger.info(
-                    "Document rendered: %s fields=%d data_keys=%s",
+                    "Document rendered: %s employee=%s fields=%d",
                     out_path,
+                    employee,
                     len(data),
-                    list(data.keys()),
                 )
                 return f"/api/v1/hr/documents/download/{file_id}"
             except Exception as e:

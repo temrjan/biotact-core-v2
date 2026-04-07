@@ -1,10 +1,41 @@
-"""HR Library models — document templates/samples."""
+"""HR Library models — document templates and generated documents."""
 
 from sqlalchemy import ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from biotact.models.base import Base, TimestampMixin
+
+
+class HRDocument(TimestampMixin, Base):
+    """Generated document — rendered from a template with employee data.
+
+    Tracks every document created via chat or render API.
+    Files stored in data/hr_rendered/{file_id}.docx.
+    """
+
+    __tablename__ = "hr_documents"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    file_id: Mapped[str] = mapped_column(
+        String(32), nullable=False, unique=True, index=True,
+    )
+    template_id: Mapped[int | None] = mapped_column(
+        ForeignKey("hr_templates.id", ondelete="SET NULL"),
+    )
+    template_name: Mapped[str] = mapped_column(String(300), nullable=False)
+    employee_name: Mapped[str] = mapped_column(
+        String(300), nullable=False, index=True,
+    )
+    file_path: Mapped[str] = mapped_column(String(500), nullable=False)
+    file_size: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    created_by: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    def __repr__(self) -> str:
+        return f"<HRDocument(id={self.id}, employee='{self.employee_name}')>"
 
 
 class HRTemplate(TimestampMixin, Base):

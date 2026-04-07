@@ -464,6 +464,21 @@ export async function hrDownloadDocx(text, filename = 'document.docx') {
   URL.revokeObjectURL(url);
 }
 
+/** List generated documents (history) */
+export async function hrListDocuments(page = 1, perPage = 20) {
+  return apiRequest(`/hr/documents?page=${page}&per_page=${perPage}`);
+}
+
+/** Delete generated document */
+export async function hrDeleteDocument(id) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/documents/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Delete failed');
+}
+
 /** Download rendered DOCX by URL path (from chat) */
 export async function hrDownloadRendered(documentUrl) {
   const token = getAuthToken();

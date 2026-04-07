@@ -30,3 +30,30 @@ class TemplateListResponse(BaseModel):
 
     items: list[TemplateResponse]
     total: int
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Generated Document Schemas
+# ═══════════════════════════════════════════════════════════════════
+
+
+class DocumentResponse(BaseModel):
+    """Generated document info."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    file_id: str
+    template_name: str
+    employee_name: str
+    file_size: int
+    created_at: datetime
+
+
+class DocumentListResponse(BaseModel):
+    """Paginated list of generated documents."""
+
+    items: list[DocumentResponse]
+    total: int
+    page: int
+    per_page: int

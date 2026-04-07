@@ -1,12 +1,14 @@
-"""HR Documents API — render DOCX templates + download."""
+"""HR Documents API — render DOCX templates + download + history."""
 
 import logging
+import os
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.database import get_session
@@ -14,6 +16,8 @@ from biotact.core.dependencies import CurrentUserDep
 from biotact.modules.hr.documents.docx_generator import text_to_docx
 from biotact.modules.hr.documents.renderer import render_template
 from biotact.modules.hr.library import service as library_service
+from biotact.modules.hr.library.models import HRDocument
+from biotact.modules.hr.library.schemas import DocumentListResponse, DocumentResponse
 
 logger = logging.getLogger(__name__)
 
@@ -142,3 +146,65 @@ async def download_rendered(
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         filename=f"document_{file_id}.docx",
     )
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Document History
+# ═══════════════════════════════════════════════════════════════════
+
+
+@router.get("", response_model=DocumentListResponse)
+async def list_documents(
+    current_user: CurrentUserDep,
+    db: SessionDep,
+    page: int = Query(1, ge=1),
+    per_page: int = Query(20, ge=1, le=100),
+) -> DocumentListResponse:
+    """List generated documents with pagination (newest first)."""
+    _ = current_user
+
+    offset = (page - 1) * per_page
+
+    count_result = await db.execute(select(func.count(HRDocument.id)))
+    total = count_result.scalar_one()
+
+    result = await db.execute(
+        select(HRDocument)
+        .order_by(HRDocument.created_at.desc())
+        .offset(offset)
+        .limit(per_page)
+    )
+    items = [DocumentResponse.model_validate(row) for row in result.scalars().all()]
+
+    return DocumentListResponse(items=items, total=total, page=page, per_page=per_page)
+
+
+@router.delete("/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_document(
+    document_id: int,
+    current_user: CurrentUserDep,
+    db: SessionDep,
+) -> None:
+    """Delete a generated document (file + DB record)."""
+    _ = current_user
+
+    result = await db.execute(
+        select(HRDocument).where(HRDocument.id == document_id)
+    )
+    doc = result.scalar_one_or_none()
+    if not doc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
+        )
+
+    # Delete file from disk
+    try:
+        if os.path.exists(doc.file_path):
+            os.remove(doc.file_path)
+            logger.info("Deleted file: %s", doc.file_path)
+    except OSError:
+        logger.warning("Could not delete file: %s", doc.file_path)
+
+    # Delete DB record
+    await db.delete(doc)
+    logger.info("Deleted document id=%d file_id=%s", doc.id, doc.file_id)

@@ -483,6 +483,13 @@ function Dashboard({ onLogout }) {
   const [hrDocResult, setHrDocResult] = useState(null); // generated document text
   const hrFileInputRef = useRef(null);
 
+  // HR Document History
+  const [hrDocHistory, setHrDocHistory] = useState([]);
+  const [hrDocHistoryTotal, setHrDocHistoryTotal] = useState(0);
+  const [hrDocHistoryPage, setHrDocHistoryPage] = useState(1);
+  const [hrDocHistoryLoading, setHrDocHistoryLoading] = useState(false);
+  const [hrActiveTab, setHrActiveTab] = useState('library'); // 'library' | 'history'
+
   // HR Chat
   const [hrChatMsgs, setHrChatMsgs] = useState([
     { id: 1, role: 'assistant', text: 'Здравствуйте! Я HR-ассистент. Напишите какой документ нужно создать — я найду образец и заполню данными.' },
@@ -701,8 +708,11 @@ function Dashboard({ onLogout }) {
   }, []);
 
   useEffect(() => {
-    if (section === 'hr') loadHrTemplates();
-  }, [section, loadHrTemplates]);
+    if (section === 'hr') {
+      loadHrTemplates();
+      loadHrDocHistory();
+    }
+  }, [section, loadHrTemplates, loadHrDocHistory]);
 
   const [hrUploadMsg, setHrUploadMsg] = useState(null); // {type: 'success'|'error', text}
   const [hrSelectedCategory, setHrSelectedCategory] = useState('трудовой_договор');
@@ -735,6 +745,31 @@ function Dashboard({ onLogout }) {
       console.error('HR delete failed:', e);
     }
   }, [loadHrTemplates]);
+
+  // HR Document History
+  const loadHrDocHistory = useCallback(async (page = 1) => {
+    setHrDocHistoryLoading(true);
+    try {
+      const data = await api.hrListDocuments(page);
+      setHrDocHistory(data.items || []);
+      setHrDocHistoryTotal(data.total || 0);
+      setHrDocHistoryPage(page);
+    } catch (e) {
+      console.error('Failed to load HR doc history:', e);
+    } finally {
+      setHrDocHistoryLoading(false);
+    }
+  }, []);
+
+  const handleHrDeleteDocument = useCallback(async (id) => {
+    if (!confirm('Удалить документ? Файл будет удалён безвозвратно.')) return;
+    try {
+      await api.hrDeleteDocument(id);
+      await loadHrDocHistory(hrDocHistoryPage);
+    } catch (e) {
+      console.error('HR doc delete failed:', e);
+    }
+  }, [loadHrDocHistory, hrDocHistoryPage]);
 
   const sendHrChat = useCallback(async () => {
     const text = hrChatInput.trim();
@@ -1656,7 +1691,29 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             )}
 
+            {/* Tabs: Библиотека / История */}
+            <div className="flex gap-1 p-1 rounded-xl" style={{ backgroundColor: theme.bg.elevated }}>
+              {[
+                { id: 'library', label: 'Библиотека', count: hrTemplates.length },
+                { id: 'history', label: 'История', count: hrDocHistoryTotal },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => { setHrActiveTab(tab.id); if (tab.id === 'history') loadHrDocHistory(); }}
+                  className="flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                  style={{
+                    backgroundColor: hrActiveTab === tab.id ? theme.bg.card : 'transparent',
+                    color: hrActiveTab === tab.id ? theme.text.primary : theme.text.muted,
+                    boxShadow: hrActiveTab === tab.id ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                  }}
+                >
+                  {tab.label} {tab.count > 0 && <span className="ml-1 opacity-60">({tab.count})</span>}
+                </button>
+              ))}
+            </div>
+
             {/* Library — uploaded templates */}
+            {hrActiveTab === 'library' && (
             <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold" style={{ color: theme.text.primary }}>Библиотека образцов</h3>
@@ -1724,6 +1781,89 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 </div>
               )}
             </div>
+            )}
+
+            {/* History — generated documents */}
+            {hrActiveTab === 'history' && (
+            <div className="rounded-2xl p-6 border" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+              <h3 className="text-sm font-semibold mb-4" style={{ color: theme.text.primary }}>Созданные документы</h3>
+
+              {hrDocHistoryLoading ? (
+                <div className="flex justify-center py-8">
+                  <Loader2 size={24} className="animate-spin" style={{ color: theme.text.muted }} />
+                </div>
+              ) : hrDocHistory.length === 0 ? (
+                <div className="text-center py-8">
+                  <FileText size={32} style={{ color: theme.text.muted }} className="mx-auto mb-3" />
+                  <p className="text-sm" style={{ color: theme.text.muted }}>Документы ещё не создавались</p>
+                  <p className="text-xs mt-1" style={{ color: theme.text.muted }}>Напишите в чат запрос на создание документа</p>
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    {hrDocHistory.map(doc => (
+                      <div key={doc.id} className="flex items-center justify-between p-3 rounded-lg border transition-all" style={{ borderColor: theme.border.default }}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white" style={{ backgroundColor: '#3498db' }}>
+                            DOCX
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium" style={{ color: theme.text.primary }}>{doc.employee_name}</div>
+                            <div className="text-xs" style={{ color: theme.text.muted }}>
+                              {doc.template_name} · {(doc.file_size / 1024).toFixed(0)} KB · {new Date(doc.created_at).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => api.hrDownloadRendered(`/api/v1/hr/documents/download/${doc.file_id}`)}
+                            className="p-1.5 rounded-md transition-colors hover:text-blue-500"
+                            style={{ color: theme.text.muted }}
+                            title="Скачать"
+                          >
+                            <Download size={14} />
+                          </button>
+                          <button
+                            onClick={() => handleHrDeleteDocument(doc.id)}
+                            className="p-1.5 rounded-md transition-colors hover:text-red-500"
+                            style={{ color: theme.text.muted }}
+                            title="Удалить"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  {hrDocHistoryTotal > 20 && (
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <button
+                        onClick={() => loadHrDocHistory(hrDocHistoryPage - 1)}
+                        disabled={hrDocHistoryPage <= 1}
+                        className="px-3 py-1 rounded-md text-sm border transition-all disabled:opacity-30"
+                        style={{ borderColor: theme.border.default, color: theme.text.primary }}
+                      >
+                        &larr;
+                      </button>
+                      <span className="text-sm" style={{ color: theme.text.muted }}>
+                        {hrDocHistoryPage} / {Math.ceil(hrDocHistoryTotal / 20)}
+                      </span>
+                      <button
+                        onClick={() => loadHrDocHistory(hrDocHistoryPage + 1)}
+                        disabled={hrDocHistoryPage >= Math.ceil(hrDocHistoryTotal / 20)}
+                        className="px-3 py-1 rounded-md text-sm border transition-all disabled:opacity-30"
+                        style={{ borderColor: theme.border.default, color: theme.text.primary }}
+                      >
+                        &rarr;
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            )}
 
           </div>
         </div>
