@@ -7,6 +7,7 @@ from biotact.api.v1.chat import router as chat_router
 from biotact.api.v1.dashboard import router as dashboard_router
 from biotact.api.v1.health import router as health_router
 from biotact.api.v1.hr_digest import router as hr_digest_router
+from biotact.api.v1.knowledge import router as knowledge_router
 from biotact.api.v1.marketing import router as marketing_router
 from biotact.api.v1.prompts import router as prompts_router
 from biotact.api.v1.public import router as public_router
@@ -32,5 +33,6 @@ router.include_router(files_router)
 router.include_router(hr_library_router)
 router.include_router(hr_chat_router)
 router.include_router(hr_documents_router)
+router.include_router(knowledge_router)
 
 __all__ = ["router"]
