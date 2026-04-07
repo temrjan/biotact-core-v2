@@ -47,9 +47,13 @@ def parse_csv_to_text(file_path: Path) -> str:
 
 def parse_json_to_text(file_path: Path) -> str:
     """Parse JSON to readable text."""
-    with open(file_path, encoding="utf-8") as f:
-        data = json.load(f)
-    return json.dumps(data, ensure_ascii=False, indent=2)
+    try:
+        with open(file_path, encoding="utf-8") as f:
+            data = json.load(f)
+        return json.dumps(data, ensure_ascii=False, indent=2)
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        logger.warning("Failed to parse JSON %s: %s", file_path, e)
+        return ""
 
 
 def parse_pdf(file_path: Path) -> str:

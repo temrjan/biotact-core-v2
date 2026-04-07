@@ -562,20 +562,24 @@ function Dashboard({ onLogout }) {
   }, [docCurrentFolder, loadDocuments]);
 
   const handleDeleteFile = useCallback(async (fileId) => {
+    if (!confirm('Удалить файл?')) return;
     try {
       await api.deleteFile(fileId);
       await loadDocuments();
     } catch (err) {
       console.error('Delete failed:', err);
+      alert('Ошибка удаления файла. Удалять может только создатель.');
     }
   }, [loadDocuments]);
 
   const handleDeleteFolder = useCallback(async (folderId) => {
+    if (!confirm('Удалить папку и всё содержимое?')) return;
     try {
       await api.deleteFolder(folderId);
       await loadDocuments();
     } catch (err) {
       console.error('Delete folder failed:', err);
+      alert('Ошибка удаления папки. Удалять может только создатель.');
     }
   }, [loadDocuments]);
 
