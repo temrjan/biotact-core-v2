@@ -32,6 +32,13 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     vector_store = FileVectorStore(get_settings())
     await vector_store.ensure_collection()
 
+    # Ensure hr_documents table exists (safe to call repeatedly)
+    from biotact.core.database import engine
+    from biotact.modules.hr.library.models import HRDocument
+
+    async with engine.begin() as conn:
+        await conn.run_sync(HRDocument.__table__.create, checkfirst=True)
+
     # Register Telegram bot commands (/start, /new, /products, /contact)
     await register_bot_commands()
 
