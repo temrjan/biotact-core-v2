@@ -23,7 +23,7 @@ ALLOWED_EXTENSIONS: dict[str, str] = {
 }
 
 MAX_FILE_SIZE_BYTES = 20 * 1024 * 1024  # 20 MB
-UPLOAD_BASE_DIR = Path("/data/uploads")
+UPLOAD_BASE_DIR = Path("data/uploads")
 
 
 def get_upload_dir() -> Path:

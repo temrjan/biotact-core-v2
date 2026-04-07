@@ -80,6 +80,8 @@ services:
       - ./scripts:/app/scripts
       - ./data/telegram_sessions:/app/.sessions:rw
       - ./data/hr_templates:/app/data/hr_templates:rw
+      - ./data/hr_rendered:/app/data/hr_rendered:rw
+      - ./data/uploads:/app/data/uploads:rw
       - ./.env:/app/.env:ro
     depends_on:
       postgres:
