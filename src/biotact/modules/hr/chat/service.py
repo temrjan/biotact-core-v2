@@ -177,6 +177,42 @@ class HRChatService:
             logger.exception("Failed to pre-fetch templates")
             return ""
 
+    async def _extract_data_from_context(
+        self, context: str, fields: list[str],
+    ) -> dict[str, str]:
+        """Use a focused LLM call to extract structured data from conversation."""
+        extraction_prompt = (
+            "Извлеки данные из текста переписки и верни JSON.\n"
+            f"Поля: {json.dumps(fields)}\n\n"
+            "Правила:\n"
+            "- FIO: ЗАГЛАВНЫМИ кириллицей (ПЕТРОВ АЛЕКСЕЙ СЕРГЕЕВИЧ)\n"
+            "- FIO_LATIN: ЗАГЛАВНЫМИ латиницей (PETROV ALEKSEY SERGEEVICH)\n"
+            "- FIO_SHORT_LATIN: PETROV A. S.\n"
+            "- CONTRACT_TYPE: 'неопределённый срок' или 'определённый срок'\n"
+            "- CONTRACT_TYPE_UZ: 'муддатсиз' или 'муайян муддатга'\n"
+            "- WORK_TYPE: 'основной работы' или 'работы по совместительству'\n"
+            "- WORK_TYPE_UZ: 'асосий иш жойи' или 'ўриндошлик бўйича иш жойи'\n"
+            "- Даты: ДД.ММ.ГГГГ\n"
+            "- Если поле нельзя извлечь — пустая строка\n\n"
+            "Верни ТОЛЬКО JSON, без пояснений.\n\n"
+            f"Переписка:\n{context}"
+        )
+
+        try:
+            response = await self.openai.chat.completions.create(
+                model=self.model,
+                max_completion_tokens=2048,
+                messages=[{"role": "user", "content": extraction_prompt}],
+                response_format={"type": "json_object"},
+            )
+            raw = response.choices[0].message.content or "{}"
+            data = json.loads(raw)
+            logger.info("Extracted %d fields from context", len(data))
+            return {k: str(v) for k, v in data.items() if v}
+        except Exception:
+            logger.exception("Failed to extract data from context")
+            return {}
+
     async def process_message(
         self,
         message: str,
@@ -198,6 +234,13 @@ class HRChatService:
                 messages.append({"role": msg["role"], "content": msg["content"]})
 
         messages.append({"role": "user", "content": message})
+
+        # Save conversation text for fallback extraction
+        self._messages_context = "\n".join(
+            f"{m['role']}: {m['content']}"
+            for m in messages
+            if m["role"] in ("user", "assistant") and m.get("content")
+        )
 
         document_url: str | None = None
 
@@ -302,7 +345,6 @@ class HRChatService:
             if not template_id:
                 return "Ошибка: не указан template_id"
 
-            # Get template file path
             from sqlalchemy import select
 
             from biotact.modules.hr.library.models import HRTemplate
@@ -314,6 +356,23 @@ class HRChatService:
             if not db_template:
                 return "Ошибка: шаблон не найден"
 
+            # If AI sent incomplete data, extract from conversation
+            fields = db_template.template_fields or []
+            missing = [f for f in fields if f not in data or not data[f]]
+            if missing and hasattr(self, "_messages_context"):
+                logger.info(
+                    "generate_document: %d/%d fields missing, extracting via LLM",
+                    len(missing),
+                    len(fields),
+                )
+                extracted = await self._extract_data_from_context(
+                    self._messages_context, fields
+                )
+                # Merge: AI-provided data takes priority
+                for k, v in extracted.items():
+                    if k not in data or not data.get(k):
+                        data[k] = v
+
             # Render DOCX
             try:
                 RENDER_DIR.mkdir(parents=True, exist_ok=True)
@@ -323,7 +382,12 @@ class HRChatService:
                 buffer = render_template(db_template.file_path, data)
                 out_path.write_bytes(buffer.read())
 
-                logger.info("Document rendered: %s fields=%d", out_path, len(data))
+                logger.info(
+                    "Document rendered: %s fields=%d data_keys=%s",
+                    out_path,
+                    len(data),
+                    list(data.keys()),
+                )
                 return f"/api/v1/hr/documents/download/{file_id}"
             except Exception as e:
                 logger.exception("Render failed for template %d", template_id)
