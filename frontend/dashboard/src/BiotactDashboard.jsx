@@ -708,11 +708,8 @@ function Dashboard({ onLogout }) {
   }, []);
 
   useEffect(() => {
-    if (section === 'hr') {
-      loadHrTemplates();
-      loadHrDocHistory();
-    }
-  }, [section, loadHrTemplates, loadHrDocHistory]);
+    if (section === 'hr') loadHrTemplates();
+  }, [section, loadHrTemplates]);
 
   const [hrUploadMsg, setHrUploadMsg] = useState(null); // {type: 'success'|'error', text}
   const [hrSelectedCategory, setHrSelectedCategory] = useState('трудовой_договор');
@@ -770,6 +767,10 @@ function Dashboard({ onLogout }) {
       console.error('HR doc delete failed:', e);
     }
   }, [loadHrDocHistory, hrDocHistoryPage]);
+
+  useEffect(() => {
+    if (section === 'hr') loadHrDocHistory();
+  }, [section, loadHrDocHistory]);
 
   const sendHrChat = useCallback(async () => {
     const text = hrChatInput.trim();
