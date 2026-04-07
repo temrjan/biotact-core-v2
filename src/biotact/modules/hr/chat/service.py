@@ -201,7 +201,11 @@ class HRChatService:
                 tool_call = choice.message.tool_calls[0]
                 func_name = tool_call.function.name
                 func_args = json.loads(tool_call.function.arguments)
-                logger.info("HR tool: %s(%s)", func_name, list(func_args.keys()))
+                logger.info(
+                    "HR tool: %s args=%s",
+                    func_name,
+                    json.dumps(func_args, ensure_ascii=False)[:2000],
+                )
 
                 tool_result = await self._execute_tool(func_name, func_args)
 
