@@ -41,6 +41,11 @@ SYSTEM_PROMPT = """\
 - НЕ выдумывай данные. Если пользователь не дал — спроси.
 - Для SALARY_TEXT переведи число в текст прописью (напр. 8 000 000 → восемь миллионов).
 - Для FIO_SHORT сократи ФИО (Иванова Мария Петровна → Иванова М.П.)
+- Для FIO_LATIN транслитерируй ФИО латиницей (Иванова Мария Петровна → IVANOVA MARIYA PETROVNA).
+- Для FIO_SHORT_LATIN то же но кратко (IVANOVA M. P.)
+- Для CONTRACT_TYPE_UZ переведи тип срока на узбекский (неопределённый срок → муддатсиз, определённый срок → муайян муддатга).
+- Для WORK_TYPE_UZ переведи тип работы на узбекский (основной работы → асосий иш жойи, по совместительству → ўриндошлик бўйича иш жойи).
+- ВАЖНО: заполни ВСЕ поля из списка template_fields. Не пропускай поля.
 """
 
 OPENAI_TOOLS = [
@@ -84,12 +89,15 @@ OPENAI_TOOLS = [
                     "data": {
                         "type": "object",
                         "description": (
-                            "Данные для подстановки. Ключи — метки шаблона: "
-                            "FIO, FIO_SHORT, PASSPORT, PASSPORT_ISSUED_BY, PASSPORT_DATE, "
+                            "Данные для подстановки. Ключи — метки шаблона "
+                            "(используй список полей из find_template): "
+                            "FIO, FIO_LATIN, FIO_SHORT, FIO_SHORT_LATIN, "
+                            "PASSPORT, PASSPORT_ISSUED_BY, PASSPORT_DATE, "
                             "POSITION, DEPARTMENT, SALARY, SALARY_TEXT, "
                             "CONTRACT_NUMBER, CONTRACT_DATE, START_DATE, "
                             "PROBATION, HOURS_WEEK, HOURS_DAY, VACATION_DAYS, VACATION_DAYS_TEXT, "
-                            "ADDRESS, PHONE, PINFL, INN, WORK_TYPE, CONTRACT_TYPE, WORK_CHARACTER"
+                            "ADDRESS, PHONE, PINFL, INN, "
+                            "WORK_TYPE, WORK_TYPE_UZ, CONTRACT_TYPE, CONTRACT_TYPE_UZ, WORK_CHARACTER"
                         ),
                     },
                 },

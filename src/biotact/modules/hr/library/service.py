@@ -33,12 +33,21 @@ def _ensure_upload_dir() -> None:
 
 
 def _extract_text_docx(file_path: str) -> str:
-    """Extract full text from DOCX file."""
+    """Extract full text from DOCX file (paragraphs + table cells)."""
     from docx import Document
 
     doc = Document(file_path)
-    paragraphs = [p.text for p in doc.paragraphs if p.text.strip()]
-    return "\n".join(paragraphs)
+    parts: list[str] = []
+    for p in doc.paragraphs:
+        if p.text.strip():
+            parts.append(p.text)
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for p in cell.paragraphs:
+                    if p.text.strip():
+                        parts.append(p.text)
+    return "\n".join(parts)
 
 
 def _extract_text_pdf(file_path: str) -> str:

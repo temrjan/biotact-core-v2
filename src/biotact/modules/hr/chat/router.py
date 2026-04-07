@@ -27,10 +27,10 @@ class HRChatRequest(BaseModel):
 
 
 class HRChatResponse(BaseModel):
-    """Chat response with optional document text."""
+    """Chat response with optional document URL."""
 
     message: str
-    document_text: str | None = None
+    document_url: str | None = None
 
 
 @router.post("/message", response_model=HRChatResponse)
@@ -46,5 +46,5 @@ async def hr_chat_message(
     result: dict[str, Any] = await service.process_message(req.message, req.history)
     return HRChatResponse(
         message=result["message"],
-        document_text=result.get("document_text"),
+        document_url=result.get("document_url"),
     )
