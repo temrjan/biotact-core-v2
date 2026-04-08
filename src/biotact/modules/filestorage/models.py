@@ -60,6 +60,7 @@ class Folder(TimestampMixin, Base):
         "Folder",
         remote_side="Folder.id",
         back_populates="children",
+        lazy="selectin",
     )
     children: Mapped[list["Folder"]] = relationship(
         "Folder",
@@ -71,7 +72,7 @@ class Folder(TimestampMixin, Base):
         back_populates="folder",
         cascade="all, delete-orphan",
     )
-    creator: Mapped["User"] = relationship("User", foreign_keys=[uploaded_by])
+    creator: Mapped["User"] = relationship("User", foreign_keys=[uploaded_by], lazy="selectin")
 
     def __repr__(self) -> str:
         return f"<Folder(id={self.id}, name='{self.name}')>"
@@ -127,8 +128,9 @@ class File(TimestampMixin, Base):
     folder: Mapped["Folder | None"] = relationship(
         "Folder",
         back_populates="files",
+        lazy="selectin",
     )
-    creator: Mapped["User"] = relationship("User", foreign_keys=[uploaded_by])
+    creator: Mapped["User"] = relationship("User", foreign_keys=[uploaded_by], lazy="selectin")
 
     def __repr__(self) -> str:
         return f"<File(id={self.id}, name='{self.name}')>"

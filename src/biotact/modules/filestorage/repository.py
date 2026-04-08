@@ -35,6 +35,7 @@ class FileRepository:
         self.session.add(folder)
         await self.session.flush()
         await self.session.refresh(folder)
+        await self.session.refresh(folder, ["parent"])
         return folder
 
     async def get_folder_by_uuid(self, folder_id: str) -> Folder | None:
@@ -56,8 +57,7 @@ class FileRepository:
         parent_id: int | None = None,
     ) -> list[Folder]:
         """List folders at a given level (None = root)."""
-        query = select(Folder).where(Folder.parent_id == parent_id)
-        query = query.order_by(Folder.name)
+        query = select(Folder).where(Folder.parent_id == parent_id).order_by(Folder.name)
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
@@ -66,6 +66,7 @@ class FileRepository:
         folder.name = name
         await self.session.flush()
         await self.session.refresh(folder)
+        await self.session.refresh(folder, ["parent"])
         return folder
 
     async def delete_folder(self, folder: Folder) -> None:
@@ -120,6 +121,7 @@ class FileRepository:
         self.session.add(file)
         await self.session.flush()
         await self.session.refresh(file)
+        await self.session.refresh(file, ["folder"])
         return file
 
     async def get_file_by_uuid(self, file_id: str) -> File | None:
@@ -139,8 +141,7 @@ class FileRepository:
         folder_id: int | None = None,
     ) -> list[File]:
         """List files in a folder (None = root)."""
-        query = select(File).where(File.folder_id == folder_id)
-        query = query.order_by(File.created_at.desc())
+        query = select(File).where(File.folder_id == folder_id).order_by(File.created_at.desc())
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
@@ -167,6 +168,7 @@ class FileRepository:
         file.share_token = token
         await self.session.flush()
         await self.session.refresh(file)
+        await self.session.refresh(file, ["folder"])
         return file
 
     async def get_all_file_ids_in_folder(self, folder_pk: int) -> list[str]:
