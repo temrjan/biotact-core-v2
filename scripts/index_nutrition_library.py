@@ -21,8 +21,8 @@ QDRANT_PORT = 6333
 COLLECTION = "nutrition_library"
 EMBEDDING_MODEL = "text-embedding-3-large"
 EMBEDDING_DIMS = 3072
-CHUNK_SIZE = 1500
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 150
 MIN_CHARS = 100
 BATCH_EMBED = 20
 BATCH_UPSERT = 100
@@ -64,7 +64,7 @@ def chunk_text(text, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
     # Handle single paragraphs > chunk_size
     final = []
     for chunk in chunks:
-        if len(chunk) <= chunk_size * 1.2:  # Allow 20% overflow
+        if len(chunk) <= chunk_size:
             final.append(chunk)
         else:
             # Split at sentence boundaries
