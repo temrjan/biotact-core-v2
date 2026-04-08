@@ -1,0 +1,471 @@
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: journal_article
+category: clinical-research
+
+[OPHTALMOCOMPLEX -- Узб.мед журнал статья (оценка современных профилактич. свойств при дегенеративны (часть 1)]
+lmpoct Foctor: 4.9
+|SSNi218 1-0664
+Dol: 1о,267 39 l21 8 1 -0664
+tadqiqot, uzluzbe k-m ed i ka l -j оu rпа l
+UZBEK
+JOURNдL
+Vоlчmе 2.lssue 3
+MEDlclL
+I
+\-а
+,//
+,//
+/ ir
+I
+х/
+2021
+Узьпк тlшьиЁт журнАJIи
+узввкскrfr мЕдицинский журндJI l uzBEK MEDISдL JоI;RNдL
+Nч3 (202 l ) DOI hФ //dx. doi. оrg/ 1 0 .267 39 l 2|8|,0664,202l -З
+Бош Myxapprrp:
+Главный редактор:
+Chief Editor:
+Мадазпмов Мадамнп Мумrrповпч
+Ректор Андижшrского Государственного
+медицинского института, д.м.н., профессор
+кафедры фшсультетской и гостп.rтальной
+хирурrии
+Бош муцаррrrр iрпнбосари:
+3аместпте.ltь главllого редактора:
+Dерчý Chief Editor:
+Салахнддrrнов Кама.пrrддин Зухриддиновtlч
+доцент, д,м.н. кафедры факультетской и
+госпитальной хирургии Андижанского
+Государственного медицинского института
+Маъсул котпб:
+Отвgгственный 
+секрегарь;
+Executive Secretary:
+.Щоспна Маргарпта Олеговrrа
+в.н.с, ГНУ "Инстиryт физиолоrии Национальной
+академии наук Беларуси", к,б.н., председатель
+совета молодых ученых огделения медицинских
+наук НАН Беларуси
+Тахрпрнят раисп:
+Председатшь рсдакцшошной коллегни :
+сhаirmrп of the editoriдl Воаrd:
+Алексеев Ашдрей Аrrатольевпч
+,Щиректор ожогового цента ШVtИЦ хирургии
+им. В.Вишневского, главный комбустиолог
+Миrмстерства здравоохранения России, д.м.н.,
+профессор. Бош мухаррпр }ринбосарш:
+Заместrтglь глrвного реддкторд:
+Dерчý Chief Editor:
+хегаfi Любовь Нrrколаевна
+доцент, к,м,н., начаJIьник отдела по координации
+деятельности граrпов Межвузовской научнФ,
+исследователюкой лаборатории Ташкентской
+медицинской академии
+Маъсул котпб:
+Отвgтgгвешпыfi секреrарь:
+Executive Secretaty:
+Нrrязова Зебннпсо Апваровна
+базовый докгорант кафедры офтальмологии,
+детской офтальмологии Ташкентского
+педиатрического мсдицинского института
+Узбек тшббиёт,курIIаJIп тахрприй маслах8т кепrаши
+редакцпонныfi совет УзбекскпЙ медпцннскиf, rсурпал
+Editorial Boald of the Uzbek medical jочrпаl
+Хужамберлиев Мамазоrrр Ахмедович
+д.м.н., профессор кафедры госпитальной терапии Андижанского
+Государственного медицинского и нститута
+Прпвалова Ирвва Леовндовва
+д.б.н., профессор кафедры нормальной физиологии Курского государственного медицинского университета
+'заъ.дуйщ* 
+лаъораторией физиологии висцеральных систем Нии физиологии (курк)
+Гаврвлова Елепа Апатольевна
+д.м.н., прфессор, заве.ryющая кафедрой лечебной физкульryры и спортивной медицины Север-западного
+государственНого медицинСкого универсИтета им. И.И. МечникОм (Санкт-Петербург)
+Чургапов Олег Апатольевпч
+л.п.н,, профессор кафедры ЛФК и споргивной медицины Северо-3ападного государственного
+медициt{ского университета нм. И.И. Мечникова (Санкг-Петефург)
+Салахrrддшrrов Зухрпддпп Салахнддиновпч
+д.м.н., прфессор, заве.ryющий кафелры Воп Nчl, Андиlканского государственного медицинского института
+Рябчпков .Щевпс Апатольевпч
+д.м.н,, в.н.с. онкологического отдеJIения хирургических методов лечения ФгБу "нмиц
+онкологии им. Н.Н. Блохина" Минздрам России
+Гулямов Суръат Сапдвалпевпч
+д.м.н., прфессор кафедры оториноларингологии, дgгской оторинолари}lгологии, 
+стоматологии
+Ташкентского педиатрического медвцинского института
+z
+Тереза Мrгалхrйз
+профессор, заве.ryющаЯ кафелроЙ ФдебноЙ медицинЫ юсударственного университета Порry (Порryгалия)
+Юлдашев Илхом ýзпевнч
+д.м.н., профессор, заведующий кафелрой Дллерюлогии, иммунологии, микробиологии
+ташкентского педиатрического медицинского института
+Хамраев Аблурпшtlл Журакуловшч
+д,м.н., профессор кафедры госпитальной детской хирургии, Ташкентского педиатрического медицинского института
+Редакционпдя коллегия:
+Эрматов Низом Жумакуловшч
+д.Irl.н., Доцент, заведующий кафелрой гигиены детей и подростков и гигиены питания Ташкентской медицинскоii академии
+ýзиев Шерзод Ибодуллаевпч
+д.м.н.. доцент кафелры сулебной медицины и медицинского права Ташкентского педиатического медицинского института
+доцент, заве,ryющая кафелрой социальной гигиены Андиr<анского государственнок) медицинского института
+Сабrrрова Рнхсп Абдукадировпд
+д.м.н., профессор кафедры медицинской и биологической химии Ташкентской медицинской академии
+Щеомашко Ндталья Евгеньевна
+д.б,н, с.н,с., заведующая отделом медико-генетических исспедований Мнил Ташкентской медицинской академии
+Хамраева Лола Сrлпмовна
+доцент, к.м.н. кафедры офтальмологии, детской офтальмологии Тдпкентского педиатического медицинского института
+,
+доцент, к.м.н., заведующая кафедрой Нардной медицины, реабиrшmлогии и физической культуры Ташкентской медицинской
+академии
+Шарппова Фаршда КамRльевна
+к.м.н., доцент кафе.чры пси)(иатии, наркологии и детской психиатрии, медицинской психологии, психотерапии Ташкентского
+педиатического медицинского института
+Бузруков Батпр ýлкуновпч
+д.м.н., профессор, заведующий кафелры офтапьмологии, детской офrальмологии Ташкентского педиатического
+медицинскопо института
+ýfi чпев Галибrсдп Урмопжоrrович
+к.м.н., доцент, заведуюший кафедрой д.r"*ой хирургии, детской аяестезиологии-реаниматологии с курсом офrальмологии и
+стоматологии факультета
+и переподготовки врачей АГМИ
+Млмrтхужаевr Гулшора Нrrсмrrтдиновrrs
+доцент, к.м.н. кафедры Офтальмологии Андижанского Государственного медицинскоI0 института
+Кярпмовя 3пёда Кушбаевпа
+доцентt 
+к.м.н. кафедры 
+Дллергологии, 
+клинической 
+иммунологии, 
+микробиоломи 
+Ташкентского 
+педиатрического
+медицинского инстиryта
+Сrrrдходrrсаева Сrвдд Набшевна
+доцент, phd кафедры неврологии, детской неврологии и мсдицинской генстики Ташкентского педиатического медицинского
+инстиryта
+Зуфарова 3ухра Хабпбуллдевшд
+доценъ к.ф.н. кафелры промышленной технологии лекарственных средств Ташкентского фармацевтического института
+PhD кафелры оториноларингологии, детской оториноларинголоrии, детской стомаmлогии Ташкентского педиаIрического
+медицинского института
+Page Maker | Версгка | Сах,пфаловчп: Хуршид Мирзахмедов
+Контдкт редакцшй хryрпалов. www.tadqiqotuz
+ООО Tadqiqot горд Ташкект,
+улица Амира Темура пр.l, дом-2. Web: http://www.tadqiqot. uzl Emai l : i nfo@tadqiqot. uz
+Тел: (+99&94) 40+0000
+Editorial staff of the jочrпдls of www.tadqiqotuz
+Tadqiqot LLC the city ofTashkent
+Аmir Теmчr Street рr. l, House 2. Web: hfip://www.tadqiqot. uzl; Emai l : i nfo@tadqi qot. uz
+Рhопе: (+998-94) 4И-0000
+з
+МУНДАРИЖА / СОДЕРЖАНИЕ / CONTENT
+1. Egamberdiyeva S.M., Yuldashov S.A., КоrаЬаеч А.А., Askarova N.A. EVALUATION ОF MODERN PROPHYLACTIC FEATURES IN RETINAL
+DEGENERATIVE PATHOLOGIES оF тнЕ EYE.. ......5
+2. АЬrоrоча D.N., Togaeva G.S., Davranova A.D. CLINICAL AND FUNCTIONAL FEATURES ОF ТНЕ COURSE
+IN PATIENTS WITH TYPE 2 DIABETES MELLITUS WITH
+AUTONOMIC NEUROPATHY. .....l l
+3. Saidova М.А., Khodjaeva S.A. ТНЕ ROLE ОF PSYCHOLOGICAL REHABILITATION IN
+тнЕ TREATMENT оF PATIENTS WITH LUNG TUBERCULOSIS.. . . . . . 16
+4. ТчlаЬоеча G.M., Kamolov В.В., Saidov Kh.Kh.,
+Talipova Yu.Sh., Abdukodirova N.M. CLINICAL AND HEMODYNAMIC ЕFFIСАСY ОF CHOLINE
+ALFOSCERATE IN ARTERIAL HYPERTENSION AND
+HYPERTENSIVE ENCEPHALOPATHY 
+..........2з
+5. Khabilov N.L., Safarov М.Т., Azizova Sh.I. MODERN METHODS ОF PREVENTION AND TREATMEM ОF
+FIYPERESTHESIA CAUSED BY SFIARPENING IN ORTHOPEDIC DENTISTRY 
+.,...28
+б. Мчrаtоча S.K., Khaydarov А.М., Khajimetov А.А., Shчkшrоча N.T. CELLULAR COMPOSITION STATE AND MICROFLORA ОF
+ORAL MUCOSAL EPITHELIUM ОF РАПЕNТS WITH
+сHRONIC CEREBRAL ISCHEMIA.... ...........34
+7. Boboeva N.T. CLINICAL AND LABORATORY CHARACTERISTICS
+DEPENDING ON ТНЕ LEVEL ОF BILIRUBIN
+IN тнЕ OBSERVEDNEWBORNS.. ..,,........42
+8. Talipov R.M., ТчlаЬаеча G.M., Sagatova Н.М.,
+Nчrmеtоч Н.Т., КhчdауЬеrgапоча N.H. PECULIARITIES ОF COMORBIDITY IN ELDERLY
+PATIEMS WITH MYOCARDIAL IMARсTION. ............48
+9. Khidoyatova D.N., Abdшjamilova R.M., Zuparova L.M., Mirkhalilova M.R. PROGNOSTIC VALUE ОF VARIOUS PATHOGENETIC
+VARIANTS оF TRANSIENT ISсHEMIC ATTACKS 
+.,....,..52
+10. Tillabaeva А.А., Iskandarova Sh.T. DETECПON RATE AND MANAGEMENT TACTICS
+ОF PATIENTS WITH ARTERIAL HYPERTENSION
+IN PRIMARY HEALTH CARE.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: journal_article
+category: clinical-research
+
+[OPHTALMOCOMPLEX -- Узб.мед журнал статья (оценка современных профилактич. свойств при дегенеративны (часть 2)]
+...........57
+УзБЕк тиББип журндли | узБЕкЕкиR мЕдиlшнЕкиff журндл l uzвЕк llEOlEдt JOlJRшдt
+Е@
+УЗВПК 
+ТИББИЁТ 
+ЖУРНАПИ
+узБЕкский мЕдицIrнGкий журнАп
+UZBEK MEDIGAL IОURIUАI
+Egamberdiyeva Saida Mamadjanovna
+Assistant, Department of ophthalmology
+Tashkent Medical Academy, Tashkent, Uzbekistan. Yuldashov Sаrчаrkhоп Akmaljon ugli
+Master Student, Department of ophthalmology
+Tashkent Medical Academy, Tashkent, Uzbekistan. e-mail : ф. sаrчаr.2020@mаil,rч
+Korabaev Azamjon Akhmadjon ugli
+Master Student, Department of ophthalmology
+Tashkent Medical Academy, Tashkent. UzbekisИn. e-mail : Azamj ondoctor@gmail. соm
+Askarova Nаmчпаhоп Alisher kizi
+Master Student, Department of ophthalmology
+Tashkent Medical Academy, Tashkent. Uzbekistan. e-mai l : namunaasqarova4@gmail. соm
+ЕЧЛLUАТIОN ОF MODERN PROPHYLACTIC FEATURES IN RETINAL
+DEGENERATIVE PATHOLOGIES ОF ТНЕ EYE
+@ bttn://dx.doi.org/1 О.267 3gl2|81-0бб4-202 1-3-1
+ABSTRACT
+Дgе-rеlаtеd mасчlаr degeneration (AMD) is а progressive еуе disease in which the physiological
+function of the choriocapillaries, Bruch's mеmЬrапе, and retinal pigment epithelium (RPE) аrе
+impaired, а defect in the рhоtогесерtоr layer оссчrS, and central vision is irrеvеrsiЬlе. Primary
+open-angle glaucoma (POAG) is а pathological process characterized Ьу impaired hydrodynamics
+ol intr"o"ular fluid and damage to the optic пеrче, although the апtеriоr сhаmЬеr angle is ореп. In
+this disease, intraocular рrеSsurе (IoP) often increases and реriрhеrаl vision decreases depending
+on the retinal layer's level of compression. According to WHO statistics, роАG is then complicated
+Ьу the ".|ry' fоrm of AMD iп 4|Yо of cases, i.e. an effective combination of the above two
+pathologies сап Ье observed in clinical practice. consumption of foods riсh in antioxidant
+micronutrients and drugs likes "ophthalmocomplex" in the prevention and treatment of chronic
+degenerative еуе diseases such as primary open-angle glaucoma (poAG) and age-related mасulаr
+degeneration (AMD) can shorten the rehabiliиtion реriоd. The mechanisms of development of
+pйological processes (especially inflammation, degeneration) аrе different. still, the main
+pathogenetic point is the disruption of the antioxidant defense system as а result of detoxification. keywords: age-related mасчlаr degeneration (AMD), primary open-angle glaucoma (POAG),
+viиmins, antioxidants, partiallY oxidized free radicals, Ophthalmocomplex drug, healthy eating. УзБЕк тиББип )l0рндли | узБЕкскиR }tЕдиtшнЕкиR журндл | |JZBE|( ilЕOlЕд JOURшд
+Эгамберлпева Саида Мамадлсановна
+Ассистент кафедры офтальмологии
+Ташкентскaш медицинская академия, Ташкент, Узбекистан
+Юлдашов Сарвархон Акмалжон угли
+Сryлент магистратуры, Кафедра офтальмологии. ташкентская медицинская академия, Ташкент, Узбекистан
+Эл.почта: dr. sаrчаr. 2020@mail.ru
+Корабаев Азамжон Ахмадlкон угли
+Студент магистратуры, Кафедра офтальмологии. ташкентск€ш медицинская академия, Ташкент, Узбекистан
+Эл. почта: Azamj ondoctor@gmail. com
+Аскарова HaMyHaxorr Алишер кизи
+Сryлент магистратуры, Кафедра офтальмологии. ташкентскzu{ медицинская академия, Ташкент, Узбекистан
+Эл.почта: паmчпааsqаrоча4@gmаil.соm
+оцЕнкд соврЕмЕнных проФилдктиtIЕских свойств при
+ДЕГЕНЕРАТИВНЫХ ПАТОЛОГИЯХ СЕТЧАТКИ ГЛАЗА
+АННОТАЦИЯ
+возрастная макулярная дегенерация (BMD) - это постепенно прогрессирующее заболевание
+глЕв, при котором физиологическая функция хориокапилляров, мембрана Бруха и
+пигментного эпителия сетчатки (гЕс) нарушается, возникает дефект в фоторецепторном
+слое и вызывает необратимую потерю центрального зрения. Первичная открытоугольнаrI
+глаукома-это патологический процесс, сопровождшощийся нарушением гидродинамики
+внутренней оболочки глiва и порФкением зрительного нерва, несмотря на открытый угол
+пеiелн.И камеры. При этоМ заболеванИи частО повышаетСя внутриглазное давление (ВГ.Щ) и
+ar"*u"r"" периферическое зрение в зависимости от степени сжатия слоя сетчатки. По
+статистике воз, поУГ в дальнейшем в 41оlо случаев осложняется "сухой" формой ВМ.Щ, то
+есть в клинической практике в значительном количестве можно наблюдать сочетание двух
+вышеперечисленных патологий. В процессе профилактики и лечения хронических
+д"."r"рurrвных заболеваний глаз, таких как первичная открытzrя угловшI глаукома (ПОУГ) и
+Возрастная макулярная дегенерация (вмд), потребление питательных продуктов, богатых
+антиоксидантными микроэлементами, а также препарата "офтальмокомплекс"
+(ophthalmocomplex) приводит к сокращению реабилитационного периода. Механизмы
+р:ввития патологических процессов (особенно воспапительных, дегенеративных) различны,
+но среди них глzlвным патогенетическим гryнктом является нарушение системы
+антиоксидантной защиты в результате детоксикации. ключевые слова: Возрастная макулярнiul дегенерация (вмщ), первичная открытоугольная
+глаукома 
+(поут), 
+витЕlluин, антиоксидантные 
+вещества, недоокисленные 
+свободные
+радикЕ}лы, препарат Офтальмокомплекс, здоровое питание. Saida Mamadj anovna Egam berdiyeva
+Toshkent tibbiyot akademiyasi
+Oftalmologiya kafedrasi assistenti. Toshkent, O'zbekiston
+Sаrчаrхоп Akmaljon о' g'li Yuldashov
+Toshkent tibbiyot akademiyasi
+Oftalmologiya kafedrasi magistranti. Toshkent, O'zbekiston. dr. sarvar. 2020@mai l.rч
+Qorabayev A'zamjon Axmadjon o'g'li
+УзБЕкIиББиЕtю,рнАли l узБЕкЕкиR мЕдицинuкиR хурнАл | lJzвЕкilЕOlЕд JOURl{д
+Toshkent tibbiyot akademiyasi
+Oftalmologiya kafedrasi magistranti. Toshkent, O'zbekiston
+Azamj ondoctor@gmai l. com
+Nаmчпахоп Alisher qizi Asqarova
+Toshkent tibbiyot akademiyasi
+Oftalmologiya kafedrasi magistranti. Toshkent. O'zbekiston. namunaasqarova4@gmai 
+l. com
+KO,ZNING RETINAL DEGENERATIV PATOLOGIYALARIDA ZAMONAVIY
+PROFILAKTIKA XUSUSШATLARINI BAHOLASH
+Qarilik makulyar degeneratsiyasi (QMD) bu bosqichma bosqich rivojlanur"hi kiUYJ*I8Jlif;
+Ьir vaqtda xoriokapillariyalar, Вruх membranasi va rеtiпаl pigment epiteliysi (RPE) ning fiziologik
+funksiyasi buzilib, fotoreseptor qatlamda defekt paydo bo'ladi va markaziy ko'rishning qaytarilmas
+yo'qotilishiga sabab bo'ladi. Birlamchi ochiq ЬчrсhаНi glaukoma - bu oldingi kamera burchagining
+ochiq bo'lishiga qaramasdan ko'z ichki susyuqligi gidrodinamikasi buzulishi va kо'ruv nervining
+zararlanishi bilan kechuvchi patologik jarayondir. Bu kasallikda ko'pincha ko'z ichki bosimi (kIB)
+oshadi va retinal qavat kompression darajasiga bog'liq holda periferik ko'rish kamayib boradi. JSST
+ning statistik ma'lumotlariga ko'ra BOBG keyinchalik 4l% holatda QMD ning "quruq" shakli bilan
+asoiatlanadi, ya'ni Hinik amaliyotda yuqoridagi ikki patologiyaning kombinatsiyasini sezilarli
+miqdorda kuzatish mumkin. Birlamchi ochiq burchakli glaukoma (BOBG) va qarilik makulyar
+dеgъпеrаtsiуаsi (QMD) kabi surunkali degenerativ ko'z kasalliklarining profilaktikasi va davolash
+jагауопidа antioksidant mikroelementlarga Ьоу bo'lgan oalqa mahsulotlari hamda
+i'ophthu1-ocomplex" рrераrаtiпi iste'mol qilish reabiliиtsion davrni qisqarishiga sabab bo'ladi. Patologik jarayonlarning (ayniqsa yallig'lanish, degeneratsiya) rivojlanish mexanizmlari turlicha,
+lekin ular orasida detosikatsiYa natijasida mrtioksidant himoya tizimini buzulishi asosiy patogenetik
+nuqta hisoblanadi. Kaiit so'zlar: Qarilik makulyar degeneratsiyasi (QMD), birlamchi ochiq burchakli glaukoma
+(BQBG), vitamin, antioksidant moddalar, chala oksidlangan еrkiп radikallar, Ophthalmocomplex
+рrераrаti, sog'lom ovqatlanish. Diagnostics and treatment of diseases of the rеtiпа of the new methods аrе widely used in
+modem ophthalmology. The need for active clinical dynamic monitoring and the еmеrgепсе of
+complications аftеr complex injection рrосеdчrеs оr manipulations are the main drawbacks of new
+treatments. Degenerative pathologies of the retina аrе becoming mоrе common аmопg the world's
+population ечеry уеаr.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: journal_article
+category: clinical-research
+
+[OPHTALMOCOMPLEX -- Узб.мед журнал статья (оценка современных профилактич. свойств при дегенеративны (часть 3)]
+Ноwечеr, adherence to а healthy lifestyle and at the same time through
+p"iioai" medical examinations, rеgulаr function thrочф dynamic control of this type of
+ophthalmopathological medical examination, which is а good preventive algorithm. Ассоrdiпg to
+epidemiological and clinical studies, the type of diet in which antioxidant additives аrе stored slows
+the prophylactic and development of degenerative retinal pathologies (AMD and POAG). дntioxidant supplements (vitamins С, Е, beta-carotene, zinc, сорреr and omega-3 fatty
+acids) neutralize and even iйibit frее radicals of immature oxidized type and macromolecules. As а
+result, local inflammatory рrосеssеs in age-related degenerative diseases of the retina аrе limited. Even though the patient's age, hereditary predisposition, and smoking аrе the main factors in the
+development of AMD , the antioxidant diet against а healthy diet background leads to а decrease in
+retinal development level pathologies, such as AMD. The fоrm of antioxidant miпеrаl and vitamin supplements preservative diet is а socially simple and
+cost-effective method. This method is associated with the selected consumption of паturаl products,
+and this method can also Ье used in home conditions. This provides а favorable opportunity to
+Бl rorl
+узБЕктиББипжурнАли 
+l узБЕкскиR }lЕдицинЕкиR )0рнАл | lJzЕЕк l{EB|cA[ JtlljRшд
+рrоfilе degenerative еуе diseases, which is the leading cause of irrечеrsiЬlе blindness among the
+elderly. According to the World Health Organization, mоrе than 45 million people worldwide аrе
+infected with AMD ,25Уо of them аrе blind оr have рооr еуеsiфt due to this disease. It is also noted
+that now the number of patients diagnosed with glaucoma around the world is mоrе than 90 million,
+and almost 8 million of them аrе blind to both eyes. Frоm уеаr to уеаr, the indicator of degenerative diseases of the еуе is increasing. According to the experts forecast, in the next decade, the incidence of AMD was estimated to rеасh
+250 million, while those with glaucoma wеrе estimated to increase Ьу almost 100 million. This
+requires reliable and effective methods of reducing the frequency of occurrence of this pathology
+frorn clinical researchers. Elimination of the existing risk factors remains the best choice as а
+prophylactic solution. It is the cessation of smoking and the оЬsеrчапсе of а healthy lifestyle, опе of
+the harmful habits. The basis of compliance with STT is maintaining adequate physical activity реr
+day and а healthy diet,
+The mesh mеmЬrапе layers аrе made up of cells that exchange substances as quickly as the brain's
+neurons. Retinal cells аrе considered to Ье very sensitive to а deficit of oxygen and metabolites in
+the blood. Reactive oxygen free radicals are fоrmеd from unsaturated fatty acids stored on
+photoreceptors' surface (rods and cones) and cause apoptosis of ganglion cells ЬУ а toxic-
+degenerative effect on the retinal layer. In пшпеrоus clinical studies involving AMD and POAG, it was found that patients had
+reduced levels of antioxidants in blood plasma and еуе fluid, and increased concentrations of
+peroxide-oxidative meиbolites (mainly malonildialdegide) in lipids. Since lutein, опе of the most
+important antioxidant substances for the еуе, is deposited 2.5 times mоrе in the mасчlаr zone than
+in the peripheral retinal zone, the rapid development of degenerative retinal lesions macular аrеа
+has been proven in these studies. Дt present, mоrе than 750 carotenoids аrе known to science, but only 20-25 types of them
+аrе considered indispensable irreplaceable-essential substances and аrе constantly absorbed frоm
+the composition of food substances. Аmопg them, lutein and zeaxanthin аrе considered antioxidant
+and co-enzyme substances that belong to the carotenoid grочр. The main physiological function is
+to neutralize free radical toxic substances formed when converting liфt into an electric impulse and
+simultaneously participate in соlоr filtration (especially blue). This function means that macular
+pigments (lutein and zeaxanthin)are the main substrate preventing degenerative processes such as
+senile cataracts, diabetic retinopathy, and maculodystrophy of old age. The hчmап body can not
+synthesize mасulаr pigments (lutein and zeaxanthin)autonomously, that is, these substances аrе
+absorbed only frоm the composition of nutrients оr special phytopreparations. The volume of
+absorption of these antioxidant substances is frоm 5Yо to 50Оlо, and this indicator is individual fоr
+each organism, directly dependent on the hereditary and meИbolic characteristics. If, as а result of а
+violation of the поrmаl balance of microflora in the digestive tract, the absorption of antioxidants
+into the blood decreases, and the decrease in biotin level in their blood can lead to an iпсrеаsе in the
+risk of developing degenerative pathologies of the еуе. The effect of xanthophyll and carotenoids
+оп visual function is largely dependent on tho amount of them in the Ыооd plasma, which is
+determined Ьу laboratory tests. An increase concentration of lutein and zeaxanthin in plasma is ап
+effective and safe method that inhibits the development of AMD and improves visual function in
+patients, which is among the elderly. Дссоrdiпg to the conclusion of gепеrаl clinical studies, specific prophylactic
+recommendations fоr pathologies associated with antioxidant deficiency have been developed. Firstly, eat many fruits and vegetables, especially cabbage, саrrоts, sauerkraut, lemon,
+dates. Lutein and zeaxanthin аrе especially abundant in the composition of cabbage, spinach,
+paprika, Persimmon. The use of continuous antioxidant - rich products has Ьееп identified in
+clinical studies that рrечепt up to 40% of AMD and cardiovascular diseases. Secondly, the reception of special drugs that improve visual function is the most соrrесt
+profilactic tactic. At the same time, this method causes а reduction in the treatment-rehabilitation
+реriоd in patients with retinal degenerative pathologies. The intake of antioxidant vitamins and
+УзБЕк тиББи[т хурнАли | узБЕкuкиR мцицинскиR хурнАл | lJz8Ек мЕDlOд JO|JRшАL
+Е@
+minerals as а biologically active supplement and in therapeutic doses reduces the likelihood of
+developing degenerative еуе pathologies. The use of antioxidant preservatives in the fоrm of
+tablets, capsules and еуе drops in diseases ,such as AMD POAG and diabetic retinopathy, has been
+рrочеп in mапу clinical experiments to increase the effectiveness of prophylactic and treatment
+рrосеssеs. The most соmmоп of these ýpes of drugs is "Ophthalmocomplex" (Biotact
+Duetschland), which in its composition stores many ingredients (100 mg vitamin С, 80 mg vitamin
+Е, 50 mg lutein а combination of zeaxanthin and viИmin А,25 mg zinc, 25 mg omega - 3, 1,5 mg
+vitamin Bl and Вб ). Ophthalmologists аrоuпd ttre world аrе now emphasizing the need to store
+micronutrients, such as omega-3, lutein, selenium in the composition of antioxidant
+ophthalmological preparations of the ideal арреаrапсе. The same composition forms the basis of the
+drug" Ophthalmocomplex". So this parapharmaceutical product сап Ье included in the list of drugs
+of choice in the profilactics and treatment рrосеssеs of AMD disease. On the doctor's
+recommendation, the regulary intake of multivitamins increases the likelihood of positive clinical
+changes. The importance of vitamin complex and biologically active compliments in eliminating
+the deficit of substrates in the body can not Ье overestimated. Тhirdlу, quit smoking tobacco products (cigarettes). The frequency of AMD exposure is
+equal to 4:l compared to that of non-smokers.
+===/СЕКЦИЯ===
+
+===СЕКЦИЯ===
+product_id: OPHTALMOCOMPLEX
+doc_type: journal_article
+category: clinical-research
+
+[OPHTALMOCOMPLEX -- Узб.мед журнал статья (оценка современных профилактич. свойств при дегенеративны (часть 4)]
+Fоr example, every уеаr in the UK, about б0
+thousand people (especially очеr б0 years of age) get sick with AMD due to smoking, and 30% of
+patients rеmаiп completely blind frоm degenerative еуе disease complications. These statistical
+indicators indicate that smoking is а socially dangerous habit. Fоurthlу, rеgulаr consumption of fish meat. Studies have shown that fish meat contains omega-3, unsaturated fatty acids and essential amino
+acids. It is advisable to сопsчmе fish рrоdчсЪ in the diet at least 2 times а week fоr the поrmаl
+functioning of physiological processes in the body. As а result, the risk of developing retinal
+degenerative diseases is rеdчсеd Ьу 2-2.5 times. Fifthly, consuming less animal fat-containing foods also reduces the development of еуе diseases
+and cardiovascular disease at the same time, as sаtчгаtеd fat and cholesterol in animal fats lead to
+narrowing of the iппеr diameter of the capillaries, followed Ьу local hypoxia. -causes the
+development of ischemic processes. Sixth, wear sunglasses against the sun. Light rays of small wavelength, which provide the blue
+соlоr of the sчп's ultraviolet rays, have а reactive-cumulative and phototoxic efГect оп the retina's
+macular zone, leading to rapid depletion of antioxidant rеsеrчеs. The use of sunglasses in the
+afternoon significantly stops developing a "dry" - "atrophic" fоrm of AMD. Seventhly, daily physical activity and body weight monitoring. Adequate physical load on the body
+regularly and optimal body weight, age mаkulуаr degeneration and diabetic retinopathy as the basis
+for preventing diseases. Eighthly, dynamic control of blood cholesterol levels and blood рrеssчrе. Clinical studies have
+demonstrated that , depending оп the mасulаr pathology development age in parallel with the
+increase in the plasma concentration of cholesteгol and blood рrеssчrе аrе оЬsеrчеd . Blood
+рrеssчrе and normal levels of cholesterol in йе blood аrе а universal solution to mапу paЙological
+mechanisms in the body,
+Сопсlusiоп: compliance with the indicated prophylactic mеаsчrеs significantly reduces
+the risk and progression of AMD development, diabetic retinopathy and POAG. Also, in the
+pathology of macular degeneration in old age, taking the drug "Ophthalmocomplex" in therapeutic
+doses as а biologically active additive is effective prophylaxis of degenerative еуе pathologies. References:
+l. Kiselyova TN, Polunin GS, Budzinskaya MV, Lagutina YM, Vorobyova МV. Modem
+approaches to the treatment and prevention of yellow spot degeneration. Jurn. [Russian
+medical journal] 2007;'2: 7819, (in Russia). 2. 3. 4,
+5. 6. 7. УзБЕктиББипжурнАли 
+l узБЕкЕкиR ilЕдиllинвкиR хурнАл | lJzЕЕкilЕDluд Jt]lJRшAt
+Е@
+Seddon J.M., Ajani U. А., Sperduto R. D. DieИry carotenoids, vitamin А, С and Е and
+advanced age_related mасulаr degeneration: Еуе Disease case-Control Study Group. JAVA
+1994;272: l4|З-l420. Evans Jr. Дntioxidant viИmin and mineral supplements for slowing the progression of age-
+related macular degeneration// Cochrane Database Syst. Rev. 2006;19 (2): 54. Lyle В. J., Маrеs-Реrlmап J. А., Klein В. Е. et al. Antioxidant intake and risk of incident age-
+related nuclear cataracts in the Веачеr Dam Еуе Study. Аm. J. Epidemiol. 1999;149 (39):
+801-809,
+Zeimet М., Hense Н. W., Heimes В. et al. The macular pigment: short- and intermediate -
+term changes of macular pigment optical density following supplementation with lutein and
+zeaxanthin and со - antioxidants. The LUNA Study / Ophthalmologe 2009;10б:29-36. Blokhina О., Virolainen Е., Fagerstedt К. V. Antioxidants, Oxidative Damage and Oxygen
+Deprivation Stress: а Review. Annals of Botany 2003; 9l L79-194. Kim S. R., Nakanishi K.,Itagaki Y. et al. Photooxidation of А2-РЕ, а photoreceptor outer
+segment fluоrорhоrе, and protection Ьу lutein and zeaxanthin. Ехр. Еуе Res. 200б; 82 (5):
+828-39. Bressler N. М., Silva J. С., Bressler S. В. Clinicopathologic correlation of drusen and retinal
+pigment epithelial abnormalities in age-related macular degeneration. Retina 2005; 25zlЗ0-42. The Age- Related Еуе Disease Study Rеsеаrсh Group. А randomized, placebocontrolled,
+clinical trial of high-dose supplementation with viиmins С and Е, beta-carotene, and zinc fоr
+age-related macular degeneration and vision loss. Beatty S., Koh Н-Н. Henson D., Bouston М. et al. Role of oxidative stress in the pathogenesis
+of age_related mасчlаr degeneration. Sчrч. ophthalmol. 2000;45 : l 1 5_ 1 34. 9. 10. 10
+Tadqlc;ot tlz
+УЗВВК 
+ТИББИЁТ
+журнАли
+узБЕкский 
+мшдицинский
+журнАл
+UZB.F,KMEDICAL
+JoURNAL
+}lьз (2021)
+ISSN 2181-0бб4
+Doi Jоurпаl 10.2б7 39 12181,0664
+Коrrтякr реддкцпfi ,(урпалов. www.tadqiqotшz
+ООО Tadqiqot горд Ташкент,
+улиuа Амира Темура пр.l, лом,2. Web: hкp://www.ИdqiqoruzJ; Email : info@adqiqot. uz
+Тел: (+99&94),t04-0000
+Editorial зtаff of the jочrпаls of wrvw.tadqiqotuz
+Tadqiqot LLC the city ofTaýhkent,
+Аmir Теmчr Strееt рг.l, House 2. Web: http://www.tadqiqot.uzl; 
+Emai l : i nfo@tadqiqot. uz
+Рhопе: (+998-И) 4И-0000
+===/СЕКЦИЯ===
