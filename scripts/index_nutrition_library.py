@@ -24,7 +24,7 @@ EMBEDDING_DIMS = 3072
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 150
 MIN_CHARS = 100
-BATCH_EMBED = 20
+BATCH_EMBED = 5
 BATCH_UPSERT = 100
 
 
@@ -108,15 +108,27 @@ def process_file(filepath):
     return results
 
 
+MAX_TOKENS_APPROX = 7000  # Safety margin under 8192 limit
+MAX_CHARS_PER_TEXT = 6000  # ~7000 tokens max
+
+
 def batch_embed(texts, oai_client):
-    """Embed texts in batches."""
+    """Embed texts in batches, truncating oversized texts."""
+    # Truncate any text that might exceed token limit
+    safe_texts = []
+    for t in texts:
+        if len(t) > MAX_CHARS_PER_TEXT:
+            t = t[:MAX_CHARS_PER_TEXT]
+        safe_texts.append(t)
+
     all_vectors = []
-    for i in range(0, len(texts), BATCH_EMBED):
-        batch = texts[i:i + BATCH_EMBED]
+    for i in range(0, len(safe_texts), BATCH_EMBED):
+        batch = safe_texts[i:i + BATCH_EMBED]
         resp = oai_client.embeddings.create(input=batch, model=EMBEDDING_MODEL)
         vectors = [d.embedding for d in resp.data]
         all_vectors.extend(vectors)
-        print(f"  Embedded {min(i + BATCH_EMBED, len(texts))}/{len(texts)}")
+        if (i + BATCH_EMBED) % 100 < BATCH_EMBED:
+            print(f"  Embedded {min(i + BATCH_EMBED, len(safe_texts))}/{len(safe_texts)}")
     return all_vectors
 
 
