@@ -1557,20 +1557,19 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
 
           {/* Create folder modal */}
           {docShowNewFolder && (
-            <div className="px-8 py-3 flex items-center gap-2 border-b" style={{ borderColor: theme.border.subtle, backgroundColor: theme.bg.elevated }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleCreateFolder(); }} className="px-8 py-3 flex items-center gap-2 border-b" style={{ borderColor: theme.border.subtle, backgroundColor: theme.bg.elevated }}>
               <FolderPlus size={16} style={{ color: '#3584e4' }} />
               <input
                 autoFocus
                 value={docNewFolderName}
                 onChange={(e) => setDocNewFolderName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleCreateFolder()}
                 placeholder="Имя папки..."
                 className="flex-1 px-3 py-1.5 rounded-lg text-sm border outline-none"
                 style={{ borderColor: theme.border.default, backgroundColor: theme.bg.card, color: theme.text.primary }}
               />
-              <button onClick={handleCreateFolder} className="px-3 py-1.5 rounded-lg text-sm font-medium text-white" style={{ backgroundColor: '#3584e4' }}>Создать</button>
-              <button onClick={() => { setDocShowNewFolder(false); setDocNewFolderName(''); }} className="p-1.5 rounded-lg" style={{ color: theme.text.muted }}><X size={16} /></button>
-            </div>
+              <button type="submit" className="px-3 py-1.5 rounded-lg text-sm font-medium text-white" style={{ backgroundColor: '#3584e4' }}>Создать</button>
+              <button type="button" onClick={() => { setDocShowNewFolder(false); setDocNewFolderName(''); }} className="p-1.5 rounded-lg" style={{ color: theme.text.muted }}><X size={16} /></button>
+            </form>
           )}
 
           {/* Upload notification */}

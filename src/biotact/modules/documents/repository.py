@@ -1,11 +1,12 @@
 """Repository for file storage operations."""
 
 import logging
+from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from biotact.modules.filestorage.models import File, Folder
+from biotact.modules.documents.models import File, Folder
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +58,9 @@ class FileRepository:
         parent_id: int | None = None,
     ) -> list[Folder]:
         """List folders at a given level (None = root)."""
-        query = select(Folder).where(Folder.parent_id == parent_id).order_by(Folder.name)
+        query = (
+            select(Folder).where(Folder.parent_id == parent_id).order_by(Folder.name)
+        )
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
@@ -80,6 +83,18 @@ class FileRepository:
             select(func.count(File.id)).where(File.folder_id == folder_pk)
         )
         return result.scalar_one()
+
+    async def get_folder_file_counts(self, folder_ids: list[int]) -> dict[int, int]:
+        """Batch count files for multiple folders in one query."""
+        if not folder_ids:
+            return {}
+        result = await self.session.execute(
+            select(File.folder_id, func.count(File.id))
+            .where(File.folder_id.in_(folder_ids))
+            .group_by(File.folder_id)
+        )
+        counts = {row[0]: row[1] for row in result.all()}
+        return {fid: counts.get(fid, 0) for fid in folder_ids}
 
     async def get_breadcrumbs(self, folder_pk: int) -> list[Folder]:
         """Get folder chain from root to given folder."""
@@ -141,7 +156,11 @@ class FileRepository:
         folder_id: int | None = None,
     ) -> list[File]:
         """List files in a folder (None = root)."""
-        query = select(File).where(File.folder_id == folder_id).order_by(File.created_at.desc())
+        query = (
+            select(File)
+            .where(File.folder_id == folder_id)
+            .order_by(File.created_at.desc())
+        )
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
@@ -202,8 +221,43 @@ class FileRepository:
         return list(result.scalars().all())
 
     # ═══════════════════════════════════════════════════════════════
-    # Stats
+    # Tree & Stats
     # ═══════════════════════════════════════════════════════════════
+
+    async def get_folder_tree_summary(self) -> list[dict[str, Any]]:
+        """Get flat list of all folders with file counts for chat context.
+
+        Single query with LEFT JOIN + GROUP BY to avoid N+1.
+        """
+        file_count_sub = (
+            select(File.folder_id, func.count(File.id).label("file_count"))
+            .group_by(File.folder_id)
+            .subquery()
+        )
+
+        query = (
+            select(
+                Folder.id,
+                Folder.folder_id,
+                Folder.name,
+                Folder.parent_id,
+                func.coalesce(file_count_sub.c.file_count, 0).label("file_count"),
+            )
+            .outerjoin(file_count_sub, Folder.id == file_count_sub.c.folder_id)
+            .order_by(Folder.name)
+        )
+
+        result = await self.session.execute(query)
+        return [
+            {
+                "id": row.id,
+                "folder_id": row.folder_id,
+                "name": row.name,
+                "parent_id": row.parent_id,
+                "file_count": row.file_count,
+            }
+            for row in result.all()
+        ]
 
     async def get_stats(self) -> dict[str, int]:
         """Get storage statistics (all users, shared platform)."""

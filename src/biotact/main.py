@@ -14,7 +14,7 @@ from biotact.core.database import close_db
 from biotact.modules import module_registry
 from biotact.modules.callcenter.config import callcenter_config
 from biotact.modules.dashboard.config import dashboard_config
-from biotact.modules.filestorage.vector_store import FileVectorStore
+from biotact.modules.documents.vector_store import FileVectorStore
 from biotact.modules.hr.config import hr_config
 from biotact.modules.marketing.config import marketing_config
 

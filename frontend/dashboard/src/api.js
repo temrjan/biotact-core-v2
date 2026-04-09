@@ -287,7 +287,7 @@ export async function marketingChat(message, history = null) {
 export async function createFolder(name, parentId = null) {
   const body = { name };
   if (parentId) body.parent_id = parentId;
-  return apiRequest('/files/folders', {
+  return apiRequest('/documents/folders', {
     method: 'POST',
     body: JSON.stringify(body),
   });
@@ -296,12 +296,12 @@ export async function createFolder(name, parentId = null) {
 /** List folders (parentId=null → root) */
 export async function listFolders(parentId = null) {
   const query = parentId ? `?parent_id=${parentId}` : '';
-  return apiRequest(`/files/folders${query}`);
+  return apiRequest(`/documents/folders${query}`);
 }
 
 /** Rename a folder */
 export async function renameFolder(folderId, name) {
-  return apiRequest(`/files/folders/${folderId}`, {
+  return apiRequest(`/documents/folders/${folderId}`, {
     method: 'PATCH',
     body: JSON.stringify({ name }),
   });
@@ -309,7 +309,7 @@ export async function renameFolder(folderId, name) {
 
 /** Delete a folder */
 export async function deleteFolder(folderId) {
-  return apiRequest(`/files/folders/${folderId}`, { method: 'DELETE' });
+  return apiRequest(`/documents/folders/${folderId}`, { method: 'DELETE' });
 }
 
 /** Upload a file (multipart/form-data) */
@@ -319,7 +319,7 @@ export async function uploadFile(file, folderId = null) {
   formData.append('file', file);
 
   const query = folderId ? `?folder_id=${folderId}` : '';
-  const response = await fetch(`${API_BASE}/files/upload${query}`, {
+  const response = await fetch(`${API_BASE}/documents/upload${query}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
@@ -336,23 +336,23 @@ export async function uploadFile(file, folderId = null) {
 /** List files (folderId=null → root) */
 export async function listFiles(folderId = null) {
   const query = folderId ? `?folder_id=${folderId}` : '';
-  return apiRequest(`/files/${query}`);
+  return apiRequest(`/documents/${query}`);
 }
 
 /** Delete a file */
 export async function deleteFile(fileId) {
-  return apiRequest(`/files/${fileId}`, { method: 'DELETE' });
+  return apiRequest(`/documents/${fileId}`, { method: 'DELETE' });
 }
 
 /** Get download URL for a file */
 export function getFileDownloadUrl(fileId) {
-  return `${API_BASE}/files/${fileId}/download`;
+  return `${API_BASE}/documents/${fileId}/download`;
 }
 
 /** Download file (triggers browser download) */
 export async function downloadFile(fileId, fileName) {
   const token = getAuthToken();
-  const response = await fetch(`${API_BASE}/files/${fileId}/download`, {
+  const response = await fetch(`${API_BASE}/documents/${fileId}/download`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!response.ok) throw new Error('Download failed');
@@ -367,29 +367,29 @@ export async function downloadFile(fileId, fileName) {
 
 /** Generate share link */
 export async function shareFile(fileId) {
-  return apiRequest(`/files/${fileId}/share`, { method: 'POST' });
+  return apiRequest(`/documents/${fileId}/share`, { method: 'POST' });
 }
 
 /** Revoke share link */
 export async function unshareFile(fileId) {
-  return apiRequest(`/files/${fileId}/share`, { method: 'DELETE' });
+  return apiRequest(`/documents/${fileId}/share`, { method: 'DELETE' });
 }
 
 /** Get breadcrumbs for a folder */
 export async function getBreadcrumbs(folderId) {
-  return apiRequest(`/files/breadcrumbs/${folderId}`);
+  return apiRequest(`/documents/breadcrumbs/${folderId}`);
 }
 
 /** Get storage stats */
 export async function getFileStats() {
-  return apiRequest('/files/stats');
+  return apiRequest('/documents/stats');
 }
 
 /** Chat about documents (RAG) */
 export async function filesChat(message, history = null) {
   const body = { message };
   if (history) body.history = history;
-  return apiRequest('/files/chat', {
+  return apiRequest('/documents/chat', {
     method: 'POST',
     body: JSON.stringify(body),
   });

@@ -12,7 +12,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from biotact.modules.filestorage.vector_store import FileVectorStore
+from biotact.modules.documents.vector_store import FileVectorStore
 from biotact.services.rag.embedding import EmbeddingService
 
 logger = logging.getLogger(__name__)

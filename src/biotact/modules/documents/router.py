@@ -1,4 +1,4 @@
-"""File storage REST API endpoints."""
+"""Documents module REST API endpoints."""
 
 import logging
 import uuid
@@ -8,11 +8,11 @@ from fastapi.responses import FileResponse
 
 from biotact.core.config import get_settings
 from biotact.core.dependencies import CurrentUserDep, SessionDep
-from biotact.modules.filestorage import file_service
-from biotact.modules.filestorage.chat_service import FilesChatService
-from biotact.modules.filestorage.models import File, Folder
-from biotact.modules.filestorage.repository import FileRepository
-from biotact.modules.filestorage.schemas import (
+from biotact.modules.documents import file_service
+from biotact.modules.documents.chat_service import FilesChatService
+from biotact.modules.documents.models import File, Folder
+from biotact.modules.documents.repository import FileRepository
+from biotact.modules.documents.schemas import (
     BreadcrumbItem,
     FilesChatRequest,
     FilesChatResponse,
@@ -21,15 +21,15 @@ from biotact.modules.filestorage.schemas import (
     FolderRenameRequest,
     FolderResponse,
 )
-from biotact.modules.filestorage.schemas import (
+from biotact.modules.documents.schemas import (
     FileResponse as FileResponseSchema,
 )
-from biotact.modules.filestorage.vector_store import FileVectorStore
+from biotact.modules.documents.vector_store import FileVectorStore
 from biotact.services.rag.embedding import EmbeddingService
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/files", tags=["files"])
+router = APIRouter(prefix="/documents", tags=["documents"])
 
 
 def _get_repo(session: SessionDep) -> FileRepository:
@@ -377,12 +377,15 @@ async def get_stats(
 async def files_chat(
     request: FilesChatRequest,
     _current_user: CurrentUserDep,
+    session: SessionDep,
 ) -> FilesChatResponse:
-    """Chat with LLM about uploaded documents. Searches all shared files."""
+    """Chat with LLM about uploaded documents. Folder-aware + RAG search."""
     settings = get_settings()
     embedding_service = EmbeddingService(settings)
     vector_store = FileVectorStore(settings)
-    chat_service = FilesChatService(settings, embedding_service, vector_store)
+    chat_service = FilesChatService(
+        settings, embedding_service, vector_store, db=session
+    )
 
     history = None
     if request.history:
@@ -406,7 +409,7 @@ async def _index_file_background(
 ) -> None:
     """Background task: index a file after upload."""
     from biotact.core.database import AsyncSessionLocal
-    from biotact.modules.filestorage import indexing_service
+    from biotact.modules.documents import indexing_service
 
     settings = get_settings()
     embedding_service = EmbeddingService(settings)

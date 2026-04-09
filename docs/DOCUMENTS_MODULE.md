@@ -10,7 +10,7 @@
 ### Backend (8 файлов, ~1700 строк)
 
 ```
-src/biotact/modules/filestorage/
+src/biotact/modules/documents/
 ├── __init__.py            — описание модуля
 ├── models.py              — Folder + File (SQLAlchemy 2.0)
 ├── schemas.py             — Pydantic request/response (14 схем)
