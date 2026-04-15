@@ -731,7 +731,7 @@ function Dashboard({ onLogout }) {
   }, [section, loadHrTemplates]);
 
   const [hrUploadMsg, setHrUploadMsg] = useState(null); // {type: 'success'|'error', text}
-  const [hrSelectedCategory, setHrSelectedCategory] = useState('трудовой_договор');
+  const [hrSelectedCategory, setHrSelectedCategory] = useState('td_osnovnoy');
 
   const handleHrUpload = useCallback(async (files) => {
     if (!files || files.length === 0) return;
@@ -1766,7 +1766,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                     className="px-3 py-2 rounded-lg text-sm border outline-none"
                     style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
                   >
-                    <option value="трудовой_договор">Трудовой договор</option>
+                    <option value="td_osnovnoy">ТД (основное место)</option>
+                    <option value="td_sovmestitelstvo">ТД (совместительство)</option>
                     <option value="гпд">ГПД</option>
                     <option value="приказ">Приказ</option>
                     <option value="должностная_инструкция">Должностная инструкция</option>

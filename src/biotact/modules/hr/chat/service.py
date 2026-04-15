@@ -85,7 +85,9 @@ OPENAI_TOOLS = [
             "name": "find_template",
             "description": (
                 "Найти шаблон документа по категории. "
-                "Категории: трудовой_договор, гпд, приказ, должностная_инструкция, "
+                "Категории: td_osnovnoy (трудовой договор, основное место), "
+                "td_sovmestitelstvo (трудовой договор, совместительство), "
+                "гпд, приказ, должностная_инструкция, "
                 "мат_ответственность, соглашение_конфиденциальности, "
                 "соглашение_персданные, соглашение_возмещение, другое."
             ),
@@ -121,12 +123,13 @@ OPENAI_TOOLS = [
                         "description": (
                             "Данные для подстановки. Ключи — метки шаблона "
                             "(используй список полей из find_template): "
-                            "FIO, FIO_LATIN, FIO_SHORT, FIO_SHORT_LATIN, "
+                            "FIO, FIO_LATIN, FIO_SHORT_LATIN, "
                             "PASSPORT, PASSPORT_ISSUED_BY, PASSPORT_DATE, "
-                            "POSITION, DEPARTMENT, SALARY, SALARY_TEXT, "
+                            "POSITION, POSITION_UZ, SALARY, SALARY_TEXT, SALARY_TEXT_UZ, "
                             "CONTRACT_NUMBER, CONTRACT_DATE, START_DATE, "
-                            "PROBATION, HOURS_WEEK, HOURS_DAY, VACATION_DAYS, VACATION_DAYS_TEXT, "
-                            "ADDRESS, PHONE, PINFL, INN, "
+                            "PROBATION, HOURS_WEEK, HOURS_DAY, "
+                            "VACATION_DAYS, VACATION_DAYS_TEXT, VACATION_DAYS_TEXT_UZ, "
+                            "ADDRESS, PHONE, PINFL, "
                             "WORK_TYPE, WORK_TYPE_UZ, CONTRACT_TYPE, CONTRACT_TYPE_UZ, WORK_CHARACTER"
                         ),
                     },
