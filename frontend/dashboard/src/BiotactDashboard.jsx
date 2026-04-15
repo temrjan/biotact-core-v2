@@ -809,6 +809,7 @@ function Dashboard({ onLogout }) {
 
       if (data.document_url) {
         setHrDocResult(data.document_url);
+        loadHrDocHistory();
       }
     } catch (e) {
       setHrChatMsgs(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: 'Ошибка: ' + (e.message || 'попробуйте позже') }]);
