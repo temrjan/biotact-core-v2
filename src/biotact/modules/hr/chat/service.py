@@ -152,7 +152,9 @@ OPENAI_TOOLS = [
 class HRChatService:
     """HR Chat — AI extracts data from user text, docxtpl renders DOCX."""
 
-    def __init__(self, settings: Settings, db: AsyncSession, *, user_id: int = 0) -> None:
+    def __init__(
+        self, settings: Settings, db: AsyncSession, *, user_id: int = 0
+    ) -> None:
         self.openai = AsyncOpenAI(api_key=settings.openai_api_key)
         self.model = "gpt-5.4-mini"
         self.db = db
@@ -168,8 +170,7 @@ class HRChatService:
             for t in templates_result.items:
                 fields = t.template_fields or []
                 lines.append(
-                    f"- id={t.id} name={t.name} category={t.category} "
-                    f"fields={fields}"
+                    f"- id={t.id} name={t.name} category={t.category} fields={fields}"
                 )
             return (
                 "\n\nДоступные шаблоны (уже загружены, find_template не нужен):\n"
@@ -182,7 +183,9 @@ class HRChatService:
             return ""
 
     async def _extract_data_from_context(
-        self, context: str, fields: list[str],
+        self,
+        context: str,
+        fields: list[str],
     ) -> dict[str, str]:
         """Use a focused LLM call to extract structured data from conversation."""
         extraction_prompt = (
