@@ -65,6 +65,7 @@ dependencies = [
     # HR Module — document processing
     "docxtpl>=0.18.0",
     "pypdf>=4.0.0",
+    "num2words>=0.5.0",
 ]
 
 [project.optional-dependencies]

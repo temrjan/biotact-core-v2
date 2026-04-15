@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
+from datetime import UTC
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -14,6 +15,11 @@ from biotact.modules.hr.documents.renderer import render_template
 from biotact.modules.hr.library.service import (
     get_template_by_category,
     list_templates,
+)
+from biotact.modules.hr.num_to_text import (
+    format_salary,
+    num_to_text_ru,
+    num_to_text_uz,
 )
 
 if TYPE_CHECKING:
@@ -40,13 +46,21 @@ SYSTEM_PROMPT = """\
 - FIO: ФИО кириллицей, ЗАГЛАВНЫМИ (ИВАНОВА МАРИЯ ПЕТРОВНА)
 - FIO_LATIN: транслитерация ФИО латиницей (IVANOVA MARIYA PETROVNA)
 - FIO_SHORT_LATIN: краткое латиницей (IVANOVA M. P.)
+- POSITION: должность на русском (Бухгалтер)
+- POSITION_UZ: должность на узбекском (Бухгалтер, Менежер, Директор). Если не знаешь — используй русское название.
 - CONTRACT_TYPE: "неопределённый срок" или "определённый срок"
 - CONTRACT_TYPE_UZ: "муддатсиз" или "муайян муддатга"
 - WORK_TYPE: "основной работы" или "работы по совместительству"
 - WORK_TYPE_UZ: "асосий иш жойи" или "ўриндошлик бўйича иш жойи"
 - WORK_CHARACTER: "офисный", "разъездной", "в пути", "на производстве"
-- SALARY_TEXT: число прописью (8 000 000 → восемь миллионов)
+- SALARY: число (5000000). SALARY_TEXT и SALARY_TEXT_UZ генерируются автоматически.
+- VACATION_DAYS: число дней отпуска (по умолчанию 21). VACATION_DAYS_TEXT генерируется автоматически.
+- CONTRACT_DATE: если не указана — используй текущую дату
 - Даты в формате ДД.ММ.ГГГГ
+
+Категории шаблонов:
+- td_osnovnoy — трудовой договор по основному месту работы
+- td_sovmestitelstvo — трудовой договор по совместительству
 
 Пример вызова generate_document:
 generate_document(template_id=2, data={
@@ -60,6 +74,8 @@ generate_document(template_id=2, data={
   "PASSPORT_ISSUED_BY": "IIV 12345",
   "PASSPORT_DATE": "15.03.2024",
   "POSITION": "Бухгалтер",
+  "POSITION_UZ": "Бухгалтер",
+  "SALARY": "5000000",
   "CONTRACT_TYPE": "неопределённый срок",
   "CONTRACT_TYPE_UZ": "муддатсиз",
   "WORK_TYPE": "основной работы",
@@ -68,6 +84,7 @@ generate_document(template_id=2, data={
   "WORK_CHARACTER": "офисный",
   "HOURS_WEEK": "40",
   "HOURS_DAY": "8",
+  "VACATION_DAYS": "21",
   "ADDRESS": "г. Ташкент, район, улица, дом, кв",
   "PHONE": "+998901234567",
   "PINFL": "32001015670045"
@@ -147,6 +164,56 @@ OPENAI_TOOLS = [
         },
     },
 ]
+
+
+def _parse_int(value: str) -> int | None:
+    """Extract integer from string like '5000000' or '5 000 000'."""
+    digits = "".join(c for c in value if c.isdigit())
+    return int(digits) if digits else None
+
+
+def _postprocess_fields(data: dict[str, str]) -> dict[str, str]:
+    """Generate computed fields programmatically after LLM extraction.
+
+    - SALARY_TEXT / SALARY_TEXT_UZ from SALARY
+    - VACATION_DAYS_TEXT / VACATION_DAYS_TEXT_UZ from VACATION_DAYS
+    - SALARY formatting with space separators
+    - POSITION_UZ fallback to POSITION
+    - CONTRACT_DATE default to today
+    """
+    # SALARY → formatted + text
+    salary_raw = data.get("SALARY", "")
+    salary_int = _parse_int(salary_raw) if salary_raw else None
+    if salary_int:
+        data["SALARY"] = format_salary(salary_raw)
+        if not data.get("SALARY_TEXT"):
+            data["SALARY_TEXT"] = num_to_text_ru(salary_int) + " сум 00 тийин"
+        if not data.get("SALARY_TEXT_UZ"):
+            data["SALARY_TEXT_UZ"] = num_to_text_uz(salary_int) + " сўм 00 тийин"
+
+    # VACATION_DAYS → text
+    vac = data.get("VACATION_DAYS", "")
+    if not vac:
+        data["VACATION_DAYS"] = "21"
+        vac = "21"
+    vac_int = _parse_int(vac)
+    if vac_int:
+        if not data.get("VACATION_DAYS_TEXT"):
+            data["VACATION_DAYS_TEXT"] = num_to_text_ru(vac_int)
+        if not data.get("VACATION_DAYS_TEXT_UZ"):
+            data["VACATION_DAYS_TEXT_UZ"] = num_to_text_uz(vac_int)
+
+    # POSITION_UZ fallback
+    if not data.get("POSITION_UZ") and data.get("POSITION"):
+        data["POSITION_UZ"] = data["POSITION"]
+
+    # CONTRACT_DATE default to today
+    if not data.get("CONTRACT_DATE"):
+        from datetime import datetime
+
+        data["CONTRACT_DATE"] = datetime.now(tz=UTC).strftime("%d.%m.%Y")
+
+    return data
 
 
 class HRChatService:
@@ -379,6 +446,9 @@ class HRChatService:
                 for k, v in extracted.items():
                     if k not in data or not data.get(k):
                         data[k] = v
+
+            # Post-process: generate computed fields programmatically
+            data = _postprocess_fields(data)
 
             # Render DOCX
             try:
