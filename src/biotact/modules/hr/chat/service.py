@@ -53,8 +53,10 @@ SYSTEM_PROMPT = """\
 - WORK_TYPE: "основной работы" или "работы по совместительству"
 - WORK_TYPE_UZ: "асосий иш жойи" или "ўриндошлик бўйича иш жойи"
 - WORK_CHARACTER: "офисный", "разъездной", "в пути", "на производстве"
-- SALARY: число (5000000). SALARY_TEXT и SALARY_TEXT_UZ генерируются автоматически.
+- PROBATION: ТОЛЬКО число месяцев ("3", не "3 месяца")
+- SALARY: ТОЛЬКО число (5000000). SALARY_TEXT генерируется автоматически.
 - VACATION_DAYS: число дней отпуска (по умолчанию 21). VACATION_DAYS_TEXT генерируется автоматически.
+- HOURS_WEEK / HOURS_DAY: заполняются автоматически (40/8 для основного, 20/4 для совместительства)
 - CONTRACT_DATE: если не указана — используй текущую дату
 - Даты в формате ДД.ММ.ГГГГ
 
@@ -172,7 +174,7 @@ def _parse_int(value: str) -> int | None:
     return int(digits) if digits else None
 
 
-def _postprocess_fields(data: dict[str, str]) -> dict[str, str]:
+def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, str]:  # noqa: PLR0912
     """Generate computed fields programmatically after LLM extraction.
 
     - SALARY_TEXT / SALARY_TEXT_UZ from SALARY
@@ -180,7 +182,22 @@ def _postprocess_fields(data: dict[str, str]) -> dict[str, str]:
     - SALARY formatting with space separators
     - POSITION_UZ fallback to POSITION
     - CONTRACT_DATE default to today
+    - PROBATION: extract just the number
+    - HOURS_WEEK / HOURS_DAY: defaults based on contract type
     """
+    # PROBATION: strip to digits only ("3 месяца" → "3")
+    prob = data.get("PROBATION", "")
+    if prob:
+        prob_int = _parse_int(prob)
+        if prob_int:
+            data["PROBATION"] = str(prob_int)
+
+    # HOURS defaults based on contract type
+    if not data.get("HOURS_WEEK"):
+        data["HOURS_WEEK"] = "20" if category == "td_sovmestitelstvo" else "40"
+    if not data.get("HOURS_DAY"):
+        data["HOURS_DAY"] = "4" if category == "td_sovmestitelstvo" else "8"
+
     # SALARY → formatted + text
     salary_raw = data.get("SALARY", "")
     salary_int = _parse_int(salary_raw) if salary_raw else None
@@ -448,7 +465,7 @@ class HRChatService:
                         data[k] = v
 
             # Post-process: generate computed fields programmatically
-            data = _postprocess_fields(data)
+            data = _postprocess_fields(data, category=db_template.category)
 
             # Render DOCX
             try:
