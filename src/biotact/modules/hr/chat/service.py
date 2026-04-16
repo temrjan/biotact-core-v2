@@ -42,55 +42,91 @@ SYSTEM_PROMPT = """\
 4. Если обязательных данных не хватает — спроси пользователя
 5. Когда ВСЕ поля заполнены → вызови generate_document, передав template_id и data с КАЖДЫМ полем
 
-Правила заполнения полей:
-- FIO: ФИО кириллицей, ЗАГЛАВНЫМИ (ИВАНОВА МАРИЯ ПЕТРОВНА)
-- FIO_LATIN: транслитерация ФИО латиницей (IVANOVA MARIYA PETROVNA)
+Общие правила полей:
+- FIO_LATIN: ФИО латиницей, ЗАГЛАВНЫМИ (IVANOVA MARIYA PETROVNA)
 - FIO_SHORT_LATIN: краткое латиницей (IVANOVA M. P.)
-- POSITION: должность на русском (Бухгалтер)
-- POSITION_UZ: должность на узбекском (Бухгалтер, Менежер, Директор). Если не знаешь — используй русское название.
+- PASSPORT: серия и номер (AD 1234567)
+- PASSPORT_SERIES / PASSPORT_NUMBER: серия и номер раздельно (AD / 1234567)
+- PASSPORT_ISSUED_BY: кем выдан (IIV 12345)
+- PASSPORT_DATE: дата выдачи (ДД.ММ.ГГГГ)
+- ADDRESS: полный адрес
+- PHONE: телефон (+998...)
+- PINFL: 14-значный номер
+- DIRECTOR_SHORT_LATIN: "ISHMATOV SH.R." (по умолчанию)
+- HR_DIRECTOR_SHORT_LATIN: "KOROTUN O.A." (по умолчанию)
+- Все даты в формате ДД.ММ.ГГГГ
+
+Правила по типам документов:
+
+ТРУДОВОЙ ДОГОВОР (td_osnovnoy, td_sovmestitelstvo):
+- POSITION / POSITION_UZ: должность на рус / узб
 - CONTRACT_TYPE: "неопределённый срок" или "определённый срок"
 - CONTRACT_TYPE_UZ: "муддатсиз" или "муайян муддатга"
 - WORK_TYPE: "основной работы" или "работы по совместительству"
 - WORK_TYPE_UZ: "асосий иш жойи" или "ўриндошлик бўйича иш жойи"
-- WORK_CHARACTER: "офисный", "разъездной", "в пути", "на производстве"
-- PROBATION: ТОЛЬКО число месяцев ("3", не "3 месяца")
+- PROBATION: ТОЛЬКО число месяцев ("3")
 - SALARY: ТОЛЬКО число (5000000). SALARY_TEXT генерируется автоматически.
-- VACATION_DAYS: число дней отпуска (по умолчанию 21). VACATION_DAYS_TEXT генерируется автоматически.
-- HOURS_WEEK / HOURS_DAY: заполняются автоматически (40/8 для основного, 20/4 для совместительства)
-- CONTRACT_DATE: если не указана — используй текущую дату
-- Даты в формате ДД.ММ.ГГГГ
+- VACATION_DAYS: число дней (по умолчанию 21). Текст генерируется автоматически.
+- HOURS_WEEK / HOURS_DAY: автоматически (40/8 основной, 20/4 совместительство)
+
+ГПД (gpd_uslugi):
+- CONTRACT_NUMBER, CONTRACT_DATE: номер и дата договора
+- INN: ИНН исполнителя
+- BANK_ACCOUNT, BANK_NAME, BANK_MFO, CARD_NUMBER: банковские реквизиты
+
+ПРИКАЗ О ПРИЁМЕ (prikaz_priem):
+- POSITION_GENITIVE: должность в родительном падеже ("специалиста по маркетингу")
+- START_DATE / START_DATE_SHORT: дата приёма ("12 февраля 2026 года" / "12.02.2026")
+- WORK_TYPE: "по основному месту работы" или "по совместительству"
+- ORDER_NUMBER: номер приказа
+- TD_NUMBER: номер трудового договора
+
+ПРИКАЗ ЗАКРЕПЛЕНИЯ АВТО (prikaz_avto):
+- POSITION / POSITION_INSTRUMENTAL: должность ("Специалист" / "специалистом")
+- CAR_BRAND, CAR_NUMBER: марка и госномер авто
+- CONTROLLER_FIO_LATIN, CONTROLLER_SHORT_LATIN: ФИО контролирующего лица
+- CONTROLLER_POSITION / CONTROLLER_POSITION_GENITIVE: должность контролирующего
+- SIGNER_TITLE, SIGNER_SHORT_LATIN: подписант ("Директор AI трансформации", "SUVOROVA T. A.")
+
+МАТ. ОТВЕТСТВЕННОСТЬ (mat_otvetstvennost):
+- PASSPORT_SERIES / PASSPORT_NUMBER: серия и номер раздельно
+
+ДОП. СОГЛАШЕНИЕ — смена паспорта (dop_soglashenie_pasport):
+- TD_NUMBER, TD_DATE: номер и дата трудового договора
+- AGREEMENT_NUMBER, AGREEMENT_DATE: номер и дата доп. соглашения
+- NEW_PASSPORT, NEW_PASSPORT_ISSUED_BY, NEW_PASSPORT_DATE: новые паспортные данные
+- DIRECTOR_FIO_LATIN, DIRECTOR_SHORT_LATIN: ФИО директора
+
+NDA ДЛЯ РАБОТНИКА (nda_rabotnik):
+- SIGNER_TITLE: должность подписанта ("Генеральный директор" или "Директор продаж")
+- SIGNER_TITLE_GENITIVE: в родит. падеже ("Генерального директора")
+- SIGNER_TITLE_UZ: на узбекском ("Бош директор" или "Савдо директори")
+- CITIZEN_GENDER: "гражданин" или "гражданка"
+- DIRECTOR_FIO_LATIN: ФИО подписанта ("ISHMATOV SHERZOD RUSTAMOVICH")
+
+NDA ДЛЯ ГПД (nda_gpd):
+- CITIZEN_GENDER: "гражданин" или "гражданка"
+- DIRECTOR_FIO / DIRECTOR_FIO_NOMINATIVE / DIRECTOR_SHORT: ФИО директора в разных падежах
+
+ВОЗМЕЩЕНИЕ РАСХОДОВ (soglashenie_vozmeshenie):
+- AGREEMENT_DATE: дата соглашения
+
+ОБРАБОТКА ПЕРС. ДАННЫХ (soglashenie_pd):
+- AGREEMENT_NUMBER, AGREEMENT_DATE: номер и дата соглашения
+- GPD_NUMBER, GPD_DATE: номер и дата ГПД на который ссылается
 
 Категории шаблонов:
-- td_osnovnoy — трудовой договор по основному месту работы
-- td_sovmestitelstvo — трудовой договор по совместительству
-
-Пример вызова generate_document:
-generate_document(template_id=2, data={
-  "FIO": "ИВАНОВА МАРИЯ ПЕТРОВНА",
-  "FIO_LATIN": "IVANOVA MARIYA PETROVNA",
-  "FIO_SHORT_LATIN": "IVANOVA M. P.",
-  "CONTRACT_NUMBER": "2026-15",
-  "CONTRACT_DATE": "07.04.2026",
-  "START_DATE": "10.04.2026",
-  "PASSPORT": "AB 1234567",
-  "PASSPORT_ISSUED_BY": "IIV 12345",
-  "PASSPORT_DATE": "15.03.2024",
-  "POSITION": "Бухгалтер",
-  "POSITION_UZ": "Бухгалтер",
-  "SALARY": "5000000",
-  "CONTRACT_TYPE": "неопределённый срок",
-  "CONTRACT_TYPE_UZ": "муддатсиз",
-  "WORK_TYPE": "основной работы",
-  "WORK_TYPE_UZ": "асосий иш жойи",
-  "PROBATION": "3",
-  "WORK_CHARACTER": "офисный",
-  "HOURS_WEEK": "40",
-  "HOURS_DAY": "8",
-  "VACATION_DAYS": "21",
-  "ADDRESS": "г. Ташкент, район, улица, дом, кв",
-  "PHONE": "+998901234567",
-  "PINFL": "32001015670045"
-})
+- td_osnovnoy — трудовой договор (основное место)
+- td_sovmestitelstvo — трудовой договор (совместительство)
+- gpd_uslugi — ГПД на оказание услуг
+- prikaz_priem — приказ о приёме на работу
+- prikaz_avto — приказ закрепления авто
+- mat_otvetstvennost — договор мат. ответственности
+- dop_soglashenie_pasport — доп. соглашение (смена паспорта)
+- nda_rabotnik — NDA для работника
+- nda_gpd — NDA для исполнителя по ГПД
+- soglashenie_vozmeshenie — соглашение о возмещении расходов
+- soglashenie_pd — соглашение об обработке перс. данных
 
 КРИТИЧНО: в data должны быть ВСЕ поля из fields. Пустые поля = пустые места в документе.
 Отвечай коротко, по делу, на русском.
@@ -104,11 +140,11 @@ OPENAI_TOOLS = [
             "name": "find_template",
             "description": (
                 "Найти шаблон документа по категории. "
-                "Категории: td_osnovnoy (трудовой договор, основное место), "
-                "td_sovmestitelstvo (трудовой договор, совместительство), "
-                "гпд, приказ, должностная_инструкция, "
-                "мат_ответственность, соглашение_конфиденциальности, "
-                "соглашение_персданные, соглашение_возмещение, другое."
+                "Категории: td_osnovnoy, td_sovmestitelstvo, "
+                "gpd_uslugi, prikaz_priem, prikaz_avto, "
+                "mat_otvetstvennost, dop_soglashenie_pasport, "
+                "nda_rabotnik, nda_gpd, "
+                "soglashenie_vozmeshenie, soglashenie_pd."
             ),
             "parameters": {
                 "type": "object",
@@ -140,16 +176,8 @@ OPENAI_TOOLS = [
                     "data": {
                         "type": "object",
                         "description": (
-                            "Данные для подстановки. Ключи — метки шаблона "
-                            "(используй список полей из find_template): "
-                            "FIO, FIO_LATIN, FIO_SHORT_LATIN, "
-                            "PASSPORT, PASSPORT_ISSUED_BY, PASSPORT_DATE, "
-                            "POSITION, POSITION_UZ, SALARY, SALARY_TEXT, SALARY_TEXT_UZ, "
-                            "CONTRACT_NUMBER, CONTRACT_DATE, START_DATE, "
-                            "PROBATION, HOURS_WEEK, HOURS_DAY, "
-                            "VACATION_DAYS, VACATION_DAYS_TEXT, VACATION_DAYS_TEXT_UZ, "
-                            "ADDRESS, PHONE, PINFL, "
-                            "WORK_TYPE, WORK_TYPE_UZ, CONTRACT_TYPE, CONTRACT_TYPE_UZ, WORK_CHARACTER"
+                            "Данные для подстановки. Используй ТОЧНЫЙ список полей "
+                            "из find_template (fields). Передай ВСЕ поля."
                         ),
                     },
                 },
@@ -177,14 +205,17 @@ def _parse_int(value: str) -> int | None:
 def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, str]:  # noqa: PLR0912
     """Generate computed fields programmatically after LLM extraction.
 
-    - SALARY_TEXT / SALARY_TEXT_UZ from SALARY
-    - VACATION_DAYS_TEXT / VACATION_DAYS_TEXT_UZ from VACATION_DAYS
-    - SALARY formatting with space separators
-    - POSITION_UZ fallback to POSITION
-    - CONTRACT_DATE default to today
+    Handles auto-generation for all document types:
+    - TD: SALARY_TEXT, VACATION_DAYS_TEXT, HOURS, POSITION_UZ, CONTRACT_DATE
+    - All: DIRECTOR_SHORT_LATIN, HR_DIRECTOR_SHORT_LATIN defaults
     - PROBATION: extract just the number
-    - HOURS_WEEK / HOURS_DAY: defaults based on contract type
     """
+    # Company defaults — if field exists in template but not provided
+    if "DIRECTOR_SHORT_LATIN" in data and not data["DIRECTOR_SHORT_LATIN"]:
+        data["DIRECTOR_SHORT_LATIN"] = "ISHMATOV SH.R."
+    if "HR_DIRECTOR_SHORT_LATIN" in data and not data["HR_DIRECTOR_SHORT_LATIN"]:
+        data["HR_DIRECTOR_SHORT_LATIN"] = "KOROTUN O.A."
+
     # PROBATION: strip to digits only ("3 месяца" → "3")
     prob = data.get("PROBATION", "")
     if prob:
@@ -192,11 +223,12 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
         if prob_int:
             data["PROBATION"] = str(prob_int)
 
-    # HOURS defaults based on contract type
-    if not data.get("HOURS_WEEK"):
-        data["HOURS_WEEK"] = "20" if category == "td_sovmestitelstvo" else "40"
-    if not data.get("HOURS_DAY"):
-        data["HOURS_DAY"] = "4" if category == "td_sovmestitelstvo" else "8"
+    # HOURS defaults based on contract type (TD only)
+    if category.startswith("td_"):
+        if not data.get("HOURS_WEEK"):
+            data["HOURS_WEEK"] = "20" if category == "td_sovmestitelstvo" else "40"
+        if not data.get("HOURS_DAY"):
+            data["HOURS_DAY"] = "4" if category == "td_sovmestitelstvo" else "8"
 
     # SALARY → formatted + text
     salary_raw = data.get("SALARY", "")
@@ -208,27 +240,30 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
         if not data.get("SALARY_TEXT_UZ"):
             data["SALARY_TEXT_UZ"] = num_to_text_uz(salary_int) + " сўм 00 тийин"
 
-    # VACATION_DAYS → text
-    vac = data.get("VACATION_DAYS", "")
-    if not vac:
-        data["VACATION_DAYS"] = "21"
-        vac = "21"
-    vac_int = _parse_int(vac)
-    if vac_int:
-        if not data.get("VACATION_DAYS_TEXT"):
-            data["VACATION_DAYS_TEXT"] = num_to_text_ru(vac_int)
-        if not data.get("VACATION_DAYS_TEXT_UZ"):
-            data["VACATION_DAYS_TEXT_UZ"] = num_to_text_uz(vac_int)
+    # VACATION_DAYS → text (TD only)
+    if category.startswith("td_"):
+        vac = data.get("VACATION_DAYS", "")
+        if not vac:
+            data["VACATION_DAYS"] = "21"
+            vac = "21"
+        vac_int = _parse_int(vac)
+        if vac_int:
+            if not data.get("VACATION_DAYS_TEXT"):
+                data["VACATION_DAYS_TEXT"] = num_to_text_ru(vac_int)
+            if not data.get("VACATION_DAYS_TEXT_UZ"):
+                data["VACATION_DAYS_TEXT_UZ"] = num_to_text_uz(vac_int)
 
     # POSITION_UZ fallback
     if not data.get("POSITION_UZ") and data.get("POSITION"):
         data["POSITION_UZ"] = data["POSITION"]
 
-    # CONTRACT_DATE default to today
-    if not data.get("CONTRACT_DATE"):
-        from datetime import datetime
+    # CONTRACT_DATE / AGREEMENT_DATE / ORDER_DATE — default to today
+    from datetime import datetime
 
-        data["CONTRACT_DATE"] = datetime.now(tz=UTC).strftime("%d.%m.%Y")
+    today = datetime.now(tz=UTC).strftime("%d.%m.%Y")
+    for date_field in ("CONTRACT_DATE", "AGREEMENT_DATE", "ORDER_DATE"):
+        if date_field in data and not data[date_field]:
+            data[date_field] = today
 
     return data
 
