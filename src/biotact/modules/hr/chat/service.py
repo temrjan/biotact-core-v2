@@ -203,6 +203,31 @@ def _parse_int(value: str) -> int | None:
     return int(digits) if digits else None
 
 
+_MONTHS_RU = [
+    "", "января", "февраля", "марта", "апреля", "мая", "июня",
+    "июля", "августа", "сентября", "октября", "ноября", "декабря",
+]
+
+
+def _is_short_date(value: str) -> bool:
+    """Check if value looks like DD.MM.YYYY."""
+    import re
+
+    return bool(re.match(r"^\d{1,2}\.\d{2}\.\d{4}$", value.strip()))
+
+
+def _date_to_full_russian(short_date: str) -> str:
+    """Convert '15.04.2026' to '15 апреля 2026 года'."""
+    parts = short_date.strip().split(".")
+    if len(parts) != 3:
+        return short_date
+    day, month, year = parts
+    month_int = int(month)
+    if 1 <= month_int <= 12:
+        return f"{int(day)} {_MONTHS_RU[month_int]} {year} года"
+    return short_date
+
+
 def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, str]:  # noqa: PLR0912
     """Generate computed fields programmatically after LLM extraction.
 
@@ -257,6 +282,21 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
     # POSITION_UZ fallback
     if not data.get("POSITION_UZ") and data.get("POSITION"):
         data["POSITION_UZ"] = data["POSITION"]
+
+    # START_DATE: convert short date to full Russian format if needed
+    # "15.04.2026" → "15 апреля 2026 года"
+    start_date = data.get("START_DATE", "")
+    if start_date and _is_short_date(start_date):
+        data["START_DATE"] = _date_to_full_russian(start_date)
+
+    # WORK_TYPE: ensure full phrase for prikaz_priem
+    if category == "prikaz_priem":
+        wt = data.get("WORK_TYPE", "")
+        if wt and "по " not in wt:
+            if "совместител" in wt:
+                data["WORK_TYPE"] = "по совместительству"
+            else:
+                data["WORK_TYPE"] = "по основному месту работы"
 
     # CONTRACT_DATE / AGREEMENT_DATE / ORDER_DATE — default to today
     from datetime import datetime
