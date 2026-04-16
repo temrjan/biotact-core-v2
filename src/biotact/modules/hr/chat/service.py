@@ -210,10 +210,10 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
     - All: DIRECTOR_SHORT_LATIN, HR_DIRECTOR_SHORT_LATIN defaults
     - PROBATION: extract just the number
     """
-    # Company defaults — if field exists in template but not provided
-    if "DIRECTOR_SHORT_LATIN" in data and not data["DIRECTOR_SHORT_LATIN"]:
+    # Company defaults — fill if missing or empty
+    if not data.get("DIRECTOR_SHORT_LATIN"):
         data["DIRECTOR_SHORT_LATIN"] = "ISHMATOV SH.R."
-    if "HR_DIRECTOR_SHORT_LATIN" in data and not data["HR_DIRECTOR_SHORT_LATIN"]:
+    if not data.get("HR_DIRECTOR_SHORT_LATIN"):
         data["HR_DIRECTOR_SHORT_LATIN"] = "KOROTUN O.A."
 
     # PROBATION: strip to digits only ("3 месяца" → "3")
