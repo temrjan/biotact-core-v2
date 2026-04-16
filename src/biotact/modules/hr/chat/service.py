@@ -217,14 +217,17 @@ def _is_short_date(value: str) -> bool:
 
 
 def _date_to_full_russian(short_date: str) -> str:
-    """Convert '15.04.2026' to '15 апреля 2026 года'."""
+    """Convert '15.04.2026' to '15 апреля 2026'.
+
+    Note: no 'года' suffix — templates add 'г.' or 'й.' themselves.
+    """
     parts = short_date.strip().split(".")
     if len(parts) != 3:
         return short_date
     day, month, year = parts
     month_int = int(month)
     if 1 <= month_int <= 12:
-        return f"{int(day)} {_MONTHS_RU[month_int]} {year} года"
+        return f"{int(day)} {_MONTHS_RU[month_int]} {year}"
     return short_date
 
 
@@ -261,10 +264,9 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
     salary_int = _parse_int(salary_raw) if salary_raw else None
     if salary_int:
         data["SALARY"] = format_salary(salary_raw)
-        if not data.get("SALARY_TEXT"):
-            data["SALARY_TEXT"] = num_to_text_ru(salary_int) + " сум 00 тийин"
-        if not data.get("SALARY_TEXT_UZ"):
-            data["SALARY_TEXT_UZ"] = num_to_text_uz(salary_int) + " сўм 00 тийин"
+        # Always regenerate text — LLM often puts numbers instead of words
+        data["SALARY_TEXT"] = num_to_text_ru(salary_int) + " сум 00 тийин"
+        data["SALARY_TEXT_UZ"] = num_to_text_uz(salary_int) + " сўм 00 тийин"
 
     # VACATION_DAYS → text (TD only)
     if category.startswith("td_"):
