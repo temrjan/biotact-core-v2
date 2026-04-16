@@ -245,6 +245,37 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
     if not data.get("HR_DIRECTOR_SHORT_LATIN"):
         data["HR_DIRECTOR_SHORT_LATIN"] = "KOROTUN O.A."
 
+    # SIGNER_TITLE defaults for NDA
+    if category == "nda_rabotnik":
+        if not data.get("SIGNER_TITLE"):
+            data["SIGNER_TITLE"] = "Генеральный директор"
+        if not data.get("SIGNER_TITLE_GENITIVE"):
+            # Derive from SIGNER_TITLE
+            title = data.get("SIGNER_TITLE", "")
+            if "Генеральный директор" in title:
+                data["SIGNER_TITLE_GENITIVE"] = "Генерального директора"
+            elif "Директор продаж" in title:
+                data["SIGNER_TITLE_GENITIVE"] = "Директора продаж"
+            else:
+                data["SIGNER_TITLE_GENITIVE"] = title
+        if not data.get("SIGNER_TITLE_UZ"):
+            title = data.get("SIGNER_TITLE", "")
+            if "Генеральный директор" in title:
+                data["SIGNER_TITLE_UZ"] = "Бош директор"
+            elif "Директор продаж" in title:
+                data["SIGNER_TITLE_UZ"] = "Савдо директори"
+            else:
+                data["SIGNER_TITLE_UZ"] = title
+
+    # CITIZEN_GENDER: normalize LLM output
+    cg = data.get("CITIZEN_GENDER", "")
+    if cg and cg not in ("гражданин", "гражданка"):
+        # LLM may return "женский"/"мужской" or other variants
+        if any(w in cg.lower() for w in ("жен", "female", "ка")):
+            data["CITIZEN_GENDER"] = "гражданка"
+        else:
+            data["CITIZEN_GENDER"] = "гражданин"
+
     # PROBATION: strip to digits only ("3 месяца" → "3")
     prob = data.get("PROBATION", "")
     if prob:
