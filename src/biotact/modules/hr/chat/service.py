@@ -312,12 +312,32 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
             if not data.get("VACATION_DAYS_TEXT_UZ"):
                 data["VACATION_DAYS_TEXT_UZ"] = num_to_text_uz(vac_int)
 
+    # POSITION: normalize case — LLM often returns ALL CAPS
+    for pos_field in ("POSITION", "POSITION_UZ", "POSITION_GENITIVE", "POSITION_INSTRUMENTAL"):
+        val = data.get(pos_field, "")
+        if val and val == val.upper() and len(val) > 3:
+            data[pos_field] = val.capitalize()
+
     # POSITION_UZ fallback
     if not data.get("POSITION_UZ") and data.get("POSITION"):
         data["POSITION_UZ"] = data["POSITION"]
 
+    # WORK_CHARACTER_UZ: translate from Russian
+    wc = data.get("WORK_CHARACTER", "")
+    if wc and not data.get("WORK_CHARACTER_UZ"):
+        wc_map = {
+            "офисный": "офис",
+            "офис": "офис",
+            "разъездной": "саёҳат",
+            "в пути": "йўлда",
+            "на производстве": "ишлаб чиқариш",
+            "производство": "ишлаб чиқариш",
+            "производственный": "ишлаб чиқариш",
+        }
+        data["WORK_CHARACTER_UZ"] = wc_map.get(wc.lower(), wc)
+
     # START_DATE: convert short date to full Russian format if needed
-    # "15.04.2026" → "15 апреля 2026 года"
+    # "15.04.2026" → "15 апреля 2026"
     start_date = data.get("START_DATE", "")
     if start_date and _is_short_date(start_date):
         data["START_DATE"] = _date_to_full_russian(start_date)
