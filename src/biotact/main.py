@@ -17,6 +17,7 @@ from biotact.modules.dashboard.config import dashboard_config
 from biotact.modules.documents.vector_store import FileVectorStore
 from biotact.modules.hr.config import hr_config
 from biotact.modules.marketing.config import marketing_config
+from biotact.modules.media.vector_store import MediaTranscriptionVectorStore
 
 
 @asynccontextmanager
@@ -28,9 +29,10 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     module_registry.register(marketing_config)
     module_registry.register(hr_config)
 
-    # Ensure Qdrant collection for user files
-    vector_store = FileVectorStore(get_settings())
-    await vector_store.ensure_collection()
+    # Ensure Qdrant collections
+    settings = get_settings()
+    await FileVectorStore(settings).ensure_collection()
+    await MediaTranscriptionVectorStore(settings).ensure_collection()
 
     # Ensure all tables exist (safe to call repeatedly — checkfirst=True)
     from biotact.core.database import engine

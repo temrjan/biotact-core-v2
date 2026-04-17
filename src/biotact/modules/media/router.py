@@ -6,22 +6,30 @@ import re
 from datetime import datetime
 from functools import lru_cache
 
-from fastapi import APIRouter, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, UploadFile, status
 from fastapi.responses import Response
+from openai import AsyncOpenAI
 
 from biotact.core.config import get_settings
+from biotact.core.database import AsyncSessionLocal
 from biotact.core.dependencies import CurrentUserDep, SessionDep
 from biotact.models.user import User
+from biotact.modules.media.chat_service import MediaChatService
+from biotact.modules.media.indexing_service import index_transcription
 from biotact.modules.media.models import MediaTranscription
 from biotact.modules.media.openai_client import STT_DIRECT_MAX_BYTES, AudioClient
 from biotact.modules.media.repository import MediaTranscriptionRepository
 from biotact.modules.media.schemas import (
+    MediaChatRequest,
+    MediaChatResponse,
     SynthesizeRequest,
     TranscribeResponse,
     TranscriptionDetail,
     TranscriptionListItem,
     TranscriptionListResponse,
 )
+from biotact.modules.media.vector_store import MediaTranscriptionVectorStore
+from biotact.services.rag.embedding import EmbeddingService
 
 logger = logging.getLogger(__name__)
 
@@ -83,12 +91,14 @@ def _preview(text: str) -> str:
 
 
 async def _cleanup_transcription_vectors(transcription_id: str) -> None:
-    """Remove Qdrant vectors for a transcription.
-
-    Placeholder for Этап 3 — real implementation will delete all points
-    with matching transcription_id from the media_transcriptions collection.
-    """
-    logger.debug("Vector cleanup hook (stub) for %s", transcription_id)
+    """Remove Qdrant vectors associated with a transcription."""
+    store = MediaTranscriptionVectorStore(get_settings())
+    try:
+        await store.delete_transcription_vectors(transcription_id)
+    except Exception:
+        logger.exception(
+            "Failed to delete vectors for transcription %s", transcription_id
+        )
 
 
 async def _get_or_404(
@@ -118,9 +128,11 @@ def _to_list_item(
         transcription_id=record.transcription_id,
         title=record.title,
         preview=_preview(record.text),
+        summary=record.summary or "",
         uploaded_by=record.uploaded_by,
         uploaded_by_name=record.creator.full_name if record.creator else "",
         is_owner=record.uploaded_by == current_user.id,
+        is_indexed=record.is_indexed,
         created_at=record.created_at,
     )
 
@@ -130,10 +142,13 @@ def _to_detail(record: MediaTranscription, current_user: User) -> TranscriptionD
         transcription_id=record.transcription_id,
         title=record.title,
         text=record.text,
+        summary=record.summary or "",
+        keywords=list(record.keywords or []),
         original_filename=record.original_filename,
         uploaded_by=record.uploaded_by,
         uploaded_by_name=record.creator.full_name if record.creator else "",
         is_owner=record.uploaded_by == current_user.id,
+        is_indexed=record.is_indexed,
         created_at=record.created_at,
     )
 
@@ -143,6 +158,7 @@ async def transcribe_audio(
     file: UploadFile,
     current_user: CurrentUserDep,
     session: SessionDep,
+    background_tasks: BackgroundTasks,
 ) -> TranscribeResponse:
     """Transcribe uploaded audio via Whisper and persist the result."""
     _validate_audio(file)
@@ -194,6 +210,11 @@ async def transcribe_audio(
         title=title,
         text=text,
         uploaded_by=current_user.id,
+    )
+
+    background_tasks.add_task(
+        _index_transcription_background,
+        transcription_id=record.transcription_id,
     )
 
     return TranscribeResponse(
@@ -283,3 +304,66 @@ async def delete_transcription(
 
     await _cleanup_transcription_vectors(transcription_id)
     await repo.delete(record)
+
+
+@router.post("/chat", response_model=MediaChatResponse)
+async def media_chat(
+    request: MediaChatRequest,
+    _current_user: CurrentUserDep,
+) -> MediaChatResponse:
+    """Unified RAG chat across transcriptions + documents + knowledge bases."""
+    settings = get_settings()
+    embedding = EmbeddingService(settings)
+    service = MediaChatService(settings=settings, embedding_service=embedding)
+    return await service.query(
+        message=request.message,
+        history=request.history,
+    )
+
+
+async def _index_transcription_background(transcription_id: str) -> None:
+    """Run the enrichment + Qdrant indexing pipeline out-of-band.
+
+    Opens its own DB session (FastAPI BackgroundTask does not inherit the
+    request scope). Failures are logged but do not raise — the record
+    stays with MVP title and is_indexed=False; the user can retry.
+    """
+    settings = get_settings()
+    llm_client = AsyncOpenAI(api_key=settings.openai_api_key)
+    embedding_service = EmbeddingService(settings)
+    vector_store = MediaTranscriptionVectorStore(settings)
+
+    async with AsyncSessionLocal() as session:
+        repo = MediaTranscriptionRepository(session)
+        record = await repo.get_by_uuid(transcription_id)
+        if not record:
+            logger.warning(
+                "Background indexing: transcription %s not found", transcription_id
+            )
+            return
+
+        try:
+            enrich, chunk_count = await index_transcription(
+                transcription_id=record.transcription_id,
+                user_id=record.uploaded_by,
+                created_at=record.created_at,
+                original_filename=record.original_filename,
+                text=record.text,
+                llm_client=llm_client,
+                llm_model=settings.openai_model,
+                embedding_service=embedding_service,
+                vector_store=vector_store,
+            )
+        except Exception:
+            logger.exception("Background indexing failed for %s", transcription_id)
+            return
+
+        new_title = enrich.title or record.title
+        await repo.update_enrichment(
+            record=record,
+            title=new_title,
+            summary=enrich.summary,
+            keywords=enrich.keywords,
+            chunk_count=chunk_count,
+        )
+        await session.commit()

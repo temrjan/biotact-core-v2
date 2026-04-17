@@ -456,6 +456,14 @@ function Dashboard({ onLogout }) {
   const [sttHistoryError, setSttHistoryError] = useState('');
   const [sttSelectedId, setSttSelectedId] = useState(null);
   const SST_PAGE_SIZE = 20;
+  // Media chat (unified RAG across all collections)
+  const [mediaChatMsgs, setMediaChatMsgs] = useState([
+    { id: '0', role: 'ai', text: 'Здравствуйте! Задайте вопрос — я поищу по транскриптам, документам и базам знаний.', ts: new Date() },
+  ]);
+  const [mediaChatInput, setMediaChatInput] = useState('');
+  const [mediaChatLoading, setMediaChatLoading] = useState(false);
+  const mediaChatEndRef = useRef(null);
+  const mediaChatInputRef = useRef(null);
 
   // Marketing — Content Generator
   const [mktTab, setMktTab] = useState('generate'); // 'generate' | 'history'
@@ -726,6 +734,58 @@ function Dashboard({ onLogout }) {
       setSttHistoryError(err.message || 'Не удалось удалить');
     }
   }, [sttSelectedId, sttHistoryPage, loadTranscriptions]);
+
+  const sendMediaChat = useCallback(async () => {
+    const text = mediaChatInput.trim();
+    if (!text || mediaChatLoading) return;
+
+    if (mediaTab !== 'audio') {
+      setMediaChatMsgs(prev => [
+        ...prev,
+        { id: Date.now().toString(), role: 'user', text, ts: new Date() },
+        { id: (Date.now() + 1).toString(), role: 'ai', text: 'Раздел в разработке — поиск пока доступен в аудио-транскриптах и смежных базах.', ts: new Date() },
+      ]);
+      setMediaChatInput('');
+      return;
+    }
+
+    const userMsg = { id: Date.now().toString(), role: 'user', text, ts: new Date() };
+    setMediaChatMsgs(prev => [...prev, userMsg]);
+    setMediaChatInput('');
+    setMediaChatLoading(true);
+
+    try {
+      const history = mediaChatMsgs
+        .slice(-8)
+        .filter(m => m.text)
+        .map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }));
+      const data = await api.mediaChat(text, history);
+      setMediaChatMsgs(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          role: 'ai',
+          text: data.answer || 'Пустой ответ.',
+          sources: data.sources || [],
+          ts: new Date(),
+        },
+      ]);
+    } catch (err) {
+      setMediaChatMsgs(prev => [
+        ...prev,
+        { id: (Date.now() + 1).toString(), role: 'ai', text: `Ошибка: ${err.message || 'не удалось получить ответ'}`, ts: new Date() },
+      ]);
+    } finally {
+      setMediaChatLoading(false);
+    }
+  }, [mediaChatInput, mediaChatLoading, mediaTab, mediaChatMsgs]);
+
+  const handleOpenMediaSource = useCallback(async (source) => {
+    if (source.source_type !== 'media' || !source.ref_id) return;
+    setMediaTab('audio');
+    setAudioMode('stt');
+    await handleSelectTranscription(source.ref_id);
+  }, [handleSelectTranscription]);
 
   const handleCopyTranscript = useCallback(async () => {
     if (!sttText) return;
@@ -1029,6 +1089,10 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
   useEffect(() => {
     askEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [askMsgs]);
+
+  useEffect(() => {
+    mediaChatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [mediaChatMsgs]);
 
   const sendAskMessage = useCallback(async () => {
     if (!askInput.trim() || askLoading) return;
@@ -2286,8 +2350,11 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                                   <span>·</span>
                                   <span className="truncate">{item.uploaded_by_name || 'Без имени'}</span>
                                 </div>
-                                <div className="text-sm font-medium mb-1 truncate" style={{ color: theme.text.primary }}>
-                                  {item.title}
+                                <div className="text-sm font-medium mb-1 truncate flex items-center gap-1.5" style={{ color: theme.text.primary }}>
+                                  <span className="truncate">{item.title}</span>
+                                  {!item.is_indexed && (
+                                    <Loader2 size={11} className="animate-spin flex-shrink-0" style={{ color: theme.text.muted }} title="Индексируется..." />
+                                  )}
                                 </div>
                                 <div className="text-xs line-clamp-2" style={{ color: theme.text.secondary }}>
                                   {item.preview}
@@ -2428,7 +2495,6 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
       </main>
 
       {/* ══════════ CHAT SIDEBAR ══════════ */}
-      {section !== 'media' && (
       <aside
         className="w-96 flex flex-col border-l"
         style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
@@ -2440,18 +2506,18 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
           <div className="flex-1">
             <div className="text-sm font-semibold" style={{ color: theme.text.primary }}>
-              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : section === 'documents' ? 'Документы AI' : section === 'hr' ? 'HR Ассистент' : 'AI Ассистент'}
+              {section === 'askbiotact' ? 'Тест консультанта' : section === 'marketing' ? 'Контент-ассистент' : section === 'documents' ? 'Документы AI' : section === 'hr' ? 'HR Ассистент' : section === 'media' ? 'Медиа Поиск' : 'AI Ассистент'}
             </div>
             <div className="text-[11px] flex items-center gap-1" style={{ color: theme.text.success }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.text.success }} />
-              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : section === 'documents' ? `${docStats.indexed_files} документов проиндексировано` : section === 'hr' ? `${hrTemplates.length} образцов загружено` : 'Подключён к API'}
+              {section === 'askbiotact' ? 'Промпт загружен' : section === 'marketing' ? 'Поиск + генерация' : section === 'documents' ? `${docStats.indexed_files} документов проиндексировано` : section === 'hr' ? `${hrTemplates.length} образцов загружено` : section === 'media' ? 'По всем источникам' : 'Подключён к API'}
             </div>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-auto p-4 space-y-4">
-          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : section === 'documents' ? docChatMsgs : section === 'hr' ? hrChatMsgs : msgs).map(m => (
+          {(section === 'askbiotact' ? askMsgs : section === 'marketing' ? mktChatMsgs : section === 'documents' ? docChatMsgs : section === 'hr' ? hrChatMsgs : section === 'media' ? mediaChatMsgs : msgs).map(m => (
             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
                 className="max-w-[85%] px-4 py-3 text-sm leading-relaxed"
@@ -2472,10 +2538,40 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                   </div>
                 )}
                 <p className="whitespace-pre-line">{m.text}</p>
+                {section === 'media' && m.role === 'ai' && Array.isArray(m.sources) && m.sources.length > 0 && (
+                  <div className="mt-3 pt-3 border-t space-y-1.5" style={{ borderColor: theme.border.default }}>
+                    <div className="text-[10px] font-medium uppercase tracking-wider" style={{ color: theme.text.muted }}>
+                      Источники
+                    </div>
+                    {m.sources.map((s, idx) => {
+                      const isMedia = s.source_type === 'media' && s.ref_id;
+                      const typeLabel = { media: 'Запись', files: 'Файл', biotact: 'Biotact', dr_berg: 'Dr Berg', nutrition: 'Nutrition' }[s.source_type] || s.source_type;
+                      const common = {
+                        key: idx,
+                        className: 'block w-full text-left rounded-lg px-2 py-1.5 text-xs transition-colors',
+                        style: { backgroundColor: theme.bg.elevated, color: theme.text.secondary },
+                      };
+                      const body = (
+                        <>
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="font-semibold" style={{ color: theme.text.primary }}>{typeLabel}</span>
+                            <span style={{ color: theme.text.muted }}>·</span>
+                            <span className="truncate flex-1">{s.title}</span>
+                            <span style={{ color: theme.text.muted }}>{Math.round(s.score * 100)}%</span>
+                          </div>
+                          <div className="line-clamp-2" style={{ color: theme.text.muted }}>{s.snippet}</div>
+                        </>
+                      );
+                      return isMedia
+                        ? <button {...common} onClick={() => handleOpenMediaSource(s)}>{body}</button>
+                        : <div {...common}>{body}</div>;
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           ))}
-          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : loading) && (
+          {(section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : section === 'media' ? mediaChatLoading : loading) && (
             <div className="flex justify-start">
               <div className="px-4 py-3 rounded-2xl" style={{ backgroundColor: theme.bg.aiBubble }}>
                 <div className="flex items-center gap-1">
@@ -2486,7 +2582,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
             </div>
           )}
-          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : section === 'documents' ? docChatEndRef : section === 'hr' ? hrChatEndRef : endRef} />
+          <div ref={section === 'askbiotact' ? askEndRef : section === 'marketing' ? mktChatEndRef : section === 'documents' ? docChatEndRef : section === 'hr' ? hrChatEndRef : section === 'media' ? mediaChatEndRef : endRef} />
         </div>
 
         {/* Quick Actions */}
@@ -2500,6 +2596,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               ? ['Найди в документах...', 'Сравни два файла', 'Что нового загружено?']
               : section === 'hr'
               ? ['Составь трудовой договор', 'Приказ о приёме', 'Какие образцы есть?']
+              : section === 'media'
+              ? ['О чём говорили на последней встрече?', 'Что было про пробиотики?', 'Найди упоминание штаммов']
               : ['Расход 5 млн на маркетинг', 'Доход 10 млн', 'Покажи отчёт']
             ).map(a => (
               <button
@@ -2517,6 +2615,9 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                   } else if (section === 'hr') {
                     setHrChatInput(a);
                     hrChatInputRef.current?.focus();
+                  } else if (section === 'media') {
+                    setMediaChatInput(a);
+                    mediaChatInputRef.current?.focus();
                   } else {
                     setInput(a);
                     inputRef.current?.focus();
@@ -2535,13 +2636,13 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         <div className="p-4 border-t" style={{ borderColor: theme.border.default }}>
           <div className="flex gap-2">
             <input
-              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : section === 'documents' ? docChatInputRef : section === 'hr' ? hrChatInputRef : inputRef}
+              ref={section === 'askbiotact' ? askInputRef : section === 'marketing' ? mktChatInputRef : section === 'documents' ? docChatInputRef : section === 'hr' ? hrChatInputRef : section === 'media' ? mediaChatInputRef : inputRef}
               type="text"
-              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : section === 'documents' ? docChatInput : section === 'hr' ? hrChatInput : input}
-              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : section === 'documents' ? setDocChatInput(e.target.value) : section === 'hr' ? setHrChatInput(e.target.value) : setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : section === 'documents' ? sendDocChat() : section === 'hr' ? sendHrChat() : send())}
-              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : section === 'documents' ? 'Спросите о документах...' : section === 'hr' ? 'Какой документ создать?' : 'Напишите команду...'}
-              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : loading}
+              value={section === 'askbiotact' ? askInput : section === 'marketing' ? mktChatInput : section === 'documents' ? docChatInput : section === 'hr' ? hrChatInput : section === 'media' ? mediaChatInput : input}
+              onChange={e => section === 'askbiotact' ? setAskInput(e.target.value) : section === 'marketing' ? setMktChatInput(e.target.value) : section === 'documents' ? setDocChatInput(e.target.value) : section === 'hr' ? setHrChatInput(e.target.value) : section === 'media' ? setMediaChatInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (section === 'askbiotact' ? sendAskMessage() : section === 'marketing' ? sendMktChat() : section === 'documents' ? sendDocChat() : section === 'hr' ? sendHrChat() : section === 'media' ? sendMediaChat() : send())}
+              placeholder={section === 'askbiotact' ? 'Напишите как клиент...' : section === 'marketing' ? 'Спросите про контент...' : section === 'documents' ? 'Спросите о документах...' : section === 'hr' ? 'Какой документ создать?' : section === 'media' ? 'Ищи по записям и базам...' : 'Напишите команду...'}
+              disabled={section === 'askbiotact' ? askLoading : section === 'marketing' ? mktChatLoading : section === 'documents' ? docChatLoading : section === 'hr' ? hrChatLoading : section === 'media' ? mediaChatLoading : loading}
               className="flex-1 border-0 rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2"
               style={{
                 backgroundColor: theme.bg.input,
@@ -2550,8 +2651,8 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               }}
             />
             <button
-              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : section === 'hr' ? sendHrChat : send}
-              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : section === 'hr' ? (!hrChatInput.trim() || hrChatLoading) : (!input.trim() || loading)}
+              onClick={section === 'askbiotact' ? sendAskMessage : section === 'marketing' ? sendMktChat : section === 'documents' ? sendDocChat : section === 'hr' ? sendHrChat : section === 'media' ? sendMediaChat : send}
+              disabled={section === 'askbiotact' ? (!askInput.trim() || askLoading) : section === 'marketing' ? (!mktChatInput.trim() || mktChatLoading) : section === 'documents' ? (!docChatInput.trim() || docChatLoading) : section === 'hr' ? (!hrChatInput.trim() || hrChatLoading) : section === 'media' ? (!mediaChatInput.trim() || mediaChatLoading) : (!input.trim() || loading)}
               className="w-11 h-11 rounded-xl flex items-center justify-center transition-all disabled:opacity-40"
               style={{ backgroundColor: theme.bg.accent }}
             >
@@ -2560,7 +2661,6 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
       </aside>
-      )}
     </div>
   );
 }

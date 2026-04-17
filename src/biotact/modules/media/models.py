@@ -3,7 +3,8 @@
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, String, Text
+from sqlalchemy import JSON, ForeignKey, String, Text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from biotact.models.base import Base, TimestampMixin
@@ -21,7 +22,8 @@ class MediaTranscription(TimestampMixin, Base):
     """Stored audio transcription result (Whisper output).
 
     Visible to all authenticated users. Only the author (uploaded_by)
-    may delete.
+    may delete. Enrichment fields (summary, keywords) and index status
+    are populated asynchronously by the indexing pipeline.
     """
 
     __tablename__ = "media_transcriptions"
@@ -37,6 +39,14 @@ class MediaTranscription(TimestampMixin, Base):
     original_filename: Mapped[str] = mapped_column(String(500), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     text: Mapped[str] = mapped_column(Text, nullable=False)
+    summary: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    keywords: Mapped[list[str]] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+        default=list,
+    )
+    is_indexed: Mapped[bool] = mapped_column(default=False, nullable=False)
+    chunk_count: Mapped[int] = mapped_column(default=0, nullable=False)
 
     uploaded_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"),

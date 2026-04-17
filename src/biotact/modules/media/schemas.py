@@ -31,9 +31,11 @@ class TranscriptionListItem(BaseModel):
     transcription_id: str
     title: str
     preview: str
+    summary: str
     uploaded_by: int
     uploaded_by_name: str
     is_owner: bool
+    is_indexed: bool
     created_at: datetime
 
 
@@ -53,8 +55,47 @@ class TranscriptionDetail(BaseModel):
     transcription_id: str
     title: str
     text: str
+    summary: str
+    keywords: list[str]
     original_filename: str
     uploaded_by: int
     uploaded_by_name: str
     is_owner: bool
+    is_indexed: bool
     created_at: datetime
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Chat schemas
+# ═══════════════════════════════════════════════════════════════════
+
+
+class ChatMessage(BaseModel):
+    """Single chat message in history."""
+
+    role: str  # "user" | "assistant"
+    content: str
+
+
+class MediaChatRequest(BaseModel):
+    """Chat request to unified media search."""
+
+    message: str = Field(min_length=1, max_length=2000)
+    history: list[ChatMessage] | None = None
+
+
+class MediaChatSource(BaseModel):
+    """One retrieved source cited in the answer."""
+
+    source_type: str  # "media" | "files" | "biotact" | "dr_berg" | "nutrition"
+    title: str
+    snippet: str
+    score: float
+    ref_id: str | None = None  # transcription_id for media, else None
+
+
+class MediaChatResponse(BaseModel):
+    """Unified chat response with cited sources."""
+
+    answer: str
+    sources: list[MediaChatSource]

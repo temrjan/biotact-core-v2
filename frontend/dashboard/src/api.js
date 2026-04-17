@@ -449,6 +449,16 @@ export async function getTranscription(transcriptionId) {
   return apiRequest(`/media/audio/transcriptions/${transcriptionId}`);
 }
 
+/** Unified media RAG chat across all knowledge collections */
+export async function mediaChat(message, history = null) {
+  const body = { message };
+  if (history) body.history = history;
+  return apiRequest('/media/chat', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
 /** Delete transcription (only author) */
 export async function deleteTranscription(transcriptionId) {
   const token = getAuthToken();

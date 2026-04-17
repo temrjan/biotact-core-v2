@@ -59,6 +59,24 @@ class MediaTranscriptionRepository:
 
         return list(items_r.scalars().all()), total_r.scalar_one()
 
+    async def update_enrichment(
+        self,
+        record: MediaTranscription,
+        title: str,
+        summary: str,
+        keywords: list[str],
+        chunk_count: int,
+    ) -> MediaTranscription:
+        """Persist enrichment results after indexing completes."""
+        record.title = title
+        record.summary = summary
+        record.keywords = keywords
+        record.is_indexed = True
+        record.chunk_count = chunk_count
+        await self.session.flush()
+        await self.session.refresh(record)
+        return record
+
     async def delete(self, record: MediaTranscription) -> None:
         """Delete a transcription record."""
         await self.session.delete(record)
