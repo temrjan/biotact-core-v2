@@ -34,12 +34,9 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     await FileVectorStore(settings).ensure_collection()
     await MediaTranscriptionVectorStore(settings).ensure_collection()
 
-    # Ensure all tables exist (safe to call repeatedly — checkfirst=True)
-    from biotact.core.database import engine
-    from biotact.models.base import Base
-
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all, checkfirst=True)
+    # SQL schema is owned by Alembic (`alembic upgrade head` in CD).
+    # Do NOT create tables here — it would bypass the migration chain and
+    # leave alembic_version out of sync with the real schema.
 
     # Register Telegram bot commands (/start, /new, /products, /contact)
     await register_bot_commands()
