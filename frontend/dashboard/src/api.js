@@ -396,6 +396,50 @@ export async function filesChat(message, history = null) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// MEDIA — Audio (STT/TTS via OpenAI)
+// ═══════════════════════════════════════════════════════════════
+
+/** Transcribe audio file to Russian text */
+export async function transcribeAudio(file) {
+  const token = getAuthToken();
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_BASE}/media/audio/transcribe`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  });
+
+  if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Transcribe failed' }));
+    throw new Error(err.detail || 'Transcribe failed');
+  }
+  return response.json();
+}
+
+/** Synthesize Russian text to MP3 audio */
+export async function synthesizeAudio(text, voice = 'nova') {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/media/audio/synthesize`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ text, voice }),
+  });
+
+  if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Synthesize failed' }));
+    throw new Error(err.detail || 'Synthesize failed');
+  }
+  return response.blob();
+}
+
+// ═══════════════════════════════════════════════════════════════
 // HR MODULE
 // ═══════════════════════════════════════════════════════════════
 

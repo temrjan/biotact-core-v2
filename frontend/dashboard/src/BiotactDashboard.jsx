@@ -6,7 +6,8 @@ import {
   Server, Megaphone, Briefcase, ShoppingCart, Coffee,
   Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2,
   Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText,
-  FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown
+  FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown,
+  Image as ImageIcon, Video, Music, Mic, Volume2
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -415,6 +416,7 @@ function Dashboard({ onLogout }) {
     { id: 'marketing', label: 'Marketing', icon: Megaphone },
     { id: 'documents', label: 'Документы', icon: FolderOpen },
     { id: 'hr', label: 'HR', icon: Briefcase },
+    { id: 'media', label: 'Медиа', icon: ImageIcon },
   ];
 
   // AskBiotact state
@@ -427,6 +429,24 @@ function Dashboard({ onLogout }) {
   ]);
   const [askInput, setAskInput] = useState('');
   const [askLoading, setAskLoading] = useState(false);
+
+  // Media — Image / Video / Audio (today: audio only)
+  const [mediaTab, setMediaTab] = useState('audio'); // 'image' | 'video' | 'audio'
+  const [audioMode, setAudioMode] = useState('stt'); // 'stt' | 'tts'
+  const [sttFile, setSttFile] = useState(null);
+  const [sttFileUrl, setSttFileUrl] = useState(null);
+  const [sttText, setSttText] = useState('');
+  const [sttLoading, setSttLoading] = useState(false);
+  const [sttError, setSttError] = useState('');
+  const [sttCopied, setSttCopied] = useState(false);
+  const [ttsText, setTtsText] = useState('');
+  const [ttsVoice, setTtsVoice] = useState('nova');
+  const [ttsLoading, setTtsLoading] = useState(false);
+  const [ttsError, setTtsError] = useState('');
+  const [ttsAudioUrl, setTtsAudioUrl] = useState(null);
+  const [mediaDragOver, setMediaDragOver] = useState(false);
+  const sttFileInputRef = useRef(null);
+  const ttsFileInputRef = useRef(null);
 
   // Marketing — Content Generator
   const [mktTab, setMktTab] = useState('generate'); // 'generate' | 'history'
@@ -620,6 +640,91 @@ function Dashboard({ onLogout }) {
       setDocChatLoading(false);
     }
   }, [docChatInput, docChatLoading, docChatMsgs]);
+
+  // ── Media: Audio handlers ──────────────────────────────────────
+  const acceptSttFile = useCallback((file) => {
+    if (!file) return;
+    setSttError('');
+    setSttText('');
+    setSttCopied(false);
+    if (sttFileUrl) URL.revokeObjectURL(sttFileUrl);
+    setSttFile(file);
+    setSttFileUrl(URL.createObjectURL(file));
+  }, [sttFileUrl]);
+
+  const handleTranscribe = useCallback(async () => {
+    if (!sttFile || sttLoading) return;
+    setSttLoading(true);
+    setSttError('');
+    setSttText('');
+    setSttCopied(false);
+    try {
+      const data = await api.transcribeAudio(sttFile);
+      setSttText(data.text || '');
+    } catch (err) {
+      setSttError(err.message || 'Не удалось транскрибировать');
+    } finally {
+      setSttLoading(false);
+    }
+  }, [sttFile, sttLoading]);
+
+  const handleCopyTranscript = useCallback(async () => {
+    if (!sttText) return;
+    await navigator.clipboard.writeText(sttText);
+    setSttCopied(true);
+    setTimeout(() => setSttCopied(false), 2000);
+  }, [sttText]);
+
+  const handleDownloadTranscript = useCallback(() => {
+    if (!sttText) return;
+    const blob = new Blob([sttText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const baseName = (sttFile?.name || 'transcript').replace(/\.[^.]+$/, '');
+    a.href = url;
+    a.download = `${baseName}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [sttText, sttFile]);
+
+  const handleLoadTxtForTts = useCallback(async (file) => {
+    if (!file) return;
+    setTtsError('');
+    try {
+      const text = await file.text();
+      if (text.length > 4096) {
+        setTtsError('Файл больше 4096 символов — обрежьте текст');
+      }
+      setTtsText(text.slice(0, 4096));
+    } catch (err) {
+      setTtsError(err.message || 'Не удалось прочитать файл');
+    }
+  }, []);
+
+  const handleSynthesize = useCallback(async () => {
+    const text = ttsText.trim();
+    if (!text || ttsLoading) return;
+    setTtsLoading(true);
+    setTtsError('');
+    if (ttsAudioUrl) URL.revokeObjectURL(ttsAudioUrl);
+    setTtsAudioUrl(null);
+    try {
+      const blob = await api.synthesizeAudio(text, ttsVoice);
+      setTtsAudioUrl(URL.createObjectURL(blob));
+    } catch (err) {
+      setTtsError(err.message || 'Не удалось синтезировать');
+    } finally {
+      setTtsLoading(false);
+    }
+  }, [ttsText, ttsVoice, ttsLoading, ttsAudioUrl]);
+
+  const handleDownloadTtsAudio = useCallback(() => {
+    if (!ttsAudioUrl) return;
+    const a = document.createElement('a');
+    a.href = ttsAudioUrl;
+    a.download = 'speech.mp3';
+    a.click();
+  }, [ttsAudioUrl]);
 
   const handleGenerate = useCallback(async () => {
     if (!mktProduct.trim()) return;
@@ -974,9 +1079,10 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 {section === 'marketing' && 'Маркетинг'}
                 {section === 'documents' && 'Документы'}
                 {section === 'hr' && 'HR / Кадры'}
+                {section === 'media' && 'Медиа'}
               </h1>
               <p className="text-xs" style={{ color: theme.text.muted }}>
-                {section === 'askbiotact' ? 'AI Консультант' : section === 'marketing' ? 'Генератор контента' : section === 'documents' ? 'Общая площадка обмена документами' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
+                {section === 'askbiotact' ? 'AI Консультант' : section === 'marketing' ? 'Генератор контента' : section === 'documents' ? 'Общая площадка обмена документами' : section === 'media' ? 'Изображения, видео и аудио' : new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -1912,9 +2018,245 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
         )}
+
+        {section === 'media' && (
+        <div className="flex-1 overflow-auto p-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            {/* Tabs: Image / Video / Audio */}
+            <div className="flex gap-1 p-1 rounded-xl" style={{ backgroundColor: theme.bg.elevated }}>
+              {[
+                { id: 'image', label: 'Изображение', icon: ImageIcon },
+                { id: 'video', label: 'Видео', icon: Video },
+                { id: 'audio', label: 'Аудио', icon: Music },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setMediaTab(tab.id)}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                  style={{
+                    backgroundColor: mediaTab === tab.id ? theme.bg.card : 'transparent',
+                    color: mediaTab === tab.id ? theme.text.primary : theme.text.muted,
+                    boxShadow: mediaTab === tab.id ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                  }}
+                >
+                  <tab.icon size={14} /> {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* ── Image / Video placeholders ── */}
+            {(mediaTab === 'image' || mediaTab === 'video') && (
+              <div className="rounded-2xl p-12 border text-center" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+                {mediaTab === 'image'
+                  ? <ImageIcon size={40} className="mx-auto mb-3" style={{ color: theme.text.muted }} />
+                  : <Video size={40} className="mx-auto mb-3" style={{ color: theme.text.muted }} />}
+                <p className="text-sm font-medium" style={{ color: theme.text.primary }}>Скоро</p>
+                <p className="text-xs mt-1" style={{ color: theme.text.muted }}>Раздел в разработке</p>
+              </div>
+            )}
+
+            {/* ── Audio tab ── */}
+            {mediaTab === 'audio' && (<>
+              {/* Mode switch: STT / TTS */}
+              <div className="flex gap-1 p-1 rounded-xl" style={{ backgroundColor: theme.bg.elevated }}>
+                {[
+                  { id: 'stt', label: 'Аудио → Текст', icon: Mic },
+                  { id: 'tts', label: 'Текст → Аудио', icon: Volume2 },
+                ].map(m => (
+                  <button
+                    key={m.id}
+                    onClick={() => setAudioMode(m.id)}
+                    className="flex-1 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                    style={{
+                      backgroundColor: audioMode === m.id ? theme.bg.card : 'transparent',
+                      color: audioMode === m.id ? theme.text.primary : theme.text.muted,
+                      boxShadow: audioMode === m.id ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                    }}
+                  >
+                    <m.icon size={14} /> {m.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* ── STT: Audio → Text ── */}
+              {audioMode === 'stt' && (
+                <div className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+                  <input
+                    ref={sttFileInputRef}
+                    type="file"
+                    accept=".mp3,.m4a,.wav,.ogg,.oga,.webm,.mp4,.mpeg,.mpga,audio/*"
+                    className="hidden"
+                    onChange={e => acceptSttFile(e.target.files?.[0])}
+                  />
+                  <div
+                    onClick={() => sttFileInputRef.current?.click()}
+                    onDragOver={e => { e.preventDefault(); setMediaDragOver(true); }}
+                    onDragLeave={() => setMediaDragOver(false)}
+                    onDrop={e => { e.preventDefault(); setMediaDragOver(false); acceptSttFile(e.dataTransfer.files?.[0]); }}
+                    className="rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-colors"
+                    style={{
+                      borderColor: mediaDragOver ? theme.text.accent : theme.border.default,
+                      backgroundColor: mediaDragOver ? theme.bg.elevated : 'transparent',
+                    }}
+                  >
+                    <Upload size={28} className="mx-auto mb-2" style={{ color: theme.text.muted }} />
+                    <p className="text-sm font-medium" style={{ color: theme.text.primary }}>
+                      {sttFile ? sttFile.name : 'Перетащите аудио или выберите файл'}
+                    </p>
+                    <p className="text-xs mt-1" style={{ color: theme.text.muted }}>
+                      MP3 · M4A · WAV · OGG · WebM · до 25 МБ
+                    </p>
+                  </div>
+
+                  {sttFileUrl && (
+                    <audio controls src={sttFileUrl} className="w-full" />
+                  )}
+
+                  <button
+                    onClick={handleTranscribe}
+                    disabled={!sttFile || sttLoading}
+                    className="w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                    style={{
+                      backgroundColor: !sttFile || sttLoading ? theme.bg.elevated : theme.bg.accent,
+                      color: !sttFile || sttLoading ? theme.text.muted : '#fff',
+                      cursor: !sttFile || sttLoading ? 'not-allowed' : 'pointer',
+                    }}
+                  >
+                    {sttLoading
+                      ? <><Loader2 size={16} className="animate-spin" /> Транскрибирую...</>
+                      : <><Mic size={16} /> Транскрибировать</>}
+                  </button>
+
+                  {sttError && (
+                    <div className="rounded-xl p-4 flex items-center gap-3" style={{ backgroundColor: theme.bg.elevated }}>
+                      <AlertCircle size={18} style={{ color: '#ef4444' }} />
+                      <span className="text-sm" style={{ color: '#ef4444' }}>{sttError}</span>
+                    </div>
+                  )}
+
+                  {sttText && (
+                    <div className="space-y-3">
+                      <textarea
+                        value={sttText}
+                        onChange={e => setSttText(e.target.value)}
+                        rows={10}
+                        className="w-full px-4 py-3 rounded-xl text-sm border outline-none resize-y"
+                        style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                      />
+                      <div className="flex gap-3">
+                        <button
+                          onClick={handleCopyTranscript}
+                          className="flex-1 py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 border transition-colors"
+                          style={{ borderColor: theme.border.default, color: sttCopied ? theme.text.success : theme.text.primary, backgroundColor: theme.bg.card }}
+                        >
+                          {sttCopied ? <><Check size={14} /> Скопировано</> : <><Copy size={14} /> Копировать</>}
+                        </button>
+                        <button
+                          onClick={handleDownloadTranscript}
+                          className="flex-1 py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 border transition-colors"
+                          style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+                        >
+                          <Download size={14} /> Скачать .txt
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ── TTS: Text → Audio ── */}
+              {audioMode === 'tts' && (
+                <div className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+                  <input
+                    ref={ttsFileInputRef}
+                    type="file"
+                    accept=".txt,text/plain"
+                    className="hidden"
+                    onChange={e => handleLoadTxtForTts(e.target.files?.[0])}
+                  />
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium" style={{ color: theme.text.primary }}>
+                      Текст <span className="font-normal" style={{ color: theme.text.muted }}>({ttsText.length} / 4096)</span>
+                    </label>
+                    <button
+                      onClick={() => ttsFileInputRef.current?.click()}
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 border transition-colors"
+                      style={{ borderColor: theme.border.default, color: theme.text.muted, backgroundColor: theme.bg.card }}
+                    >
+                      <Upload size={12} /> Загрузить .txt
+                    </button>
+                  </div>
+
+                  <textarea
+                    value={ttsText}
+                    onChange={e => setTtsText(e.target.value.slice(0, 4096))}
+                    rows={8}
+                    placeholder="Введите текст на русском..."
+                    className="w-full px-4 py-3 rounded-xl text-sm border outline-none resize-y"
+                    style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                  />
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: theme.text.primary }}>Голос</label>
+                    <select
+                      value={ttsVoice}
+                      onChange={e => setTtsVoice(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl text-sm border outline-none"
+                      style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
+                    >
+                      <option value="nova">Nova (женский, тёплый)</option>
+                      <option value="shimmer">Shimmer (женский, мягкий)</option>
+                      <option value="alloy">Alloy (нейтральный)</option>
+                      <option value="echo">Echo (мужской)</option>
+                      <option value="fable">Fable (мужской, британский)</option>
+                      <option value="onyx">Onyx (мужской, глубокий)</option>
+                    </select>
+                  </div>
+
+                  <button
+                    onClick={handleSynthesize}
+                    disabled={!ttsText.trim() || ttsLoading}
+                    className="w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                    style={{
+                      backgroundColor: !ttsText.trim() || ttsLoading ? theme.bg.elevated : theme.bg.accent,
+                      color: !ttsText.trim() || ttsLoading ? theme.text.muted : '#fff',
+                      cursor: !ttsText.trim() || ttsLoading ? 'not-allowed' : 'pointer',
+                    }}
+                  >
+                    {ttsLoading
+                      ? <><Loader2 size={16} className="animate-spin" /> Синтезирую...</>
+                      : <><Volume2 size={16} /> Синтезировать</>}
+                  </button>
+
+                  {ttsError && (
+                    <div className="rounded-xl p-4 flex items-center gap-3" style={{ backgroundColor: theme.bg.elevated }}>
+                      <AlertCircle size={18} style={{ color: '#ef4444' }} />
+                      <span className="text-sm" style={{ color: '#ef4444' }}>{ttsError}</span>
+                    </div>
+                  )}
+
+                  {ttsAudioUrl && (
+                    <div className="space-y-3">
+                      <audio controls src={ttsAudioUrl} className="w-full" />
+                      <button
+                        onClick={handleDownloadTtsAudio}
+                        className="w-full py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 border transition-colors"
+                        style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+                      >
+                        <Download size={14} /> Скачать .mp3
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>)}
+          </div>
+        </div>
+        )}
       </main>
 
       {/* ══════════ CHAT SIDEBAR ══════════ */}
+      {section !== 'media' && (
       <aside
         className="w-96 flex flex-col border-l"
         style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
@@ -2046,6 +2388,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
       </aside>
+      )}
     </div>
   );
 }
