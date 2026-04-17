@@ -211,6 +211,10 @@ async def transcribe_audio(
         text=text,
         uploaded_by=current_user.id,
     )
+    # Commit before scheduling the background task: the task opens its own
+    # session and must see the row. Without this commit there is a race —
+    # the task can read from the DB before get_session's cleanup commits.
+    await session.commit()
 
     background_tasks.add_task(
         _index_transcription_background,
