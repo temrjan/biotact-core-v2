@@ -439,6 +439,30 @@ export async function synthesizeAudio(text, voice = 'nova') {
   return response.blob();
 }
 
+/** List transcriptions (paginated) */
+export async function listTranscriptions({ limit = 20, offset = 0 } = {}) {
+  return apiRequest(`/media/audio/transcriptions?limit=${limit}&offset=${offset}`);
+}
+
+/** Get full transcription detail */
+export async function getTranscription(transcriptionId) {
+  return apiRequest(`/media/audio/transcriptions/${transcriptionId}`);
+}
+
+/** Delete transcription (only author) */
+export async function deleteTranscription(transcriptionId) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/media/audio/transcriptions/${transcriptionId}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Delete failed' }));
+    throw new Error(err.detail || 'Delete failed');
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════
 // HR MODULE
 // ═══════════════════════════════════════════════════════════════

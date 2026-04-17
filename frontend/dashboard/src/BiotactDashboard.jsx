@@ -447,6 +447,15 @@ function Dashboard({ onLogout }) {
   const [mediaDragOver, setMediaDragOver] = useState(false);
   const sttFileInputRef = useRef(null);
   const ttsFileInputRef = useRef(null);
+  // STT history
+  const [sttHistory, setSttHistory] = useState([]);
+  const [sttHistoryTotal, setSttHistoryTotal] = useState(0);
+  const [sttHistoryPage, setSttHistoryPage] = useState(1);
+  const [sttHistoryPages, setSttHistoryPages] = useState(0);
+  const [sttHistoryLoading, setSttHistoryLoading] = useState(false);
+  const [sttHistoryError, setSttHistoryError] = useState('');
+  const [sttSelectedId, setSttSelectedId] = useState(null);
+  const SST_PAGE_SIZE = 20;
 
   // Marketing — Content Generator
   const [mktTab, setMktTab] = useState('generate'); // 'generate' | 'history'
@@ -652,6 +661,25 @@ function Dashboard({ onLogout }) {
     setSttFileUrl(URL.createObjectURL(file));
   }, [sttFileUrl]);
 
+  const loadTranscriptions = useCallback(async (page = 1) => {
+    setSttHistoryLoading(true);
+    setSttHistoryError('');
+    try {
+      const data = await api.listTranscriptions({
+        limit: SST_PAGE_SIZE,
+        offset: (page - 1) * SST_PAGE_SIZE,
+      });
+      setSttHistory(data.items || []);
+      setSttHistoryTotal(data.total || 0);
+      setSttHistoryPage(data.page || page);
+      setSttHistoryPages(data.pages || 0);
+    } catch (err) {
+      setSttHistoryError(err.message || 'Не удалось загрузить историю');
+    } finally {
+      setSttHistoryLoading(false);
+    }
+  }, []);
+
   const handleTranscribe = useCallback(async () => {
     if (!sttFile || sttLoading) return;
     setSttLoading(true);
@@ -661,12 +689,43 @@ function Dashboard({ onLogout }) {
     try {
       const data = await api.transcribeAudio(sttFile);
       setSttText(data.text || '');
+      setSttSelectedId(data.transcription_id || null);
+      await loadTranscriptions(1);
     } catch (err) {
       setSttError(err.message || 'Не удалось транскрибировать');
     } finally {
       setSttLoading(false);
     }
-  }, [sttFile, sttLoading]);
+  }, [sttFile, sttLoading, loadTranscriptions]);
+
+  const handleSelectTranscription = useCallback(async (transcriptionId) => {
+    setSttError('');
+    setSttCopied(false);
+    try {
+      const data = await api.getTranscription(transcriptionId);
+      setSttText(data.text || '');
+      setSttSelectedId(data.transcription_id);
+      if (sttFileUrl) URL.revokeObjectURL(sttFileUrl);
+      setSttFileUrl(null);
+      setSttFile(null);
+    } catch (err) {
+      setSttError(err.message || 'Не удалось загрузить транскрипт');
+    }
+  }, [sttFileUrl]);
+
+  const handleDeleteTranscription = useCallback(async (transcriptionId) => {
+    if (!window.confirm('Удалить эту запись? Отмена невозможна.')) return;
+    try {
+      await api.deleteTranscription(transcriptionId);
+      if (sttSelectedId === transcriptionId) {
+        setSttSelectedId(null);
+        setSttText('');
+      }
+      await loadTranscriptions(sttHistoryPage);
+    } catch (err) {
+      setSttHistoryError(err.message || 'Не удалось удалить');
+    }
+  }, [sttSelectedId, sttHistoryPage, loadTranscriptions]);
 
   const handleCopyTranscript = useCallback(async () => {
     if (!sttText) return;
@@ -834,6 +893,12 @@ function Dashboard({ onLogout }) {
   useEffect(() => {
     if (section === 'hr') loadHrTemplates();
   }, [section, loadHrTemplates]);
+
+  useEffect(() => {
+    if (section === 'media' && mediaTab === 'audio' && audioMode === 'stt') {
+      loadTranscriptions(1);
+    }
+  }, [section, mediaTab, audioMode, loadTranscriptions]);
 
   const [hrUploadMsg, setHrUploadMsg] = useState(null); // {type: 'success'|'error', text}
   const [hrSelectedCategory, setHrSelectedCategory] = useState('td_osnovnoy');
@@ -2079,7 +2144,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
               </div>
 
               {/* ── STT: Audio → Text ── */}
-              {audioMode === 'stt' && (
+              {audioMode === 'stt' && (<>
                 <div className="rounded-2xl p-6 border space-y-4" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
                   <input
                     ref={sttFileInputRef}
@@ -2162,7 +2227,108 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                     </div>
                   )}
                 </div>
-              )}
+
+                {/* История транскрипций */}
+                <div className="rounded-2xl p-6 border space-y-3" style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold" style={{ color: theme.text.primary }}>
+                      История
+                      {sttHistoryTotal > 0 && <span className="font-normal ml-2" style={{ color: theme.text.muted }}>· {sttHistoryTotal}</span>}
+                    </h3>
+                    <button
+                      onClick={() => loadTranscriptions(sttHistoryPage)}
+                      disabled={sttHistoryLoading}
+                      className="p-1.5 rounded-lg transition-colors"
+                      style={{ color: theme.text.muted }}
+                      title="Обновить"
+                    >
+                      <RefreshCw size={14} className={sttHistoryLoading ? 'animate-spin' : ''} />
+                    </button>
+                  </div>
+
+                  {sttHistoryError && (
+                    <div className="rounded-xl p-3 flex items-center gap-2 text-xs" style={{ backgroundColor: theme.bg.elevated, color: '#ef4444' }}>
+                      <AlertCircle size={14} /> {sttHistoryError}
+                    </div>
+                  )}
+
+                  {!sttHistoryLoading && sttHistory.length === 0 && !sttHistoryError && (
+                    <p className="text-sm text-center py-6" style={{ color: theme.text.muted }}>
+                      Пока нет записей. Транскрибируй первое аудио — оно появится здесь.
+                    </p>
+                  )}
+
+                  {sttHistory.length > 0 && (
+                    <div className="space-y-2">
+                      {sttHistory.map(item => {
+                        const isSelected = sttSelectedId === item.transcription_id;
+                        const dateStr = new Date(item.created_at).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        return (
+                          <div
+                            key={item.transcription_id}
+                            className="rounded-xl p-3 border cursor-pointer transition-colors"
+                            style={{
+                              backgroundColor: isSelected ? theme.bg.elevated : 'transparent',
+                              borderColor: isSelected ? theme.text.accent : theme.border.default,
+                            }}
+                            onClick={() => handleSelectTranscription(item.transcription_id)}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 text-xs mb-1" style={{ color: theme.text.muted }}>
+                                  <span>{dateStr}</span>
+                                  <span>·</span>
+                                  <span className="truncate">{item.uploaded_by_name || 'Без имени'}</span>
+                                </div>
+                                <div className="text-sm font-medium mb-1 truncate" style={{ color: theme.text.primary }}>
+                                  {item.title}
+                                </div>
+                                <div className="text-xs line-clamp-2" style={{ color: theme.text.secondary }}>
+                                  {item.preview}
+                                </div>
+                              </div>
+                              {item.is_owner && (
+                                <button
+                                  onClick={e => { e.stopPropagation(); handleDeleteTranscription(item.transcription_id); }}
+                                  className="p-1.5 rounded-lg transition-colors flex-shrink-0"
+                                  style={{ color: theme.text.muted }}
+                                  title="Удалить"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {sttHistoryPages > 1 && (
+                    <div className="flex items-center justify-between pt-2">
+                      <button
+                        onClick={() => loadTranscriptions(sttHistoryPage - 1)}
+                        disabled={sttHistoryPage <= 1 || sttHistoryLoading}
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1 border transition-colors disabled:opacity-40"
+                        style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+                      >
+                        <ChevronLeft size={14} /> Назад
+                      </button>
+                      <span className="text-xs" style={{ color: theme.text.muted }}>
+                        {sttHistoryPage} / {sttHistoryPages}
+                      </span>
+                      <button
+                        onClick={() => loadTranscriptions(sttHistoryPage + 1)}
+                        disabled={sttHistoryPage >= sttHistoryPages || sttHistoryLoading}
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1 border transition-colors disabled:opacity-40"
+                        style={{ borderColor: theme.border.default, color: theme.text.primary, backgroundColor: theme.bg.card }}
+                      >
+                        Вперёд <ChevronRight size={14} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>)}
 
               {/* ── TTS: Text → Audio ── */}
               {audioMode === 'tts' && (
