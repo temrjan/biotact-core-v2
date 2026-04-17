@@ -7,7 +7,6 @@ from biotact.core.config import Settings
 STT_LANGUAGE = "ru"
 STT_MODEL = "whisper-1"
 TTS_MODEL = "tts-1"
-TTS_FORMAT = "mp3"
 
 
 class AudioClient:
@@ -55,6 +54,6 @@ class AudioClient:
             model=TTS_MODEL,
             voice=voice,
             input=text,
-            response_format=TTS_FORMAT,
+            response_format="mp3",
         )
         return response.content
