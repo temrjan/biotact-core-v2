@@ -45,8 +45,11 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            # Restart API (source volume-mounted)
-            docker compose -f docker-compose.prod.yml restart api
+            # Rebuild API image (picks up Dockerfile changes like ffmpeg)
+            docker compose -f docker-compose.prod.yml build api
+
+            # Recreate API (new image + source volume-mounted)
+            docker compose -f docker-compose.prod.yml up -d api
 
             # Run pending database migrations
             sleep 5

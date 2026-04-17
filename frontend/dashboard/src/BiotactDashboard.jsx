@@ -2169,7 +2169,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                       {sttFile ? sttFile.name : 'Перетащите аудио или выберите файл'}
                     </p>
                     <p className="text-xs mt-1" style={{ color: theme.text.muted }}>
-                      MP3 · M4A · WAV · OGG · WebM · до 25 МБ
+                      MP3 · M4A · WAV · OGG · WebM · до 300 МБ · длинные файлы режутся автоматически
                     </p>
                   </div>
 
@@ -2191,6 +2191,12 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                       ? <><Loader2 size={16} className="animate-spin" /> Транскрибирую...</>
                       : <><Mic size={16} /> Транскрибировать</>}
                   </button>
+
+                  {sttLoading && sttFile && sttFile.size > 20_000_000 && (
+                    <p className="text-xs text-center" style={{ color: theme.text.muted }}>
+                      Длинная запись режется на куски и обрабатывается параллельно — это может занять несколько минут.
+                    </p>
+                  )}
 
                   {sttError && (
                     <div className="rounded-xl p-4 flex items-center gap-3" style={{ backgroundColor: theme.bg.elevated }}>

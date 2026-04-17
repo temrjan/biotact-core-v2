@@ -29,7 +29,7 @@ FROM python:3.11-slim AS runtime
 WORKDIR /app
 
 # Install runtime dependencies only
-RUN apt-get update && apt-get install -y --no-install-recommends     libpq5     curl     && rm -rf /var/lib/apt/lists/*     && apt-get clean
+RUN apt-get update && apt-get install -y --no-install-recommends     libpq5     curl     ffmpeg     && rm -rf /var/lib/apt/lists/*     && apt-get clean
 
 # Copy virtual environment from builder
 COPY --from=builder /opt/venv /opt/venv

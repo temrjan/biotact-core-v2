@@ -1,5 +1,6 @@
 """Media module REST API endpoints."""
 
+import asyncio
 import logging
 import re
 from datetime import datetime
@@ -12,7 +13,7 @@ from biotact.core.config import get_settings
 from biotact.core.dependencies import CurrentUserDep, SessionDep
 from biotact.models.user import User
 from biotact.modules.media.models import MediaTranscription
-from biotact.modules.media.openai_client import AudioClient
+from biotact.modules.media.openai_client import STT_DIRECT_MAX_BYTES, AudioClient
 from biotact.modules.media.repository import MediaTranscriptionRepository
 from biotact.modules.media.schemas import (
     SynthesizeRequest,
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/media", tags=["media"])
 
-MAX_UPLOAD_BYTES = 25_000_000  # 25 MB — OpenAI Whisper limit
+MAX_UPLOAD_BYTES = 300_000_000  # 300 MB — backend accepts, splits if >20 MB
+# Guard against OOM: only one split-transcription runs at a time.
+_LONG_TRANSCRIBE_SEM = asyncio.Semaphore(1)
 ALLOWED_AUDIO_EXT = (
     ".mp3",
     ".m4a",
@@ -153,16 +156,24 @@ async def transcribe_audio(
     if len(content) > MAX_UPLOAD_BYTES:
         raise HTTPException(
             status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-            detail="Файл больше 25 МБ",
+            detail="Файл больше 300 МБ",
         )
 
     client = _get_client()
-    try:
-        text = await client.transcribe(
+
+    async def _run_transcribe() -> str:
+        return await client.transcribe_long(
             filename=file.filename or "audio",
             content=content,
             content_type=file.content_type or "application/octet-stream",
         )
+
+    try:
+        if len(content) > STT_DIRECT_MAX_BYTES:
+            async with _LONG_TRANSCRIBE_SEM:
+                text = await _run_transcribe()
+        else:
+            text = await _run_transcribe()
     except Exception:
         logger.exception("Whisper transcription failed")
         raise HTTPException(
