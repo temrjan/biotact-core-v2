@@ -81,6 +81,7 @@ services:
       - ./src:/app/src
       - ./prompts:/app/prompts
       - ./scripts:/app/scripts
+      - ./data/medical_sources:/app/medical_sources:ro
       - ./data/telegram_sessions:/app/.sessions:rw
       - ./data/hr_templates:/app/data/hr_templates:rw
       - ./data/hr_rendered:/app/data/hr_rendered:rw

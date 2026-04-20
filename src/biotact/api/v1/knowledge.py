@@ -41,6 +41,11 @@ COLLECTIONS = {
         "text_field": "content",
         "source_label": "nutrition_library",
     },
+    "medical": {
+        "name": "medical_sources",
+        "text_field": "content",
+        "source_label": "medical_sources",
+    },
 }
 
 
@@ -227,7 +232,7 @@ async def search_knowledge(
 
     for _key, config in targets.items():
         # Use English embedding for English collections, original for Russian
-        use_en = config["source_label"] in ("dr_berg", "nutrition_library")
+        use_en = config["source_label"] in ("dr_berg", "nutrition_library", "medical_sources")
         embedding = embedding_en if use_en else embedding_original
 
         try:
