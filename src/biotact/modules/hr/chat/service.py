@@ -108,6 +108,7 @@ NDA ДЛЯ РАБОТНИКА (nda_rabotnik):
 NDA ДЛЯ ГПД (nda_gpd):
 - CITIZEN_GENDER: "гражданин" или "гражданка"
 - DIRECTOR_FIO / DIRECTOR_FIO_NOMINATIVE / DIRECTOR_SHORT: ФИО директора в разных падежах
+- GPD_NUMBER, GPD_DATE: номер и дата ГПД, к которому относится NDA (из фраз вида "ГПД №4 от 27.04.2026", "гражданско-правовой договор № X от Y")
 
 ВОЗМЕЩЕНИЕ РАСХОДОВ (soglashenie_vozmeshenie):
 - AGREEMENT_DATE: дата соглашения
