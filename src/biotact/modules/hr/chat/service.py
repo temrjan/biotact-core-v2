@@ -232,7 +232,7 @@ def _date_to_full_russian(short_date: str) -> str:
     return short_date
 
 
-def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, str]:  # noqa: PLR0912
+def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, str]:  # noqa: PLR0912, PLR0915
     """Generate computed fields programmatically after LLM extraction.
 
     Handles auto-generation for all document types:

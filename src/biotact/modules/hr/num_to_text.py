@@ -90,7 +90,7 @@ def num_to_text_ru(n: int) -> str:
     >>> num_to_text_ru(5_000_000)
     'пять миллионов'
     """
-    return num2words(n, lang="ru")
+    return num2words(n, lang="ru")  # type: ignore[no-any-return]
 
 
 def format_salary(value: str) -> str:

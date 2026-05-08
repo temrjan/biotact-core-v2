@@ -246,7 +246,52 @@ Must-not-mention rate:  0.100   ⚠️   (1/10 violations, -27.5pp от 0.375)
 
 ---
 
+## Phase 0.6 final (2026-05-08) — 🟢 PERFECT SCORE
+
+Code-level safety guard внедрён в `src/biotact/modules/askbiotact/safety_filter.py` + интегрирован в `service.py:_process_rag_query`. Закрыл финальный 1/10 violation из Phase 0.5.
+
+```
+Cases:                  32
+Recall@5 mean:          0.909   ✅  (= baseline #1)
+Faithfulness mean:      0.344   ✅  (≥ 0.30 floor)
+Safety redirect rate:   1.000   🟢🟢 10/10 — все redirect-кейсы pass
+Must-mention coverage:  1.000   🟢🟢 100% — каждое ожидаемое упоминание есть
+Must-not-mention rate:  0.000   🟢🟢 zero violations — ни одного запрещённого упоминания
+```
+
+### Архитектура safety_filter (Phase 0.6)
+
+`detect_safety_trigger(message)` — regex-classifier, возвращает `pregnancy / child_under_3 / cardiac / chronic / None` (priority в указанном порядке). Покрывает RU+UZ ключевые слова + возрастные комбинации (year+месяц+yosh/oy в combinations).
+
+`apply_safety_filter(answer, message, trigger)`:
+1. Strips имена BIOTACT-продуктов из ответа (full names + base tokens, sorted by length descending — чтобы "BIFOLAK NEO" сматчился до "BIFOLAK")
+2. Если в ответе нет упоминания врача — добавляет boilerplate "обратитесь к [специалисту]" / "[mutaxassis]ga murojaat qiling" в правильном языке (по тексту user_message — источник истины)
+3. Idempotent: `apply(apply(x)) == apply(x)`
+
+12 unit-тестов покрывают: 4 категории детекта (RU+UZ), false-positive reject (старшие дети, обычные вопросы про продукты), strip multiword names, lang-detection, idempotency, no-double-redirect.
+
+### Полная история метрик (4 версии)
+
+| Метрика | Baseline #1 | Phase 0.5 v2 | Phase 0.5 v3 | Phase 0.5 v4 | **Phase 0.6** |
+|---|---|---|---|---|---|
+| recall@5 | 0.909 | 0.905 | 0.909 | 0.909 | **0.909** |
+| faithfulness | 0.333 | 0.310 | 0.312 | 0.375 | 0.344 |
+| safety_redirect | 0.625 | 0.750 | 0.900 | 0.900 | **1.000** 🟢 |
+| must_mention | 0.852 | 0.731 | 0.793 | 0.966 | **1.000** 🟢 |
+| must_not_mention | 0.375 | 0.000 | 0.000 | 0.100 | **0.000** 🟢 |
+
+### Reports
+
+- `reports/baseline_phase06.json` — финальный (gitignored, локально + на проде в `/tmp`)
+
+### По-прежнему PRELIMINARY
+
+Все safety-кейсы остаются `sme_validated_by: null`. **Code-level filter — это инсуранс, не замена медицинской экспертизы.** Перед production launch на пациентах требуется ревью гинеколога (pregnancy), педиатра (child<3), кардиолога (cardiac), терапевта (chronic).
+
+---
+
 ## История правок
 
 - **2026-05-08** — методология создана. Gold-set 30 кейсов draft. **Baseline #1 зафиксирован** на проде. Выявлен критический safety-gap (62.5%). Phase 0.5 — блокирующий приоритет.
-- **2026-05-08** — Phase 0.5 итерации #1-3 (cap исчерпан). safety_redirect 0.625 → 0.900, must_not_mention 3/8 → 1/10, must_mention 0.852 → 0.966. Финальный 1/10 violation — borderline (бот отказал + упомянул в meta-контексте). **Phase 0.5 closed; Phase 0.6 (code-level guard) запланирован отдельным workflow.**
+- **2026-05-08** — Phase 0.5 итерации #1-3 (cap исчерпан). safety_redirect 0.625 → 0.900, must_not_mention 3/8 → 1/10, must_mention 0.852 → 0.966. Phase 0.5 closed by cap.
+- **2026-05-08** — **Phase 0.6 — code-level guard зафиксирован 🟢 PERFECT SCORE.** safety_redirect 1.000, must_not_mention 0.000, must_mention 1.000. Все safety failures устранены на промпт + code уровне.
