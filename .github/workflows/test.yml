@@ -20,6 +20,12 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
+    # Pump the OPENAI_API_KEY secret to job-level env so step-level `if:`
+    # can check it without using the `secrets` context (which is restricted
+    # in some `if:` evaluations).
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -69,12 +75,11 @@ jobs:
         # Skipped when OPENAI_API_KEY secret is not configured — integration
         # tests instantiate AsyncOpenAI at import time and fail without a key.
         # Set the secret via `gh secret set OPENAI_API_KEY` to enable.
-        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        if: env.OPENAI_API_KEY != ''
         env:
           DATABASE_URL: postgresql+asyncpg://biotact:biotact_test@localhost:5432/biotact_test
           QDRANT_HOST: localhost
           QDRANT_PORT: 6333
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: pytest -m integration -v --tb=short
 
       - name: Run tests with coverage
@@ -82,7 +87,6 @@ jobs:
           DATABASE_URL: postgresql+asyncpg://biotact:biotact_test@localhost:5432/biotact_test
           QDRANT_HOST: localhost
           QDRANT_PORT: 6333
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           pytest --cov=src/biotact --cov-report=xml --cov-report=term-missing
         continue-on-error: true
