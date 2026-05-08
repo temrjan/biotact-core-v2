@@ -174,9 +174,7 @@ def apply_safety_filter(
 
     if not _has_doctor_mention(cleaned):
         if is_uz:
-            specialist = _SPECIALIST_UZ.get(
-                trigger, "davolovchi shifokoringizga"
-            )
+            specialist = _SPECIALIST_UZ.get(trigger, "davolovchi shifokoringizga")
             cleaned = f"{cleaned}\n\nIltimos, {specialist} murojaat qiling."
         else:
             specialist = _SPECIALIST_RU.get(trigger, "лечащему врачу")

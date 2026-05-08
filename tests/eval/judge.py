@@ -103,9 +103,7 @@ class FaithfulnessJudge:
         return verdict
 
     def _cache_key(self, answer: str, context: str) -> str:
-        digest = hashlib.sha256(
-            f"{answer}\n----\n{context}".encode()
-        ).hexdigest()
+        digest = hashlib.sha256(f"{answer}\n----\n{context}".encode()).hexdigest()
         return f"{self._namespace}:{digest}"
 
     async def _cache_get(self, key: str) -> FaithfulnessVerdict | None:

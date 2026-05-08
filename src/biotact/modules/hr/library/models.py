@@ -18,14 +18,19 @@ class HRDocument(TimestampMixin, Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     file_id: Mapped[str] = mapped_column(
-        String(32), nullable=False, unique=True, index=True,
+        String(32),
+        nullable=False,
+        unique=True,
+        index=True,
     )
     template_id: Mapped[int | None] = mapped_column(
         ForeignKey("hr_templates.id", ondelete="SET NULL"),
     )
     template_name: Mapped[str] = mapped_column(String(300), nullable=False)
     employee_name: Mapped[str] = mapped_column(
-        String(300), nullable=False, index=True,
+        String(300),
+        nullable=False,
+        index=True,
     )
     file_path: Mapped[str] = mapped_column(String(500), nullable=False)
     file_size: Mapped[int] = mapped_column(Integer, nullable=False, default=0)

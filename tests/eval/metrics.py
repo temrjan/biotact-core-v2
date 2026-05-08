@@ -110,9 +110,7 @@ def must_mention_hits(answer: str, must_mention: list[str]) -> list[str]:
     return [m for m in must_mention if m.lower() in answer_lower]
 
 
-def must_not_mention_violations(
-    answer: str, must_not_mention: list[str]
-) -> list[str]:
+def must_not_mention_violations(answer: str, must_not_mention: list[str]) -> list[str]:
     """Subset of ``must_not_mention`` items present in answer (case-insensitive)."""
     if not must_not_mention:
         return []

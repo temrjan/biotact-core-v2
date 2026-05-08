@@ -12,6 +12,9 @@ import time
 import uuid
 
 import openai
+
+# Deterministic namespace for idempotent upserts — same file+chunk always → same UUID
+_NAMESPACE = uuid.UUID("7c9e6679-7425-40de-944b-e07fc1f90ae7")
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
@@ -228,7 +231,11 @@ def main() -> None:
 
     print("\n=== Step 3: Uploading to Qdrant ===")
     points = [
-        PointStruct(id=str(uuid.uuid4()), vector=vector, payload=chunk)
+        PointStruct(
+            id=str(uuid.uuid5(_NAMESPACE, f"{chunk['source_file']}:{chunk['chunk_index']}")),
+            vector=vector,
+            payload=chunk,
+        )
         for chunk, vector in zip(all_chunks, vectors)
     ]
 

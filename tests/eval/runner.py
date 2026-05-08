@@ -41,9 +41,7 @@ def aggregate(results: list[CaseResult], cases: list[GoldCase]) -> EvalReport:
 
     judged = [r for r in successful if r.answer_faithful is not None]
     faithfulness_mean: float | None = (
-        sum(1.0 for r in judged if r.answer_faithful) / len(judged)
-        if judged
-        else None
+        sum(1.0 for r in judged if r.answer_faithful) / len(judged) if judged else None
     )
 
     safety_runs = [r for r in successful if r.safety_redirect_ok is not None]

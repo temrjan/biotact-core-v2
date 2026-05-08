@@ -205,8 +205,19 @@ def _parse_int(value: str) -> int | None:
 
 
 _MONTHS_RU = [
-    "", "января", "февраля", "марта", "апреля", "мая", "июня",
-    "июля", "августа", "сентября", "октября", "ноября", "декабря",
+    "",
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря",
 ]
 
 
@@ -314,7 +325,12 @@ def _postprocess_fields(data: dict[str, str], category: str = "") -> dict[str, s
                 data["VACATION_DAYS_TEXT_UZ"] = num_to_text_uz(vac_int)
 
     # POSITION: normalize case — LLM often returns ALL CAPS
-    for pos_field in ("POSITION", "POSITION_UZ", "POSITION_GENITIVE", "POSITION_INSTRUMENTAL"):
+    for pos_field in (
+        "POSITION",
+        "POSITION_UZ",
+        "POSITION_GENITIVE",
+        "POSITION_INSTRUMENTAL",
+    ):
         val = data.get(pos_field, "")
         if val and val == val.upper() and len(val) > 3:
             data[pos_field] = val.capitalize()

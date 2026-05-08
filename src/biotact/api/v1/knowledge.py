@@ -172,7 +172,8 @@ def _extract_content(payload: dict[str, Any], config: dict[str, str]) -> str:
 
 
 def _point_to_result(
-    point: Any, config: dict[str, str],
+    point: Any,
+    config: dict[str, str],
 ) -> SearchResult:
     """Convert Qdrant point to SearchResult."""
     payload = point.payload or {}
@@ -201,7 +202,9 @@ def _point_to_result(
 @router.get("/search", response_model=SearchResponse)
 async def search_knowledge(
     q: str = Query(..., min_length=1, description="Search query"),
-    source: str | None = Query(None, description="Filter: biotact, files, dr_berg, nutrition"),
+    source: str | None = Query(
+        None, description="Filter: biotact, files, dr_berg, nutrition"
+    ),
     limit: int = Query(10, ge=1, le=50),
     threshold: float = Query(0.3, ge=0.0, le=1.0),
     x_api_key: str = Header(...),
@@ -222,9 +225,15 @@ async def search_knowledge(
         targets = COLLECTIONS
 
     # Prepare embeddings: translated for English collections, original for Russian
-    query_en = await _translate_to_english(q) if q != q.encode("ascii", "ignore").decode() else q
+    query_en = (
+        await _translate_to_english(q)
+        if q != q.encode("ascii", "ignore").decode()
+        else q
+    )
     embedding_original = await _get_embedding(q)
-    embedding_en = await _get_embedding(query_en) if query_en != q else embedding_original
+    embedding_en = (
+        await _get_embedding(query_en) if query_en != q else embedding_original
+    )
 
     # Search all collections
     qdrant = _get_qdrant()
@@ -232,7 +241,11 @@ async def search_knowledge(
 
     for _key, config in targets.items():
         # Use English embedding for English collections, original for Russian
-        use_en = config["source_label"] in ("dr_berg", "nutrition_library", "medical_sources")
+        use_en = config["source_label"] in (
+            "dr_berg",
+            "nutrition_library",
+            "medical_sources",
+        )
         embedding = embedding_en if use_en else embedding_original
 
         try:

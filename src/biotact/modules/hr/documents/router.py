@@ -188,9 +188,7 @@ async def delete_document(
     """Delete a generated document (file + DB record)."""
     _ = current_user
 
-    result = await db.execute(
-        select(HRDocument).where(HRDocument.id == document_id)
-    )
+    result = await db.execute(select(HRDocument).where(HRDocument.id == document_id))
     doc = result.scalar_one_or_none()
     if not doc:
         raise HTTPException(

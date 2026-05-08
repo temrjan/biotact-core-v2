@@ -59,9 +59,7 @@ class TestProcessPureSideEffects:
         mock_redis.exists.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_extraction_agent_not_fired(
-        self, service: AskBiotactService
-    ) -> None:
+    async def test_extraction_agent_not_fired(self, service: AskBiotactService) -> None:
         with (
             patch.object(service, "_get_extraction_agent") as mock_get_agent,
             patch.object(
@@ -84,9 +82,7 @@ class TestProcessPureDelegation:
     """``process_pure`` forwards the exact arguments to ``_process_rag_query``."""
 
     @pytest.mark.asyncio
-    async def test_forwards_args_verbatim(
-        self, service: AskBiotactService
-    ) -> None:
+    async def test_forwards_args_verbatim(self, service: AskBiotactService) -> None:
         history = [{"role": "user", "content": "X"}]
         with patch.object(
             service,

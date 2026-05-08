@@ -132,8 +132,12 @@ class TestApplyFilter:
         answer = "BIFOLAK ZINCUM yaxshi mahsulot."
         out = apply_safety_filter(answer, "Qandli diabetim bor", "chronic")
         assert "BIFOLAK" not in out
-        assert "shifokor" in out.lower() or "ginekolog" in out.lower() \
-            or "kardiolog" in out.lower() or "pediatr" in out.lower()
+        assert (
+            "shifokor" in out.lower()
+            or "ginekolog" in out.lower()
+            or "kardiolog" in out.lower()
+            or "pediatr" in out.lower()
+        )
 
     def test_does_not_add_doctor_if_already_present(self) -> None:
         answer = "Обратитесь к гинекологу."
