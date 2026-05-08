@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>AskBiotact — пайплайн запроса</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #161a22;
+      --text: #e6e8eb;
+      --muted: #9aa3af;
+      --accent: #4ade80;
+      --warn: #fbbf24;
+      --danger: #ef4444;
+      --border: #232936;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .deck { max-width: 1100px; margin: 0 auto; padding: 24px 24px 96px; }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 16px; }
+    header h1 { margin: 0; font-size: 24px; letter-spacing: -0.01em; }
+    header .sub { color: var(--muted); font-size: 13px; }
+    .slide { display: none; animation: fade .25s ease; }
+    .slide.show { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    h3 { margin: 18px 0 8px; font-size: 15px; color: var(--accent); }
+    .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+    .l-entry { background: #2563eb; }
+    .l-data  { background: #f59e0b; }
+    .l-llm   { background: #a855f7; }
+    .l-async { background: #ef4444; }
+    .l-out   { background: var(--accent); }
+    code { background: #0b0d12; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #e6e8eb; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; font-size: 14px; }
+    .meta dt { color: var(--muted); }
+    .meta dd { margin: 0 0 6px; }
+    .mermaid { background: #ffffff; border-radius: 10px; padding: 16px; overflow-x: auto; }
+    ol.steps { padding-left: 20px; margin: 0; }
+    ol.steps > li { margin-bottom: 16px; padding-left: 6px; }
+    ol.steps > li > b { color: var(--accent); }
+    .real { border-left: 3px solid var(--warn); padding: 10px 14px; margin-top: 8px; background: rgba(251, 191, 36, 0.08); border-radius: 6px; font-size: 14px; }
+    .real::before { content: "Что на самом деле: "; color: var(--warn); font-weight: 600; }
+    .bottleneck { border-left: 3px solid var(--danger); padding: 12px 14px; margin-bottom: 12px; background: rgba(239, 68, 68, 0.07); border-radius: 6px; }
+    .bottleneck h4 { margin: 0 0 6px; font-size: 14px; color: var(--danger); }
+    .bottleneck p { margin: 0 0 6px; font-size: 14px; }
+    .fix { color: var(--accent); font-size: 13px; }
+    .fix::before { content: "→ как лечить: "; color: var(--accent); font-weight: 600; }
+
+    /* Navigation */
+    nav.deck-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(15, 17, 21, 0.92);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      display: flex; justify-content: center; align-items: center; gap: 24px;
+      z-index: 10;
+    }
+    nav button {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    nav button:hover:not(:disabled) { background: #1f2733; border-color: var(--accent); }
+    nav button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .dots { display: flex; gap: 8px; }
+    .dots span {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #2a3140; cursor: pointer; transition: background .15s;
+    }
+    .dots span.active { background: var(--accent); }
+    .counter { color: var(--muted); font-size: 13px; min-width: 50px; text-align: center; }
+    .hint { color: var(--muted); font-size: 11px; margin-left: 16px; }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <header>
+      <div>
+        <h1>AskBiotact — пайплайн запроса</h1>
+        <div class="sub">От <code>POST /api/v1/public/ask</code> до ответа клиенту в Telegram</div>
+      </div>
+    </header>
+
+    <!-- ============== SLIDE 1: Diagram ============== -->
+    <section class="slide show" data-title="1. Схема">
+      <div class="card">
+        <div class="legend">
+          <span><span class="dot l-entry"></span>Вход / Auth</span>
+          <span><span class="dot l-data"></span>Данные (Redis / Postgres / Qdrant)</span>
+          <span><span class="dot l-llm"></span>LLM / Embeddings (OpenAI)</span>
+          <span><span class="dot l-async"></span>Async (не блокирует ответ)</span>
+          <span><span class="dot l-out"></span>Ответ клиенту</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mermaid">
+flowchart TD
+    U([Клиент Telegram]) -->|вопрос| API[POST /api/v1/public/ask<br/>X-API-Key]
+
+    API --> S1[1 - Auth<br/>проверка API-ключа]
+    S1 --> S2[2 - Redis: загрузка истории<br/>public:user_id:history, TTL 24h]
+    S2 --> S3[3 - CRM: get_or_create<br/>telegram_customers PostgreSQL]
+    S3 --> S4[4 - Order Detection<br/>phone regex + ORDER_KEYWORDS]
+    S4 --> S5[5 - Query Enrichment<br/>insights + regex по истории + price triggers]
+    S5 --> S6[6 - Embedding<br/>OpenAI text-embedding-3-large 3072d]
+    S6 --> S7[7 - Qdrant search<br/>filter department_id=askbiotact, k=10, threshold 0.30]
+    S7 --> S8[8 - LLM ответ<br/>GPT-5 mini + system_prompt + CRM + history]
+    S8 --> S9[9 - Redis: сохранение истории]
+    S9 --> S10[10 - ExtractionAgent ASYNC<br/>gpt-4o-mini → conversation_insights]
+    S9 --> R[11 - Response<br/>answer, user_id, order_sent]
+    R --> U
+
+    classDef entry fill:#2563eb,stroke:#1e40af,color:#fff;
+    classDef data  fill:#f59e0b,stroke:#b45309,color:#1f2937;
+    classDef llm   fill:#a855f7,stroke:#6b21a8,color:#fff;
+    classDef async fill:#ef4444,stroke:#991b1b,color:#fff;
+    classDef out   fill:#4ade80,stroke:#166534,color:#062b15;
+
+    class API,S1 entry;
+    class S2,S3,S7,S9 data;
+    class S6,S8 llm;
+    class S10 async;
+    class R out;
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ключевые параметры</h2>
+        <dl class="meta">
+          <dt>Department</dt><dd><code>askbiotact</code> (payload-фильтр в Qdrant)</dd>
+          <dt>RAG limit / threshold</dt><dd><code>10</code> / <code>0.30</code></dd>
+          <dt>Embedding</dt><dd><code>text-embedding-3-large</code> (3072d, cosine)</dd>
+          <dt>Vector store</dt><dd>Qdrant <code>knowledge-evolution</code></dd>
+          <dt>LLM (ответ)</dt><dd><code>gpt-5-mini</code></dd>
+          <dt>LLM (extraction / order)</dt><dd><code>gpt-4o-mini</code></dd>
+          <dt>История</dt><dd>Redis 7, TTL 24h, ≤ 10 пар сообщений</dd>
+          <dt>CRM</dt><dd>PostgreSQL 16 → <code>telegram_customers</code>, <code>conversation_insights</code></dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============== SLIDE 2: Plain language ============== -->
+    <section class="slide" data-title="2. Простыми словами">
+      <div class="card">
+        <h2>Что происходит, когда клиент задаёт вопрос</h2>
+        <p style="color:var(--muted);font-size:14px;margin:0">
+          Пишу как есть — чтобы видеть, где можно улучшить качество.
+          Где ожидание расходится с кодом — отмечено жёлтым блоком.
+        </p>
+      </div>
+
+      <div class="card">
+        <ol class="steps">
+          <li>
+            <b>Вопрос приходит.</b> Клиент пишет в Telegram, бот шлёт нам <code>POST /ask</code>
+            с user_id, текстом, именем. Проверяем API-ключ — пускаем дальше.
+          </li>
+
+          <li>
+            <b>Подгружаем историю.</b> Из Redis достаём предыдущие сообщения этого клиента
+            (до 10 пар, живут 24 часа). Дописываем туда новый вопрос.
+          </li>
+
+          <li>
+            <b>Находим карточку клиента в CRM.</b> Postgres → телеграм-ID. Если клиент новый —
+            создаём; если знакомый — берём его профиль (проблемы со здоровьем, семья, прошлые покупки).
+            Этот профиль потом подмешаем в инструкцию для LLM.
+          </li>
+
+          <li>
+            <b>Обогащаем вопрос (для поиска, не для LLM).</b><br/>
+            Цель: короткий вопрос "а цена?" сам по себе не найдёт нужную карточку — надо
+            добавить контекст того, о чём шла речь.
+            <div class="real">
+              ЛЛМ <b>не</b> переписывает вопрос. Делается это так:<br/>
+              а) лезем в Postgres за <code>conversation_insights</code> — это то, что
+              <b>с прошлого хода</b> async-агент успел извлечь (упомянутые продукты, симптомы).
+              Если запрос короткий и в инсайте есть продукты → клеим
+              <code>"BIFOLAK NEO IMMUNOCOMPLEX а цена?"</code>.<br/>
+              б) если инсайтов нет — regex проходит по последним 6 сообщениям, ищет
+              ТОЧНЫЕ имена продуктов из жёсткого списка. Нашёл — клеит, нет — клеит
+              просто текст последних 2 сообщений клиента.<br/>
+              в) если в вопросе есть "цена/стоит/narx/qancha" — в конец дописывается
+              статичная строка <code>"цены на продукты BIOTACT прайс-лист..."</code>.
+            </div>
+          </li>
+
+          <li>
+            <b>Превращаем обогащённый текст в вектор (embedding).</b>
+            OpenAI <code>text-embedding-3-large</code> → 3072 числа.
+            Один вызов, одна попытка.
+          </li>
+
+          <li>
+            <b>Ищем похожие чанки в Qdrant.</b> База — одна коллекция
+            <code>knowledge-evolution</code> на всю компанию, фильтр
+            <code>department_id = askbiotact</code>. Возвращаем <b>до 10 чанков</b>
+            с похожестью ≥ <b>0.30</b> (косинус). Это карточки продуктов и куски прайса.
+            <div class="real">
+              Reranker (умной пересортировки) — нет. Все 10 чанков как есть идут в LLM.
+              Порог 0.30 — низкий, в выдачу легко попадает шум.
+            </div>
+          </li>
+
+          <li>
+            <b>LLM формирует ответ.</b> GPT-5 mini получает три блока:
+            <ul>
+              <li><b>system_prompt</b> = <code>prompts/askbiotact.txt</code> + CRM-профиль клиента
+                + критические ограничения (например "аллергия на молочное")</li>
+              <li><b>chat_history</b> = последние сообщения из Redis (контекст диалога)</li>
+              <li><b>user message</b> = шаблон "Данные из базы знаний: {10 чанков}\n\nСообщение клиента: {ОРИГИНАЛЬНЫЙ вопрос}"</li>
+            </ul>
+            <div class="real">
+              В LLM уходит <b>оригинальный</b> вопрос, не обогащённый.
+              Обогащение работает только на этапе поиска (шаг 4 → 6).
+            </div>
+          </li>
+
+          <li>
+            <b>Отдаём ответ клиенту</b> и сохраняем пару (вопрос + ответ) обратно в Redis.
+          </li>
+
+          <li>
+            <b>Параллельно (в фоне) — ExtractionAgent.</b> gpt-4o-mini читает
+            свежий обмен и сохраняет в Postgres структурированные инсайты:
+            какие продукты упомянуты, симптомы, состав семьи, намерение, ограничения.
+            Это пригодится в <b>следующем</b> запросе того же клиента (см. шаг 4а).
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============== SLIDE 3: Where to improve ============== -->
+    <section class="slide" data-title="3. Где улучшать качество">
+      <div class="card">
+        <h2>Bottlenecks и что можно сделать</h2>
+        <p style="color:var(--muted);font-size:14px;margin:0 0 12px">
+          От самого болезненного к косметике. Каждый пункт ссылается на конкретный шаг из слайда 2.
+        </p>
+
+        <div class="bottleneck">
+          <h4>1. Обогащение вопроса — regex, а не LLM (шаг 4)</h4>
+          <p>"А второй продукт сколько стоит?" — regex не поймёт, что речь о товаре из прошлого хода,
+            если его нет в жёстком списке <code>PRODUCT_NAMES</code>.
+            Insights из Postgres помогают, но они <b>с прошлого хода</b> — на первом коротком
+            вопросе клиента их ещё нет.</p>
+          <p class="fix">добавить query-rewriting шаг — gpt-4o-mini переписывает вопрос
+            с учётом 3-4 последних сообщений в самодостаточный поисковый запрос.
+            Дешёво (~$0.0001/вопрос), сильно бьёт по качеству.</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>2. Один эмбеддинг — одна попытка поиска (шаги 5–6)</h4>
+          <p>Если формулировка клиента "не попала" в формулировку карточки — выдача пустая
+            или не та. Особенно болезненно для смешанных RU/UZ запросов.</p>
+          <p class="fix">multi-query (HyDE / 3 перефразировки → 3 поиска → объединить)
+            или гибридный поиск (вектор + BM25 по тем же чанкам).
+            Дороже один раз поднять, но качество растёт сильно.</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>3. Нет reranker'а, threshold 0.30 (шаг 6)</h4>
+          <p>10 чанков как попало. Релевантный чанк может оказаться 8-м в списке —
+            LLM хуже его читает (lost-in-the-middle). Шум на 0.30 тоже мешает.</p>
+          <p class="fix">cross-encoder reranker (Cohere Rerank / bge-reranker)
+            на k=20 → топ-5 в LLM. Или поднять threshold до 0.45 и k=5.</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>4. В LLM уходит ОРИГИНАЛЬНЫЙ вопрос, не обогащённый (шаг 7)</h4>
+          <p>Если поиск нашёл карточку BIFOLAK NEO благодаря склейке "BIFOLAK NEO а цена?",
+            то LLM видит только "а цена?" — и сам должен догадаться по чанкам и истории.
+            Иногда отвечает не про тот продукт.</p>
+          <p class="fix">передавать в LLM <code>enriched_message</code> или хотя бы
+            явно вставлять "клиент спрашивал про X" в шаблон. Изменение в одну строку.</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>5. Один шанс на корректный ответ — нет evaluation loop</h4>
+          <p>Если LLM ответил мимо, мы это узнаём только из жалоб клиента.
+            Качество не измеряется автоматически.</p>
+          <p class="fix">собрать 30-50 эталонных вопросов с правильными ответами.
+            Гонять их nightly после любого изменения промпта/чанков. Без этого
+            каждое "улучшение" — наугад.</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>6. Цены живут отдельно от карточек (контент-проблема)</h4>
+          <p>Чтобы ответить "сколько стоит BIFOLAK NEO", нужно найти ДВА чанка:
+            карточку продукта и кусок <code>prices.txt</code>. Если вторая не попадёт
+            в топ-10 — цены не будет в ответе.</p>
+          <p class="fix">либо положить цену прямо в карточку продукта (дублирование, но
+            живучее), либо boost'ить prices.txt при price-query (сейчас просто
+            добавляется текст-подсказка, но это не гарантия).</p>
+        </div>
+
+        <div class="bottleneck">
+          <h4>7. Async ExtractionAgent — race condition (шаг 9)</h4>
+          <p>Инсайты пишутся в фоне. Если клиент шлёт следующий вопрос быстрее, чем
+            завершился gpt-4o-mini — обогащение шага 4а не сработает (insight ещё пустой).</p>
+          <p class="fix">для активной сессии переключить на синхронный extraction
+            (+~500ms задержки), либо хотя бы дожидаться его при <code>is_short_query()</code>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Что бы я сделал первым</h3>
+        <p style="margin:0;font-size:14px">
+          Порядок по соотношению "усилие × эффект":
+          <b>(4) передавать enriched в LLM</b> — 1 строка кода, мгновенно;
+          <b>(1) query rewriting</b> — день работы, заметный скачок качества;
+          <b>(5) eval-сет</b> — без него остальные изменения слепые.
+          <b>(3) reranker</b> и <b>(2) hybrid search</b> — потом, когда eval покажет где боль.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============== SLIDE 4: Prior art + Navigator+Pilot ============== -->
+    <section class="slide" data-title="4. Что украсть у лучших">
+      <div class="card">
+        <h2>Top 5 проектов — что взять в Navigator + Pilot</h2>
+        <p style="color:var(--muted);font-size:14px;margin:0">
+          3 агента изучили 12 open-source проектов (читали реальный код, не маркетинг).
+          Команда: <b>Captain</b> (ты) → <b>Navigator</b> (стратег между вопросом и поиском) → <b>Pilot</b> (chat LLM, формирует ответ).
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>1. Onyx — production-grade reference</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
+          <code>github.com/onyx-dot-app/onyx</code> · ~29k⭐ · MIT · Python/FastAPI + Vespa + LangGraph
+        </p>
+        <p style="margin:0 0 4px"><b>Что круто:</b> agent_search граф — expand → search → grade → rerank → verify → sub-answer → aggregate. Refined-answer loop если первый ответ слабый.</p>
+        <p class="fix">
+          скелет LangGraph для Navigator + абстракция <code>DocumentIndex</code> — обернём Qdrant за интерфейсом, чтобы можно было A/B без переписывания pipeline.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>2. LangGraph — скелет Navigator</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
+          <code>github.com/langchain-ai/langgraph</code> · ~31k⭐ · MIT · Python, StateGraph + Postgres checkpointer
+        </p>
+        <p style="margin:0 0 4px"><b>Что круто:</b> туториал <code>agentic_rag</code> — это буквально Navigator: <code>generate_query_or_respond → retrieve → grade_documents → rewrite_question → generate_answer</code>. Условные edges, typed state, persistence per user_id.</p>
+        <p class="fix">
+          взять 4-нодовый скелет 1:1. Typed state: <code>{messages, crm_card, extracted_slots, missing_slots, last_query}</code>. Checkpoint в Postgres по telegram_id.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>3. Letta / MemGPT — память для CRM-карточки</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
+          <code>github.com/letta-ai/letta</code> · ~22k⭐ · Apache-2.0 · Python + Postgres
+        </p>
+        <p style="margin:0 0 4px"><b>Что круто:</b> <i>core memory blocks</i> — структурированный JSON, который агент сам редактирует через tool-вызовы (<code>core_memory_replace("symptoms", "...")</code>). Инжектится в каждый промпт.</p>
+        <p class="fix">
+          заменить async ExtractionAgent на синхронные core memory updates от Navigator. CRM-карточка перестаёт быть статичной "справкой" — становится живой структурой, которую Navigator пополняет каждый ход.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>4. Quivr — заменить regex на 2 LLM-промпта</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
+          <code>github.com/QuivrHQ/quivr</code> · ~39k⭐ · Apache-2.0 · Python + LangGraph, YAML-описание pipeline
+        </p>
+        <p style="margin:0 0 4px"><b>Что круто:</b> <code>CONDENSE_TASK_PROMPT</code> (history-aware rewrite) + <code>SPLIT_PROMPT</code> (разбивает мульти-вопрос на отдельные). Pipeline объявлен в YAML — можно менять без правки кода.</p>
+        <p class="fix">
+          самый дешёвый и быстрый апгрейд из всех. Убираем regex-склейку из <code>constants.py:enrich_query</code>, ставим 2 промпта gpt-4o-mini. Стоит ~$0.0002/запрос.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>5. DSPy — Navigator, который сам себя оптимизирует</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
+          <code>github.com/stanfordnlp/dspy</code> · ~34k⭐ · MIT · Python, типизированные Signatures + оптимизаторы
+        </p>
+        <p style="margin:0 0 4px"><b>Что круто:</b> промпт пишется как контракт <code>Signature("crm_card, history, user_msg → rewritten_query, missing_slots, clarify")</code>, дальше <code>MIPROv2</code> оптимизатор сам подбирает лучшие формулировки против метрики на эталонном сете.</p>
+        <p class="fix">
+          Navigator = DSPy-программа. Когда соберём 50 эталонных диалогов RU/UZ — оптимизатор за ночь подберёт промпт лучше, чем мы вручную за неделю.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Honorable mentions (отдельные паттерны)</h3>
+        <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7">
+          <li><b>Khoj</b> — единый <code>prompts.py</code>-реестр и Agent-as-DB-model. Для Pilot-промптов вместо разбросанных файлов.</li>
+          <li><b>R2R</b> — 3-уровневый API (<code>search</code>/<code>rag</code>/<code>agent</code>). Дешёвые запросы могут идти мимо Navigator.</li>
+          <li><b>AnythingLLM</b> — Workspace-абстракция. Мапится на текущий <code>department_id=askbiotact</code>.</li>
+          <li><b>MedRAG / i-MedRAG</b> — <code>follow_up_ask</code> промпт для multi-query/HyDE расширения <i>после</i> Navigator.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Вердикт по Rust — остаёмся на Python</h3>
+        <p style="margin:0 0 6px;font-size:14px">
+          Bottleneck — I/O (OpenAI ~300-800ms + Qdrant ~20-50ms), оба сетевые. Rust ≈ Python для async I/O. Что Rust <b>не даёт</b>: ускорения там, где у нас боль.
+        </p>
+        <p style="margin:0 0 6px;font-size:14px">
+          Что <b>теряем</b>: скорость итерации промптов (это 80% работы над качеством), feature parity OpenAI SDK, hiring в Ташкенте, aiogram &gt; teloxide для RU/UZ FSM.
+        </p>
+        <p class="fix">
+          Через 12 мес., если профайлер покажет CPU-bound hot path (custom reranker / chunker) — оборачиваем PyO3-модуль. Полный rewrite не оправдан. Изученные Rust-проекты worth knowing: <code>rig</code>, <code>swiftide</code>, <code>fastembed-rs</code>, <code>LanceDB</code>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>План: 4 фазы</h3>
+        <ol class="steps" style="font-size:14px">
+          <li>
+            <b>Фаза 1 (день):</b> передать <code>enriched_message</code> в Pilot (1 строка, фикс bottleneck #4 со слайда 3) +
+            один LLM-промпт <code>CONDENSE</code> от Quivr вместо regex. <b>Уже видно улучшение.</b>
+          </li>
+          <li>
+            <b>Фаза 2 (1-2 недели):</b> Navigator = LangGraph граф (decide → retrieve → grade → answer)
+            с typed state. Letta-style core memory для CRM-карточки.
+            Логирование решений Navigator в Postgres.
+          </li>
+          <li>
+            <b>Фаза 3 (2 недели):</b> Navigator переписан как DSPy Signature.
+            Собираем 50 эталонных RU/UZ диалогов с правильными ответами.
+            Запускаем MIPROv2 — он сам подбирает промпт. <b>Здесь главный скачок качества.</b>
+          </li>
+          <li>
+            <b>Фаза 4 (опционально):</b> Cohere/BGE reranker (k=20 → top-5). Multi-query HyDE из MedRAG.
+            Делаем только если eval показывает что retrieval — узкое место.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <nav class="deck-nav">
+      <button id="prev" aria-label="Назад">← Назад</button>
+      <div class="dots" id="dots"></div>
+      <span class="counter" id="counter">1 / 3</span>
+      <button id="next" aria-label="Вперёд">Вперёд →</button>
+      <span class="hint">или ← →</span>
+    </nav>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+      flowchart: { curve: "basis", padding: 12, nodeSpacing: 40, rankSpacing: 50 },
+      securityLevel: "loose",
+    });
+  </script>
+  <script>
+    (function () {
+      const slides = document.querySelectorAll(".slide");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const counter = document.getElementById("counter");
+      const dotsBox = document.getElementById("dots");
+      let idx = 0;
+
+      slides.forEach((_, i) => {
+        const d = document.createElement("span");
+        d.addEventListener("click", () => go(i));
+        dotsBox.appendChild(d);
+      });
+
+      function go(i) {
+        idx = Math.max(0, Math.min(slides.length - 1, i));
+        slides.forEach((s, j) => s.classList.toggle("show", j === idx));
+        dotsBox.querySelectorAll("span").forEach((d, j) => d.classList.toggle("active", j === idx));
+        counter.textContent = `${idx + 1} / ${slides.length}`;
+        prev.disabled = idx === 0;
+        next.disabled = idx === slides.length - 1;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      prev.addEventListener("click", () => go(idx - 1));
+      next.addEventListener("click", () => go(idx + 1));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") go(idx - 1);
+        if (e.key === "ArrowRight") go(idx + 1);
+      });
+      go(0);
+    })();
+  </script>
+</body>
+</html>

@@ -265,6 +265,30 @@ class AskBiotactService:
 
         return answer
 
+    async def process_pure(
+        self,
+        message: str,
+        chat_history: list[dict[str, str]],
+        customer_context: str | None = None,
+        telegram_id: int | None = None,
+    ) -> str:
+        """Pure RAG pipeline for evaluation harness.
+
+        Same logic as the path inside ``get_ai_response`` but without side
+        effects: does NOT load/save Redis history, does NOT fire the
+        ExtractionAgent, does NOT run order detection. Caller passes
+        ``chat_history`` explicitly.
+
+        Used by ``tests/eval/`` and ``scripts/run_eval.py`` to measure
+        retrieval/answer quality without polluting production state.
+        """
+        return await self._process_rag_query(
+            message,
+            chat_history,
+            customer_context,
+            telegram_id,
+        )
+
     async def _process_rag_query(
         self,
         message: str,
