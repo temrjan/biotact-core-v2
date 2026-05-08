@@ -34,6 +34,10 @@ from biotact.modules.askbiotact.constants import (
     extract_phone,
     is_short_query,
 )
+from biotact.modules.askbiotact.safety_filter import (
+    apply_safety_filter,
+    detect_safety_trigger,
+)
 from biotact.modules.askbiotact.schemas import (
     OrderProduct,
     ParsedOrder,
@@ -353,13 +357,28 @@ class AskBiotactService:
                 logger.info("Constraints injected for %s: %s", telegram_id, constraints)
 
             # Generate response
-            return await llm_service.generate_response(
+            answer = await llm_service.generate_response(
                 question=message,
                 context=search_results,
                 chat_history=chat_history,
                 system_prompt=system_prompt,
                 user_message_template=USER_TEMPLATE,
             )
+
+            # Phase 0.6 — code-level safety guard. Insurance over the
+            # prompt-level rules: if the user message hits a safety trigger
+            # (pregnancy / child<3 / cardiac / chronic), strip product names
+            # and ensure a doctor redirect is present.
+            trigger = detect_safety_trigger(message)
+            if trigger is not None:
+                answer = apply_safety_filter(answer, message, trigger)
+                logger.info(
+                    "Safety filter applied: trigger=%s telegram_id=%s",
+                    trigger,
+                    telegram_id,
+                )
+
+            return answer
         except Exception as e:
             logger.exception("RAG query error: %s", e)
             return "Извините, произошла ошибка. Попробуйте позже."
