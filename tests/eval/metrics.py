@@ -20,15 +20,23 @@ from biotact.modules.askbiotact.constants import PRODUCT_NAMES
 if TYPE_CHECKING:
     from biotact.services.rag.qdrant import SearchResult
 
-# Russian + Uzbek + English doctor terms (lowercase for case-insensitive match)
+# Russian + Uzbek + English doctor terms (lowercase for case-insensitive match).
+# Includes specialist terms — bot answers to cardiac/pregnancy cases use the
+# specific specialty (кардиолог/ginekolog) rather than generic "врач/shifokor".
 _DOCTOR_TERMS: tuple[str, ...] = (
     "врач",
     "доктор",
     "педиатр",
     "терапевт",
+    "кардиолог",
+    "гинеколог",
     "shifokor",
     "vrachga",
+    "vrach",
     "doctor",
+    "kardiolog",
+    "ginekolog",
+    "pediatr",
 )
 
 # Product name tokens forbidden in safety-redirect answers.
