@@ -21,7 +21,11 @@ biotact-core-v2/                        # Модульный монолит (Fas
 │   │   ├── base.py                     # BaseModuleConfig, RAGModuleConfig, CommandModuleConfig
 │   │   ├── registry.py                 # ModuleRegistry (singleton)
 │   │   ├── askbiotact/                 # << ЭТОТ МОДУЛЬ
-│   │   │   ├── config.py              # RAGModuleConfig(department_id="askbiotact", rag_limit=5, score_threshold=0.30)
+│   │   │   ├── config.py              # RAGModuleConfig(department_id="askbiotact", rag_limit=10, score_threshold=0.30)
+│   │   │   ├── service.py             # AskBiotactService — RAG pipeline + Phase 0.6 safety_filter integration
+│   │   │   ├── safety_filter.py       # Phase 0.6 — code-level guard: detect_safety_trigger + apply_safety_filter
+│   │   │   ├── constants.py           # PRODUCT_NAMES, PRODUCT_PRICES, ORDER_KEYWORDS, enrich_query
+│   │   │   ├── schemas.py             # AskRequest/AskResponse/ParsedOrder pydantic
 │   │   │   └── __init__.py
 │   │   ├── crm/                        # CRM для Telegram-клиентов
 │   │   │   ├── models.py              # TelegramCustomer (проблемы, семья, покупки, AI-заметки)
@@ -98,6 +102,9 @@ POST /api/v1/public/ask (X-API-Key)
     ├── 8. LLM: GPT-5 mini генерирует ответ
     │      ├── system_prompt: prompts/askbiotact.txt (+ CRM-контекст клиента)
     │      └── user_message: RAG-контекст + оригинальный вопрос
+    ├── 8.5. Safety filter (Phase 0.6, post-process):
+    │      ├── detect_safety_trigger(message) → pregnancy/child<3/cardiac/chronic/None
+    │      └── if trigger → strip BIOTACT product names + ensure doctor redirect
     ├── 9. Redis: сохранение истории
     ├── 10. ExtractionAgent (async, не блокирует ответ):
     │      └── GPT-4o-mini → products, symptoms, family, intent, summary → conversation_insights

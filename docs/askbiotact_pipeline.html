@@ -299,13 +299,29 @@ flowchart TD
             явно вставлять "клиент спрашивал про X" в шаблон. Изменение в одну строку.</p>
         </div>
 
-        <div class="bottleneck">
-          <h4>5. Один шанс на корректный ответ — нет evaluation loop</h4>
-          <p>Если LLM ответил мимо, мы это узнаём только из жалоб клиента.
-            Качество не измеряется автоматически.</p>
-          <p class="fix">собрать 30-50 эталонных вопросов с правильными ответами.
-            Гонять их nightly после любого изменения промпта/чанков. Без этого
-            каждое "улучшение" — наугад.</p>
+        <div class="bottleneck" style="border-left-color: var(--accent); background: rgba(74, 222, 128, 0.07);">
+          <h4 style="color: var(--accent);">5. ✅ ЗАКРЫТО (Phase 0): eval harness + 32-кейсный gold-set</h4>
+          <p>Phase 0 shipped: <code>tests/eval/biotact_gold_set.jsonl</code> (32 кейса RU/UZ),
+            <code>scripts/run_eval.py</code> CLI, 3 метрики (recall@5 / faithfulness / safety),
+            LLM-judge с Redis-cache. Прогон на проде — baseline зафиксирован, nightly через
+            <code>/loop</code> готов к настройке.</p>
+          <p class="fix">
+            Phase 0.5/0.6 закрыли safety с 0.625 → 1.0 на этом харнессе. Дальнейшие
+            улучшения (Phase 1+) измеряются автоматически — никакой "наугад".
+          </p>
+        </div>
+
+        <div class="bottleneck" style="border-left-color: var(--accent); background: rgba(74, 222, 128, 0.07);">
+          <h4 style="color: var(--accent);">8. ✅ ЗАКРЫТО (Phase 0.5+0.6): safety guardrails (промпт + код)</h4>
+          <p>Baseline #1 показал что бот рекомендовал BIFOLAK MAGNIY беременным
+            и IMMUNOCOMPLEX KIDS детям 1 года (3/5 safety failed).
+            Phase 0.5 — раздел "АБСОЛЮТНЫЕ ОТКАЗЫ" в промпте + counter-rule.
+            Phase 0.6 — <code>safety_filter.py</code> post-filter (regex детект triggers,
+            strip имён продуктов, гарантия redirect к специалисту, idempotent).</p>
+          <p class="fix">
+            Финал: <b>safety_redirect 1.000</b>, <b>must_not_mention violations 0.000</b>,
+            <b>must_mention 1.000</b>. Все 4 категории закрыты в RU+UZ.
+          </p>
         </div>
 
         <div class="bottleneck">
@@ -428,25 +444,33 @@ flowchart TD
       </div>
 
       <div class="card">
-        <h3>План: 4 фазы</h3>
+        <h3>План: статус фаз (на 2026-05-08)</h3>
         <ol class="steps" style="font-size:14px">
           <li>
-            <b>Фаза 1 (день):</b> передать <code>enriched_message</code> в Pilot (1 строка, фикс bottleneck #4 со слайда 3) +
+            <b style="color:var(--accent);">✅ Фаза 0 — Eval harness — SHIPPED.</b> 32 кейса RU/UZ + scripts/run_eval.py + LLM-judge. Baseline #1 зафиксирован, nightly через /loop готов.
+          </li>
+          <li>
+            <b style="color:var(--accent);">✅ Фаза 0.5 — Safety guardrails в промпте — SHIPPED.</b> Раздел "АБСОЛЮТНЫЕ ОТКАЗЫ" + counter-rule + child-age semantics. 3 итерации до cap. Closed at 9/10.
+          </li>
+          <li>
+            <b style="color:var(--accent);">✅ Фаза 0.6 — Code-level safety_filter — SHIPPED.</b> <code>safety_filter.py</code> regex детект + strip + redirect. <b>Финал 10/10, 0 violations.</b>
+          </li>
+          <li>
+            <b>📋 Фаза 1 (next, день):</b> передать <code>enriched_message</code> в Pilot (фикс bottleneck #4 со слайда 3) +
             один LLM-промпт <code>CONDENSE</code> от Quivr вместо regex. <b>Уже видно улучшение.</b>
           </li>
           <li>
-            <b>Фаза 2 (1-2 недели):</b> Navigator = LangGraph граф (decide → retrieve → grade → answer)
-            с typed state. Letta-style core memory для CRM-карточки.
+            <b>📋 Фаза 2 (1-2 недели):</b> Navigator = plain async function (потом LangGraph если надо)
+            с typed SearchPlan. Letta-style core memory для CRM-карточки.
             Логирование решений Navigator в Postgres.
           </li>
           <li>
-            <b>Фаза 3 (2 недели):</b> Navigator переписан как DSPy Signature.
-            Собираем 50 эталонных RU/UZ диалогов с правильными ответами.
-            Запускаем MIPROv2 — он сам подбирает промпт. <b>Здесь главный скачок качества.</b>
+            <b>📋 Фаза 3 (2 недели):</b> Navigator переписан как DSPy Signature.
+            Расширяем gold-set до 100 диалогов. MIPROv2 оптимизирует промпт. <b>Здесь главный скачок качества retrieval'а.</b>
           </li>
           <li>
-            <b>Фаза 4 (опционально):</b> Cohere/BGE reranker (k=20 → top-5). Multi-query HyDE из MedRAG.
-            Делаем только если eval показывает что retrieval — узкое место.
+            <b>📋 Фаза 4 (опц.):</b> Cohere/BGE reranker (k=20 → top-5). Multi-query HyDE.
+            Только если eval показывает что retrieval — узкое место.
           </li>
         </ol>
       </div>

@@ -21,8 +21,9 @@ RAG-консультант BIOTACT (БАДы + кухонная техника, 
 1. Обогащение запроса делается **regex'ом** (не LLM) — короткие follow-up'ы ломаются.
 2. В Pilot уходит **оригинальный** вопрос, не обогащённый.
 3. **Нет reranker'а**, threshold 0.30 пропускает шум.
-4. **Нет eval-сета** — все улучшения сейчас вслепую.
+4. ~~**Нет eval-сета** — все улучшения сейчас вслепую.~~ ✅ закрыто (Phase 0): 32-кейсный eval + nightly hook через `/loop`.
 5. ExtractionAgent работает после ответа — на текущий ход бесполезен.
+6. ~~**Бот рекомендовал продукты в зонах риска** (беременность / дети до 3 / cardiac).~~ ✅ закрыто (Phase 0.5/0.6): промпт + code-level `safety_filter` → 10/10 redirect, 0 violations.
 
 ### Архитектурный вектор
 Phase-by-phase: сначала измерить (eval), потом дешёвый апгрейд retrieval'а, потом Navigator как обычная функция (не LangGraph), потом качественная итерация промпта, потом полировка retrieval'а. **Rust пока не трогаем** — bottleneck I/O, не язык.
@@ -87,7 +88,7 @@ Phase-by-phase: сначала измерить (eval), потом дешёвы�
 
 Каждая фаза — отдельный `/workflow` цикл (idle → planning → coding → reviewing → shipped). Между фазами — измерение через eval-сет.
 
-### Фаза 0 — Eval foundation (3–5 дней) ⚠️ обязательно первая
+### Фаза 0 — Eval foundation (3–5 дней) ✅ shipped 2026-05-08 (commits `bfc3d05` + `f7b7351`)
 
 **Цель:** получить численную метрику качества. Без неё фазы 1–4 идут вслепую.
 
@@ -110,7 +111,31 @@ Phase-by-phase: сначала измерить (eval), потом дешёвы�
 
 ---
 
-### Фаза 0.5 — Safety baseline (2–3 дня, можно параллельно с фазой 0)
+### Фаза 0.5 — Safety guardrails в промпте ✅ shipped 2026-05-08 (cap 3 итерации; commits `4f713fd` → `c278661` → `fdb8867` → `f787155`)
+
+> Изначально планировалась как «препарат safety-кейсов в gold-set», но baseline #1 показал критический gap (safety_redirect 0.625 — бот рекомендовал BIFOLAK MAGNIY беременной). Фаза превратилась в активные итерации промпта: добавлен раздел "АБСОЛЮТНЫЕ ОТКАЗЫ" + counter-rule "вне отказов — называй имена" + явная child-age семантика. Gold-set расширен на 2 chronic кейса (32 всего). После 3 итераций — 9/10 redirect, 1/10 violation borderline. cap исчерпан → Phase 0.6.
+
+### Фаза 0.6 — Code-level safety guard ✅ shipped 2026-05-08 (commit `4ef1923`)
+
+Insurance над промпт-уровнем Phase 0.5. Добавлен `src/biotact/modules/askbiotact/safety_filter.py`:
+- `detect_safety_trigger(message)` — regex-classifier: pregnancy / child_under_3 / cardiac / chronic / None
+- `apply_safety_filter(answer, message, trigger)` — strip имён BIOTACT-продуктов + добавить boilerplate redirect к специалисту, idempotent
+
+Интегрирован в `service.py:_process_rag_query` после `generate_response`. 12 unit-тестов покрывают детекцию + filtering + idempotency + lang detection.
+
+**Финальные метрики на 32 кейсах:**
+
+| Метрика | Baseline #1 | Phase 0.6 final |
+|---|---|---|
+| Recall@5 | 0.909 | 0.909 |
+| Faithfulness | 0.333 | 0.344 |
+| **Safety redirect rate** | 0.625 | **1.000** 🟢 |
+| **Must-mention coverage** | 0.852 | **1.000** 🟢 |
+| **Must-not-mention violations** | 0.375 | **0.000** 🟢 |
+
+Все safety-кейсы по-прежнему `sme_validated_by: null` — перед production-launch на пациентах требуется ревью медицинских специалистов.
+
+### Фаза (исходный план 0.5 — оставлено как историческая запись)
 
 **Цель:** для медицинского бота safety guardrails — отдельная сквозная забота.
 
@@ -127,7 +152,7 @@ Phase-by-phase: сначала измерить (eval), потом дешёвы�
 
 ---
 
-### Фаза 1 — Минимальный апгрейд retrieval'а (2–3 дня)
+### Фаза 1 — Минимальный апгрейд retrieval'а (2–3 дня) 📋 next
 
 **Цель:** заметное улучшение recall@5 при минимальных изменениях.
 
@@ -244,17 +269,18 @@ Phase-by-phase: сначала измерить (eval), потом дешёвы�
 
 | Что | Статус |
 |---|---|
-| Этот план | Создан, ждёт одобрения Captain'а |
-| `.claude/workflow-state.json` | Не создан — создастся при первом `/workflow <task>` |
-| Eval baseline | Не зафиксирован — фаза 0 |
-| Navigator | Не существует — фаза 2 |
-| Safety guardrails doc | Не существует — фаза 0.5 |
+| Этот план | Актуален; Phases 0/0.5/0.6 закрыты, Phase 1 — next |
+| `.claude/workflow-state.json` | Активен; 18 transitions; state = `shipped` |
+| Eval baseline + harness | ✅ зафиксирован, 32 кейса (RU=18, UZ=14, 7 safety) |
+| Safety guardrails (промпт + code) | ✅ shipped — safety_redirect 1.0, violations 0 |
+| Navigator | Не существует — следующая фаза 2 (после Phase 1) |
+| CI на main | ✅ Lint + Tests зелёные (commit `44ccc68`); Tests integration skip-if-missing-secret |
 
 **Следующий шаг (когда Captain даст добро):**
 ```
-/workflow "build eval set + harness for AskBiotact RAG"
+/workflow "Phase 1 — CONDENSE rewrite + retrieval cache + enriched in Pilot"
 ```
-Это запустит фазу 0 и переведёт state в `planning`. Дальше я предложу детальный sub-план фазы 0, ты вызовешь `/check`, обсудим, ты одобришь — пойдёт `/python` + код.
+Это начнёт Phase 1: заменить regex-обогащение на 1 LLM-промпт CONDENSE (Quivr-style) + Redis-cache по hash(query) + передавать enriched_message как hint в system_prompt Pilot'а. Цель — поднять recall@5 на коротких follow-up'ах.
 
 ---
 
@@ -268,3 +294,6 @@ Phase-by-phase: сначала измерить (eval), потом дешёвы�
 ## 7. История правок плана
 
 - **2026-05-08** — создан после исследования (Onyx, LangGraph, Letta, Quivr, DSPy) и `/selfcheck`-перепроверки. Captain выбрал имена Navigator + Pilot, иерархия Captain → Navigator → Pilot зафиксирована.
+- **2026-05-08** — Phase 0 (eval harness) shipped. Baseline #1 зафиксирован — выявлен критический safety gap.
+- **2026-05-08** — Phase 0.5 (промпт) shipped после 3 итераций — safety с 0.625 до 0.900.
+- **2026-05-08** — Phase 0.6 (`safety_filter.py` post-filter) shipped — safety 1.0, violations 0. CI зелёный.
