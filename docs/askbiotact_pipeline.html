@@ -107,11 +107,14 @@
     <!-- ============== SLIDE 1: Diagram ============== -->
     <section class="slide show" data-title="1. Схема">
       <div class="card">
+        <p style="margin:0 0 8px;color:var(--muted);font-size:13px">
+          Текущее состояние — Phase 0.6 baseline. Phase 1 (CONDENSE) была реализована, развернута и откатилась 2026-05-12 после неудачного eval. См. <code>docs/EVAL_BASELINE.md</code>.
+        </p>
         <div class="legend">
-          <span><span class="dot l-entry"></span>Вход / Auth</span>
-          <span><span class="dot l-data"></span>Данные (Redis / Postgres / Qdrant)</span>
-          <span><span class="dot l-llm"></span>LLM / Embeddings (OpenAI)</span>
-          <span><span class="dot l-async"></span>Async (не блокирует ответ)</span>
+          <span><span class="dot l-entry"></span>Приёмная</span>
+          <span><span class="dot l-data"></span>Память / картотека / склад знаний</span>
+          <span><span class="dot l-llm"></span>Умные помощники (OpenAI)</span>
+          <span><span class="dot l-async"></span>Фоновый аналитик</span>
           <span><span class="dot l-out"></span>Ответ клиенту</span>
         </div>
       </div>
@@ -119,47 +122,66 @@
       <div class="card">
         <div class="mermaid">
 flowchart TD
-    U([Клиент Telegram]) -->|вопрос| API[POST /api/v1/public/ask<br/>X-API-Key]
+    U([Клиент Telegram]) -->|вопрос| API[Бот принимает запрос<br/>проверка ключа доступа]
 
-    API --> S1[1 - Auth<br/>проверка API-ключа]
-    S1 --> S2[2 - Redis: загрузка истории<br/>public:user_id:history, TTL 24h]
-    S2 --> S3[3 - CRM: get_or_create<br/>telegram_customers PostgreSQL]
-    S3 --> S4[4 - Order Detection<br/>phone regex + ORDER_KEYWORDS]
-    S4 --> S5[5 - Query Enrichment<br/>insights + regex по истории + price triggers]
-    S5 --> S6[6 - Embedding<br/>OpenAI text-embedding-3-large 3072d]
-    S6 --> S7[7 - Qdrant search<br/>filter department_id=askbiotact, k=10, threshold 0.30]
-    S7 --> S8[8 - LLM ответ<br/>GPT-5 mini + system_prompt + CRM + history]
-    S8 --> S9[9 - Redis: сохранение истории]
-    S9 --> S10[10 - ExtractionAgent ASYNC<br/>gpt-4o-mini → conversation_insights]
-    S9 --> R[11 - Response<br/>answer, user_id, order_sent]
-    R --> U
+    API --> S1[1 - Поднимает папку разговоров<br/>память Redis, последние 24ч]
+    S1 --> S2[2 - Открывает анкету клиента<br/>картотека Postgres<br/>имя, покупки, аллергии, дети]
+    S2 --> S3{3 - Это заказ?<br/>есть телефон + ключевые слова?}
+    S3 -->|да| ORD[Передаём в обработку заказа<br/>отдельная ветка]
+    S3 -->|нет| S4[4 - Дописываем контекст к вопросу<br/>склейка имён продуктов из истории<br/>для короткого а сколько стоит?]
+    S4 --> S5[5 - Перевод вопроса в смысловые координаты<br/>3072 числа на вопрос]
+    S5 --> S6[6 - Поиск в складе знаний<br/>до 10 наиболее похожих карточек]
+    S6 --> S7{7 - Стражник смотрит на вопрос<br/>беременность? дети до 3? сердце? хроника?}
+    S7 --> S8[8 - Умный коллега сочиняет ответ<br/>оригинальный вопрос + анкета + 10 карточек + история]
+    S8 --> S9{9 - Стражник пересматривает ответ<br/>если был триггер - вычёркивает имена продуктов и дописывает к врачу}
+    S9 --> S10[10 - Ответ клиенту + запись в память]
+    S10 --> R([Клиент получает ответ])
+    S10 -.фоном.-> S11[11 - Аналитик читает разговор<br/>обновляет анкету клиента<br/>пригодится на следующем ходу]
 
     classDef entry fill:#2563eb,stroke:#1e40af,color:#fff;
     classDef data  fill:#f59e0b,stroke:#b45309,color:#1f2937;
     classDef llm   fill:#a855f7,stroke:#6b21a8,color:#fff;
     classDef async fill:#ef4444,stroke:#991b1b,color:#fff;
     classDef out   fill:#4ade80,stroke:#166534,color:#062b15;
+    classDef safety fill:#fbbf24,stroke:#b45309,color:#1f2937;
 
-    class API,S1 entry;
-    class S2,S3,S7,S9 data;
-    class S6,S8 llm;
-    class S10 async;
+    class API entry;
+    class S1,S2,S6,S10 data;
+    class S5,S8 llm;
+    class S11 async;
     class R out;
+    class S7,S9 safety;
         </div>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:12px">
+          Жёлтые узлы (7, 9) — Phase 0.6 safety guard, страховка поверх инструкции в промпте. Срабатывает на медицинские триггеры в исходном сообщении.
+        </p>
       </div>
 
       <div class="card">
-        <h2>Ключевые параметры</h2>
+        <h2>Что под капотом — простыми словами</h2>
         <dl class="meta">
-          <dt>Department</dt><dd><code>askbiotact</code> (payload-фильтр в Qdrant)</dd>
-          <dt>RAG limit / threshold</dt><dd><code>10</code> / <code>0.30</code></dd>
-          <dt>Embedding</dt><dd><code>text-embedding-3-large</code> (3072d, cosine)</dd>
-          <dt>Vector store</dt><dd>Qdrant <code>knowledge-evolution</code></dd>
-          <dt>LLM (ответ)</dt><dd><code>gpt-5-mini</code></dd>
-          <dt>LLM (extraction / order)</dt><dd><code>gpt-4o-mini</code></dd>
-          <dt>История</dt><dd>Redis 7, TTL 24h, ≤ 10 пар сообщений</dd>
-          <dt>CRM</dt><dd>PostgreSQL 16 → <code>telegram_customers</code>, <code>conversation_insights</code></dd>
+          <dt>Где живут знания о продуктах</dt><dd>Векторная база Qdrant — большой «склад смысловых карточек» о продуктах BIOTACT, отзывах, прайсах. У каждой карточки бирка отдела — здесь берём только <code>askbiotact</code>.</dd>
+          <dt>Сколько карточек достаём</dt><dd>До 10 на запрос. Порог похожести 0.30 (низкий — может проскочить шум; reranker'а нет).</dd>
+          <dt>Кодировщик смысла</dt><dd>OpenAI <code>text-embedding-3-large</code> — превращает русский / узбекский текст в 3072 числа (одинаковые числа = похожий смысл).</dd>
+          <dt>Кто сочиняет ответ</dt><dd>GPT-5 mini — основной «голос бота». Получает инструкцию + анкету клиента + 10 найденных карточек + историю.</dd>
+          <dt>Фоновый аналитик и парсер заказов</dt><dd>gpt-4o-mini — дешевле, читает разговор для следующего раза или парсит данные заказа.</dd>
+          <dt>Память разговоров</dt><dd>Redis — до 10 пар сообщений живут 24 часа.</dd>
+          <dt>Картотека клиентов</dt><dd>PostgreSQL — анкеты + извлечённые инсайты (что упомянули, симптомы, состав семьи).</dd>
+          <dt>Безопасник (Phase 0.6)</dt><dd>Двойной фильтр в коде: смотрит исходное сообщение клиента на триггеры (беременность / ребёнок &lt; 3 / сердце / хроника). Если есть — после ответа LLM вычёркивает все имена продуктов BIOTACT и дописывает «обратитесь к специалисту».</dd>
         </dl>
+      </div>
+
+      <div class="card">
+        <h2>Чего НЕТ (после отката Phase 1)</h2>
+        <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7">
+          <li>❌ <b>LLM-переписыватель короткого вопроса</b> (CONDENSE). Был добавлен в Phase 1, откатили — терял прайс-контекст и медицинский контекст.</li>
+          <li>❌ <b>Кэш переписанных вопросов в Redis.</b> Часть Phase 1, удалена вместе с ней.</li>
+          <li>❌ <b>Reranker</b> — нет вторичного эксперта который переупорядочивает 10 найденных карточек.</li>
+          <li>❌ <b>Гибридный поиск</b> (вектор + точное совпадение слов) — никогда не было.</li>
+        </ul>
+        <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">
+          Метрики на этой схеме: recall@5=0.909, must_mention=1.0, safety_redirect=1.0, violations=0. Faithfulness 0.344-0.438 (судья нестабилен).
+        </p>
       </div>
     </section>
 
@@ -257,46 +279,52 @@ flowchart TD
     <!-- ============== SLIDE 3: Where to improve ============== -->
     <section class="slide" data-title="3. Где улучшать качество">
       <div class="card">
-        <h2>Bottlenecks и что можно сделать</h2>
+        <h2>Слабые места и что с ними делать</h2>
         <p style="color:var(--muted);font-size:14px;margin:0 0 12px">
-          От самого болезненного к косметике. Каждый пункт ссылается на конкретный шаг из слайда 2.
+          От самого болезненного к косметике. Каждый пункт ссылается на конкретный шаг из слайда 2.<br/>
+          <span style="color:var(--warn)">⚠ 2026-05-12: пункт #1 пробовали закрыть в Phase 1 (CONDENSE) — откатили из-за regression. См. обновление ниже.</span>
         </p>
 
-        <div class="bottleneck">
-          <h4>1. Обогащение вопроса — regex, а не LLM (шаг 4)</h4>
-          <p>"А второй продукт сколько стоит?" — regex не поймёт, что речь о товаре из прошлого хода,
-            если его нет в жёстком списке <code>PRODUCT_NAMES</code>.
-            Insights из Postgres помогают, но они <b>с прошлого хода</b> — на первом коротком
-            вопросе клиента их ещё нет.</p>
-          <p class="fix">добавить query-rewriting шаг — gpt-4o-mini переписывает вопрос
-            с учётом 3-4 последних сообщений в самодостаточный поисковый запрос.
-            Дешёво (~$0.0001/вопрос), сильно бьёт по качеству.</p>
+        <div class="bottleneck" style="border-left-color: var(--warn); background: rgba(251, 191, 36, 0.07);">
+          <h4 style="color: var(--warn);">1. Дописка контекста — простой шаблонный поиск, а не умный переписыватель (шаг 4)</h4>
+          <p>«А второй продукт сколько стоит?» — шаблон по жёсткому списку имён продуктов это не понимает.
+            Анкета из картотеки помогает только <b>со второго хода</b> — на первом коротком вопросе её ещё пусто.</p>
+          <p style="margin:8px 0 0;background:rgba(239, 68, 68, 0.10);padding:10px;border-radius:6px;font-size:13px">
+            <b>2026-05-12 — попытка Phase 1 (CONDENSE) откатилась.</b> Заменили шаблон на умного переписывателя (gpt-4o-mini, Quivr-style) — recall@5 поднялся на +4.6pp, но
+            <b>must_mention упал с 1.0 до 0.862</b> (потеря ценовых подсказок) +
+            в 9 кейсах симптомов/безопасности retrieval провалился в ноль.
+            Корневая причина: шаблон одновременно делал два полезных дела — клеил имена продуктов И добавлял ценовой маячок для прайса.
+            Умный переписыватель эти два эффекта в одном куске текста не воспроизводит.
+          </p>
+          <p class="fix">Phase 1.5 (кандидат, ждёт решения): <b>гибрид</b> — умный переписыватель только для коротких follow-up'ов <b>вне</b> safety/price/длинных запросов; шаблон остаётся для всего остального. Жёсткий gate: eval ДО push, не после. Альтернатива: оставить как сейчас и не трогать.</p>
         </div>
 
         <div class="bottleneck">
-          <h4>2. Один эмбеддинг — одна попытка поиска (шаги 5–6)</h4>
-          <p>Если формулировка клиента "не попала" в формулировку карточки — выдача пустая
+          <h4>2. Один поиск — одна попытка (шаги 5–6)</h4>
+          <p>Если формулировка клиента «не попала» в формулировку карточки — выдача пустая
             или не та. Особенно болезненно для смешанных RU/UZ запросов.</p>
-          <p class="fix">multi-query (HyDE / 3 перефразировки → 3 поиска → объединить)
-            или гибридный поиск (вектор + BM25 по тем же чанкам).
-            Дороже один раз поднять, но качество растёт сильно.</p>
+          <p class="fix">несколько перефразировок вопроса → несколько поисков → объединить;
+            либо гибрид «смысловой поиск + поиск по точным словам». Дороже один раз поднять, но качество растёт сильно.</p>
         </div>
 
         <div class="bottleneck">
-          <h4>3. Нет reranker'а, threshold 0.30 (шаг 6)</h4>
-          <p>10 чанков как попало. Релевантный чанк может оказаться 8-м в списке —
-            LLM хуже его читает (lost-in-the-middle). Шум на 0.30 тоже мешает.</p>
-          <p class="fix">cross-encoder reranker (Cohere Rerank / bge-reranker)
-            на k=20 → топ-5 в LLM. Или поднять threshold до 0.45 и k=5.</p>
+          <h4>3. Нет вторичного эксперта-сортировщика; порог похожести 0.30 (шаг 6)</h4>
+          <p>10 карточек как нашлись — в таком порядке и идут к умному коллеге.
+            Релевантная карточка может оказаться 8-й — LLM хуже читает середину списка.
+            Низкий порог 0.30 пропускает шум.</p>
+          <p class="fix">добавить «вторичного эксперта» (Cohere Rerank / bge-reranker)
+            который читает 20 карточек и переупорядочивает в топ-5. Или поднять порог до 0.45.</p>
         </div>
 
-        <div class="bottleneck">
-          <h4>4. В LLM уходит ОРИГИНАЛЬНЫЙ вопрос, не обогащённый (шаг 7)</h4>
-          <p>Если поиск нашёл карточку BIFOLAK NEO благодаря склейке "BIFOLAK NEO а цена?",
-            то LLM видит только "а цена?" — и сам должен догадаться по чанкам и истории.
+        <div class="bottleneck" style="border-left-color: var(--warn); background: rgba(251, 191, 36, 0.07);">
+          <h4 style="color: var(--warn);">4. К умному коллеге уходит ОРИГИНАЛЬНЫЙ вопрос, не обогащённый (шаг 8)</h4>
+          <p>Если поиск нашёл карточку BIFOLAK NEO благодаря склейке «BIFOLAK NEO а цена?»,
+            то умный коллега видит только «а цена?» — и сам должен догадаться по карточкам и истории.
             Иногда отвечает не про тот продукт.</p>
-          <p class="fix">передавать в LLM <code>enriched_message</code> или хотя бы
-            явно вставлять "клиент спрашивал про X" в шаблон. Изменение в одну строку.</p>
+          <p style="margin:8px 0 0;background:rgba(239, 68, 68, 0.10);padding:10px;border-radius:6px;font-size:13px">
+            <b>2026-05-12 — пробовали закрыть в Phase 1 через подсказку в инструкции коллеге</b> («поиск был по такой-то переформулировке»). Само по себе не вызвало регрессии, но шло в комплекте с CONDENSE — отброшено вместе с откатом Phase 1. Изолированного измерения эффекта подсказки у нас нет.
+          </p>
+          <p class="fix">если Phase 1.5 пойдёт — заодно вернуть подсказку (одна строка), но **изолированно**: A/B на eval, чтобы видеть собственный вклад.</p>
         </div>
 
         <div class="bottleneck" style="border-left-color: var(--accent); background: rgba(74, 222, 128, 0.07);">
@@ -344,13 +372,18 @@ flowchart TD
       </div>
 
       <div class="card">
-        <h3>Что бы я сделал первым</h3>
-        <p style="margin:0;font-size:14px">
-          Порядок по соотношению "усилие × эффект":
-          <b>(4) передавать enriched в LLM</b> — 1 строка кода, мгновенно;
-          <b>(1) query rewriting</b> — день работы, заметный скачок качества;
-          <b>(5) eval-сет</b> — без него остальные изменения слепые.
-          <b>(3) reranker</b> и <b>(2) hybrid search</b> — потом, когда eval покажет где боль.
+        <h3>Что делать первым (обновлено 2026-05-12)</h3>
+        <p style="margin:0 0 8px;font-size:14px">
+          Старый порядок («(4) подсказка в LLM → (1) переписыватель → (3) reranker») попробовали на практике — Phase 1 откатилась. Сейчас слабые места ранжируются по-другому.
+        </p>
+        <ol style="margin:0;padding-left:20px;font-size:14px;line-height:1.7">
+          <li><b>Починить измерительный прибор (judge).</b> Мы обнаружили что судья faithfulness даёт +9.4pp вариацию <b>без изменений кода</b>. Пока он шумит — любое «улучшение» неотличимо от случайности. Зафиксировать версию модели, повторные прогоны с усреднением. <b>День работы, разблокирует всё остальное.</b></li>
+          <li><b>SME-валидация safety кейсов.</b> 7 safety кейсов из gold-set помечены «sme_validated_by: null». Без ревью врача наша safety_redirect = 1.0 — это качество соответствия пониманию инженера, не реальной медицинской безопасности. <b>Блокер для production launch.</b> Задача Captain'а — найти 1-2 знакомых врачей.</li>
+          <li><b>Расширить gold-set 32 → 60.</b> 32 кейса статистически шумно — Phase 1 регрессия must_mention была всего 4 кейса из 32. Расширение позволит видеть тренд, а не выбросы.</li>
+          <li><b>Только после 1-3:</b> вернуться к выбору между Phase 1.5 (гибридный переписыватель) / Phase 4 (reranker) / стоп. Решение из позиции силы, с надёжным измерительным прибором.</li>
+        </ol>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--muted)">
+          Phase 2 (Navigator) и Phase 3 (DSPy) остаются в перспективе — но только когда retrieval-направление измеримо и обосновано.
         </p>
       </div>
     </section>
@@ -398,14 +431,15 @@ flowchart TD
         </p>
       </div>
 
-      <div class="card">
-        <h3>4. Quivr — заменить regex на 2 LLM-промпта</h3>
+      <div class="card" style="border-left: 3px solid var(--warn);">
+        <h3>4. Quivr — переписыватель вопроса (попробовали 2026-05-12, откатили)</h3>
         <p style="font-size:13px;color:var(--muted);margin:0 0 6px">
           <code>github.com/QuivrHQ/quivr</code> · ~39k⭐ · Apache-2.0 · Python + LangGraph, YAML-описание pipeline
         </p>
-        <p style="margin:0 0 4px"><b>Что круто:</b> <code>CONDENSE_TASK_PROMPT</code> (history-aware rewrite) + <code>SPLIT_PROMPT</code> (разбивает мульти-вопрос на отдельные). Pipeline объявлен в YAML — можно менять без правки кода.</p>
-        <p class="fix">
-          самый дешёвый и быстрый апгрейд из всех. Убираем regex-склейку из <code>constants.py:enrich_query</code>, ставим 2 промпта gpt-4o-mini. Стоит ~$0.0002/запрос.
+        <p style="margin:0 0 4px"><b>Что круто:</b> <code>CONDENSE_TASK_PROMPT</code> переписывает короткий follow-up с учётом истории в самодостаточный поисковый запрос.</p>
+        <p style="margin:0;background:rgba(251, 191, 36, 0.10);padding:10px;border-radius:6px;font-size:13px">
+          <b>Что обнаружилось на eval:</b> переписыватель в чистом виде не воспроизводит «магию» старого шаблонного поиска. Шаблон делал ДВА полезных дела: клеил имена продуктов из истории И добавлял ценовой маячок для price-запросов. LLM-переписыватель эти два эффекта потерял — must_mention упал 1.0 → 0.862, 9 кейсов симптомов/безопасности дали recall@5=0.<br/>
+          Phase 1.5 candidate: гибрид — переписыватель только для коротких follow-up'ов <b>вне</b> safety/price/длинных. Шаблон остаётся для остального. Жёсткий gate: eval ДО push.
         </p>
       </div>
 
@@ -444,33 +478,40 @@ flowchart TD
       </div>
 
       <div class="card">
-        <h3>План: статус фаз (на 2026-05-08)</h3>
+        <h3>План: статус фаз (на 2026-05-12)</h3>
         <ol class="steps" style="font-size:14px">
           <li>
-            <b style="color:var(--accent);">✅ Фаза 0 — Eval harness — SHIPPED.</b> 32 кейса RU/UZ + scripts/run_eval.py + LLM-judge. Baseline #1 зафиксирован, nightly через /loop готов.
+            <b style="color:var(--accent);">✅ Фаза 0 — Eval harness — SHIPPED.</b> 32 кейса RU/UZ + scripts/run_eval.py + LLM-judge. Baseline #1 зафиксирован.
           </li>
           <li>
-            <b style="color:var(--accent);">✅ Фаза 0.5 — Safety guardrails в промпте — SHIPPED.</b> Раздел "АБСОЛЮТНЫЕ ОТКАЗЫ" + counter-rule + child-age semantics. 3 итерации до cap. Closed at 9/10.
+            <b style="color:var(--accent);">✅ Фаза 0.5 — Safety guardrails в промпте — SHIPPED.</b> Раздел «АБСОЛЮТНЫЕ ОТКАЗЫ» + counter-rule + child-age semantics. 3 итерации до cap. Closed at 9/10.
           </li>
           <li>
-            <b style="color:var(--accent);">✅ Фаза 0.6 — Code-level safety_filter — SHIPPED.</b> <code>safety_filter.py</code> regex детект + strip + redirect. <b>Финал 10/10, 0 violations.</b>
+            <b style="color:var(--accent);">✅ Фаза 0.6 — Code-level safety_filter — SHIPPED.</b> <code>safety_filter.py</code> детект триггеров + вычёркивание имён + redirect к врачу. <b>Финал 10/10, 0 violations.</b>
           </li>
           <li>
-            <b>📋 Фаза 1 (next, день):</b> передать <code>enriched_message</code> в Pilot (фикс bottleneck #4 со слайда 3) +
-            один LLM-промпт <code>CONDENSE</code> от Quivr вместо regex. <b>Уже видно улучшение.</b>
+            <b style="color:var(--danger);">❌ Фаза 1 — CONDENSE rewrite + cache + hint — ROLLED BACK (2026-05-12).</b> Реализовали (commit <code>f0395a2</code>), задеплоили, eval показал regression must_mention 1.0 → 0.862 + 9 кейсов симптомов/safety с recall@5=0. 2 revert-коммита (<code>e332daf</code> + <code>b876dba</code>). Заодно открыли: <b>judge faithfulness нестабилен</b> (+9.4pp без изменений кода).
           </li>
           <li>
-            <b>📋 Фаза 2 (1-2 недели):</b> Navigator = plain async function (потом LangGraph если надо)
-            с typed SearchPlan. Letta-style core memory для CRM-карточки.
-            Логирование решений Navigator в Postgres.
+            <b style="color:var(--warn);">🔬 Шаг следующий (приоритет 1): Починка измерительного прибора.</b> Зафиксировать версию gpt-4o-mini judge + majority-voting на 3 прогона. Без этого все будущие «улучшения» неизмеримы.
           </li>
           <li>
-            <b>📋 Фаза 3 (2 недели):</b> Navigator переписан как DSPy Signature.
-            Расширяем gold-set до 100 диалогов. MIPROv2 оптимизирует промпт. <b>Здесь главный скачок качества retrieval'а.</b>
+            <b style="color:var(--warn);">👨‍⚕️ Шаг следующий (приоритет 2, Captain): SME-валидация safety.</b> 7 safety кейсов помечены «не валидированы врачом». Блокер для production. Найти гинеколога / педиатра / кардиолога / терапевта для ревью формулировок.
           </li>
           <li>
-            <b>📋 Фаза 4 (опц.):</b> Cohere/BGE reranker (k=20 → top-5). Multi-query HyDE.
-            Только если eval показывает что retrieval — узкое место.
+            <b style="color:var(--warn);">📊 Шаг следующий (приоритет 3): Расширить gold-set 32 → 60.</b> Реальные жалобы из бот'а + дубль категорий на других продуктах. Снизит дисперсию метрик.
+          </li>
+          <li>
+            <b>📋 Фаза 1.5 (candidate, ждёт решения после шагов 1-3):</b> гибридный переписыватель — только для коротких follow-up'ов вне safety/price/длинных. Жёсткий pre-push eval gate. Если не даст +5pp recall@5 на узком сегменте — закрываем направление CONDENSE.
+          </li>
+          <li>
+            <b>📋 Фаза 2 (отложено):</b> Navigator = plain async function с typed SearchPlan. Letta-style core memory. Имеет смысл только когда retrieval-направление измеримо и обосновано.
+          </li>
+          <li>
+            <b>📋 Фаза 3 (отложено):</b> Navigator как DSPy Signature, MIPROv2 оптимизирует промпт. Требует gold-set ≥100.
+          </li>
+          <li>
+            <b>📋 Фаза 4 (опц.):</b> Cohere/BGE reranker. Только если eval покажет что retrieval — узкое место (сейчас recall@5=0.909 — здоровое).
           </li>
         </ol>
       </div>
