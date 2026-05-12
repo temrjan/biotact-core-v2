@@ -30,6 +30,7 @@ from biotact.modules.askbiotact.config import askbiotact_config
 from biotact.modules.askbiotact.constants import (
     ORDER_KEYWORDS,
     PRODUCT_PRICES,
+    enrich_query,
     extract_phone,
     is_short_query,
 )
@@ -43,7 +44,6 @@ from biotact.modules.askbiotact.schemas import (
     UserInfo,
 )
 from biotact.modules.crm.service import CRMService
-from biotact.services.condense import condense_query
 from biotact.services.extraction_agent import (
     ExtractionAgent,
     archive_insight,
@@ -318,16 +318,9 @@ class AskBiotactService:
                     enriched_message = f"{product_prefix} {message}"
                     logger.info("DB-enriched query: %s...", enriched_message[:80])
 
-            # LLM CONDENSE rewrite if DB didn't help. Falls back to original
-            # message on any failure — pipeline never breaks on CONDENSE.
+            # Regex fallback if DB didn't help
             if enriched_message == message:
-                enriched_message = await condense_query(
-                    await self._get_redis(),
-                    self._get_openai_client(),
-                    message,
-                    chat_history,
-                    department=config.department_id,
-                )
+                enriched_message = enrich_query(message, chat_history)
 
             # Vector search
             query_vector = await embedding_service.embed_text(enriched_message)
@@ -362,19 +355,6 @@ class AskBiotactService:
                     "НИКОГДА не рекомендуй продукты, несовместимые с этими ограничениями."
                 )
                 logger.info("Constraints injected for %s: %s", telegram_id, constraints)
-
-            # Phase 1 — surface the condensed query to Pilot as a hint.
-            # Pilot still answers the ORIGINAL question (passed in user
-            # message); the hint helps it pick the right chunks when the
-            # raw question is a short follow-up.
-            if enriched_message != message:
-                system_prompt = (
-                    f"{system_prompt}\n\n"
-                    f"--- ПОИСКОВЫЙ КОНТЕКСТ ---\n"
-                    f'Запрос был переформулирован для поиска как: "{enriched_message}".\n'
-                    "Используй это для интерпретации найденных фрагментов,\n"
-                    "но отвечай на ОРИГИНАЛЬНЫЙ вопрос клиента."
-                )
 
             # Generate response
             answer = await llm_service.generate_response(
