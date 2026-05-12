@@ -47,10 +47,10 @@ from biotact.core.dependencies import (  # noqa: E402
     get_qdrant_service,
 )
 from biotact.modules.askbiotact.config import askbiotact_config  # noqa: E402
-from biotact.modules.askbiotact.constants import enrich_query  # noqa: E402
 from biotact.modules.askbiotact.service import (  # noqa: E402
     get_askbiotact_service,
 )
+from biotact.services.condense import condense_query  # noqa: E402
 
 if TYPE_CHECKING:
     from biotact.modules.askbiotact.service import AskBiotactService
@@ -113,9 +113,17 @@ async def run_one_case(
 
     try:
         # Replicate the same enrichment ``_process_rag_query`` uses when
-        # ``telegram_id`` is None (regex path). Needed to compute recall@5
-        # against the same chunks the chat LLM saw.
-        enriched_query = enrich_query(case.last_user_message, case.seeded_history)
+        # ``telegram_id`` is None (Phase 1: CONDENSE). Needed to compute
+        # recall@5 against the same chunks the chat LLM saw. The shared
+        # Redis instance ensures CONDENSE cache hits the second time the
+        # full pipeline runs the same query inside ``process_pure``.
+        enriched_query = await condense_query(
+            await service._get_redis(),
+            service._get_openai_client(),
+            case.last_user_message,
+            case.seeded_history,
+            department=askbiotact_config.department_id,
+        )
         query_vec = await embedding_service.embed_text(enriched_query)
         retrieved = await qdrant_service.search(
             query_vector=query_vec,
