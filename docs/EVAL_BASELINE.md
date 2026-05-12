@@ -290,8 +290,81 @@ Must-not-mention rate:  0.000   🟢🟢 zero violations — ни одного �
 
 ---
 
+## Phase 1 (2026-05-12) — ❌ ROLLED BACK
+
+Попытка заменить regex-обогащение запроса на gpt-4o-mini CONDENSE rewrite + Redis cache + hint в Pilot. Commits `f0395a2` (Phase 1) + `078a364` (eval fix) → revert'нуты `e332daf` + `b876dba`.
+
+### Результаты прогона (Phase 1 deployed)
+
+```
+Cases:                  32
+Recall@5 mean:          0.955   (+4.6pp от документированного baseline 0.909)
+Faithfulness mean:      0.375
+Safety redirect rate:   1.000   ✅ (insurance Phase 0.6 спас)
+Must-mention coverage:  0.862   ❌ (-13.8pp от 1.000 — REGRESSION)
+Must-not-mention rate:  0.000   ✅
+```
+
+### Stop-condition нарушен
+
+Verified plan Phase 1 требовал: `must_mention = 1.0 → иначе откат`. Реальный результат 0.862 → откат.
+
+Дополнительно: `recall@5 +5pp` (планировалось) — на грани (+4.6pp), narrow miss.
+
+### Анализ failures
+
+**Pattern 1 — потеря PRICE_ENRICHMENT (4 кейса):** `price-uz-001`, `follow_up-ru-003`, `follow_up-uz-001`, `follow_up-uz-003` — пропустили числа `69`/`123`/`94`/`69` сум. **/selfcheck Finding 2 предупреждал:** старый `enrich_query` для price-queries добавлял semantic-core (`PRICE_ENRICHMENT`), который матчит price-chunks. CONDENSE — LLM rewrite — этот boost НЕ воспроизводит. Embedding ушёл от price-chunks.
+
+**Pattern 2 — recall@5 = 0 в 9 кейсах** (все symptoms/safety): CONDENSE переписывал short medical follow-ups так, что retrieval уходил от gold-chunks полностью. `safety_filter` Phase 0.6 спасал текст ответа (safety_redirect=1.0), но retrieval — на 0. Это означает: бот отвечал на основе ТОЛЬКО safety boilerplate + LLM-knowledge, не медицинских чанков.
+
+**Pattern 3 — composition-uz-001 + symptoms-ru-002:** частичные потери имён продуктов.
+
+### Открытие: judge недетерминирован
+
+Post-revert sanity-eval показал **faithfulness 0.438** на восстановленном Phase 0.6 коде (vs документированной baseline 0.344). +9.4pp вариация **БЕЗ изменений кода** — gpt-4o-mini judge даёт разные verdicts между прогонами даже на temperature=0.
+
+**Импликации:**
+1. `faithfulness` нельзя использовать как stop-condition — слишком шумит.
+2. Сравнение Phase X vs baseline должно делаться в **одной и той же сессии** (same-day snapshot baseline + same-day snapshot тест-варианта), иначе judge-noise искажает Δ.
+3. Корректный пересчёт Phase 1: vs same-day baseline (0.438) → faithfulness = 0.375 = **−6.3pp regression**, не +3.1pp как казалось.
+
+Phase 1 имел 2 явных regressions (must_mention + faithfulness), не 1.
+
+### Post-revert sanity eval (2026-05-12)
+
+После реверта 2 коммитов + Deploy на bcv2:
+
+```
+Cases:                  32
+Recall@5 mean:          0.909   ✅ = baseline
+Faithfulness mean:      0.438   ⚠️ judge-noise (+9.4pp без изменений)
+Safety redirect rate:   1.000   ✅
+Must-mention coverage:  1.000   ✅
+Must-not-mention rate:  0.000   ✅
+```
+
+4 из 5 метрик точно совпали с baseline. Это подтверждает что rollback успешен.
+
+### Learnings (для Phase 1.5 и далее)
+
+1. **Eval должен быть pre-push gate**, не post-deploy. Phase 1 пошёл сразу в main → CD сразу deploy → eval только потом → ~2 часа prod-time с regression. В будущем: snapshot tests на feature-branch / `docker cp` в одноразовый контейнер ДО merge.
+
+2. **Stop-conditions на детерминированные метрики:** recall@5, must_mention, safety_redirect, violations — substring matching, повторяемо. `faithfulness` — информативная, не gate.
+
+3. **Same-day baseline snapshot:** перед любым Phase X прогоняем eval на текущем baseline сразу перед тест-вариантом. Δ считаем vs same-day, не vs документированный baseline.
+
+4. **CONDENSE-as-replacement-for-regex рискованно.** Regex `enrich_query` имел два чётких эффекта (DB-product prefix + PRICE_ENRICHMENT semantic-core). LLM CONDENSE их не воспроизводит. Если будем возвращаться — hybrid (CONDENSE только для `is_short_query AND not detect_safety_trigger AND not is_price_query`), regex для остальных.
+
+### Reports
+
+- `reports/eval-phase1-full.json` — Phase 1 deployed (для post-mortem)
+- `reports/eval-baseline-restore.json` — post-revert sanity (на bcv2 `/tmp`)
+
+---
+
 ## История правок
 
 - **2026-05-08** — методология создана. Gold-set 30 кейсов draft. **Baseline #1 зафиксирован** на проде. Выявлен критический safety-gap (62.5%). Phase 0.5 — блокирующий приоритет.
 - **2026-05-08** — Phase 0.5 итерации #1-3 (cap исчерпан). safety_redirect 0.625 → 0.900, must_not_mention 3/8 → 1/10, must_mention 0.852 → 0.966. Phase 0.5 closed by cap.
 - **2026-05-08** — **Phase 0.6 — code-level guard зафиксирован 🟢 PERFECT SCORE.** safety_redirect 1.000, must_not_mention 0.000, must_mention 1.000. Все safety failures устранены на промпт + code уровне.
+- **2026-05-12** — **Phase 1 (CONDENSE) ROLLED BACK.** Eval показал must_mention regression 1.000→0.862 (PRICE_ENRICHMENT loss) + 9 кейсов recall@5=0 (symptoms/safety). Reverts `e332daf` + `b876dba`. Зафиксировано: judge недетерминирован (+9.4pp faithfulness без изменений кода) — same-day baseline snapshot обязателен.

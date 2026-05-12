@@ -152,27 +152,73 @@ Insurance над промпт-уровнем Phase 0.5. Добавлен `src/bi
 
 ---
 
-### Фаза 1 — Минимальный апгрейд retrieval'а (2–3 дня) 📋 next
+### Фаза 1 — CONDENSE rewrite (2026-05-12) ❌ ROLLED BACK
 
-**Цель:** заметное улучшение recall@5 при минимальных изменениях.
+> Реализована, задеплоена, eval не прошёл stop-condition `must_mention = 1.0` (упал до 0.862). Revert'нута двумя коммитами (`e332daf` + `b876dba`). Полный post-mortem — в `docs/EVAL_BASELINE.md`.
 
-**Воркфлоу:**
-1. `/workflow "add CONDENSE rewrite + enrichment hint + retrieval cache"` → planning
-2. `/check` — особенно: cache invalidation, latency budget (+300–600ms на CONDENSE), fallback при сбое gpt-4o-mini, как enrichment попадает в Pilot (hint в system_prompt, не подмена question)
-3. Captain одобряет → `/python` (FastAPI + RAG)
-4. Изменения:
-   - `src/biotact/modules/askbiotact/service.py`: вызвать `condense_query()` перед embedding, добавить hint в system_prompt Pilot'а
-   - `src/biotact/services/condense.py` — новый файл, 1 промпт gpt-4o-mini (Quivr-style CONDENSE_TASK_PROMPT)
-   - `src/biotact/services/retrieval_cache.py` — Redis-cache по `(department, hash(condensed_query))`, TTL 1ч
-   - prompt в `prompts/condense.txt`
-5. `/review` (диф ~150–250 строк, может быть single-agent или fleet)
-6. Прогон eval → должен вырасти recall@5 на ≥ 5pp
-7. **Канарейка:** деплой 10% → `/verify staging` → 50% → 100%
-8. Обновить `docs/askbiotact_pipeline.html` слайд 1+2
+**Что было сделано:**
+- `src/biotact/services/condense.py` — async `condense_query()` с lru_cache промптом + Redis-cache по `(dept, hash(original + history))` + 3-уровневый fallback на original message.
+- `prompts/condense.txt` — Quivr-style rewriter с RU/UZ language invariant.
+- `src/biotact/modules/askbiotact/service.py:_process_rag_query` — заменил regex `enrich_query` на `condense_query` после DB-insight branch; `<context_hint>` блок в system_prompt; Pilot всё ещё получает ORIGINAL `message`.
+- 18 unit-тестов `test_condense.py` + 3 invariant-теста `test_phase1_invariants.py`.
+- `scripts/run_eval.py` обновлён чтобы eval мерил CONDENSE retrieval.
 
-**Stop-condition:** eval не показал ≥ 5pp улучшения → откат, разбор, не идём в фазу 2.
+**Почему откатилось:**
 
-**Артефакты:** condense service, cache layer, обновлённый pipeline diagram.
+| Метрика | Baseline | Phase 1 | Verdict |
+|---|---|---|---|
+| recall@5 | 0.909 | 0.955 | +4.6pp (planned ≥+5pp — narrow miss) |
+| **must_mention** | **1.000** | **0.862** | **-13.8pp ❌ STOP-CONDITION** |
+| faithfulness | 0.438 (judge-noise) | 0.375 | -6.3pp same-day, regression |
+| safety_redirect | 1.000 | 1.000 | ✅ (insurance спас) |
+| violations | 0.000 | 0.000 | ✅ |
+
+**Корневая причина (2 паттерна):**
+
+1. **PRICE_ENRICHMENT lost.** `enrich_query` (regex) для price-queries добавлял semantic-core который матчил `prices.txt` chunks. CONDENSE — LLM rewrite — этот boost не воспроизводит. 4 кейса (`price-uz-001`, `follow_up-ru-003`, `follow_up-uz-001`, `follow_up-uz-003`) потеряли числа цен. **/selfcheck Finding 2 предупреждал, я недостаточно учёл.**
+
+2. **Medical retrieval collapse.** CONDENSE переписывал short symptoms/safety follow-ups так, что retrieval уходил от gold-chunks полностью (recall@5=0 в 9 кейсах). `safety_filter` Phase 0.6 спасал текст ответа, но retrieval — на 0.
+
+**Процессные learnings:**
+- Eval запустили ПОСЛЕ deploy → ~2 часа prod-time с regression. Должен был быть pre-push gate.
+- Faithfulness как метрика недетерминирована (judge-noise +9.4pp без изменений кода). Stop-conditions ставить на recall@5 / must_mention / safety_redirect / violations.
+- Same-day baseline snapshot обязателен.
+
+---
+
+### Фаза 1.5 — CONDENSE-hybrid (после явного решения Captain'а) 📋 candidate
+
+**Цель:** поднять recall@5 на short follow-up'ах БЕЗ regression на price/safety/symptoms.
+
+**Идея:** CONDENSE только там где регекс заведомо плох — короткие follow-up'ы вне safety/price. Регекс остаётся primary для остальных путей.
+
+```python
+if enriched_message == message:
+    if is_short_query(message) and detect_safety_trigger(message) is None and not is_price_query(message):
+        enriched_message = await condense_query(...)   # short follow-up only
+    else:
+        enriched_message = enrich_query(message, chat_history)  # regex preserves PRICE_ENRICHMENT + medical context
+```
+
+**Жёсткий gate (pre-push, не post-deploy):**
+1. Локальные изменения + unit-тесты.
+2. **Pre-push eval на bcv2** через `docker cp` файлов в `biotact-api` БЕЗ commit/push: same-day snapshot baseline + same-day snapshot test-варианта.
+3. **Stop-conditions:**
+   - `recall@5 +5pp vs same-day baseline` ✅ обязательно
+   - `must_mention = 1.000` ✅ строго (не <)
+   - `safety_redirect = 1.000` ✅ строго
+   - `violations = 0` ✅ строго
+   - `faithfulness` — информативная, не gate (judge-noise)
+4. Если все 4 gate-метрики PASS → commit + push → CD. Если FAIL → fix локально, repeat 2.
+
+**Stop-condition фазы:** если hybrid тоже не дотягивает recall@5 +5pp на short follow-ups → закрыть направление CONDENSE, рассмотреть Phase 4 (reranker) или останов на Phase 0.6.
+
+**Артефакты:** condense service (re-add) + hybrid guard в service.py + tests + eval evidence.
+
+**НЕ делать в Phase 1.5:**
+- Не возвращать `<context_hint>` блок в system_prompt — он не дал измеримой пользы в Phase 1.
+- Не убирать regex `enrich_query` — он source of truth для price/long/safety путей.
+- Не пушить без pre-push eval-gate. Без исключений.
 
 ---
 
@@ -269,18 +315,23 @@ Insurance над промпт-уровнем Phase 0.5. Добавлен `src/bi
 
 | Что | Статус |
 |---|---|
-| Этот план | Актуален; Phases 0/0.5/0.6 закрыты, Phase 1 — next |
-| `.claude/workflow-state.json` | Активен; 18 transitions; state = `shipped` |
+| Этот план | Phases 0/0.5/0.6 закрыты; Phase 1 ROLLED BACK; Phase 1.5 candidate |
+| `.claude/workflow-state.json` | state = `idle`, 27+ transitions, Phase 1 rollback зафиксирован |
 | Eval baseline + harness | ✅ зафиксирован, 32 кейса (RU=18, UZ=14, 7 safety) |
 | Safety guardrails (промпт + code) | ✅ shipped — safety_redirect 1.0, violations 0 |
-| Navigator | Не существует — следующая фаза 2 (после Phase 1) |
-| CI на main | ✅ Lint + Tests зелёные (commit `44ccc68`); Tests integration skip-if-missing-secret |
+| Phase 1 (CONDENSE) | ❌ rolled back — must_mention regression. См. `docs/EVAL_BASELINE.md` |
+| Navigator | Не существует — Phase 2 (после успешного Phase 1.X или Phase 4) |
+| CI на main | ✅ Lint + Tests зелёные (HEAD = `b876dba` revert) |
 
-**Следующий шаг (когда Captain даст добро):**
-```
-/workflow "Phase 1 — CONDENSE rewrite + retrieval cache + enriched in Pilot"
-```
-Это начнёт Phase 1: заменить regex-обогащение на 1 LLM-промпт CONDENSE (Quivr-style) + Redis-cache по hash(query) + передавать enriched_message как hint в system_prompt Pilot'а. Цель — поднять recall@5 на коротких follow-up'ах.
+**Развилка по следующему шагу (Captain решает):**
+
+| Вариант | Что | Когда уместен |
+|---|---|---|
+| A. **Phase 1.5 hybrid** (см. секцию выше) | CONDENSE только для `is_short_query AND not safety AND not price` | Хочется ещё попробовать улучшить recall@5 на коротких follow-up'ах с минимальным риском |
+| B. **Phase 4 reranker** | Cohere Rerank multilingual поверх существующего retrieval | Reranker аддитивен (top-N → top-5), не должен ронять must_mention. НО: не вытащит то чего нет в top-N |
+| C. **Стоп на Phase 0.6** | Текущая baseline здоровая, дальше не трогать | Risk-averse путь — текущее качество достаточно для пилота |
+
+**Без решения Captain'а — план в подвешенном состоянии.** Перед стартом любого варианта обязательно: same-day snapshot baseline + pre-push eval gate.
 
 ---
 
@@ -297,3 +348,5 @@ Insurance над промпт-уровнем Phase 0.5. Добавлен `src/bi
 - **2026-05-08** — Phase 0 (eval harness) shipped. Baseline #1 зафиксирован — выявлен критический safety gap.
 - **2026-05-08** — Phase 0.5 (промпт) shipped после 3 итераций — safety с 0.625 до 0.900.
 - **2026-05-08** — Phase 0.6 (`safety_filter.py` post-filter) shipped — safety 1.0, violations 0. CI зелёный.
+- **2026-05-12** — Phase 1 (CONDENSE rewrite, commits `f0395a2` + `078a364`) shipped и развёрнут. Post-deploy eval показал: recall@5 +4.6pp (narrow miss), **must_mention 1.000 → 0.862 (regression)**, 9 кейсов recall@5=0 в symptoms/safety. Stop-condition нарушен.
+- **2026-05-12** — Phase 1 ROLLED BACK через 2 revert-коммита (`e332daf` + `b876dba`). Post-revert eval подтвердил восстановление baseline (4/5 метрик exact match). Зафиксировано открытие: gpt-4o-mini judge недетерминирован (+9.4pp faithfulness без изменений кода). Phase 1.5 (hybrid CONDENSE) добавлена как candidate, требует решения Captain'а перед стартом.
