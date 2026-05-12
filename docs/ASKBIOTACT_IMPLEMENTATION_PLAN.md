@@ -186,39 +186,30 @@ Insurance над промпт-уровнем Phase 0.5. Добавлен `src/bi
 
 ---
 
-### Фаза 1.5 — CONDENSE-hybrid (после явного решения Captain'а) 📋 candidate
+### Фаза 1.5 — CONDENSE-hybrid ❌ CLOSED (2026-05-12, по итогам разбора)
 
-**Цель:** поднять recall@5 на short follow-up'ах БЕЗ regression на price/safety/symptoms.
+> Изначально планировалась как корректировка Phase 1: CONDENSE только для коротких follow-up'ов вне safety/price. После пересмотра в той же сессии — закрыта **до того как стартовала**.
 
-**Идея:** CONDENSE только там где регекс заведомо плох — короткие follow-up'ы вне safety/price. Регекс остаётся primary для остальных путей.
+**Почему направление CONDENSE целиком закрыто:**
 
-```python
-if enriched_message == message:
-    if is_short_query(message) and detect_safety_trigger(message) is None and not is_price_query(message):
-        enriched_message = await condense_query(...)   # short follow-up only
-    else:
-        enriched_message = enrich_query(message, chat_history)  # regex preserves PRICE_ENRICHMENT + medical context
-```
+1. **Главный аргумент за CONDENSE был синтетический.** В плане Phase 1 я мотивировал необходимость CONDENSE сценарием «первый короткий follow-up клиента где ExtractionAgent ещё не успел извлечь инсайты». Captain справедливо указал: **реальный человек не начинает разговор с «цена!» или «сколько стоит?»** — открывающее сообщение почти всегда самодостаточное («здравствуйте, BIFOLAK NEO есть?», «расскажите про витамины»). Этот «нулевой ход без контекста» — нереалистичный кейс.
 
-**Жёсткий gate (pre-push, не post-deploy):**
-1. Локальные изменения + unit-тесты.
-2. **Pre-push eval на bcv2** через `docker cp` файлов в `biotact-api` БЕЗ commit/push: same-day snapshot baseline + same-day snapshot test-варианта.
-3. **Stop-conditions:**
-   - `recall@5 +5pp vs same-day baseline` ✅ обязательно
-   - `must_mention = 1.000` ✅ строго (не <)
-   - `safety_redirect = 1.000` ✅ строго
-   - `violations = 0` ✅ строго
-   - `faithfulness` — информативная, не gate (judge-noise)
-4. Если все 4 gate-метрики PASS → commit + push → CD. Если FAIL → fix локально, repeat 2.
+2. **Дизайн gold-set это уже подтверждает.** Все 6 follow_up кейсов (RU+UZ) имеют `seeded_history` — то есть тест ставит реалистичный сценарий «следующий вопрос ПОСЛЕ предыдущего разговора», не «первый короткий».
 
-**Stop-condition фазы:** если hybrid тоже не дотягивает recall@5 +5pp на short follow-ups → закрыть направление CONDENSE, рассмотреть Phase 4 (reranker) или останов на Phase 0.6.
+3. **Метрики Phase 0.6 это подтверждают эмпирически.** На post-revert sanity eval (2026-05-12) все 6 follow_up + все 6 price кейсов прошли с recall@5=1.0. **ExtractionAgent + регекс-шаблон закрывает реалистичный поток follow-up'ов на 100%.**
 
-**Артефакты:** condense service (re-add) + hybrid guard в service.py + tests + eval evidence.
+4. **Phase 1 в реальности ломала ровно эти работающие кейсы.** must_mention 1.0 → 0.862 — это именно price/follow_up кейсы потеряли числа цен. CONDENSE «решал проблему которой не было» и попутно ронял то что работало.
 
-**НЕ делать в Phase 1.5:**
-- Не возвращать `<context_hint>` блок в system_prompt — он не дал измеримой пользы в Phase 1.
-- Не убирать regex `enrich_query` — он source of truth для price/long/safety путей.
-- Не пушить без pre-push eval-gate. Без исключений.
+**Что закрывается этим решением:**
+- Чистый CONDENSE (Phase 1 был этим вариантом) — закрыто.
+- Гибридный CONDENSE (Phase 1.5 candidate) — закрыто.
+- Multi-query / HyDE / SPLIT — все варианты «давайте перепишем запрос умнее» снимаются из roadmap'а до появления реального сигнала (жалобы клиентов на конкретный кейс / расширение gold-set вскрывает новый паттерн).
+
+**Что остаётся валидным:**
+- Reranker (Phase 4) — работает на найденных карточках, не трогает формулировку запроса. Принципиально другой механизм.
+- Navigator (Phase 2) — решает другие задачи (CRM-aware планирование, missing slots, clarification questions), не «переписывание короткого вопроса». Остаётся в roadmap'е с переоценённой мотивацией.
+
+**Урок для будущих фаз:** мотивация изменения должна опираться на **наблюдаемый failure mode в реальном трафике или gold-set**, не на гипотетический сценарий из best-practice статьи. «Quivr использует CONDENSE → мы тоже должны» — это не аргумент. Аргумент: «у нас 7 кейсов в gold-set где X сейчас падает, и эта техника закрывает X».
 
 ---
 
@@ -323,15 +314,24 @@ if enriched_message == message:
 | Navigator | Не существует — Phase 2 (после успешного Phase 1.X или Phase 4) |
 | CI на main | ✅ Lint + Tests зелёные (HEAD = `b876dba` revert) |
 
-**Развилка по следующему шагу (Captain решает):**
+**Что решено по итогам сессии 2026-05-12:**
 
-| Вариант | Что | Когда уместен |
-|---|---|---|
-| A. **Phase 1.5 hybrid** (см. секцию выше) | CONDENSE только для `is_short_query AND not safety AND not price` | Хочется ещё попробовать улучшить recall@5 на коротких follow-up'ах с минимальным риском |
-| B. **Phase 4 reranker** | Cohere Rerank multilingual поверх существующего retrieval | Reranker аддитивен (top-N → top-5), не должен ронять must_mention. НО: не вытащит то чего нет в top-N |
-| C. **Стоп на Phase 0.6** | Текущая baseline здоровая, дальше не трогать | Risk-averse путь — текущее качество достаточно для пилота |
+1. **Направление CONDENSE целиком закрыто** (см. секцию Phase 1.5 выше). Главный аргумент за CONDENSE был синтетический сценарий, который в реальной жизни почти не встречается. Phase 0.6 baseline закрывает реалистичный поток follow-up'ов на 100% recall@5.
 
-**Без решения Captain'а — план в подвешенном состоянии.** Перед стартом любого варианта обязательно: same-day snapshot baseline + pre-push eval gate.
+2. **Новый порядок приоритетов (НЕ retrieval):**
+
+| Приоритет | Задача | Кто | Срок |
+|---|---|---|---|
+| **1.** Починить судью (faithfulness) | Пин версии gpt-4o-mini-2024-07-18 + majority-3 voting | Claude | ~1 сессия |
+| **2.** SME-валидация safety кейсов | Найти гинеколога / педиатра / кардиолога / терапевта, прогнать 7 safety кейсов | **Captain** | недели |
+| **3.** Расширить gold-set 32 → 60 | Дубль категорий на других продуктах + реальные жалобы клиентов когда они появятся | Captain + Claude | 2 сессии |
+| **4.** Пересмотр следующего шага | Phase 4 reranker (на здоровом измерительном приборе) или Phase 2 Navigator или стоп | оба | по результатам 1-3 |
+
+3. **Принципы для будущих фаз:**
+   - **Eval ДО push**, не post-deploy. Без исключений для retrieval/generation изменений.
+   - **Same-day baseline snapshot** обязателен (judge нестабилен, документированная baseline может отличаться на ±10pp от реальной текущей).
+   - **Stop-conditions только на детерминированные метрики** (recall@5, must_mention, safety_redirect, violations). Faithfulness — информативная, не gate.
+   - **Мотивация изменения — из реальных failure mode'ов**, не из best-practice статей.
 
 ---
 
@@ -350,3 +350,4 @@ if enriched_message == message:
 - **2026-05-08** — Phase 0.6 (`safety_filter.py` post-filter) shipped — safety 1.0, violations 0. CI зелёный.
 - **2026-05-12** — Phase 1 (CONDENSE rewrite, commits `f0395a2` + `078a364`) shipped и развёрнут. Post-deploy eval показал: recall@5 +4.6pp (narrow miss), **must_mention 1.000 → 0.862 (regression)**, 9 кейсов recall@5=0 в symptoms/safety. Stop-condition нарушен.
 - **2026-05-12** — Phase 1 ROLLED BACK через 2 revert-коммита (`e332daf` + `b876dba`). Post-revert eval подтвердил восстановление baseline (4/5 метрик exact match). Зафиксировано открытие: gpt-4o-mini judge недетерминирован (+9.4pp faithfulness без изменений кода). Phase 1.5 (hybrid CONDENSE) добавлена как candidate, требует решения Captain'а перед стартом.
+- **2026-05-12 (та же сессия, позже)** — **Phase 1.5 закрыта до старта.** Captain указал: реальный человек не открывает разговор с «цена!» — открывающее сообщение почти всегда самодостаточное. Все 6 follow_up + 6 price кейсов в gold-set проходят с recall@5=1.0 на Phase 0.6. CONDENSE решал гипотетическую проблему. Закрыто направление целиком (включая multi-query / HyDE). Новый порядок приоритетов: судья → SME → gold-set расширение → потом переоценка retrieval-направлений.
