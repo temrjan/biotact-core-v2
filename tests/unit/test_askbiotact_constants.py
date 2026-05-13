@@ -41,7 +41,7 @@ class TestProductCatalog:
         product = PRODUCTS["bifolak_neo"]
         card = format_product_card(product)
         assert "BIFOLAK NEO" in card
-        assert "61 000" in card
+        assert "66 500" in card
         assert "сум" in card
 
 
