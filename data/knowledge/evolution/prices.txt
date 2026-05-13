@@ -2,7 +2,7 @@
 Тип: price_list
 Название RU: Цены и доставка BIOTACT
 Название UZ: BIOTACT narxlari va yetkazib berish
-Дата актуализации: 2025-01-19
+Дата актуализации: 2026-05-13
 Валюта: UZS
 Теги: цены, прайс, стоимость, доставка, narx, yetkazib berish, price, delivery
 ===/ДОКУМЕНТ===
@@ -15,10 +15,10 @@
 RU:
 Актуальные цены на продукцию BIOTACT DEUTSCHLAND (в узбекских сумах):
 
-BIFOLAK NEO (детский, с рождения) — 61 000 сум
-BIFOLAK ACTIVE (капсулы или стики) — 69 000 сум
-BIFOLAK ZINCUM — 69 000 сум
-BIFOLAK MAGNIY (капсулы или стики) — 76 000 сум
+BIFOLAK NEO (детский, с рождения) — 66 500 сум
+BIFOLAK ACTIVE (капсулы или стики) — 75 500 сум
+BIFOLAK ZINCUM — 75 500 сум
+BIFOLAK MAGNIY (капсулы или стики) — 83 500 сум
 BIFOLAK ZINCUM+C+D3 — 76 000 сум
 CALCIY TRIACTIVE D3 — 76 000 сум
 IMMUNOCOMPLEX (взрослый) — 76 000 сум
@@ -52,10 +52,10 @@ OPHTALMOCOMPLEX (зрение) — 123 000 сум
 UZ:
 BIOTACT DEUTSCHLAND mahsulotlarining joriy narxlari (o'zbek so'mida):
 
-BIFOLAK NEO (bolalar uchun, tug'ilgandan boshlab) — 61 000 so'm
-BIFOLAK ACTIVE (kapsulalar yoki stiklar) — 69 000 so'm
-BIFOLAK ZINCUM — 69 000 so'm
-BIFOLAK MAGNIY (kapsulalar yoki stiklar) — 76 000 so'm
+BIFOLAK NEO (bolalar uchun, tug'ilgandan boshlab) — 66 500 so'm
+BIFOLAK ACTIVE (kapsulalar yoki stiklar) — 75 500 so'm
+BIFOLAK ZINCUM — 75 500 so'm
+BIFOLAK MAGNIY (kapsulalar yoki stiklar) — 83 500 so'm
 BIFOLAK ZINCUM+C+D3 — 76 000 so'm
 IMMUNOCOMPLEX (kattalar uchun) — 76 000 so'm
 IMMUNOCOMPLEX KIDS (bolalar uchun) — 76 000 so'm
@@ -120,16 +120,16 @@ Muddatlar va narx hudud va tanlangan yetkazib berish xizmatiga bog'liq.
 Название UZ: BIFOLAK probiotiklari — batafsil
 
 RU:
-BIFOLAK NEO — 61 000 сум
+BIFOLAK NEO — 66 500 сум
 Синбиотик для детей с рождения. 100 миллиардов полезных бактерий. Форма выпуска: стики по 1,5 г, 20 штук в упаковке. Подходит для новорожденных, грудничков и детей до 12 лет.
 
-BIFOLAK ACTIVE — 69 000 сум
+BIFOLAK ACTIVE — 75 500 сум
 Синбиотик для взрослых и подростков. 1 триллион полезных бактерий плюс пребиотики. Доступен в капсулах (0,4 г, 20 штук) или стиках (1,5 г, 20 штук). Для здоровья кишечника и восстановления микрофлоры.
 
-BIFOLAK ZINCUM — 69 000 сум
+BIFOLAK ZINCUM — 75 500 сум
 Синбиотик с цинком. Форма выпуска: стики по 1,5 г, 10 штук. Поддерживает иммунитет, здоровье кожи и заживление. Для взрослых и подростков.
 
-BIFOLAK MAGNIY — 76 000 сум
+BIFOLAK MAGNIY — 83 500 сум
 Синбиотик с магнием и витаминами группы B (B1, B2, B6, B9). Доступен в капсулах (0,3 г, 30 штук) или стиках (1,5 г, 30 штук). Помогает при стрессе, улучшает сон, снимает мышечные судороги. Для взрослых и детей от 7 лет.
 
 BIFOLAK ZINCUM+C+D3 — 76 000 сум
@@ -137,16 +137,16 @@ CALCIY TRIACTIVE D3 — 76 000 сум
 Комплексная защита иммунитета. Цинк, витамин C и витамин D3. Форма выпуска: стики по 1,5 г, 10 штук. Для взрослых и детей с 3 лет.
 
 UZ:
-BIFOLAK NEO — 61 000 so'm
+BIFOLAK NEO — 66 500 so'm
 Tug'ilgandan boshlab bolalar uchun sinbiotik. 100 milliard foydali bakteriyalar. Chiqarish shakli: 1,5 g stiklar, qadoqda 20 dona. Yangi tug'ilgan chaqaloqlar, emizikli bolalar va 12 yoshgacha bolalar uchun mos.
 
-BIFOLAK ACTIVE — 69 000 so'm
+BIFOLAK ACTIVE — 75 500 so'm
 Kattalar va o'smirlar uchun sinbiotik. 1 trillion foydali bakteriyalar va prebiotiklar. Kapsulalarda (0,4 g, 20 dona) yoki stiklarda (1,5 g, 20 dona) mavjud. Ichak salomatligi va mikroflorani tiklash uchun.
 
-BIFOLAK ZINCUM — 69 000 so'm
+BIFOLAK ZINCUM — 75 500 so'm
 Rux bilan sinbiotik. Chiqarish shakli: 1,5 g stiklar, 10 dona. Immunitetni, teri salomatligini va bitishni qo'llab-quvvatlaydi. Kattalar va o'smirlar uchun.
 
-BIFOLAK MAGNIY — 76 000 so'm
+BIFOLAK MAGNIY — 83 500 so'm
 Magniy va B guruhi vitaminlari (B1, B2, B6, B9) bilan sinbiotik. Kapsulalarda (0,3 g, 30 dona) yoki stiklarda (1,5 g, 30 dona) mavjud. Stressda yordam beradi, uyquni yaxshilaydi, mushak tortishishlarini bartaraf etadi. Kattalar va 7 yoshdan bolalar uchun.
 
 BIFOLAK ZINCUM+C+D3 — 76 000 so'm
@@ -324,10 +324,10 @@ Logotipi bilan iliq shapka. Kulrang yoki yashil rang.
 
 RU:
 Вопрос: Сколько стоит магний BIOTACT?
-Ответ: BIFOLAK MAGNIY стоит 76 000 сум. Доступен в капсулах или стиках, цена одинаковая.
+Ответ: BIFOLAK MAGNIY стоит 83 500 сум. Доступен в капсулах или стиках, цена одинаковая.
 
 Вопрос: Какой самый недорогой продукт?
-Ответ: Шапка Healthy Lifestyle — 50 000 сум. Из БАДов самый доступный — BIFOLAK NEO за 61 000 сум.
+Ответ: Шапка Healthy Lifestyle — 50 000 сум. Из БАДов самый доступный — BIFOLAK NEO за 66 500 сум.
 
 Вопрос: Какой самый дорогой продукт?
 Ответ: Аэрогриль Healthy Lifestyle — 850 000 сум. Из БАДов самый дорогой — OPHTALMOCOMPLEX за 123 000 сум.
@@ -340,10 +340,10 @@ RU:
 
 UZ:
 Savol: BIOTACT magniy qancha turadi?
-Javob: BIFOLAK MAGNIY narxi 76 000 so'm. Kapsulalarda yoki stiklarda mavjud, narxi bir xil.
+Javob: BIFOLAK MAGNIY narxi 83 500 so'm. Kapsulalarda yoki stiklarda mavjud, narxi bir xil.
 
 Savol: Eng arzon mahsulot qaysi?
-Javob: Shapka Healthy Lifestyle — 50 000 so'm. BADlardan eng arzon — BIFOLAK NEO, 61 000 so'm.
+Javob: Shapka Healthy Lifestyle — 50 000 so'm. BADlardan eng arzon — BIFOLAK NEO, 66 500 so'm.
 
 Savol: Eng qimmat mahsulot qaysi?
 Javob: Aerogril Healthy Lifestyle — 850 000 so'm. BADlardan eng qimmat — OPHTALMOCOMPLEX, 123 000 so'm.

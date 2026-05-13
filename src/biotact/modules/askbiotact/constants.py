@@ -34,7 +34,7 @@ CATEGORIES: dict[str, str] = {
 PRODUCTS: dict[str, Product] = {
     "bifolak_neo": Product(
         name="BIFOLAK NEO",
-        price=61_000,
+        price=66_500,
         category="probiotics",
         description=(
             "Синбиотик нового поколения для восстановления микрофлоры "
@@ -43,7 +43,7 @@ PRODUCTS: dict[str, Product] = {
     ),
     "bifolak_active": Product(
         name="BIFOLAK ACTIVE",
-        price=69_000,
+        price=75_500,
         category="probiotics",
         description=(
             "Усиленная формула с повышенной концентрацией полезных "
@@ -52,7 +52,7 @@ PRODUCTS: dict[str, Product] = {
     ),
     "bifolak_zincum": Product(
         name="BIFOLAK ZINCUM",
-        price=69_000,
+        price=75_500,
         category="probiotics",
         description=(
             "Пробиотик с цинком для укрепления иммунитета "
@@ -61,7 +61,7 @@ PRODUCTS: dict[str, Product] = {
     ),
     "bifolak_magniy": Product(
         name="BIFOLAK MAGNIY",
-        price=76_000,
+        price=83_500,
         category="probiotics",
         description=(
             "Пробиотик с магнием для поддержки нервной системы, "
