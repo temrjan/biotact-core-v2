@@ -69,7 +69,7 @@ class TestFormatOrderForSales:
 
         assert "BIFOLAK NEO" in result
         assert "2 шт." in result
-        assert "122 000" in result  # 61000 * 2
+        assert "133 000" in result  # 66500 * 2
         assert "@test_user" in result
 
     def test_format_empty_order(self, service: AskBiotactService) -> None:

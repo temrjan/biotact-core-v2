@@ -58,7 +58,7 @@ def mock_rag() -> dict[str, MagicMock]:
     qdrant.search = AsyncMock(
         return_value=[
             SearchResult(
-                content="BIFOLAK NEO — пробиотик нового поколения. Цена: 61 000 сум.",
+                content="BIFOLAK NEO — пробиотик нового поколения. Цена: 66 500 сум.",
                 score=0.92,
                 source="catalog.txt",
                 metadata={"department": "askbiotact"},
@@ -68,7 +68,7 @@ def mock_rag() -> dict[str, MagicMock]:
 
     llm = MagicMock()
     llm.generate_response = AsyncMock(
-        return_value="BIFOLAK NEO — пробиотик для восстановления микрофлоры. Цена: 61 000 сум."
+        return_value="BIFOLAK NEO — пробиотик для восстановления микрофлоры. Цена: 66 500 сум."
     )
 
     return {"embedding": embedding, "qdrant": qdrant, "llm": llm}
