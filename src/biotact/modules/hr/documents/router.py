@@ -12,7 +12,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.database import get_session
-from biotact.core.dependencies import CurrentUserDep
+from biotact.core.dependencies import RequireHREmailDep
 from biotact.modules.hr.documents.docx_generator import text_to_docx
 from biotact.modules.hr.documents.renderer import render_template
 from biotact.modules.hr.library import service as library_service
@@ -49,7 +49,7 @@ class RenderRequest(BaseModel):
 
 @router.post("/download-docx")
 async def download_docx(
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
     req: DocxRequest,
 ) -> StreamingResponse:
     """Convert text to DOCX and return as download."""
@@ -67,7 +67,7 @@ async def download_docx(
 
 @router.post("/render")
 async def render_docx(
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
     db: SessionDep,
     req: RenderRequest,
 ) -> StreamingResponse:
@@ -132,11 +132,24 @@ async def render_docx(
 @router.get("/download/{file_id}")
 async def download_rendered(
     file_id: str,
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
 ) -> FileResponse:
-    """Download a rendered DOCX by file ID."""
+    """Download a rendered DOCX by file ID.
+
+    Returns 404 if the file_id does not correspond to an HRDocument record
+    (closes IDOR: file paths on disk are not directly addressable).
+    """
     _ = current_user
-    file_path = RENDER_DIR / f"{file_id}.docx"
+
+    result = await db.execute(select(HRDocument).where(HRDocument.file_id == file_id))
+    doc = result.scalar_one_or_none()
+    if doc is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="File not found or expired"
+        )
+
+    file_path = Path(doc.file_path)
     if not file_path.exists():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="File not found or expired"
@@ -155,7 +168,7 @@ async def download_rendered(
 
 @router.get("", response_model=DocumentListResponse)
 async def list_documents(
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
     db: SessionDep,
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=100),
@@ -182,7 +195,7 @@ async def list_documents(
 @router.delete("/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_document(
     document_id: int,
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
     db: SessionDep,
 ) -> None:
     """Delete a generated document (file + DB record)."""

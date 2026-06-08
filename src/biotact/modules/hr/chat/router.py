@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.config import get_settings
 from biotact.core.database import get_session
-from biotact.core.dependencies import CurrentUserDep
+from biotact.core.dependencies import RequireHREmailDep
 from biotact.modules.hr.chat.service import HRChatService
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ class HRChatResponse(BaseModel):
 @router.post("/message", response_model=HRChatResponse)
 async def hr_chat_message(
     req: HRChatRequest,
-    current_user: CurrentUserDep,
+    current_user: RequireHREmailDep,
     db: SessionDep,
 ) -> HRChatResponse:
     """Send message to HR AI assistant. Returns text + optional document."""
