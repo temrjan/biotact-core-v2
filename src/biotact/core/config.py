@@ -124,6 +124,18 @@ class Settings(BaseSettings):
     digest_retention_days: int = 7
 
     # -------------------------------------------------------------------------
+    # HR Module — Access Control
+    # -------------------------------------------------------------------------
+    hr_allowed_emails: str = Field(
+        default="",
+        description=(
+            "Comma-separated list of emails allowed to access HR endpoints "
+            "(templates library, chat, document generation). "
+            "Empty = no one has HR access (fail-closed)."
+        ),
+    )
+
+    # -------------------------------------------------------------------------
     # Firecrawl (Web Scraper)
     # -------------------------------------------------------------------------
     firecrawl_api_key: str = ""

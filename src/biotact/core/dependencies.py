@@ -180,3 +180,35 @@ async def get_current_user(
 
 
 CurrentUserDep = Annotated[User, Depends(get_current_user)]
+
+
+# =============================================================================
+# HR Authorization
+# =============================================================================
+
+
+def _parse_hr_allowlist(raw: str) -> frozenset[str]:
+    """Parse CSV emails into a normalized frozenset (lowercased, trimmed)."""
+    return frozenset(part.strip().lower() for part in raw.split(",") if part.strip())
+
+
+async def require_hr_email(
+    current_user: CurrentUserDep,
+    settings: SettingsDep,
+) -> User:
+    """Require that current user's email is in HR_ALLOWED_EMAILS.
+
+    Raises:
+        HTTPException: 403 if user email is not in allowlist. Fail-closed:
+            empty allowlist means nobody has HR access.
+    """
+    allowlist = _parse_hr_allowlist(settings.hr_allowed_emails)
+    if current_user.email.lower() not in allowlist:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="HR access required",
+        )
+    return current_user
+
+
+RequireHREmailDep = Annotated[User, Depends(require_hr_email)]
