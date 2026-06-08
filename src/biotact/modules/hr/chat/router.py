@@ -4,12 +4,12 @@ import logging
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.config import get_settings
 from biotact.core.database import get_session
 from biotact.core.dependencies import RequireHREmailDep
+from biotact.modules.hr.chat.schemas import HRChatRequest, HRChatResponse
 from biotact.modules.hr.chat.service import HRChatService
 
 logger = logging.getLogger(__name__)
@@ -17,20 +17,6 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/hr/chat", tags=["hr-chat"])
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
-
-
-class HRChatRequest(BaseModel):
-    """Chat request from frontend."""
-
-    message: str = Field(min_length=1, max_length=5000)
-    history: list[dict[str, str]] | None = None
-
-
-class HRChatResponse(BaseModel):
-    """Chat response with optional document URL."""
-
-    message: str
-    document_url: str | None = None
 
 
 @router.post("/message", response_model=HRChatResponse)
