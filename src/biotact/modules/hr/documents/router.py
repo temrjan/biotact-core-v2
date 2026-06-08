@@ -2,6 +2,7 @@
 
 import logging
 import os
+import secrets
 from pathlib import Path
 from typing import Annotated
 
@@ -101,14 +102,19 @@ async def render_docx(
             status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
         )
 
-    # Render template
+    # Render template — sanitize errors: log full traceback, expose only correlation id
     try:
         buffer = render_template(db_template.file_path, req.data)
     except Exception as e:
-        logger.exception("Failed to render template %d", req.template_id)
+        correlation_id = secrets.token_hex(8)
+        logger.exception(
+            "Failed to render template %d (cid=%s)",
+            req.template_id,
+            correlation_id,
+        )
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Render failed: {e}",
+            detail=f"Render failed. Reference: {correlation_id}",
         ) from e
 
     filename = (

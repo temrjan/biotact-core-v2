@@ -34,10 +34,8 @@ async def upload_template(
     """Upload a document template (DOCX/PDF/TXT)."""
     try:
         return await service.upload_template(db, file, category, current_user.id)
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
-        ) from e
+    except service.HRFileError as e:
+        raise HTTPException(status_code=e.status_code, detail=str(e)) from e
 
 
 @router.get("", response_model=TemplateListResponse)

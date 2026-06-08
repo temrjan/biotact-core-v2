@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
 
     from biotact.core.config import Settings
+    from biotact.modules.hr.chat.schemas import ChatMessage
 
 logger = logging.getLogger(__name__)
 
@@ -453,7 +454,7 @@ class HRChatService:
     async def process_message(
         self,
         message: str,
-        history: list[dict[str, str]] | None = None,
+        history: list[ChatMessage] | None = None,
     ) -> dict[str, Any]:
         """Process user message.
 
@@ -468,7 +469,7 @@ class HRChatService:
 
         if history:
             for msg in history[-10:]:
-                messages.append({"role": msg["role"], "content": msg["content"]})
+                messages.append({"role": msg.role, "content": msg.content})
 
         messages.append({"role": "user", "content": message})
 
