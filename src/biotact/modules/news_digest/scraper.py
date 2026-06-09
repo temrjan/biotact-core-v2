@@ -9,8 +9,8 @@ import httpx
 from telethon import TelegramClient
 
 from biotact.core.config import Settings
-from biotact.modules.hr.digest.config import TELEGRAM_CHANNELS, WEB_SOURCES
-from biotact.modules.hr.digest.schemas import NewsItem
+from biotact.modules.news_digest.config import TELEGRAM_CHANNELS, WEB_SOURCES
+from biotact.modules.news_digest.schemas import NewsItem
 
 logger = logging.getLogger(__name__)
 

@@ -16,7 +16,7 @@ async def generate_daily_digest() -> None:
 
     from biotact.core.config import get_settings
     from biotact.core.database import AsyncSessionLocal
-    from biotact.modules.hr.digest.service import digest_service
+    from biotact.modules.news_digest.service import digest_service
 
     logger.info("🤖 Starting automatic daily digest generation...")
 
@@ -91,7 +91,7 @@ async def cleanup_old_data() -> None:
     """
     from biotact.core.config import get_settings
     from biotact.core.database import AsyncSessionLocal
-    from biotact.modules.hr.digest.service import digest_service
+    from biotact.modules.news_digest.service import digest_service
 
     settings = get_settings()
 

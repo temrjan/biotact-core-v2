@@ -119,7 +119,7 @@ services:
     image: biotact-core-v2-api:latest
     container_name: hr-digest-bot
     restart: unless-stopped
-    command: python -m biotact.modules.hr.digest.bot
+    command: python -m biotact.modules.news_digest.bot
     environment:
       APP_ENV: production
       POSTGRES_HOST: biotact-postgres

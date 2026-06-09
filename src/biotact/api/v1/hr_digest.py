@@ -5,8 +5,8 @@ from datetime import date as date_type
 from fastapi import APIRouter, HTTPException, Query, status
 
 from biotact.core.dependencies import CurrentUserDep, SessionDep
-from biotact.modules.hr.digest.schemas import DigestResponse
-from biotact.modules.hr.digest.service import DigestService
+from biotact.modules.news_digest.schemas import DigestResponse
+from biotact.modules.news_digest.service import DigestService
 
 router = APIRouter(prefix="/hr/digest", tags=["HR Digest"])
 

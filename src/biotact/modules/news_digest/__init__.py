@@ -11,6 +11,6 @@
 - Ежедневная отправка в Telegram (08:00)
 """
 
-from biotact.modules.hr.digest.service import DigestService
+from biotact.modules.news_digest.service import DigestService
 
 __all__ = ["DigestService"]
