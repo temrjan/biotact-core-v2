@@ -26,9 +26,6 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-_MAX_TOOL_ROUNDS = 5
-_HISTORY_WINDOW = 10
-
 
 class HRChatService:
     """HR Chat — AI extracts data from user text, docxtpl renders DOCX."""
@@ -42,7 +39,9 @@ class HRChatService:
         now_fn: Callable[[], datetime] = lambda: datetime.now(UTC),
     ) -> None:
         self.openai = AsyncOpenAI(api_key=settings.openai_api_key)
-        self.model = "gpt-5.4-mini"
+        self.model = settings.hr_chat_model
+        self._max_tool_rounds = settings.hr_max_tool_rounds
+        self._history_window = settings.hr_history_window
         self.db = db
         self._user_id = user_id
         self._now = now_fn
@@ -84,7 +83,7 @@ class HRChatService:
         ]
 
         if history:
-            for msg in history[-_HISTORY_WINDOW:]:
+            for msg in history[-self._history_window:]:
                 messages.append({"role": msg.role, "content": msg.content})
 
         messages.append({"role": "user", "content": message})
@@ -96,7 +95,7 @@ class HRChatService:
         )
 
         document_url: str | None = None
-        for round_num in range(_MAX_TOOL_ROUNDS):
+        for round_num in range(self._max_tool_rounds):
             try:
                 response = await self.openai.chat.completions.create(  # type: ignore[call-overload]
                     model=self.model,

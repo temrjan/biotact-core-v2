@@ -12,9 +12,9 @@ import pytest
 from fastapi import UploadFile
 
 from biotact.modules.hr.library import service as library_service
+from biotact.core.config import Settings
 from biotact.modules.hr.library.service import (
     ALLOWED_EXTS,
-    MAX_UPLOAD_BYTES,
     HRFileMagicError,
     HRFileTooLarge,
     HRFileTypeError,
@@ -45,7 +45,7 @@ class TestUploadConstants:
         assert frozenset({"docx", "pdf", "txt", "md"}) == ALLOWED_EXTS
 
     def test_size_limit_is_20mb(self) -> None:
-        assert MAX_UPLOAD_BYTES == 20 * 1024 * 1024
+        assert Settings().hr_max_upload_mb == 20
 
 
 @pytest.mark.unit
@@ -178,9 +178,13 @@ class TestPartialFileCleanup:
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         """Triggering HRFileTooLarge must leave no orphan files in UPLOAD_DIR."""
-        monkeypatch.setattr(library_service, "UPLOAD_DIR", tmp_path)
+        monkeypatch.setattr(library_service, "_upload_dir", lambda: tmp_path)
         # Lower the limit so we don't allocate the real 20 MB ceiling.
-        monkeypatch.setattr(library_service, "MAX_UPLOAD_BYTES", 1024)  # 1 KB
+        monkeypatch.setattr(
+            library_service,
+            "get_settings",
+            lambda: Settings(hr_max_upload_mb=0),
+        )
         # Valid DOCX magic + content exceeding 1 KB.
         oversize = b"PK\x03\x04" + b"\x00" * 2048
         f = _fake_upload("big.docx", oversize)
@@ -196,7 +200,7 @@ class TestPartialFileCleanup:
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         """If db.flush() raises after the file is written, unlink the file."""
-        monkeypatch.setattr(library_service, "UPLOAD_DIR", tmp_path)
+        monkeypatch.setattr(library_service, "_upload_dir", lambda: tmp_path)
         f = _fake_upload("doc.docx", b"PK\x03\x04rest of valid header")
         execute_result = MagicMock()
         execute_result.scalar_one_or_none = MagicMock(return_value=None)

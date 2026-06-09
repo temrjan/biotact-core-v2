@@ -19,6 +19,7 @@ from biotact.modules.hr.library.scanner import scan_template_fields
 if TYPE_CHECKING:
     from fastapi import UploadFile
     from sqlalchemy.ext.asyncio import AsyncSession
+from biotact.core.config import get_settings
 from biotact.modules.hr.library.schemas import (
     TemplateDetailResponse,
     TemplateListResponse,
@@ -27,11 +28,6 @@ from biotact.modules.hr.library.schemas import (
 
 logger = logging.getLogger(__name__)
 
-# Storage directory for uploaded templates
-UPLOAD_DIR = Path("data/hr_templates")
-
-# Upload validation
-MAX_UPLOAD_BYTES = 20 * 1024 * 1024  # 20 MB hard limit
 ALLOWED_EXTS = frozenset({"docx", "pdf", "txt", "md"})
 # Magic bytes for content-type verification (text formats have no fixed signature)
 _MAGIC_BYTES: dict[str, bytes] = {
@@ -66,9 +62,14 @@ class HRTemplateConflictError(HRFileError):
     status_code = 409
 
 
+def _upload_dir() -> Path:
+    """Return configured upload directory."""
+    return Path(get_settings().hr_upload_dir)
+
+
 def _ensure_upload_dir() -> None:
     """Create upload directory if it doesn't exist."""
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    _upload_dir().mkdir(parents=True, exist_ok=True)
 
 
 def _verify_magic_bytes(ext: str, first_chunk: bytes) -> None:
@@ -149,6 +150,9 @@ async def upload_template(
     """
     _ensure_upload_dir()
 
+    settings = get_settings()
+    max_upload_bytes = settings.hr_max_upload_mb * 1024 * 1024
+
     # Sanitize filename — strip any path components (cross-platform path traversal guard)
     raw_name = file.filename or "unknown"
     safe_basename = os.path.basename(raw_name.replace("\\", "/"))
@@ -159,7 +163,7 @@ async def upload_template(
 
     # Storage uses only uuid + ext — attacker-controlled bytes never on disk path
     storage_name = f"{uuid.uuid4().hex}.{ext}"
-    file_path = UPLOAD_DIR / storage_name
+    file_path = _upload_dir() / storage_name
 
     # Verify magic bytes BEFORE persisting anything (no disk write on type mismatch)
     first_chunk = await file.read(8)
@@ -174,9 +178,9 @@ async def upload_template(
             f.write(first_chunk)
             while chunk := await file.read(65536):
                 total_size += len(chunk)
-                if total_size > MAX_UPLOAD_BYTES:
+                if total_size > max_upload_bytes:
                     raise HRFileTooLarge(
-                        f"Upload exceeds {MAX_UPLOAD_BYTES // (1024 * 1024)} MB limit."
+                        f"Upload exceeds {settings.hr_max_upload_mb} MB limit."
                     )
                 f.write(chunk)
 

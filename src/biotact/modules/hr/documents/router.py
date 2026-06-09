@@ -25,10 +25,6 @@ router = APIRouter(prefix="/hr/documents", tags=["hr-documents"])
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
-# Temp directory for rendered files
-RENDER_DIR = Path("data/hr_rendered")
-RENDER_DIR.mkdir(parents=True, exist_ok=True)
-
 
 class DocxRequest(BaseModel):
     """Request body for text-to-DOCX generation."""

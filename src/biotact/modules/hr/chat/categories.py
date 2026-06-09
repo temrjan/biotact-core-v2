@@ -82,10 +82,13 @@ def _date_to_full_russian(short_date: str) -> str:
 
 def _default_directors(data: dict[str, str]) -> None:
     """Fill company-wide director defaults when missing."""
+    from biotact.core.config import get_settings
+
+    settings = get_settings()
     if not data.get("DIRECTOR_SHORT_LATIN"):
-        data["DIRECTOR_SHORT_LATIN"] = "ISHMATOV SH.R."
+        data["DIRECTOR_SHORT_LATIN"] = settings.hr_director_short_latin
     if not data.get("HR_DIRECTOR_SHORT_LATIN"):
-        data["HR_DIRECTOR_SHORT_LATIN"] = "KOROTUN O.A."
+        data["HR_DIRECTOR_SHORT_LATIN"] = settings.hr_hr_director_short_latin
 
 
 def _normalize_gender(data: dict[str, str]) -> None:
