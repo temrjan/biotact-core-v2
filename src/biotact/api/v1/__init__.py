@@ -16,6 +16,8 @@ from biotact.modules.crm.router import router as crm_router
 from biotact.modules.documents.router import router as documents_router
 from biotact.modules.hr.chat.router import router as hr_chat_router
 from biotact.modules.hr.documents.router import router as hr_documents_router
+from biotact.modules.hr.events.router import router as hr_events_router
+from biotact.modules.hr.gifts.router import router as hr_gifts_router
 from biotact.modules.hr.library.router import router as hr_library_router
 from biotact.modules.media.router import router as media_router
 
@@ -34,6 +36,8 @@ router.include_router(documents_router)
 router.include_router(hr_library_router)
 router.include_router(hr_chat_router)
 router.include_router(hr_documents_router)
+router.include_router(hr_gifts_router)
+router.include_router(hr_events_router)
 router.include_router(knowledge_router)
 router.include_router(media_router)
 
