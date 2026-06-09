@@ -16,6 +16,9 @@ class TemplateResponse(BaseModel):
     file_type: str
     file_size: int
     template_fields: list[str] | None = None
+    version: int
+    is_active: bool
+    superseded_by_id: int | None = None
     created_at: datetime
 
 
