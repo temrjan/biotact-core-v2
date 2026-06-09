@@ -3,7 +3,7 @@
 **Repository:** `biotact-core-v2`  
 **Module:** `src/biotact/modules/hr/`  
 **Date:** 2026-06-08  
-**Status:** Phase 1 (P0 Security) ✅ DONE — Phase 2-5 IN PLANNING  
+**Status:** Phase 1-4 ✅ DONE — Phase 5 IN PROGRESS (1/3: PR-13 merged, PR-14/15 pending)  
 **Authors:** Engineering Team + Reviewer  
 **Source Plan:** `docs/HR_AUDIT_FIX_PLAN.md` (audit origin)  
 
@@ -113,7 +113,7 @@ Reason: Extract `digest` first so PR-4 doesn't touch digest imports.
 
 ---
 
-### PR-5 · `hr/p5-extract-digest` — Extract Telegram Digest from HR Module
+### PR-5 · `hr/p5-extract-digest` — Extract Telegram Digest from HR Module ✅ MERGED
 
 **Goal:** Move `modules/hr/digest/` to `modules/news_digest/` to eliminate false coupling.
 
@@ -194,7 +194,7 @@ git mv src/biotact/modules/news_digest src/biotact/modules/hr/digest
 
 ---
 
-### PR-4 · `hr/p4-chat-decompose` — Decompose `chat/service.py` (663 LOC)
+### PR-4 · `hr/p4-chat-decompose` — Decompose `chat/service.py` (663 LOC) ✅ MERGED
 
 **Goal:** Split monolithic `chat/service.py` into 3 focused modules and inject clock for deterministic testing.
 
@@ -333,7 +333,7 @@ git checkout main -- src/biotact/modules/hr/chat/service.py
 
 ---
 
-### PR-6 · `hr/p6-dead-code-cleanup` — Remove Legacy Code
+### PR-6 · `hr/p6-dead-code-cleanup` — Remove Legacy Code ✅ MERGED
 
 **Goal:** Eliminate unused code, columns, and endpoints. Reduce module size by ~200 LOC.
 
@@ -443,7 +443,7 @@ alembic downgrade -1
 
 ---
 
-### PR-7 · `hr/p7-template-versioning-schema` — Database Schema
+### PR-7 · `hr/p7-template-versioning-schema` — Database Schema ✅ MERGED
 
 **Goal:** Add version columns to `hr_templates` with race-condition-safe constraints.
 
@@ -577,7 +577,7 @@ alembic downgrade -1
 
 ---
 
-### PR-8 · `hr/p8-template-versioning-flow` — Upload & Rollback Logic
+### PR-8 · `hr/p8-template-versioning-flow` — Upload & Rollback Logic ✅ MERGED
 
 **Goal:** Transactional version bump on upload + rollback endpoint + version history.
 
@@ -733,7 +733,7 @@ git revert <merge-commit>
 
 ---
 
-### PR-9 · `hr/p9-retention-per-category` — Auto-Cleanup Transient Documents
+### PR-9 · `hr/p9-retention-per-category` — Auto-Cleanup Transient Documents ✅ MERGED
 
 **Goal:** Delete transient HR documents after 30 days; preserve statutory documents forever.
 
@@ -861,7 +861,7 @@ git revert <merge-commit>
 
 ---
 
-### PR-10 · `hr/p10-unit-tests` — Unit Coverage
+### PR-10 · `hr/p10-unit-tests` — Unit Coverage ✅ MERGED
 
 **Goal:** Cover pure functions with fast, deterministic unit tests.
 
@@ -886,7 +886,7 @@ tests/unit/hr/test_chat_helpers.py          # NEW
 
 ---
 
-### PR-11 · `hr/p11-integration-tests` — Full Cycle Tests
+### PR-11 · `hr/p11-integration-tests` — Full Cycle Tests ✅ MERGED
 
 **Goal:** End-to-end tests with mock OpenAI and real PostgreSQL.
 
@@ -911,7 +911,7 @@ tests/integration/hr/test_versioning.py     # NEW
 
 ---
 
-### PR-12 · `hr/p12-security-regression-tests` — Security Regression
+### PR-12 · `hr/p12-security-regression-tests` — Security Regression ✅ MERGED
 
 **Goal:** Lock down all P0 fixes so they cannot regress.
 
@@ -941,25 +941,23 @@ tests/integration/test_hr_security.py       # extend existing file
 
 ---
 
-### PR-13 · `hr/p13-config-extraction` — Config-Driven Values
+### PR-13 · `hr/p13-config-extraction` — Config-Driven Values ✅ MERGED (#17)
 
 **Goal:** Replace hardcodes with `.env` settings.
 
-**Hardcodes to extract:**
-```python
-hr_openai_model: str = "gpt-4o"
-hr_max_tool_rounds: int = 5
-hr_history_window: int = 10
-hr_director_short_latin: str = "ISHMATOV SH.R."
-hr_director_full_latin: str = "ISHMATOV SHERZOD RUSTAMOVICH"
-hr_hr_director_short_latin: str = "KOROTUN O.A."
-hr_upload_dir: Path = Path("data/hr_templates")
-hr_render_dir: Path = Path("data/hr_rendered")
-```
+**Commit:** `9f9dd44` (squash merge to main)
 
-**Also fix:** `documents/router.py:30` `mkdir` on import → move to `main.py:on_startup`.
+**Hardcodes extracted:**
+- `hr_chat_model` (was `"gpt-5.4-mini"`)
+- `hr_max_tool_rounds` (was `5`)
+- `hr_history_window` (was `10`)
+- `hr_director_short_latin` / `hr_hr_director_short_latin`
+- `hr_upload_dir` / `hr_render_dir`
+- `hr_max_upload_mb` (was `20`)
 
-**Acceptance:** Change director name → edit `.env` + restart → works without code deploy.
+**Also fixed:** `mkdir` on import removed from `documents/router.py` and `library/service.py`; moved to `main.py` lifespan startup.
+
+**Acceptance:** Change director name → edit `.env` + restart → works without code deploy. ✅
 
 ---
 
