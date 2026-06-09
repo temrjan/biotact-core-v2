@@ -8,9 +8,12 @@ import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from docx import Document
+from pypdf import PdfReader
 from sqlalchemy import func, select
 
 from biotact.modules.hr.library.models import HRTemplate
+from biotact.modules.hr.library.scanner import scan_template_fields
 
 if TYPE_CHECKING:
     from fastapi import UploadFile
@@ -75,8 +78,6 @@ def _verify_magic_bytes(ext: str, first_chunk: bytes) -> None:
 
 def _extract_text_docx(file_path: str) -> str:
     """Extract full text from DOCX file (paragraphs + table cells)."""
-    from docx import Document
-
     doc = Document(file_path)
     parts: list[str] = []
     for p in doc.paragraphs:
@@ -93,8 +94,6 @@ def _extract_text_docx(file_path: str) -> str:
 
 def _extract_text_pdf(file_path: str) -> str:
     """Extract full text from PDF file."""
-    from pypdf import PdfReader
-
     reader = PdfReader(file_path)
     pages = [page.extract_text() or "" for page in reader.pages]
     return "\n".join(pages)
@@ -180,8 +179,6 @@ async def upload_template(
         # Scan for {{ PLACEHOLDER }} fields in DOCX templates
         fields: list[str] = []
         if ext == "docx":
-            from biotact.modules.hr.library.scanner import scan_template_fields
-
             fields = scan_template_fields(str(file_path))
 
         # Save to DB — original safe_basename is the display name (UI),
