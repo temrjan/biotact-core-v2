@@ -34,6 +34,8 @@ async def upload_template(
     """Upload a document template (DOCX/PDF/TXT)."""
     try:
         return await service.upload_template(db, file, category, current_user.id)
+    except service.HRTemplateConflictError as e:
+        raise HTTPException(status_code=e.status_code, detail=str(e)) from e
     except service.HRFileError as e:
         raise HTTPException(status_code=e.status_code, detail=str(e)) from e
 
@@ -63,6 +65,33 @@ async def get_template(
             status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
         )
     return result
+
+
+@router.get("/{category}/history", response_model=TemplateListResponse)
+async def list_template_history(
+    category: str,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+) -> TemplateListResponse:
+    """List all versions of templates for a category."""
+    _ = current_user  # auth guard
+    items = await service.list_template_history(db, category)
+    return TemplateListResponse(items=items, total=len(items))
+
+
+@router.post("/{template_id}/rollback", response_model=TemplateResponse)
+async def rollback_template(
+    template_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+) -> TemplateResponse:
+    """Rollback category to the specified template version."""
+    _ = current_user  # auth guard
+    try:
+        result = await service.rollback_template(db, template_id)
+    except service.HRFileError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    return TemplateResponse.model_validate(result)
 
 
 @router.delete("/{template_id}", status_code=status.HTTP_204_NO_CONTENT)
