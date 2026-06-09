@@ -3,6 +3,7 @@
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,6 +17,7 @@ from biotact.modules.callcenter.config import callcenter_config
 from biotact.modules.dashboard.config import dashboard_config
 from biotact.modules.documents.vector_store import FileVectorStore
 from biotact.modules.hr.config import hr_config
+from biotact.modules.hr.retention import setup_hr_retention_scheduler
 from biotact.modules.marketing.config import marketing_config
 from biotact.modules.media.vector_store import MediaTranscriptionVectorStore
 
@@ -41,9 +43,15 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     # Register Telegram bot commands (/start, /new, /products, /contact)
     await register_bot_commands()
 
+    # Start APScheduler for HR retention cleanup
+    scheduler = AsyncIOScheduler(timezone="UTC")
+    setup_hr_retention_scheduler(scheduler)
+    scheduler.start()
+
     yield
 
     # Shutdown
+    scheduler.shutdown()
     await close_db()
 
 
