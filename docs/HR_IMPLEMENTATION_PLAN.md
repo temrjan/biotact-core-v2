@@ -19,7 +19,9 @@ This document is the **authoritative implementation plan** for Phases 2-5 of the
 - **Phase 4:** Comprehensive test baseline (unit, integration, security regression)
 - **Phase 5:** Config extraction, OpenAI prompt caching, and quality polish
 
-**Total scope:** ~3,680 LOC across 12 PRs. Estimated duration: **14-18 working days** (single engineer) including review cycles.
+**Total scope:** ~4,750 LOC across 12+ PRs. Estimated duration: **14-18 working days** (single engineer) including review cycles.
+
+**Post-audit additions:** Gifts & Events subsystem (PR-1 Schema + PR-2a API) was added after Phase 1 security audit. This work is tracked as a parallel stream and is not part of the original 12-PR sequence.
 
 **Critical rule:** No direct commits to `main`. Every change goes through a PR → CI (lint + tests) → review → merge.
 
@@ -35,6 +37,8 @@ This document is the **authoritative implementation plan** for Phases 2-5 of the
 | PR-2 — RBAC apply + IDOR fix | ✅ Merged (#4) | `237bbc9` |
 | PR-3 — Input hardening | ✅ Merged (#5) | `cd0c1a8` |
 | Hotfix — `HR_ALLOWED_EMAILS` in compose | ✅ Merged (squashed into #5) | `cd0c1a8` |
+| **PR-1 (Schema)** — Gifts, Events, History tables + ENUMs | ✅ Merged (#15) | `main` |
+| **PR-2a (API)** — Gifts + Events endpoints | 🔧 In Review (#16) | `feature/hr-gifts-api-pr2a-fixes` |
 
 ### 2.2 Known issues after Phase 1
 
@@ -101,7 +105,43 @@ Blocks / blocked by: PR-X
 
 ---
 
-## 4. Phase 2 — Architecture Refactor
+## 4. Phase 1.5 — Gifts & Events Subsystem (Post-Audit)
+
+> **Goal:** New HR features: gift request tracking and calendar events.
+> **Note:** This work is parallel to the original Phase 2-5 plan.
+
+### PR-1 (Schema) · `feature/hr-schema-pr1` — Database Schema
+
+**Status:** ✅ Merged to `main` (#15)
+
+**Changes:**
+- 4 tables: `hr_gift_requests`, `hr_gift_status_history`, `hr_events`, `hr_event_reminders`
+- 2 ENUMs: `giftstatus`, `occasiontype`
+- Indexes: `ix_hr_gift_status`, `ix_hr_gift_presentation_date`, `ix_hr_event_date`
+
+### PR-2a (API) · `feature/hr-gifts-api-pr2a-fixes` — Gifts + Events Endpoints
+
+**Status:** 🔧 Open PR #16 → `main`
+
+**Changes:**
+- `modules/hr/gifts/{schemas,service,router}.py` — Gift CRUD, status transitions with `SELECT FOR UPDATE`, audit history
+- `modules/hr/events/{schemas,service,router}.py` — Event CRUD with index-friendly date filtering
+- `api/v1/__init__.py` — router registration
+- `tests/unit/hr/test_{gifts,events}_api.py` — 21 API tests (PostgreSQL-only; skip on SQLite)
+
+**Reviewer fixes applied:**
+1. Events date filter: `func.extract` → `date >= start AND date < end` (index-friendly)
+2. Auth guard: `test_non_hr_user_forbidden` for both gifts and events
+3. Filter tests: mixed data with inclusion/exclusion assertions
+4. SET NULL test: `test_delete_event_sets_null_on_gifts`
+
+**Branch cleanup:**
+- `feature/hr-gifts-api` (stale, pre-fixes) — **deleted** (locally + origin)
+- `salvage/config-to-settings` (orphan `2f22d77`) — **preserved** for future config-extraction PR
+
+---
+
+## 5. Phase 2 — Architecture Refactor
 
 > **Goal:** Reduce complexity, eliminate coupling, remove dead code. No functional changes to user-visible behavior.
 
@@ -1044,17 +1084,24 @@ ssh bcv2 'docker exec biotact-api python -c "from biotact.core.config import get
 
 | Phase | PRs | Duration | Calendar (est.) |
 |---|---|---|---|
-| 2 Refactor | 4, 5, 6 | 4-5 days | Days 1-5 |
-| 3 Versioning | 7, 8, 9 | 3-4 days | Days 6-9 |
-| 4 Tests | 10, 11, 12 | 4-5 days | Days 10-14 |
-| 5 Quality | 13, 14, 15 | 2-3 days | Days 15-17 |
-| **Total** | **12 PRs** | **13-17 days** | **~3-4 weeks** |
+| 1.5 Gifts/Events | PR-1, PR-2a | 2-3 days | Days 1-3 |
+| 2 Refactor | 4, 5, 6 | 4-5 days | Days 4-8 |
+| 3 Versioning | 7, 8, 9 | 3-4 days | Days 9-12 |
+| 4 Tests | 10, 11, 12 | 4-5 days | Days 13-17 |
+| 5 Quality | 13, 14, 15 | 2-3 days | Days 18-20 |
+| **Total** | **14+ PRs** | **15-20 days** | **~4 weeks** |
 
 *Includes review cycles. Single engineer assumption.*
 
 ### 9.2 Dependency graph
 
 ```
+PR-1 (Schema) ──> PR-2a (API) ──> PR-2b (Budgets+Report)
+                                      └─> PR-3 (AI Chat Tools)
+                                            └─> PR-4 (Frontend)
+                                                  └─> PR-5 (QA/Polish)
+
+(Parallel to above — original plan)
 PR-5 (extract digest)
   └─> PR-4 (chat decompose)
         └─> PR-6 (dead code)
