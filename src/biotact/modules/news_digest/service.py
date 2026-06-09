@@ -7,9 +7,9 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.config import Settings, get_settings
-from biotact.modules.hr.digest.schemas import Digest, DigestCreate, DigestResponse
-from biotact.modules.hr.digest.scraper import scrape_all_sources
-from biotact.modules.hr.digest.summarizer import DigestSummarizer
+from biotact.modules.news_digest.schemas import Digest, DigestCreate, DigestResponse
+from biotact.modules.news_digest.scraper import scrape_all_sources
+from biotact.modules.news_digest.summarizer import DigestSummarizer
 
 logger = logging.getLogger(__name__)
 

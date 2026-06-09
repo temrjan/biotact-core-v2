@@ -21,7 +21,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from biotact.core.config import get_settings
 from biotact.core.database import AsyncSessionLocal
-from biotact.modules.hr.digest.service import digest_service
+from biotact.modules.news_digest.service import digest_service
 
 logger = logging.getLogger(__name__)
 

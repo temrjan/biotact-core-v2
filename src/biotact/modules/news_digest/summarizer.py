@@ -8,8 +8,8 @@ from datetime import datetime
 from openai import AsyncOpenAI
 
 from biotact.core.config import Settings
-from biotact.modules.hr.digest.config import DIGEST_SYSTEM_PROMPT
-from biotact.modules.hr.digest.schemas import (
+from biotact.modules.news_digest.config import DIGEST_SYSTEM_PROMPT
+from biotact.modules.news_digest.schemas import (
     Digest,
     DigestItem,
     DigestSection,

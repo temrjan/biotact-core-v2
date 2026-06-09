@@ -11,6 +11,8 @@ from biotact.models.base import Base
 class HRDigest(Base):
     """HR News Digest table."""
 
+    # Legacy table name kept for migration stability.
+    # Module moved to news_digest/ in PR-5.
     __tablename__ = "hr_digests"
 
     id = Column(Integer, primary_key=True, index=True)
