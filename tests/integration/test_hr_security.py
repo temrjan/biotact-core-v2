@@ -15,7 +15,7 @@ from httpx import AsyncClient
 from biotact.core.config import Settings, get_settings
 from biotact.main import app
 
-# HR models use PostgreSQL JSONB columns (extracted_styles, template_fields)
+# HR models use PostgreSQL JSONB columns (template_fields)
 # which SQLite cannot render. CI sets DATABASE_URL to a Postgres service;
 # locally we skip these tests unless the same is provided.
 pytestmark = pytest.mark.skipif(

@@ -1,7 +1,6 @@
 """HR Documents API — render DOCX templates + download + history."""
 
 import logging
-import os
 import secrets
 from pathlib import Path
 from typing import Annotated
@@ -17,7 +16,7 @@ from biotact.core.dependencies import RequireHREmailDep
 from biotact.modules.hr.documents.docx_generator import text_to_docx
 from biotact.modules.hr.documents.renderer import render_template
 from biotact.modules.hr.library import service as library_service
-from biotact.modules.hr.library.models import HRDocument
+from biotact.modules.hr.library.models import HRDocument, HRTemplate
 from biotact.modules.hr.library.schemas import DocumentListResponse, DocumentResponse
 
 logger = logging.getLogger(__name__)
@@ -87,11 +86,6 @@ async def render_docx(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Only DOCX templates can be rendered. Upload a .docx file with {{ PLACEHOLDERS }}.",
         )
-
-    # Find actual file path from DB
-    from sqlalchemy import select
-
-    from biotact.modules.hr.library.models import HRTemplate
 
     result = await db.execute(
         select(HRTemplate).where(HRTemplate.id == req.template_id)
@@ -216,9 +210,8 @@ async def delete_document(
 
     # Delete file from disk
     try:
-        if os.path.exists(doc.file_path):
-            os.remove(doc.file_path)
-            logger.info("Deleted file: %s", doc.file_path)
+        Path(doc.file_path).unlink(missing_ok=True)
+        logger.info("Deleted file: %s", doc.file_path)
     except OSError:
         logger.warning("Could not delete file: %s", doc.file_path)
 
