@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any
 
 from sqlalchemy import select
 
+from biotact.core.config import get_settings
 from biotact.modules.hr.chat.categories import postprocess
 from biotact.modules.hr.chat.extractor import extract_data_from_context
 from biotact.modules.hr.documents.renderer import render_template
@@ -21,8 +22,6 @@ if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
 
 logger = logging.getLogger(__name__)
-
-RENDER_DIR = Path("data/hr_rendered")
 
 
 async def generate_hr_document(
@@ -68,9 +67,10 @@ async def generate_hr_document(
     data = postprocess(data, category=db_template.category, now=now)
 
     try:
-        RENDER_DIR.mkdir(parents=True, exist_ok=True)
+        render_dir = Path(get_settings().hr_render_dir)
+        render_dir.mkdir(parents=True, exist_ok=True)
         file_id = uuid.uuid4().hex[:12]
-        out_path = RENDER_DIR / f"{file_id}.docx"
+        out_path = render_dir / f"{file_id}.docx"
 
         buffer = render_template(db_template.file_path, data)
         rendered_bytes = buffer.read()

@@ -2,6 +2,7 @@
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
@@ -35,6 +36,10 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     settings = get_settings()
     await FileVectorStore(settings).ensure_collection()
     await MediaTranscriptionVectorStore(settings).ensure_collection()
+
+    # Ensure HR directories exist (config-driven, no hard-coded paths)
+    Path(settings.hr_upload_dir).mkdir(parents=True, exist_ok=True)
+    Path(settings.hr_render_dir).mkdir(parents=True, exist_ok=True)
 
     # SQL schema is owned by Alembic (`alembic upgrade head` in CD).
     # Do NOT create tables here — it would bypass the migration chain and

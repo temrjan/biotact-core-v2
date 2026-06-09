@@ -124,7 +124,7 @@ class Settings(BaseSettings):
     digest_retention_days: int = 7
 
     # -------------------------------------------------------------------------
-    # HR Module — Access Control
+    # HR Module
     # -------------------------------------------------------------------------
     hr_allowed_emails: str = Field(
         default="",
@@ -134,6 +134,14 @@ class Settings(BaseSettings):
             "Empty = no one has HR access (fail-closed)."
         ),
     )
+    hr_chat_model: str = "gpt-5.4-mini"
+    hr_max_tool_rounds: int = 5
+    hr_history_window: int = 10
+    hr_upload_dir: str = "data/hr_templates"
+    hr_render_dir: str = "data/hr_rendered"
+    hr_max_upload_mb: int = 20
+    hr_director_short_latin: str = "ISHMATOV SH.R."
+    hr_hr_director_short_latin: str = "KOROTUN O.A."
 
     # -------------------------------------------------------------------------
     # Firecrawl (Web Scraper)
