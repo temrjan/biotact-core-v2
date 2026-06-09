@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING
 from docx import Document
 from pypdf import PdfReader
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 
 from biotact.modules.hr.library.models import HRTemplate
 from biotact.modules.hr.library.scanner import scan_template_fields
@@ -57,6 +58,12 @@ class HRFileTooLarge(HRFileError):
     """Uploaded file exceeds the size limit."""
 
     status_code = 413
+
+
+class HRTemplateConflictError(HRFileError):
+    """Concurrent upload produced a version conflict."""
+
+    status_code = 409
 
 
 def _ensure_upload_dir() -> None:
@@ -181,21 +188,47 @@ async def upload_template(
         if ext == "docx":
             fields = scan_template_fields(str(file_path))
 
-        # Save to DB — original safe_basename is the display name (UI),
-        # file_path points at the uuid-named file on disk.
-        template = HRTemplate(
-            name=safe_basename,
-            category=category,
-            file_path=str(file_path),
-            file_type=ext,
-            file_size=total_size,
-            extracted_text=extracted,
-            template_fields=fields if fields else None,
-            uploaded_by=user_id,
-        )
-        db.add(template)
-        await db.flush()
-        await db.refresh(template)
+        # Versioning: lock current active template, bump version, deactivate prev.
+        try:
+            prev_result = await db.execute(
+                select(HRTemplate)
+                .where(HRTemplate.category == category)
+                .where(HRTemplate.is_active.is_(True))
+                .with_for_update()
+            )
+            prev = prev_result.scalar_one_or_none()
+            next_version = (prev.version + 1) if prev else 1
+
+            if prev is not None:
+                prev.is_active = False
+                await db.flush()
+
+            template = HRTemplate(
+                name=safe_basename,
+                category=category,
+                file_path=str(file_path),
+                file_type=ext,
+                file_size=total_size,
+                extracted_text=extracted,
+                template_fields=fields if fields else None,
+                uploaded_by=user_id,
+                version=next_version,
+                is_active=True,
+            )
+            db.add(template)
+            await db.flush()
+            await db.refresh(template)
+
+            if prev is not None:
+                prev.superseded_by_id = template.id
+                await db.flush()
+        except IntegrityError as exc:
+            file_path.unlink(missing_ok=True)
+            msg = (
+                f"Version conflict for category '{category}'. "
+                "Another upload completed concurrently."
+            )
+            raise HRTemplateConflictError(msg) from exc
     except Exception:
         file_path.unlink(missing_ok=True)
         raise
@@ -251,18 +284,69 @@ async def get_template_by_category(
     db: AsyncSession,
     category: str,
 ) -> TemplateDetailResponse | None:
-    """Get the most recent template for a category (for LLM tool)."""
+    """Get the active template for a category (for LLM tool)."""
     result = await db.execute(
         select(HRTemplate)
         .where(HRTemplate.category == category)
+        .where(HRTemplate.is_active.is_(True))
         .where(HRTemplate.extracted_text.is_not(None))
-        .order_by(HRTemplate.created_at.desc())
+        .order_by(HRTemplate.version.desc())
         .limit(1)
     )
     template = result.scalar_one_or_none()
     if not template:
         return None
     return TemplateDetailResponse.model_validate(template)
+
+
+async def list_template_history(
+    db: AsyncSession,
+    category: str,
+) -> list[TemplateResponse]:
+    """Return all template versions for a category, newest first."""
+    result = await db.execute(
+        select(HRTemplate)
+        .where(HRTemplate.category == category)
+        .order_by(HRTemplate.version.desc())
+    )
+    items = list(result.scalars().all())
+    return [TemplateResponse.model_validate(t) for t in items]
+
+
+async def rollback_template(
+    db: AsyncSession,
+    template_id: int,
+) -> HRTemplate:
+    """Rollback category to the specified template version.
+
+    Deactivates the current active template and reactivates the target.
+    """
+    target_result = await db.execute(
+        select(HRTemplate).where(HRTemplate.id == template_id)
+    )
+    target = target_result.scalar_one_or_none()
+    if target is None:
+        raise HRFileError("Template not found")
+
+    current_result = await db.execute(
+        select(HRTemplate)
+        .where(HRTemplate.category == target.category)
+        .where(HRTemplate.is_active.is_(True))
+        .with_for_update()
+    )
+    current = current_result.scalar_one_or_none()
+
+    if current is not None:
+        current.is_active = False
+        current.superseded_by_id = target.id
+        await db.flush()
+
+    target.is_active = True
+    target.superseded_by_id = None
+    await db.flush()
+    await db.refresh(target)
+
+    return target
 
 
 async def delete_template(
@@ -275,10 +359,8 @@ async def delete_template(
     if not template:
         return False
 
-    # Remove file from disk
     try:
-        if os.path.exists(template.file_path):
-            os.remove(template.file_path)
+        Path(template.file_path).unlink(missing_ok=True)
     except OSError:
         logger.warning("Could not delete file: %s", template.file_path)
 

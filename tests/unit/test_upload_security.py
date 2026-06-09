@@ -198,7 +198,10 @@ class TestPartialFileCleanup:
         """If db.flush() raises after the file is written, unlink the file."""
         monkeypatch.setattr(library_service, "UPLOAD_DIR", tmp_path)
         f = _fake_upload("doc.docx", b"PK\x03\x04rest of valid header")
+        execute_result = MagicMock()
+        execute_result.scalar_one_or_none = MagicMock(return_value=None)
         db = MagicMock()
+        db.execute = AsyncMock(return_value=execute_result)
         db.add = MagicMock()
         db.flush = AsyncMock(side_effect=RuntimeError("simulated DB outage"))
         db.refresh = AsyncMock()
