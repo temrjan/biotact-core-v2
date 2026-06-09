@@ -101,9 +101,7 @@ async def run_retention_cleanup(
         now = datetime.now(UTC)
 
     async with AsyncSessionLocal() as db, db.begin():
-        deleted = await cleanup_old_documents(
-            db, now, retention_days=retention_days
-        )
+        deleted = await cleanup_old_documents(db, now, retention_days=retention_days)
         if deleted:
             logger.info("Retention cleanup finished: %d document(s) deleted", deleted)
         else:
