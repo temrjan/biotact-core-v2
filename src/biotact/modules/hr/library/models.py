@@ -1,6 +1,14 @@
 """HR Library models — document templates and generated documents."""
 
-from sqlalchemy import ForeignKey, Integer, String, Text
+from sqlalchemy import (
+    Boolean,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -51,6 +59,16 @@ class HRTemplate(TimestampMixin, Base):
     """
 
     __tablename__ = "hr_templates"
+    __table_args__ = (
+        UniqueConstraint("category", "version", name="uq_hr_template_category_version"),
+        Index(
+            "ix_hr_template_active_per_category",
+            "category",
+            unique=True,
+            postgresql_where="is_active IS TRUE",
+            sqlite_where="is_active IS TRUE",
+        ),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(300), nullable=False)
@@ -62,10 +80,20 @@ class HRTemplate(TimestampMixin, Base):
     template_fields: Mapped[list[str] | None] = mapped_column(
         JSONB, default=list, doc="List of {{ PLACEHOLDER }} names found in DOCX"
     )
+    version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    superseded_by_id: Mapped[int | None] = mapped_column(
+        ForeignKey("hr_templates.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     uploaded_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
     )
 
     def __repr__(self) -> str:
-        return f"<HRTemplate(id={self.id}, name='{self.name}', category='{self.category}')>"
+        return (
+            f"<HRTemplate(id={self.id}, name='{self.name}', "
+            f"category='{self.category}', version={self.version}, "
+            f"is_active={self.is_active})>"
+        )
