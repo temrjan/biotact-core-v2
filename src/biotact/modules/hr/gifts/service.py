@@ -200,6 +200,10 @@ async def delete_gift(db: "AsyncSession", gift_id: int) -> bool:
         return False
 
     await db.delete(gift)
+    await db.flush()
+    # DB-side ON DELETE SET NULL is invisible to the session — expire cached
+    # objects so status history reloads request_id from the database.
+    db.expire_all()
     return True
 
 
@@ -324,13 +328,17 @@ async def update_budget_plan(
     for field, value in update_dict.items():
         setattr(plan, field, value)
 
+    # Snapshot for the error message: after rollback() the ORM object is
+    # expired and attribute access would trigger sync IO (MissingGreenlet).
+    target_month, target_year = plan.month, plan.year
+
     try:
         await db.flush()
         await db.refresh(plan)
     except IntegrityError:
         await db.rollback()
         raise BudgetPlanDuplicateError(
-            f"Budget plan for {plan.month:02d}.{plan.year} already exists"
+            f"Budget plan for {target_month:02d}.{target_year} already exists"
         ) from None
     return plan
 
@@ -342,6 +350,9 @@ async def delete_budget_plan(db: "AsyncSession", plan_id: int) -> bool:
         return False
 
     await db.delete(plan)
+    await db.flush()
+    # No SET NULL dependents on budget plans — no expire_all() needed
+    # (unlike delete_gift / delete_event).
     return True
 
 
