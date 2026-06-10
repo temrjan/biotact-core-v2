@@ -4,9 +4,19 @@ from datetime import date
 from typing import TYPE_CHECKING
 
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 
-from biotact.modules.hr.gifts.models import GiftRequest, GiftStatus, GiftStatusHistory
+from biotact.modules.hr.gifts.models import (
+    GiftBudgetPlan,
+    GiftRequest,
+    GiftStatus,
+    GiftStatusHistory,
+)
 from biotact.modules.hr.gifts.schemas import (
+    BudgetPlanCreateRequest,
+    BudgetPlanListResponse,
+    BudgetPlanResponse,
+    BudgetPlanUpdateRequest,
     GiftCreateRequest,
     GiftHistoryResponse,
     GiftListResponse,
@@ -209,3 +219,126 @@ async def list_gift_history(
     result = await db.execute(query)
     items = list(result.scalars().all())
     return [GiftHistoryResponse.model_validate(h) for h in items]
+
+
+# ---------------------------------------------------------------------------
+# Budget Plan service
+# ---------------------------------------------------------------------------
+
+
+class BudgetPlanNotFoundError(ValueError):
+    """Raised when a budget plan is not found."""
+
+    status_code = 404
+
+
+class BudgetPlanDuplicateError(ValueError):
+    """Raised when a budget plan for month+year already exists."""
+
+    status_code = 409
+
+
+async def create_budget_plan(
+    db: "AsyncSession",
+    data: BudgetPlanCreateRequest,
+    user_id: int,
+) -> GiftBudgetPlan:
+    """Create a new monthly budget plan."""
+    plan = GiftBudgetPlan(
+        month=data.month,
+        year=data.year,
+        planned_amount=data.planned_amount,
+        created_by=user_id,
+    )
+    db.add(plan)
+    try:
+        await db.flush()
+        await db.refresh(plan)
+    except IntegrityError:
+        await db.rollback()
+        raise BudgetPlanDuplicateError(
+            f"Budget plan for {data.month:02d}.{data.year} already exists"
+        ) from None
+    return plan
+
+
+async def list_budget_plans(
+    db: "AsyncSession",
+    *,
+    month: int | None = None,
+    year: int | None = None,
+    page: int = 1,
+    size: int = 20,
+) -> BudgetPlanListResponse:
+    """List budget plans with optional filters and pagination."""
+    query = select(GiftBudgetPlan).order_by(
+        GiftBudgetPlan.year.desc(), GiftBudgetPlan.month.desc()
+    )
+    count_query = select(func.count(GiftBudgetPlan.id))
+
+    if month is not None:
+        query = query.where(GiftBudgetPlan.month == month)
+        count_query = count_query.where(GiftBudgetPlan.month == month)
+
+    if year is not None:
+        query = query.where(GiftBudgetPlan.year == year)
+        count_query = count_query.where(GiftBudgetPlan.year == year)
+
+    total = (await db.execute(count_query)).scalar_one()
+
+    offset = (page - 1) * size
+    query = query.offset(offset).limit(size)
+    result = await db.execute(query)
+    items = list(result.scalars().all())
+
+    pages = (total + size - 1) // size if size > 0 else 0
+    return BudgetPlanListResponse(
+        items=[BudgetPlanResponse.model_validate(p) for p in items],
+        total=total,
+        page=page,
+        size=size,
+        pages=pages,
+    )
+
+
+async def get_budget_plan(db: "AsyncSession", plan_id: int) -> GiftBudgetPlan | None:
+    """Get a budget plan by ID."""
+    result = await db.execute(
+        select(GiftBudgetPlan).where(GiftBudgetPlan.id == plan_id)
+    )
+    return result.scalar_one_or_none()
+
+
+async def update_budget_plan(
+    db: "AsyncSession",
+    plan_id: int,
+    data: BudgetPlanUpdateRequest,
+) -> GiftBudgetPlan | None:
+    """Partially update a budget plan."""
+    plan = await get_budget_plan(db, plan_id)
+    if plan is None:
+        return None
+
+    update_dict = data.model_dump(exclude_unset=True)
+    for field, value in update_dict.items():
+        setattr(plan, field, value)
+
+    try:
+        await db.flush()
+        await db.refresh(plan)
+    except IntegrityError:
+        await db.rollback()
+        raise BudgetPlanDuplicateError(
+            f"Budget plan for {plan.month:02d}.{plan.year} already exists"
+        ) from None
+    return plan
+
+
+async def delete_budget_plan(db: "AsyncSession", plan_id: int) -> bool:
+    """Delete a budget plan."""
+    plan = await get_budget_plan(db, plan_id)
+    if plan is None:
+        return False
+
+    await db.delete(plan)
+    return True
