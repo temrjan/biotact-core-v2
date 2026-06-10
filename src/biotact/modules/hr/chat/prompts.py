@@ -109,6 +109,11 @@ NDA ДЛЯ ГПД (nda_gpd):
 - soglashenie_vozmeshenie — соглашение о возмещении расходов
 - soglashenie_pd — соглашение об обработке перс. данных
 
+Также ты можешь помогать с корпоративными подарками:
+- Создавать заявки на подарки (create_gift_request)
+- Показывать предстоящие события из календаря (list_upcoming_events)
+- Проверять статус заявки на подарок (get_gift_status)
+
 КРИТИЧНО: в data должны быть ВСЕ поля из fields. Пустые поля = пустые места в документе.
 Отвечай коротко, по делу, на русском.
 НЕ выдумывай данные — если не указаны, спроси.
@@ -172,6 +177,116 @@ OPENAI_TOOLS: list[dict[str, Any]] = [
             "name": "list_available_templates",
             "description": "Показать список всех загруженных шаблонов документов.",
             "parameters": {"type": "object", "properties": {}},
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_gift_request",
+            "description": (
+                "Создать заявку на подарок. "
+                "Вызывай когда пользователь просит оформить подарок "
+                "и у тебя есть все обязательные данные."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "initiator": {
+                        "type": "string",
+                        "description": "Кто инициирует подарок",
+                    },
+                    "recipient": {
+                        "type": "string",
+                        "description": "Получатель подарка",
+                    },
+                    "occasion": {
+                        "type": "string",
+                        "description": "Повод (например, День рождения, Юбилей)",
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "Категория подарка",
+                    },
+                    "budget": {
+                        "type": "integer",
+                        "description": "Бюджет в сумах",
+                    },
+                    "gift_name": {
+                        "type": "string",
+                        "description": "Название подарка (опционально)",
+                    },
+                    "vendor": {
+                        "type": "string",
+                        "description": "Поставщик (опционально)",
+                    },
+                    "presentation_date": {
+                        "type": "string",
+                        "description": "Дата вручения в формате YYYY-MM-DD (опционально)",
+                    },
+                    "responsible_person_id": {
+                        "type": "integer",
+                        "description": (
+                            "ID ответственного сотрудника. "
+                            "Если не указан, используется текущий пользователь."
+                        ),
+                    },
+                    "comment": {
+                        "type": "string",
+                        "description": "Комментарий (опционально)",
+                    },
+                    "event_id": {
+                        "type": "integer",
+                        "description": "ID связанного события из календаря (опционально)",
+                    },
+                },
+                "required": [
+                    "initiator",
+                    "recipient",
+                    "occasion",
+                    "category",
+                    "budget",
+                ],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_upcoming_events",
+            "description": (
+                "Показать предстоящие события из календаря "
+                "(Дни рождения, юбилеи, праздники и т.д.)."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "days": {
+                        "type": "integer",
+                        "description": "На сколько дней вперед смотреть (по умолчанию 30)",
+                    },
+                    "department": {
+                        "type": "string",
+                        "description": "Фильтр по отделу (опционально)",
+                    },
+                },
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_gift_status",
+            "description": "Проверить статус заявки на подарок по её ID.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "gift_id": {
+                        "type": "integer",
+                        "description": "ID заявки на подарок",
+                    },
+                },
+                "required": ["gift_id"],
+            },
         },
     },
 ]

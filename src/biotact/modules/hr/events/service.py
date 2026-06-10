@@ -43,6 +43,8 @@ async def list_events(
     month: int | None = None,
     year: int | None = None,
     department: str | None = None,
+    from_date: date | None = None,
+    to_date: date | None = None,
     page: int = 1,
     size: int = 20,
 ) -> EventListResponse:
@@ -51,11 +53,22 @@ async def list_events(
     Filters:
         month + year: Filter by event date month/year.
         department: Filter by department name (exact match).
+        from_date + to_date: Filter by inclusive date range.
+            When both are provided they take precedence over month/year.
     """
     query = select(HREvent).order_by(HREvent.date.desc())
     count_query = select(func.count(HREvent.id))
 
-    if month is not None and year is not None:
+    if from_date is not None and to_date is not None:
+        query = query.where(
+            HREvent.date >= from_date,
+            HREvent.date <= to_date,
+        )
+        count_query = count_query.where(
+            HREvent.date >= from_date,
+            HREvent.date <= to_date,
+        )
+    elif month is not None and year is not None:
         start_date = date(year, month, 1)
         end_date = date(year + 1, 1, 1) if month == 12 else date(year, month + 1, 1)
         query = query.where(
