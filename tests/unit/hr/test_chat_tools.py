@@ -164,9 +164,7 @@ class TestToolListUpcomingEvents:
             new_callable=AsyncMock,
             return_value=mock_result,
         ):
-            result = await service._execute_tool(
-                "list_upcoming_events", {"days": 7}
-            )
+            result = await service._execute_tool("list_upcoming_events", {"days": 7})
 
         assert "не найдено" in result
 
@@ -191,9 +189,7 @@ class TestToolGetGiftStatus:
             new_callable=AsyncMock,
             return_value=mock_gift,
         ):
-            result = await service._execute_tool(
-                "get_gift_status", {"gift_id": 77}
-            )
+            result = await service._execute_tool("get_gift_status", {"gift_id": 77})
 
         assert "approved" in result
         assert "Иванов" in result
@@ -209,9 +205,7 @@ class TestToolGetGiftStatus:
             new_callable=AsyncMock,
             return_value=None,
         ):
-            result = await service._execute_tool(
-                "get_gift_status", {"gift_id": 999}
-            )
+            result = await service._execute_tool("get_gift_status", {"gift_id": 999})
 
         assert "не найдена" in result
 
@@ -224,7 +218,5 @@ class TestToolGetGiftStatus:
     @pytest.mark.unit
     async def test_invalid_gift_id_type_returns_message(self) -> None:
         service = _make_service()
-        result = await service._execute_tool(
-            "get_gift_status", {"gift_id": "abc"}
-        )
+        result = await service._execute_tool("get_gift_status", {"gift_id": "abc"})
         assert "Неверный формат ID" in result

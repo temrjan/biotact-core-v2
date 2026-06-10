@@ -198,9 +198,7 @@ class HRChatService:
         """Execute a tool call by dispatching to a named handler."""
         tool_method = getattr(self, f"_tool_{name}", None)
         if tool_method is not None:
-            handler = cast(
-                "Callable[[dict[str, Any]], Awaitable[str]]", tool_method
-            )
+            handler = cast("Callable[[dict[str, Any]], Awaitable[str]]", tool_method)
             return await handler(args)
         return f"Неизвестный инструмент: {name}"
 

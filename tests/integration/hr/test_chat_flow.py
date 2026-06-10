@@ -170,9 +170,7 @@ class TestChatFlow:
         assert body["document_url"] is None
 
     @pytest.mark.asyncio
-    async def test_chat_creates_gift_request(
-        self, hr_client: AsyncClient
-    ) -> None:
+    async def test_chat_creates_gift_request(self, hr_client: AsyncClient) -> None:
         """AI tool create_gift_request creates a gift via chat."""
         mock_create = _mock_openai_response(
             "create_gift_request",
@@ -204,9 +202,7 @@ class TestChatFlow:
         assert gifts[0]["status"] == "new"
 
     @pytest.mark.asyncio
-    async def test_chat_lists_upcoming_events(
-        self, hr_client: AsyncClient
-    ) -> None:
+    async def test_chat_lists_upcoming_events(self, hr_client: AsyncClient) -> None:
         """AI tool list_upcoming_events returns events from calendar."""
         from datetime import date as _date
 
@@ -238,9 +234,7 @@ class TestChatFlow:
         assert body["message"] == "Вот предстоящие события."
 
     @pytest.mark.asyncio
-    async def test_chat_gets_gift_status(
-        self, hr_client: AsyncClient
-    ) -> None:
+    async def test_chat_gets_gift_status(self, hr_client: AsyncClient) -> None:
         """AI tool get_gift_status returns gift status."""
         gift_payload = {
             "event_id": None,
