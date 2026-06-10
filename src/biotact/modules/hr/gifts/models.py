@@ -120,6 +120,69 @@ class GiftBudgetPlan(TimestampMixin, Base):
         )
 
 
+class GiftKPI(TimestampMixin, Base):
+    """KPI tracking for gift workflow — planned vs actual per month.
+
+    Wide table with 5 indicator pairs.  % completion is computed at
+    read time (schema level), not stored.
+    """
+
+    __tablename__ = "hr_gift_kpi"
+    __table_args__ = (
+        UniqueConstraint(
+            "month",
+            "year",
+            name="uq_hr_gift_kpi_month_year",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    month: Mapped[int] = mapped_column(Integer, nullable=False)
+    year: Mapped[int] = mapped_column(Integer, nullable=False)
+
+    employee_congrats_planned: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    employee_congrats_actual: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    partner_congrats_planned: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    partner_congrats_actual: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    budget_compliance_planned: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=100
+    )
+    budget_compliance_actual: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    satisfaction_planned: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    satisfaction_actual: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    timely_closure_planned: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+    timely_closure_actual: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0
+    )
+
+    notes: Mapped[str | None] = mapped_column(Text)
+    created_by: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    def __repr__(self) -> str:
+        return (
+            f"<GiftKPI(month={self.month}, "
+            f"year={self.year}, "
+            f"created_by={self.created_by})>"
+        )
+
+
 class GiftStatusHistory(Base):
     """Audit trail for gift request status transitions.
 
