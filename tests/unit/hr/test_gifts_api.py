@@ -10,13 +10,18 @@ from datetime import date
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.config import Settings, get_settings
 from biotact.main import app
 from biotact.models.user import User
 from biotact.modules.hr.events.models import HREvent, OccasionType
-from biotact.modules.hr.gifts.models import GiftRequest, GiftStatus
+from biotact.modules.hr.gifts.models import (
+    GiftRequest,
+    GiftStatus,
+    GiftStatusHistory,
+)
 
 pytestmark = pytest.mark.skipif(
     not os.environ.get("DATABASE_URL"),
@@ -373,6 +378,46 @@ async def test_delete_gift_not_found(
     """DELETE non-existent gift returns 404."""
     response = await authenticated_client.delete("/api/v1/hr/gifts/99999")
     assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_delete_gift_sets_null_on_history(
+    authenticated_client: AsyncClient,
+    hr_allow_test_user: None,
+    sample_gift: GiftRequest,
+    test_session: AsyncSession,
+) -> None:
+    """Deleting a gift via API sets history request_id to NULL (service path).
+
+    Regression guard for service.delete_gift's flush() + expire_all():
+    the DB-side ON DELETE SET NULL only becomes visible because the
+    service flushes the DELETE and expires cached rows.
+    """
+    gift_id = sample_gift.id
+
+    # Create a history row via the status endpoint
+    r1 = await authenticated_client.patch(
+        f"/api/v1/hr/gifts/{gift_id}/status",
+        json={"status": "approval"},
+    )
+    assert r1.status_code == 200
+
+    r2 = await authenticated_client.get(f"/api/v1/hr/gifts/{gift_id}/history")
+    assert r2.status_code == 200
+    history_ids = [h["id"] for h in r2.json()]
+    assert history_ids
+
+    # Delete via API — exercises service.delete_gift (flush + expire_all)
+    r3 = await authenticated_client.delete(f"/api/v1/hr/gifts/{gift_id}")
+    assert r3.status_code == 204
+
+    # History must survive with request_id NULL
+    result = await test_session.execute(
+        select(GiftStatusHistory).where(GiftStatusHistory.id.in_(history_ids))
+    )
+    records = result.scalars().all()
+    assert len(records) == len(history_ids)
+    assert all(r.request_id is None for r in records)
 
 
 # =============================================================================

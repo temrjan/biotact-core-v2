@@ -124,4 +124,8 @@ async def delete_event(db: "AsyncSession", event_id: int) -> bool:
         return False
 
     await db.delete(event)
+    await db.flush()
+    # DB-side ON DELETE SET NULL is invisible to the session — expire cached
+    # objects so linked gifts reload event_id from the database.
+    db.expire_all()
     return True

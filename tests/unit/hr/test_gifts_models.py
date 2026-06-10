@@ -319,6 +319,11 @@ async def test_status_history_set_null_on_delete(
     await test_session.delete(request)
     await test_session.commit()
 
+    # DB-side ON DELETE SET NULL is invisible to the session (and the test
+    # session uses expire_on_commit=False) — expire so the select below
+    # reloads request_id from the database instead of the identity map.
+    test_session.expire_all()
+
     # History should survive with NULL request_id
     result = await test_session.execute(
         select(GiftStatusHistory).where(GiftStatusHistory.id == history_id)
