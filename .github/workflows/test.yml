@@ -25,6 +25,11 @@ jobs:
     # in some `if:` evaluations).
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      # Alembic builds its sync URL from Settings (migrations/env.py reads
+      # POSTGRES_* vars); the defaults point at the dev database, not the CI
+      # service container — migration tests fail auth without these.
+      POSTGRES_PASSWORD: biotact_test
+      POSTGRES_DB: biotact_test
 
     services:
       postgres:
