@@ -12,6 +12,7 @@ from biotact.modules.hr.events.schemas import (
     EventCreateRequest,
     EventListResponse,
     EventResponse,
+    EventUpdateRequest,
 )
 
 router = APIRouter(prefix="/hr/events", tags=["hr-events"])
@@ -62,6 +63,24 @@ async def get_event(
     """Get a calendar event by ID."""
     _ = current_user
     event = await service.get_event(db, event_id)
+    if event is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+    return EventResponse.model_validate(event)
+
+
+@router.patch("/{event_id}", response_model=EventResponse)
+async def update_event(
+    event_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+    data: EventUpdateRequest,
+) -> EventResponse:
+    """Partially update a calendar event."""
+    _ = current_user
+    event = await service.update_event(db, event_id, data)
     if event is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
