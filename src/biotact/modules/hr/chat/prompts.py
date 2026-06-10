@@ -7,6 +7,10 @@ from __future__ import annotations
 
 from typing import Any
 
+# Stable, request-independent prefix (>1024 tokens). Sent as a standalone
+# system message so OpenAI's automatic prompt caching can reuse it across calls
+# (no `cache_control` markers — that is Anthropic-only). Keep this block free of
+# per-request data; volatile content (template list) is appended separately.
 SYSTEM_PROMPT = """\
 Ты — HR-ассистент компании BIOTACT. Твоя задача — извлечь данные из запроса пользователя и создать документ по шаблону.
 

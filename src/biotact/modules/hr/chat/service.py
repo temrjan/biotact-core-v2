@@ -27,6 +27,16 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+def _cached_tokens(usage: Any) -> int:
+    """Cached prompt tokens reported by OpenAI, or 0 when unavailable.
+
+    Defensive: both ``usage`` and ``prompt_tokens_details`` are optional on the
+    SDK model (CompletionUsage) and absent from lightweight test doubles.
+    """
+    details = getattr(usage, "prompt_tokens_details", None)
+    return getattr(details, "cached_tokens", None) or 0
+
+
 class HRChatService:
     """HR Chat — AI extracts data from user text, docxtpl renders DOCX."""
 
@@ -58,7 +68,7 @@ class HRChatService:
                 for t in templates_result.items
             ]
             return (
-                "\n\nДоступные шаблоны (уже загружены, find_template не нужен):\n"
+                "Доступные шаблоны (уже загружены, find_template не нужен):\n"
                 + "\n".join(lines)
                 + "\n\nЕсли пользователь просит создать документ и все данные собраны, сразу вызывай generate_document с нужным template_id и ВСЕМИ полями."
             )
@@ -75,12 +85,16 @@ class HRChatService:
 
         Returns: {"message": str, "document_url": str | None}
         """
+        # Keep the stable instruction block as its own system message so OpenAI
+        # auto-caches it (identical ≥1024-token prefix across calls). The volatile
+        # template list goes in a second system message so it never invalidates
+        # the cached prefix. See docs/HR_IMPLEMENTATION_PLAN.md (Phase 5, PR-14).
         messages: list[dict[str, Any]] = [
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT + await self._get_template_context(),
-            },
+            {"role": "system", "content": SYSTEM_PROMPT},
         ]
+        template_context = await self._get_template_context()
+        if template_context:
+            messages.append({"role": "system", "content": template_context})
 
         if history:
             for msg in history[-self._history_window :]:
@@ -109,11 +123,14 @@ class HRChatService:
                 return {"message": f"Ошибка LLM: {e}", "document_url": None}
 
             choice = response.choices[0]
+            usage = getattr(response, "usage", None)
             logger.info(
-                "HR chat round=%d finish=%s tools=%s",
+                "HR chat round=%d finish=%s tools=%s prompt_tokens=%s cached_tokens=%d",
                 round_num,
                 choice.finish_reason,
                 bool(choice.message.tool_calls),
+                getattr(usage, "prompt_tokens", None),
+                _cached_tokens(usage),
             )
 
             if choice.message.tool_calls:
