@@ -6,6 +6,8 @@ import json
 import logging
 from typing import TYPE_CHECKING
 
+from openai import OpenAIError
+
 if TYPE_CHECKING:
     from openai import AsyncOpenAI
 
@@ -51,6 +53,6 @@ async def extract_data_from_context(
         data = json.loads(raw)
         logger.info("Extracted %d fields from context", len(data))
         return {k: str(v) for k, v in data.items() if v}
-    except Exception:
+    except (OpenAIError, json.JSONDecodeError):
         logger.exception("Failed to extract data from context")
         return {}
