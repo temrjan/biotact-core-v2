@@ -107,12 +107,20 @@ class TestChatFlow:
     """Chat → tool call → document generation with mocked OpenAI."""
 
     @pytest.mark.asyncio
-    async def test_chat_generates_document(self, hr_client: AsyncClient, tmp_path: Path) -> None:
+    async def test_chat_generates_document(
+        self, hr_client: AsyncClient, tmp_path: Path
+    ) -> None:
         docx = tmp_path / "chat_tpl.docx"
         _make_docx(docx)
 
         with docx.open("rb") as f:
-            files = {"file": ("chat_tpl.docx", f, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
+            files = {
+                "file": (
+                    "chat_tpl.docx",
+                    f,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                )
+            }
             r = await hr_client.post("/api/v1/hr/library?category=td_chat", files=files)
         assert r.status_code == 201
         tpl_id = r.json()["id"]
@@ -135,7 +143,9 @@ class TestChatFlow:
         assert "/api/v1/hr/documents/download/" in body["document_url"]
 
     @pytest.mark.asyncio
-    async def test_chat_without_tool_returns_text_only(self, hr_client: AsyncClient) -> None:
+    async def test_chat_without_tool_returns_text_only(
+        self, hr_client: AsyncClient
+    ) -> None:
         class _Msg:
             content: ClassVar[str] = "Привет, чем могу помочь?"
             tool_calls: ClassVar[None] = None

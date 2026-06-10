@@ -23,15 +23,9 @@ SessionDep = Annotated[AsyncSession, Depends(get_session)]
 async def list_events(
     current_user: RequireHREmailDep,
     db: SessionDep,
-    month: int | None = Query(
-        None, ge=1, le=12, description="Filter by month"
-    ),
-    year: int | None = Query(
-        None, ge=2000, le=2100, description="Filter by year"
-    ),
-    department: str | None = Query(
-        None, description="Filter by department"
-    ),
+    month: int | None = Query(None, ge=1, le=12, description="Filter by month"),
+    year: int | None = Query(None, ge=2000, le=2100, description="Filter by year"),
+    department: str | None = Query(None, description="Filter by department"),
     page: int = Query(1, ge=1, description="Page number"),
     size: int = Query(20, ge=1, le=100, description="Items per page"),
 ) -> EventListResponse:

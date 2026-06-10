@@ -232,7 +232,13 @@ class TestHrPathTraversal:
         response = await async_client.post(
             "/api/v1/hr/library",
             params={"category": "td_osnovnoy"},
-            files={"file": ("../../../etc/passwd.docx", content, "application/octet-stream")},
+            files={
+                "file": (
+                    "../../../etc/passwd.docx",
+                    content,
+                    "application/octet-stream",
+                )
+            },
             headers=auth_headers,
         )
         assert response.status_code == 201
@@ -252,7 +258,13 @@ class TestHrPathTraversal:
         response = await async_client.post(
             "/api/v1/hr/library",
             params={"category": "td_osnovnoy"},
-            files={"file": ("..\\..\\windows\\system32\\calc.exe.docx", content, "application/octet-stream")},
+            files={
+                "file": (
+                    "..\\..\\windows\\system32\\calc.exe.docx",
+                    content,
+                    "application/octet-stream",
+                )
+            },
             headers=auth_headers,
         )
         assert response.status_code == 201
@@ -293,7 +305,11 @@ class TestHrErrorSanitization:
 
         response = await async_client.post(
             "/api/v1/hr/documents/render",
-            json={"template_id": tpl.id, "data": {"FIO": "Test"}, "filename": "out.docx"},
+            json={
+                "template_id": tpl.id,
+                "data": {"FIO": "Test"},
+                "filename": "out.docx",
+            },
             headers=auth_headers,
         )
         assert response.status_code == 500

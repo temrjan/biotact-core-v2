@@ -258,9 +258,7 @@ async def test_get_gift(
     sample_gift: GiftRequest,
 ) -> None:
     """GET /api/v1/hr/gifts/{id} returns gift details."""
-    response = await authenticated_client.get(
-        f"/api/v1/hr/gifts/{sample_gift.id}"
-    )
+    response = await authenticated_client.get(f"/api/v1/hr/gifts/{sample_gift.id}")
     assert response.status_code == 200
     data = response.json()
     assert data["id"] == sample_gift.id
@@ -359,15 +357,11 @@ async def test_delete_gift(
     sample_gift: GiftRequest,
 ) -> None:
     """DELETE /api/v1/hr/gifts/{id} removes the gift."""
-    response = await authenticated_client.delete(
-        f"/api/v1/hr/gifts/{sample_gift.id}"
-    )
+    response = await authenticated_client.delete(f"/api/v1/hr/gifts/{sample_gift.id}")
     assert response.status_code == 204
 
     # Verify it's gone
-    get_response = await authenticated_client.get(
-        f"/api/v1/hr/gifts/{sample_gift.id}"
-    )
+    get_response = await authenticated_client.get(f"/api/v1/hr/gifts/{sample_gift.id}")
     assert get_response.status_code == 404
 
 
