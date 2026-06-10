@@ -244,6 +244,14 @@ class HRChatService:
         return "Доступные шаблоны:\n" + "\n".join(lines)
 
     async def _tool_create_gift_request(self, args: dict[str, Any]) -> str:
+        required = ("initiator", "recipient", "occasion", "category", "budget")
+        missing = [f for f in required if f not in args]
+        if missing:
+            return (
+                "Не хватает обязательных полей: "
+                f"{', '.join(missing)}. Спроси недостающие данные."
+            )
+
         presentation_date_str = args.get("presentation_date")
         presentation_date: date | None = None
         if presentation_date_str:
@@ -305,9 +313,13 @@ class HRChatService:
         return "Предстоящие события:\n" + "\n".join(lines)
 
     async def _tool_get_gift_status(self, args: dict[str, Any]) -> str:
-        gift_id = args.get("gift_id")
-        if gift_id is None:
+        gift_id_raw = args.get("gift_id")
+        if gift_id_raw is None:
             return "Не указан ID заявки."
+        try:
+            gift_id = int(gift_id_raw)
+        except (TypeError, ValueError):
+            return "Неверный формат ID заявки."
         gift_obj = await get_gift(self.db, gift_id)
         if not gift_obj:
             return f"Заявка на подарок #{gift_id} не найдена."

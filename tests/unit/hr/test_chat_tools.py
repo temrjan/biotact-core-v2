@@ -106,6 +106,21 @@ class TestToolCreateGiftRequest:
         )
         assert "Неверный формат даты" in result
 
+    @pytest.mark.unit
+    async def test_missing_required_fields_returns_error(self) -> None:
+        service = _make_service()
+        result = await service._execute_tool(
+            "create_gift_request",
+            {
+                "initiator": "HR",
+                "budget": 100_000,
+            },
+        )
+        assert "Не хватает обязательных полей" in result
+        assert "recipient" in result
+        assert "occasion" in result
+        assert "category" in result
+
 
 class TestToolListUpcomingEvents:
     """list_upcoming_events tool."""
@@ -205,3 +220,11 @@ class TestToolGetGiftStatus:
         service = _make_service()
         result = await service._execute_tool("get_gift_status", {})
         assert "Не указан ID" in result
+
+    @pytest.mark.unit
+    async def test_invalid_gift_id_type_returns_message(self) -> None:
+        service = _make_service()
+        result = await service._execute_tool(
+            "get_gift_status", {"gift_id": "abc"}
+        )
+        assert "Неверный формат ID" in result
