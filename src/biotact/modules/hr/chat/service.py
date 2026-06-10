@@ -91,7 +91,7 @@ class HRChatService:
         # Keep the stable instruction block as its own system message so OpenAI
         # auto-caches it (identical ≥1024-token prefix across calls). The volatile
         # template list goes in a second system message so it never invalidates
-        # the cached prefix. See docs/HR_IMPLEMENTATION_PLAN.md (Phase 5, PR-14).
+        # the cached prefix.
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": SYSTEM_PROMPT},
         ]
