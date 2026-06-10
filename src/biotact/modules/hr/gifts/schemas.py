@@ -136,3 +136,20 @@ class BudgetPlanListResponse(BaseModel):
     page: int
     size: int
     pages: int
+
+
+# ---------------------------------------------------------------------------
+# Report schemas
+# ---------------------------------------------------------------------------
+
+
+class GiftReportResponse(BaseModel):
+    """Monthly gift report — 1:1 on Table 1 from doc_content.txt."""
+
+    month: int
+    year: int
+    total_requests: int
+    planned_amount: int
+    actual_amount: int
+    delta: int
+    avg_check: int

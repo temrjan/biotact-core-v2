@@ -17,6 +17,7 @@ from biotact.modules.hr.gifts.schemas import (
     GiftCreateRequest,
     GiftHistoryResponse,
     GiftListResponse,
+    GiftReportResponse,
     GiftResponse,
     GiftStatusUpdateRequest,
     GiftUpdateRequest,
@@ -255,3 +256,20 @@ async def delete_budget_plan(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Budget plan not found",
         )
+
+
+# ---------------------------------------------------------------------------
+# Report endpoint
+# ---------------------------------------------------------------------------
+
+
+@router.get("/report", response_model=GiftReportResponse)
+async def get_report(
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+    month: int = Query(..., ge=1, le=12, description="Report month"),
+    year: int = Query(..., ge=2000, le=2100, description="Report year"),
+) -> GiftReportResponse:
+    """Monthly gift report — budget plan vs actual spend."""
+    _ = current_user
+    return await service.get_monthly_report(db, month=month, year=year)

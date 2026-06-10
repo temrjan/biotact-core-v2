@@ -20,6 +20,7 @@ from biotact.modules.hr.gifts.schemas import (
     GiftCreateRequest,
     GiftHistoryResponse,
     GiftListResponse,
+    GiftReportResponse,
     GiftResponse,
     GiftStatusUpdateRequest,
     GiftUpdateRequest,
@@ -342,3 +343,66 @@ async def delete_budget_plan(db: "AsyncSession", plan_id: int) -> bool:
 
     await db.delete(plan)
     return True
+
+
+# ---------------------------------------------------------------------------
+# Report service
+# ---------------------------------------------------------------------------
+
+
+async def get_monthly_report(
+    db: "AsyncSession",
+    month: int,
+    year: int,
+) -> GiftReportResponse:
+    """Build monthly report for gift requests.
+
+    Uses two independent queries (no JOIN) to avoid aggregation bugs
+    and plan-loss on empty months.
+    """
+    from datetime import UTC, datetime
+
+    start = datetime(year, month, 1, tzinfo=UTC)
+    end = (
+        datetime(year + 1, 1, 1, tzinfo=UTC)
+        if month == 12
+        else datetime(year, month + 1, 1, tzinfo=UTC)
+    )
+
+    # 1. Aggregate gifts (excluding cancelled)
+    total, actual = (
+        await db.execute(
+            select(
+                func.count(GiftRequest.id),
+                func.coalesce(func.sum(GiftRequest.budget), 0),
+            ).where(
+                GiftRequest.created_at >= start,
+                GiftRequest.created_at < end,
+                GiftRequest.status != GiftStatus.CANCELLED,
+            )
+        )
+    ).one()
+
+    # 2. Lookup budget plan independently
+    planned_result = await db.execute(
+        select(GiftBudgetPlan.planned_amount).where(
+            GiftBudgetPlan.month == month,
+            GiftBudgetPlan.year == year,
+        )
+    )
+    planned: int = planned_result.scalar_one_or_none() or 0
+
+    total_requests: int = int(total)
+    actual_amount: int = int(actual)
+    delta = planned - actual_amount
+    avg_check = round(actual_amount / total_requests) if total_requests else 0
+
+    return GiftReportResponse(
+        month=month,
+        year=year,
+        total_requests=total_requests,
+        planned_amount=planned,
+        actual_amount=actual_amount,
+        delta=delta,
+        avg_check=avg_check,
+    )
