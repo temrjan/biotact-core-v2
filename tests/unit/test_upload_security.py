@@ -11,8 +11,8 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from fastapi import UploadFile
 
-from biotact.modules.hr.library import service as library_service
 from biotact.core.config import Settings
+from biotact.modules.hr.library import service as library_service
 from biotact.modules.hr.library.service import (
     ALLOWED_EXTS,
     HRFileMagicError,
