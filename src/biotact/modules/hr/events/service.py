@@ -10,6 +10,7 @@ from biotact.modules.hr.events.schemas import (
     EventCreateRequest,
     EventListResponse,
     EventResponse,
+    EventUpdateRequest,
 )
 
 if TYPE_CHECKING:
@@ -91,6 +92,25 @@ async def get_event(db: "AsyncSession", event_id: int) -> HREvent | None:
     """Get a calendar event by ID."""
     result = await db.execute(select(HREvent).where(HREvent.id == event_id))
     return result.scalar_one_or_none()
+
+
+async def update_event(
+    db: "AsyncSession",
+    event_id: int,
+    data: EventUpdateRequest,
+) -> HREvent | None:
+    """Partially update a calendar event."""
+    event = await get_event(db, event_id)
+    if event is None:
+        return None
+
+    update_dict = data.model_dump(exclude_unset=True)
+    for field, value in update_dict.items():
+        setattr(event, field, value)
+
+    await db.flush()
+    await db.refresh(event)
+    return event
 
 
 async def delete_event(db: "AsyncSession", event_id: int) -> bool:
