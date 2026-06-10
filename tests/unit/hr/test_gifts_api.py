@@ -466,3 +466,49 @@ async def test_create_gift_with_event(
     assert response.status_code == 201
     data = response.json()
     assert data["event_id"] == sample_event.id
+
+
+# =============================================================================
+# HISTORY PAGINATION
+# =============================================================================
+
+
+@pytest.mark.asyncio
+async def test_list_gift_history_pagination(
+    authenticated_client: AsyncClient,
+    hr_allow_test_user: None,
+    sample_gift: GiftRequest,
+) -> None:
+    """History endpoint supports pagination."""
+    gift_id = sample_gift.id
+
+    # Create 3 history rows via status transitions
+    transitions = [
+        ("approval", "approval comment"),
+        ("purchase", "purchased"),
+        ("packaging", "packed"),
+    ]
+    for new_status, comment in transitions:
+        r = await authenticated_client.patch(
+            f"/api/v1/hr/gifts/{gift_id}/status",
+            json={"status": new_status, "comment": comment},
+        )
+        assert r.status_code == 200
+
+    # Page 1, size=2
+    r1 = await authenticated_client.get(
+        f"/api/v1/hr/gifts/{gift_id}/history", params={"page": 1, "size": 2}
+    )
+    assert r1.status_code == 200
+    page1 = r1.json()
+    assert len(page1) == 2
+
+    # Page 2, size=2
+    r2 = await authenticated_client.get(
+        f"/api/v1/hr/gifts/{gift_id}/history", params={"page": 2, "size": 2}
+    )
+    assert r2.status_code == 200
+    page2 = r2.json()
+    assert (
+        len(page2) == 1
+    )  # 3 total: approval→purchase→packaging (NEW has no history row)
