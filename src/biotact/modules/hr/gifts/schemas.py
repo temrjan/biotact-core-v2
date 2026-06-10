@@ -91,3 +91,48 @@ class GiftHistoryResponse(BaseModel):
     changed_by: int
     comment: str | None
     created_at: datetime
+
+
+# ---------------------------------------------------------------------------
+# Budget Plan schemas
+# ---------------------------------------------------------------------------
+
+
+class BudgetPlanCreateRequest(BaseModel):
+    """Schema for creating a monthly budget plan."""
+
+    month: int = Field(..., ge=1, le=12)
+    year: int = Field(..., ge=2000, le=2100)
+    planned_amount: int = Field(..., ge=0)
+
+
+class BudgetPlanUpdateRequest(BaseModel):
+    """Schema for partially updating a budget plan."""
+
+    month: int | None = Field(None, ge=1, le=12)
+    year: int | None = Field(None, ge=2000, le=2100)
+    planned_amount: int | None = Field(None, ge=0)
+
+
+class BudgetPlanResponse(BaseModel):
+    """Budget plan response schema."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    month: int
+    year: int
+    planned_amount: int
+    created_by: int
+    created_at: datetime
+    updated_at: datetime
+
+
+class BudgetPlanListResponse(BaseModel):
+    """Paginated list of budget plans."""
+
+    items: list[BudgetPlanResponse]
+    total: int
+    page: int
+    size: int
+    pages: int
