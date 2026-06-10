@@ -68,13 +68,23 @@ class TestFullCycle:
     """Upload → scan → render → download."""
 
     @pytest.mark.asyncio
-    async def test_upload_extracts_fields(self, hr_client: AsyncClient, tmp_path: Path) -> None:
+    async def test_upload_extracts_fields(
+        self, hr_client: AsyncClient, tmp_path: Path
+    ) -> None:
         docx = tmp_path / "template.docx"
         _make_docx_with_placeholders(docx)
 
         with docx.open("rb") as f:
-            files = {"file": ("template.docx", f, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
-            r = await hr_client.post("/api/v1/hr/library?category=td_cycle", files=files)
+            files = {
+                "file": (
+                    "template.docx",
+                    f,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                )
+            }
+            r = await hr_client.post(
+                "/api/v1/hr/library?category=td_cycle", files=files
+            )
 
         assert r.status_code == 201
         data = r.json()
@@ -82,13 +92,23 @@ class TestFullCycle:
         assert set(data.get("template_fields") or []) == {"FIO", "POSITION", "SALARY"}
 
     @pytest.mark.asyncio
-    async def test_render_returns_docx(self, hr_client: AsyncClient, tmp_path: Path) -> None:
+    async def test_render_returns_docx(
+        self, hr_client: AsyncClient, tmp_path: Path
+    ) -> None:
         docx = tmp_path / "template.docx"
         _make_docx_with_placeholders(docx)
 
         with docx.open("rb") as f:
-            files = {"file": ("template.docx", f, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
-            r = await hr_client.post("/api/v1/hr/library?category=td_render", files=files)
+            files = {
+                "file": (
+                    "template.docx",
+                    f,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                )
+            }
+            r = await hr_client.post(
+                "/api/v1/hr/library?category=td_render", files=files
+            )
         assert r.status_code == 201
         tpl_id = r.json()["id"]
 
@@ -99,11 +119,16 @@ class TestFullCycle:
         }
         render = await hr_client.post("/api/v1/hr/documents/render", json=payload)
         assert render.status_code == 200
-        assert render.headers["content-type"] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        assert (
+            render.headers["content-type"]
+            == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
         assert b"PK" in render.content
 
     @pytest.mark.asyncio
-    async def test_download_existing_document(self, hr_client: AsyncClient, test_session: AsyncSession) -> None:
+    async def test_download_existing_document(
+        self, hr_client: AsyncClient, test_session: AsyncSession
+    ) -> None:
         """Create HRDocument row + file, then download via API."""
         from biotact.modules.hr.library.models import HRTemplate
 
@@ -139,4 +164,7 @@ class TestFullCycle:
 
         r = await hr_client.get("/api/v1/hr/documents/download/dltest")
         assert r.status_code == 200
-        assert r.headers["content-type"] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        assert (
+            r.headers["content-type"]
+            == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )

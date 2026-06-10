@@ -56,11 +56,7 @@ async def list_events(
 
     if month is not None and year is not None:
         start_date = date(year, month, 1)
-        end_date = (
-            date(year + 1, 1, 1)
-            if month == 12
-            else date(year, month + 1, 1)
-        )
+        end_date = date(year + 1, 1, 1) if month == 12 else date(year, month + 1, 1)
         query = query.where(
             HREvent.date >= start_date,
             HREvent.date < end_date,
@@ -93,9 +89,7 @@ async def list_events(
 
 async def get_event(db: "AsyncSession", event_id: int) -> HREvent | None:
     """Get a calendar event by ID."""
-    result = await db.execute(
-        select(HREvent).where(HREvent.id == event_id)
-    )
+    result = await db.execute(select(HREvent).where(HREvent.id == event_id))
     return result.scalar_one_or_none()
 
 

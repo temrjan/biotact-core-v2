@@ -83,7 +83,7 @@ class HRChatService:
         ]
 
         if history:
-            for msg in history[-self._history_window:]:
+            for msg in history[-self._history_window :]:
                 messages.append({"role": msg.role, "content": msg.content})
 
         messages.append({"role": "user", "content": message})

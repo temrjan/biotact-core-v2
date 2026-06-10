@@ -86,11 +86,7 @@ async def list_gifts(
 
     if month is not None and year is not None:
         start_date = date(year, month, 1)
-        end_date = (
-            date(year + 1, 1, 1)
-            if month == 12
-            else date(year, month + 1, 1)
-        )
+        end_date = date(year + 1, 1, 1) if month == 12 else date(year, month + 1, 1)
         query = query.where(
             GiftRequest.presentation_date >= start_date,
             GiftRequest.presentation_date < end_date,
@@ -125,9 +121,7 @@ async def list_gifts(
 
 async def get_gift(db: "AsyncSession", gift_id: int) -> GiftRequest | None:
     """Get a gift request by ID."""
-    result = await db.execute(
-        select(GiftRequest).where(GiftRequest.id == gift_id)
-    )
+    result = await db.execute(select(GiftRequest).where(GiftRequest.id == gift_id))
     return result.scalar_one_or_none()
 
 
@@ -162,18 +156,14 @@ async def update_gift_status(
     Rejects updates where new_status equals current status.
     """
     result = await db.execute(
-        select(GiftRequest)
-        .where(GiftRequest.id == gift_id)
-        .with_for_update()
+        select(GiftRequest).where(GiftRequest.id == gift_id).with_for_update()
     )
     gift = result.scalar_one_or_none()
     if gift is None:
         return None
 
     if gift.status == data.status:
-        raise GiftStatusUnchangedError(
-            f"Status is already '{data.status.value}'"
-        )
+        raise GiftStatusUnchangedError(f"Status is already '{data.status.value}'")
 
     previous_status = gift.status
     gift.status = data.status

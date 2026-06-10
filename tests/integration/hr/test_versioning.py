@@ -56,14 +56,28 @@ class TestVersioningEndToEnd:
     """v1 → v2 → rollback via HTTP API."""
 
     @pytest.mark.asyncio
-    async def test_upload_v1_and_v2_creates_history(self, hr_client: AsyncClient) -> None:
+    async def test_upload_v1_and_v2_creates_history(
+        self, hr_client: AsyncClient
+    ) -> None:
         """Upload two versions and verify history lists both."""
-        files = {"file": ("v1.docx", BytesIO(MINIMAL_DOCX), "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
+        files = {
+            "file": (
+                "v1.docx",
+                BytesIO(MINIMAL_DOCX),
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+        }
         r1 = await hr_client.post("/api/v1/hr/library?category=td_test", files=files)
         assert r1.status_code == 201
         v1_id = r1.json()["id"]
 
-        files = {"file": ("v2.docx", BytesIO(MINIMAL_DOCX), "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
+        files = {
+            "file": (
+                "v2.docx",
+                BytesIO(MINIMAL_DOCX),
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+        }
         r2 = await hr_client.post("/api/v1/hr/library?category=td_test", files=files)
         assert r2.status_code == 201
         v2_id = r2.json()["id"]
@@ -80,13 +94,29 @@ class TestVersioningEndToEnd:
     @pytest.mark.asyncio
     async def test_rollback_makes_v1_active(self, hr_client: AsyncClient) -> None:
         """Upload v1, v2, rollback to v1, assert v1 active."""
-        files = {"file": ("v1.docx", BytesIO(MINIMAL_DOCX), "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
-        r1 = await hr_client.post("/api/v1/hr/library?category=td_test_rollback", files=files)
+        files = {
+            "file": (
+                "v1.docx",
+                BytesIO(MINIMAL_DOCX),
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+        }
+        r1 = await hr_client.post(
+            "/api/v1/hr/library?category=td_test_rollback", files=files
+        )
         assert r1.status_code == 201
         v1_id = r1.json()["id"]
 
-        files = {"file": ("v2.docx", BytesIO(MINIMAL_DOCX), "application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
-        r2 = await hr_client.post("/api/v1/hr/library?category=td_test_rollback", files=files)
+        files = {
+            "file": (
+                "v2.docx",
+                BytesIO(MINIMAL_DOCX),
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+        }
+        r2 = await hr_client.post(
+            "/api/v1/hr/library?category=td_test_rollback", files=files
+        )
         assert r2.status_code == 201
 
         rb = await hr_client.post(f"/api/v1/hr/library/{v1_id}/rollback")

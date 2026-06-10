@@ -213,9 +213,7 @@ async def test_get_event(
     sample_event: HREvent,
 ) -> None:
     """GET /api/v1/hr/events/{id} returns event details."""
-    response = await authenticated_client.get(
-        f"/api/v1/hr/events/{sample_event.id}"
-    )
+    response = await authenticated_client.get(f"/api/v1/hr/events/{sample_event.id}")
     assert response.status_code == 200
     data = response.json()
     assert data["id"] == sample_event.id
@@ -244,9 +242,7 @@ async def test_delete_event(
     sample_event: HREvent,
 ) -> None:
     """DELETE /api/v1/hr/events/{id} removes the event."""
-    response = await authenticated_client.delete(
-        f"/api/v1/hr/events/{sample_event.id}"
-    )
+    response = await authenticated_client.delete(f"/api/v1/hr/events/{sample_event.id}")
     assert response.status_code == 204
 
     # Verify it's gone

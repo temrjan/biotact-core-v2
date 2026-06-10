@@ -112,9 +112,7 @@ async def update_gift_status(
     """Update gift request status and append audit record."""
     _ = current_user
     try:
-        gift = await service.update_gift_status(
-            db, gift_id, data, current_user.id
-        )
+        gift = await service.update_gift_status(db, gift_id, data, current_user.id)
     except service.GiftStatusUnchangedError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
