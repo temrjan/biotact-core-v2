@@ -7,7 +7,8 @@ import logging
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
-from openai import AsyncOpenAI
+from openai import AsyncOpenAI, OpenAIError
+from sqlalchemy.exc import SQLAlchemyError
 
 from biotact.modules.hr.chat.documents import generate_hr_document
 from biotact.modules.hr.chat.prompts import OPENAI_TOOLS, SYSTEM_PROMPT
@@ -25,6 +26,8 @@ if TYPE_CHECKING:
     from biotact.modules.hr.chat.schemas import ChatMessage
 
 logger = logging.getLogger(__name__)
+
+LOG_ARG_TRUNCATE = 2000  # max chars of tool-call args written to the log
 
 
 def _cached_tokens(usage: Any) -> int:
@@ -72,7 +75,7 @@ class HRChatService:
                 + "\n".join(lines)
                 + "\n\nЕсли пользователь просит создать документ и все данные собраны, сразу вызывай generate_document с нужным template_id и ВСЕМИ полями."
             )
-        except Exception:
+        except SQLAlchemyError:
             logger.exception("Failed to pre-fetch templates")
             return ""
 
@@ -118,7 +121,7 @@ class HRChatService:
                     tools=OPENAI_TOOLS,
                     tool_choice="auto",
                 )
-            except Exception as e:
+            except OpenAIError as e:
                 logger.exception("HR chat OpenAI error round=%d", round_num)
                 return {"message": f"Ошибка LLM: {e}", "document_url": None}
 
@@ -140,7 +143,7 @@ class HRChatService:
                 logger.info(
                     "HR tool: %s args=%s",
                     func_name,
-                    json.dumps(func_args, ensure_ascii=False)[:2000],
+                    json.dumps(func_args, ensure_ascii=False)[:LOG_ARG_TRUNCATE],
                 )
 
                 tool_result = await self._execute_tool(func_name, func_args)
