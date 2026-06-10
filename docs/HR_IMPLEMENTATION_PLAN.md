@@ -37,8 +37,8 @@ This document is the **authoritative implementation plan** for Phases 2-5 of the
 | PR-2 — RBAC apply + IDOR fix | ✅ Merged (#4) | `237bbc9` |
 | PR-3 — Input hardening | ✅ Merged (#5) | `cd0c1a8` |
 | Hotfix — `HR_ALLOWED_EMAILS` in compose | ✅ Merged (squashed into #5) | `cd0c1a8` |
-| **PR-1 (Schema)** — Gifts, Events, History tables + ENUMs | ✅ Merged (#15) | `main` |
-| **PR-2a (API)** — Gifts + Events endpoints | 🔧 In Review (#16) | `feature/hr-gifts-api-pr2a-fixes` |
+| **PR-1 (Schema)** — Gifts, Events, History tables + ENUMs | ✅ Merged (#13) | `13a4fa6` |
+| **PR-2a (API)** — Gifts + Events endpoints | ✅ Merged (#16) | `main` (commit `e088c15`) ⚠️ |
 
 ### 2.2 Known issues after Phase 1
 
@@ -121,7 +121,14 @@ Blocks / blocked by: PR-X
 
 ### PR-2a (API) · `feature/hr-gifts-api-pr2a-fixes` — Gifts + Events Endpoints
 
-**Status:** 🔧 Open PR #16 → `main`
+**Status:** ✅ Merged (#16) — squashed to `main` as commit `e088c15` (2026-06-09)
+
+> ⚠️ **Commit-message anomaly:** `e088c15` carries the message
+> `feat(hr): extract hardcoded config to Settings (PR-13)` — a botched rebase/squash label.
+> Its actual content is **this** PR-2a Gifts + Events API (+1,469 LOC, 9 files). The *real*
+> PR-13 (config extraction, +50/−31) is a separate commit `9f9dd44`. Verified via
+> `git show --stat` + `git cherry`: no code lost or duplicated. Left as-is — rewriting the
+> message would require a force-push to shared `main`.
 
 **Changes:**
 - `modules/hr/gifts/{schemas,service,router}.py` — Gift CRUD, status transitions with `SELECT FOR UPDATE`, audit history
