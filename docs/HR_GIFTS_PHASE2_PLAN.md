@@ -129,14 +129,14 @@
 
 Можно создать и удалить событие, но нельзя отредактировать (`PATCH /hr/events/{id}`).
 
-### 2.5 🟡 AI-интеграция — не подключена
+### 2.5 ✅ AI-интеграция — реализовано в PR-5
 
-HR Chat (`chat/service.py`) не имеет tools для работы с gifts/events:
-- Нет `create_gift_request`
-- Нет `list_upcoming_events`
-- Нет `get_gift_status`
+HR Chat (`chat/service.py`) теперь имеет 3 OpenAI tools:
+- `create_gift_request` — AI создаёт заявку из диалога (`created_by=current_user.id`)
+- `list_upcoming_events` — AI показывает ближайшие события
+- `get_gift_status` — AI проверяет статус заявки по ID
 
-**Note:** доспецифицировать `user_id` — AI-tools должны передавать `created_by=current_user.id`.
+**Merged:** PR #32 (`hr/p2-gifts-ai-tools`)
 
 ### 2.6 🟡 Фронтенд — out-of-scope
 
@@ -289,11 +289,11 @@ Kanban-доска по статусам, календарь событий, фо
 |---|---|---|
 | БД Schema | ✅ Готово | + миграция KPI в PR-4 |
 | Gifts CRUD + статусы | ✅ Готово | — |
-| Events CRUD | ✅ 90% | PR-3: PATCH |
-| Budget Plan CRUD | ❌ Нет | PR-1 (чист, можно стартовать) |
-| Report (план/факт) | ❌ Нет | PR-2 |
-| KPI (planned+actual) | ❌ Нет | PR-4 |
-| AI-интеграция | ❌ Нет | PR-5 (опционально) |
-| Тесты | ✅ Unit | + Integration на новые фичи |
+| Events CRUD | ✅ Готово | — |
+| Budget Plan CRUD | ✅ Готово | — |
+| Report (план/факт) | ✅ Готово | — |
+| KPI (planned+actual) | ✅ Готово | — |
+| AI-интеграция | ✅ Готово | — |
+| Тесты | ✅ Unit + Integration | — |
 
-**Рекомендуемый порядок:** PR-1 → PR-2 → PR-3 → PR-4 → PR-6 → PR-5 (AI опционально)
+**Phase 2 статус:** ✅ Все PR завершены и влиты в `main`.

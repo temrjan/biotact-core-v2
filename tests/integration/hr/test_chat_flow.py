@@ -168,3 +168,100 @@ class TestChatFlow:
         body = r.json()
         assert body["message"] == "Привет, чем могу помочь?"
         assert body["document_url"] is None
+
+    @pytest.mark.asyncio
+    async def test_chat_creates_gift_request(self, hr_client: AsyncClient) -> None:
+        """AI tool create_gift_request creates a gift via chat."""
+        mock_create = _mock_openai_response(
+            "create_gift_request",
+            (
+                '{"initiator": "HR", "recipient": "Иванов Иван", '
+                '"occasion": "День рождения", "category": "Персональный", '
+                '"budget": 500000}'
+            ),
+            final_text="Заявка на подарок создана.",
+        )
+
+        with patch("biotact.modules.hr.chat.service.AsyncOpenAI") as MockClient:
+            instance = MockClient.return_value
+            instance.chat.completions.create = AsyncMock(side_effect=mock_create)
+
+            payload = {"message": "Оформи подарок Иванову на ДР", "history": []}
+            r = await hr_client.post("/api/v1/hr/chat/message", json=payload)
+
+        assert r.status_code == 200
+        body = r.json()
+        assert body["message"] == "Заявка на подарок создана."
+
+        # Verify gift was actually created
+        gifts_r = await hr_client.get("/api/v1/hr/gifts")
+        assert gifts_r.status_code == 200
+        gifts = gifts_r.json()["items"]
+        assert len(gifts) == 1
+        assert gifts[0]["recipient"] == "Иванов Иван"
+        assert gifts[0]["status"] == "new"
+
+    @pytest.mark.asyncio
+    async def test_chat_lists_upcoming_events(self, hr_client: AsyncClient) -> None:
+        """AI tool list_upcoming_events returns events from calendar."""
+        from datetime import date as _date
+
+        event_date = _date(2026, 6, 15)
+        event_payload = {
+            "date": event_date.isoformat(),
+            "employee_name": "Петрова Мария",
+            "department": "Маркетинг",
+            "occasion_type": "birthday",
+        }
+        event_r = await hr_client.post("/api/v1/hr/events", json=event_payload)
+        assert event_r.status_code == 201
+
+        mock_create = _mock_openai_response(
+            "list_upcoming_events",
+            '{"days": 30}',
+            final_text="Вот предстоящие события.",
+        )
+
+        with patch("biotact.modules.hr.chat.service.AsyncOpenAI") as MockClient:
+            instance = MockClient.return_value
+            instance.chat.completions.create = AsyncMock(side_effect=mock_create)
+
+            payload = {"message": "Какие события в ближайший месяц?", "history": []}
+            r = await hr_client.post("/api/v1/hr/chat/message", json=payload)
+
+        assert r.status_code == 200
+        body = r.json()
+        assert body["message"] == "Вот предстоящие события."
+
+    @pytest.mark.asyncio
+    async def test_chat_gets_gift_status(self, hr_client: AsyncClient) -> None:
+        """AI tool get_gift_status returns gift status."""
+        gift_payload = {
+            "event_id": None,
+            "initiator": "HR",
+            "recipient": "Сидоров Алексей",
+            "occasion": "Юбилей",
+            "category": "Корпоративный",
+            "budget": 1_000_000,
+            "responsible_person_id": 1,
+        }
+        gift_r = await hr_client.post("/api/v1/hr/gifts", json=gift_payload)
+        assert gift_r.status_code == 201
+        gift_id = gift_r.json()["id"]
+
+        mock_create = _mock_openai_response(
+            "get_gift_status",
+            f'{{"gift_id": {gift_id}}}',
+            final_text="Статус заявки получен.",
+        )
+
+        with patch("biotact.modules.hr.chat.service.AsyncOpenAI") as MockClient:
+            instance = MockClient.return_value
+            instance.chat.completions.create = AsyncMock(side_effect=mock_create)
+
+            payload = {"message": f"Какой статус заявки {gift_id}?", "history": []}
+            r = await hr_client.post("/api/v1/hr/chat/message", json=payload)
+
+        assert r.status_code == 200
+        body = r.json()
+        assert body["message"] == "Статус заявки получен."

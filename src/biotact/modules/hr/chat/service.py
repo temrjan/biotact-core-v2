@@ -4,21 +4,24 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Any
+from datetime import UTC, date, datetime, timedelta
+from typing import TYPE_CHECKING, Any, cast
 
 from openai import AsyncOpenAI, OpenAIError
 from sqlalchemy.exc import SQLAlchemyError
 
 from biotact.modules.hr.chat.documents import generate_hr_document
 from biotact.modules.hr.chat.prompts import OPENAI_TOOLS, SYSTEM_PROMPT
+from biotact.modules.hr.events.service import list_events
+from biotact.modules.hr.gifts.schemas import GiftCreateRequest
+from biotact.modules.hr.gifts.service import create_gift, get_gift
 from biotact.modules.hr.library.service import (
     get_template_by_category,
     list_templates,
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Awaitable, Callable
 
     from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -192,40 +195,145 @@ class HRChatService:
         }
 
     async def _execute_tool(self, name: str, args: dict[str, Any]) -> str:
-        """Execute a tool call."""
-        if name == "find_template":
-            category = args.get("category", "")
-            template = await get_template_by_category(self.db, category)
-            if not template:
-                return f"Шаблон для категории '{category}' не найден. Попросите загрузить шаблон."
-            return json.dumps(
-                {
-                    "template_id": template.id,
-                    "name": template.name,
-                    "fields": template.template_fields or [],
-                },
-                ensure_ascii=False,
-            )
-
-        if name == "generate_document":
-            return await generate_hr_document(
-                self.db,
-                args,
-                openai=self.openai,
-                model=self.model,
-                user_id=self._user_id,
-                messages_context=self._messages_context,
-                now=self._now(),
-            )
-
-        if name == "list_available_templates":
-            templates_result = await list_templates(self.db)
-            if not templates_result.items:
-                return "Библиотека пуста. Загрузите шаблоны документов."
-            lines = [
-                f"- {t.name} (категория: {t.category}, полей: {len(t.template_fields or [])})"
-                for t in templates_result.items
-            ]
-            return "Доступные шаблоны:\n" + "\n".join(lines)
-
+        """Execute a tool call by dispatching to a named handler."""
+        tool_method = getattr(self, f"_tool_{name}", None)
+        if tool_method is not None:
+            handler = cast("Callable[[dict[str, Any]], Awaitable[str]]", tool_method)
+            return await handler(args)
         return f"Неизвестный инструмент: {name}"
+
+    async def _tool_find_template(self, args: dict[str, Any]) -> str:
+        category = args.get("category", "")
+        template = await get_template_by_category(self.db, category)
+        if not template:
+            return (
+                f"Шаблон для категории '{category}' не найден. "
+                "Попросите загрузить шаблон."
+            )
+        return json.dumps(
+            {
+                "template_id": template.id,
+                "name": template.name,
+                "fields": template.template_fields or [],
+            },
+            ensure_ascii=False,
+        )
+
+    async def _tool_generate_document(self, args: dict[str, Any]) -> str:
+        return await generate_hr_document(
+            self.db,
+            args,
+            openai=self.openai,
+            model=self.model,
+            user_id=self._user_id,
+            messages_context=self._messages_context,
+            now=self._now(),
+        )
+
+    async def _tool_list_available_templates(self, _args: dict[str, Any]) -> str:
+        templates_result = await list_templates(self.db)
+        if not templates_result.items:
+            return "Библиотека пуста. Загрузите шаблоны документов."
+        lines = [
+            f"- {t.name} (категория: {t.category}, "
+            f"полей: {len(t.template_fields or [])})"
+            for t in templates_result.items
+        ]
+        return "Доступные шаблоны:\n" + "\n".join(lines)
+
+    async def _tool_create_gift_request(self, args: dict[str, Any]) -> str:
+        required = ("initiator", "recipient", "occasion", "category", "budget")
+        missing = [f for f in required if f not in args]
+        if missing:
+            return (
+                "Не хватает обязательных полей: "
+                f"{', '.join(missing)}. Спроси недостающие данные."
+            )
+
+        presentation_date_str = args.get("presentation_date")
+        presentation_date: date | None = None
+        if presentation_date_str:
+            try:
+                presentation_date = date.fromisoformat(presentation_date_str)
+            except ValueError:
+                return (
+                    f"Неверный формат даты: {presentation_date_str}. "
+                    "Используйте YYYY-MM-DD."
+                )
+
+        responsible_person_id = args.get("responsible_person_id")
+        if responsible_person_id is None:
+            responsible_person_id = self._user_id
+
+        data = GiftCreateRequest(
+            event_id=args.get("event_id"),
+            initiator=args["initiator"],
+            recipient=args["recipient"],
+            occasion=args["occasion"],
+            category=args["category"],
+            gift_name=args.get("gift_name"),
+            budget=args["budget"],
+            vendor=args.get("vendor"),
+            presentation_date=presentation_date,
+            responsible_person_id=responsible_person_id,
+            comment=args.get("comment"),
+        )
+        gift_obj = await create_gift(self.db, data, user_id=self._user_id)
+        return json.dumps(
+            {
+                "gift_id": gift_obj.id,
+                "status": gift_obj.status.value,
+                "message": f"Заявка на подарок #{gift_obj.id} создана.",
+            },
+            ensure_ascii=False,
+        )
+
+    async def _tool_list_upcoming_events(self, args: dict[str, Any]) -> str:
+        days = args.get("days", 30)
+        if not isinstance(days, int) or days < 1:
+            days = 30
+        today = date.today()
+        to_date = today + timedelta(days=days)
+        events_result = await list_events(
+            self.db,
+            from_date=today,
+            to_date=to_date,
+            department=args.get("department"),
+            size=100,
+        )
+        if not events_result.items:
+            return "Предстоящих событий не найдено."
+        lines = [
+            f"- {e.date}: {e.employee_name} ({e.occasion_type.value}, "
+            f"отдел: {e.department})"
+            for e in events_result.items
+        ]
+        return "Предстоящие события:\n" + "\n".join(lines)
+
+    async def _tool_get_gift_status(self, args: dict[str, Any]) -> str:
+        gift_id_raw = args.get("gift_id")
+        if gift_id_raw is None:
+            return "Не указан ID заявки."
+        try:
+            gift_id = int(gift_id_raw)
+        except (TypeError, ValueError):
+            return "Неверный формат ID заявки."
+        gift_obj = await get_gift(self.db, gift_id)
+        if not gift_obj:
+            return f"Заявка на подарок #{gift_id} не найдена."
+        return json.dumps(
+            {
+                "gift_id": gift_obj.id,
+                "status": gift_obj.status.value,
+                "recipient": gift_obj.recipient,
+                "occasion": gift_obj.occasion,
+                "budget": gift_obj.budget,
+                "gift_name": gift_obj.gift_name,
+                "presentation_date": (
+                    gift_obj.presentation_date.isoformat()
+                    if gift_obj.presentation_date
+                    else None
+                ),
+            },
+            ensure_ascii=False,
+        )
