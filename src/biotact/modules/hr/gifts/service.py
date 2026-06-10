@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 from biotact.modules.hr.gifts.models import (
     GiftBudgetPlan,
+    GiftKPI,
     GiftRequest,
     GiftStatus,
     GiftStatusHistory,
@@ -24,6 +25,10 @@ from biotact.modules.hr.gifts.schemas import (
     GiftResponse,
     GiftStatusUpdateRequest,
     GiftUpdateRequest,
+    KPICreateRequest,
+    KPIListResponse,
+    KPIResponse,
+    KPIUpdateRequest,
 )
 
 if TYPE_CHECKING:
@@ -417,3 +422,147 @@ async def get_monthly_report(
         delta=delta,
         avg_check=avg_check,
     )
+
+
+# ---------------------------------------------------------------------------
+# KPI service
+# ---------------------------------------------------------------------------
+
+
+class KPINotFoundError(ValueError):
+    """Raised when a KPI record is not found."""
+
+    status_code = 404
+
+
+class KPIDuplicateError(ValueError):
+    """Raised when a KPI for month+year already exists."""
+
+    status_code = 409
+
+
+async def create_kpi(
+    db: "AsyncSession",
+    data: KPICreateRequest,
+    user_id: int,
+) -> GiftKPI:
+    """Create a new monthly KPI record."""
+    kpi = GiftKPI(
+        month=data.month,
+        year=data.year,
+        employee_congrats_planned=data.employee_congrats_planned,
+        employee_congrats_actual=data.employee_congrats_actual,
+        partner_congrats_planned=data.partner_congrats_planned,
+        partner_congrats_actual=data.partner_congrats_actual,
+        budget_compliance_planned=data.budget_compliance_planned,
+        budget_compliance_actual=data.budget_compliance_actual,
+        satisfaction_planned=data.satisfaction_planned,
+        satisfaction_actual=data.satisfaction_actual,
+        timely_closure_planned=data.timely_closure_planned,
+        timely_closure_actual=data.timely_closure_actual,
+        notes=data.notes,
+        created_by=user_id,
+    )
+    db.add(kpi)
+    try:
+        await db.flush()
+        await db.refresh(kpi)
+    except IntegrityError:
+        await db.rollback()
+        raise KPIDuplicateError(
+            f"KPI for {data.month:02d}.{data.year} already exists"
+        ) from None
+    return kpi
+
+
+async def list_kpis(
+    db: "AsyncSession",
+    *,
+    month: int | None = None,
+    year: int | None = None,
+    page: int = 1,
+    size: int = 20,
+) -> KPIListResponse:
+    """List KPI records with optional filters and pagination."""
+    query = select(GiftKPI).order_by(GiftKPI.year.desc(), GiftKPI.month.desc())
+    count_query = select(func.count(GiftKPI.id))
+
+    if month is not None:
+        query = query.where(GiftKPI.month == month)
+        count_query = count_query.where(GiftKPI.month == month)
+
+    if year is not None:
+        query = query.where(GiftKPI.year == year)
+        count_query = count_query.where(GiftKPI.year == year)
+
+    total = (await db.execute(count_query)).scalar_one()
+
+    offset = (page - 1) * size
+    query = query.offset(offset).limit(size)
+    result = await db.execute(query)
+    items = list(result.scalars().all())
+
+    pages = (total + size - 1) // size if size > 0 else 0
+    return KPIListResponse(
+        items=[KPIResponse.model_validate(k) for k in items],
+        total=total,
+        page=page,
+        size=size,
+        pages=pages,
+    )
+
+
+async def get_kpi(db: "AsyncSession", kpi_id: int) -> GiftKPI | None:
+    """Get a KPI record by ID."""
+    result = await db.execute(select(GiftKPI).where(GiftKPI.id == kpi_id))
+    return result.scalar_one_or_none()
+
+
+async def get_kpi_by_month_year(
+    db: "AsyncSession", month: int, year: int
+) -> GiftKPI | None:
+    """Get a KPI record by month and year."""
+    result = await db.execute(
+        select(GiftKPI).where(GiftKPI.month == month, GiftKPI.year == year)
+    )
+    return result.scalar_one_or_none()
+
+
+async def update_kpi(
+    db: "AsyncSession",
+    kpi_id: int,
+    data: KPIUpdateRequest,
+) -> GiftKPI | None:
+    """Partially update a KPI record."""
+    kpi = await get_kpi(db, kpi_id)
+    if kpi is None:
+        return None
+
+    update_dict = data.model_dump(exclude_unset=True)
+    for field, value in update_dict.items():
+        setattr(kpi, field, value)
+
+    # Snapshot for the error message: after rollback() the ORM object is
+    # expired and attribute access would trigger sync IO (MissingGreenlet).
+    target_month, target_year = kpi.month, kpi.year
+
+    try:
+        await db.flush()
+        await db.refresh(kpi)
+    except IntegrityError:
+        await db.rollback()
+        raise KPIDuplicateError(
+            f"KPI for {target_month:02d}.{target_year} already exists"
+        ) from None
+    return kpi
+
+
+async def delete_kpi(db: "AsyncSession", kpi_id: int) -> bool:
+    """Delete a KPI record."""
+    kpi = await get_kpi(db, kpi_id)
+    if kpi is None:
+        return False
+
+    await db.delete(kpi)
+    await db.flush()
+    return True

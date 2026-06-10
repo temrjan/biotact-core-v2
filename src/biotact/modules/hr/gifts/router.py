@@ -21,6 +21,10 @@ from biotact.modules.hr.gifts.schemas import (
     GiftResponse,
     GiftStatusUpdateRequest,
     GiftUpdateRequest,
+    KPICreateRequest,
+    KPIListResponse,
+    KPIResponse,
+    KPIUpdateRequest,
 )
 
 router = APIRouter(prefix="/hr/gifts", tags=["hr-gifts"])
@@ -189,6 +193,100 @@ async def get_report(
     """Monthly gift report — budget plan vs actual spend."""
     _ = current_user
     return await service.get_monthly_report(db, month=month, year=year)
+
+
+# ---------------------------------------------------------------------------
+# KPI endpoints (STATIC — keep above /{gift_id})
+# ---------------------------------------------------------------------------
+
+
+@router.get("/kpi", response_model=KPIListResponse)
+async def list_kpis(
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+    month: int | None = Query(None, ge=1, le=12, description="Filter by month"),
+    year: int | None = Query(None, ge=2000, le=2100, description="Filter by year"),
+    page: int = Query(1, ge=1, description="Page number"),
+    size: int = Query(20, ge=1, le=100, description="Items per page"),
+) -> KPIListResponse:
+    """List KPI records with optional filters and pagination."""
+    _ = current_user
+    return await service.list_kpis(db, month=month, year=year, page=page, size=size)
+
+
+@router.post("/kpi", response_model=KPIResponse, status_code=status.HTTP_201_CREATED)
+async def create_kpi(
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+    data: KPICreateRequest,
+) -> KPIResponse:
+    """Create a new monthly KPI record."""
+    _ = current_user
+    try:
+        kpi = await service.create_kpi(db, data, current_user.id)
+    except service.KPIDuplicateError as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(e),
+        ) from e
+    return KPIResponse.model_validate(kpi)
+
+
+@router.get("/kpi/{kpi_id}", response_model=KPIResponse)
+async def get_kpi(
+    kpi_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+) -> KPIResponse:
+    """Get a KPI record by ID."""
+    _ = current_user
+    kpi = await service.get_kpi(db, kpi_id)
+    if kpi is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="KPI record not found",
+        )
+    return KPIResponse.model_validate(kpi)
+
+
+@router.patch("/kpi/{kpi_id}", response_model=KPIResponse)
+async def update_kpi(
+    kpi_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+    data: KPIUpdateRequest,
+) -> KPIResponse:
+    """Partially update a KPI record."""
+    _ = current_user
+    try:
+        kpi = await service.update_kpi(db, kpi_id, data)
+    except service.KPIDuplicateError as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(e),
+        ) from e
+    if kpi is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="KPI record not found",
+        )
+    return KPIResponse.model_validate(kpi)
+
+
+@router.delete("/kpi/{kpi_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_kpi(
+    kpi_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+) -> None:
+    """Delete a KPI record."""
+    _ = current_user
+    deleted = await service.delete_kpi(db, kpi_id)
+    if not deleted:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="KPI record not found",
+        )
 
 
 # ---------------------------------------------------------------------------
