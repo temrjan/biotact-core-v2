@@ -688,3 +688,45 @@ export async function deleteGift(id) {
 export async function listGiftHistory(id, { page = 1, size = 20 } = {}) {
   return apiRequest(`/hr/gifts/${id}/history?page=${page}&size=${size}`);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// HR EVENTS — calendar of employee occasions
+// Backend: src/biotact/modules/hr/events/router.py (/hr/events)
+// ═══════════════════════════════════════════════════════════════
+
+/** List calendar events with optional filters + pagination */
+export async function listEvents({ month, year, department, page = 1, size = 20 } = {}) {
+  const params = new URLSearchParams();
+  if (month) params.append('month', month);
+  if (year) params.append('year', year);
+  if (department) params.append('department', department);
+  params.append('page', page);
+  params.append('size', size);
+  return apiRequest(`/hr/events?${params.toString()}`);
+}
+
+/** Create a calendar event */
+export async function createEvent(data) {
+  return apiRequest('/hr/events', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Get a calendar event by ID */
+export async function getEvent(id) {
+  return apiRequest(`/hr/events/${id}`);
+}
+
+/** Partially update a calendar event */
+export async function updateEvent(id, data) {
+  return apiRequest(`/hr/events/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Delete a calendar event (linked gifts keep living with event_id = NULL) */
+export async function deleteEvent(id) {
+  return apiRequest(`/hr/events/${id}`, { method: 'DELETE' });
+}

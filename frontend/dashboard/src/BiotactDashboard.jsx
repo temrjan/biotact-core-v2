@@ -7,7 +7,7 @@ import {
   Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2, KeyRound,
   Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText,
   FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown,
-  Image as ImageIcon, Video, Music, Mic, Volume2
+  Image as ImageIcon, Video, Music, Mic, Volume2, CalendarDays
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -16,6 +16,7 @@ import {
 import * as api from './api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import GiftFlowPage from './components/gifts/GiftFlowPage';
+import EventsPage from './components/events/EventsPage';
 import ChangePasswordModal from './components/ChangePasswordModal';
 
 /*
@@ -420,6 +421,7 @@ function Dashboard({ onLogout }) {
     { id: 'documents', label: 'Документы', icon: FolderOpen },
     { id: 'hr', label: 'HR', icon: Briefcase },
     { id: 'gifts', label: 'Подарки', icon: Gift },
+    { id: 'events', label: 'События', icon: CalendarDays },
     { id: 'media', label: 'Медиа', icon: ImageIcon },
   ];
 
@@ -1221,6 +1223,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 {section === 'documents' && 'Документы'}
                 {section === 'hr' && 'HR / Кадры'}
                 {section === 'gifts' && 'Подарки'}
+                {section === 'events' && 'События'}
                 {section === 'media' && 'Медиа'}
               </h1>
               <p className="text-xs" style={{ color: theme.text.muted }}>
@@ -2506,10 +2509,11 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
         </div>
         )}
         {section === 'gifts' && <GiftFlowPage theme={theme} isDark={isDark} />}
+        {section === 'events' && <EventsPage theme={theme} />}
       </main>
 
-      {/* Chat sidebar — hidden on the full-width Kanban (gifts) page */}
-      {section !== 'gifts' && (
+      {/* Chat sidebar — hidden on the full-width HR pages (gifts, events) */}
+      {!['gifts', 'events'].includes(section) && (
       <aside
         className="w-96 flex flex-col border-l"
         style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
