@@ -1,18 +1,34 @@
 // ═══════════════════════════════════════════════════════════════
 // KanbanBoard — gift requests laid out in 7 status columns
+//
+// Each column renders an independently fetched page set; the header
+// counter is the exact backend total for that status, and a tail
+// beyond the loaded pages is exposed via "Показать ещё (N)".
 // ═══════════════════════════════════════════════════════════════
+
+import { Loader2 } from 'lucide-react';
 
 import { GIFT_STATUSES } from './constants';
 import { useGiftTheme } from './GiftThemeContext';
 import GiftCard from './GiftCard';
 
-export default function KanbanBoard({ giftsByStatus, onOpenGift, onMoveStatus, movingId }) {
+export default function KanbanBoard({
+  columns,
+  onOpenGift,
+  onMoveStatus,
+  movingId,
+  onLoadMore,
+  loadingMoreId,
+}) {
   const { theme } = useGiftTheme();
 
   return (
     <div className="flex gap-4 overflow-x-auto pb-4">
       {GIFT_STATUSES.map((column) => {
-        const cards = giftsByStatus[column.id] ?? [];
+        const { items, total } = columns[column.id] ?? { items: [], total: 0 };
+        const remaining = total - items.length;
+        const isLoadingMore = loadingMoreId === column.id;
+
         return (
           <section
             key={column.id}
@@ -36,17 +52,17 @@ export default function KanbanBoard({ giftsByStatus, onOpenGift, onMoveStatus, m
                 className="rounded-full px-2 py-0.5 text-[11px] font-medium"
                 style={{ backgroundColor: theme.bg.card, color: theme.text.muted }}
               >
-                {cards.length}
+                {total}
               </span>
             </header>
 
             <div className="flex flex-col gap-2.5 p-2.5">
-              {cards.length === 0 ? (
+              {items.length === 0 ? (
                 <p className="px-1 py-6 text-center text-xs" style={{ color: theme.text.muted }}>
                   Нет заявок
                 </p>
               ) : (
-                cards.map((gift) => (
+                items.map((gift) => (
                   <GiftCard
                     key={gift.id}
                     gift={gift}
@@ -55,6 +71,22 @@ export default function KanbanBoard({ giftsByStatus, onOpenGift, onMoveStatus, m
                     isMoving={movingId === gift.id}
                   />
                 ))
+              )}
+
+              {remaining > 0 && (
+                <button
+                  type="button"
+                  onClick={() => onLoadMore(column.id)}
+                  disabled={isLoadingMore}
+                  className="flex items-center justify-center gap-1.5 rounded-xl border py-2 text-xs font-medium transition-colors disabled:opacity-60"
+                  style={{ borderColor: theme.border.default, color: theme.text.secondary }}
+                >
+                  {isLoadingMore ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : (
+                    `Показать ещё (${remaining})`
+                  )}
+                </button>
               )}
             </div>
           </section>
