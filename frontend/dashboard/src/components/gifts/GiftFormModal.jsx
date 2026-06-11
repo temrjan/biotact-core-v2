@@ -10,7 +10,10 @@
 import { useState } from 'react';
 import { X, Loader2 } from 'lucide-react';
 
+import * as api from '../../api';
 import { useGiftTheme } from './GiftThemeContext';
+
+const LAST_CATEGORY_KEY = 'biotact_gift_last_category';
 
 const EMPTY_FORM = {
   initiator: '',
@@ -25,8 +28,27 @@ const EMPTY_FORM = {
   comment: '',
 };
 
+// Create-mode prefills — repeating fields only, all editable. Recipient,
+// occasion, gift name, budget and date stay empty on purpose: they are
+// unique per request (or money), and a stale default invites mistakes.
+function createDefaults() {
+  const user = api.getCurrentUser();
+  let lastCategory = '';
+  try {
+    lastCategory = localStorage.getItem(LAST_CATEGORY_KEY) ?? '';
+  } catch {
+    // storage unavailable — start blank
+  }
+  return {
+    ...EMPTY_FORM,
+    initiator: user?.full_name ?? '',
+    responsible_person_id: user?.id != null ? String(user.id) : '',
+    category: lastCategory,
+  };
+}
+
 function toForm(gift) {
-  if (!gift) return { ...EMPTY_FORM };
+  if (!gift) return createDefaults();
   return {
     initiator: gift.initiator ?? '',
     recipient: gift.recipient ?? '',
@@ -91,6 +113,11 @@ export default function GiftFormModal({ mode, gift, onClose, onSubmit }) {
     setSubmitError(null);
     try {
       await onSubmit(buildPayload(form));
+      try {
+        localStorage.setItem(LAST_CATEGORY_KEY, form.category.trim());
+      } catch {
+        // storage unavailable — skip remembering
+      }
     } catch (err) {
       setSubmitError(err.message || 'Не удалось сохранить заявку');
       setSaving(false);

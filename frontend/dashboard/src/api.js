@@ -34,6 +34,34 @@ export function getAuthToken() {
 export function clearAuth() {
   authToken = null;
   localStorage.removeItem('biotact_token');
+  localStorage.removeItem('biotact_user');
+}
+
+/**
+ * Get current user info ({id, full_name, ...}) for form prefills.
+ * Stored on login; falls back to the JWT `sub` claim (id only) for
+ * sessions authenticated before user storage was introduced.
+ */
+export function getCurrentUser() {
+  try {
+    const stored = localStorage.getItem('biotact_user');
+    if (stored) return JSON.parse(stored);
+  } catch {
+    // corrupted storage — fall through to the token claim
+  }
+  const token = getAuthToken();
+  if (!token) return null;
+  try {
+    // base64url → base64; JWT payloads carry no '=' padding, while strict
+    // atob() implementations require it — pad to a multiple of 4.
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+    const payload = JSON.parse(atob(padded));
+    const id = Number(payload.sub);
+    return Number.isInteger(id) ? { id } : null;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -84,6 +112,9 @@ export async function login(email, password) {
   });
 
   setAuthToken(data.access_token);
+  if (data.user) {
+    localStorage.setItem('biotact_user', JSON.stringify(data.user));
+  }
   return data;
 }
 
