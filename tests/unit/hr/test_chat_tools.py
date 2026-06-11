@@ -54,7 +54,6 @@ class TestToolCreateGiftRequest:
                     "category": "Личный",
                     "budget": 100_000,
                     "presentation_date": "2026-06-20",
-                    "responsible_person_id": 5,
                     "comment": "Срочно",
                 },
             )
@@ -63,7 +62,13 @@ class TestToolCreateGiftRequest:
         assert "new" in result
 
     @pytest.mark.unit
-    async def test_fallback_responsible_to_current_user(self) -> None:
+    async def test_responsible_is_always_current_user(self) -> None:
+        """The tool never forwards responsible_person_id.
+
+        Even if the model injects it into the args, the create schema has
+        no such field — the gifts service assigns the authenticated user
+        from user_id.
+        """
         service = _make_service(user_id=99)
         mock_gift = MagicMock()
         mock_gift.id = 456
@@ -82,13 +87,14 @@ class TestToolCreateGiftRequest:
                     "occasion": "Юбилей",
                     "category": "Корп",
                     "budget": 200_000,
+                    "responsible_person_id": 5,
                 },
             )
 
         call_args = mock_create_gift.call_args
         assert call_args.kwargs["user_id"] == 99
         sent_data = call_args.args[1]
-        assert sent_data.responsible_person_id == 99
+        assert "responsible_person_id" not in type(sent_data).model_fields
 
     @pytest.mark.unit
     async def test_invalid_date_format_returns_error(self) -> None:

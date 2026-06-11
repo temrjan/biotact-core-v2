@@ -127,7 +127,6 @@ async def test_create_gift(
         "category": "Внешнее мероприятие",
         "budget": 1_500_000,
         "presentation_date": "2026-06-15",
-        "responsible_person_id": test_user.id,
     }
     response = await authenticated_client.post("/api/v1/hr/gifts", json=payload)
     assert response.status_code == 201
@@ -136,6 +135,8 @@ async def test_create_gift(
     assert data["status"] == "new"
     assert data["budget"] == 1_500_000
     assert data["created_by"] == test_user.id
+    # Auto-assigned to the creator — the field is not accepted from input
+    assert data["responsible_person_id"] == test_user.id
 
 
 # =============================================================================
@@ -173,7 +174,6 @@ async def test_list_gifts_filter_by_status(
         "occasion": "Test",
         "category": "Test",
         "budget": 100,
-        "responsible_person_id": test_user.id,
     }
     payload_approval = {
         "initiator": "C",
@@ -181,7 +181,6 @@ async def test_list_gifts_filter_by_status(
         "occasion": "Test2",
         "category": "Test2",
         "budget": 200,
-        "responsible_person_id": test_user.id,
     }
     r1 = await authenticated_client.post("/api/v1/hr/gifts", json=payload_new)
     assert r1.status_code == 201
@@ -222,7 +221,6 @@ async def test_list_gifts_filter_by_month_year(
         "category": "Test",
         "budget": 100,
         "presentation_date": "2026-06-15",
-        "responsible_person_id": test_user.id,
     }
     payload_july = {
         "initiator": "C",
@@ -231,7 +229,6 @@ async def test_list_gifts_filter_by_month_year(
         "category": "Test2",
         "budget": 200,
         "presentation_date": "2026-07-15",
-        "responsible_person_id": test_user.id,
     }
     r1 = await authenticated_client.post("/api/v1/hr/gifts", json=payload_june)
     assert r1.status_code == 201
@@ -460,7 +457,6 @@ async def test_create_gift_with_event(
         "occasion": "Свадьба",
         "category": "Внешнее мероприятие",
         "budget": 1_500_000,
-        "responsible_person_id": test_user.id,
     }
     response = await authenticated_client.post("/api/v1/hr/gifts", json=payload)
     assert response.status_code == 201

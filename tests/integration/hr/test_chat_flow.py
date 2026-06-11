@@ -243,7 +243,6 @@ class TestChatFlow:
             "occasion": "Юбилей",
             "category": "Корпоративный",
             "budget": 1_000_000,
-            "responsible_person_id": 1,
         }
         gift_r = await hr_client.post("/api/v1/hr/gifts", json=gift_payload)
         assert gift_r.status_code == 201

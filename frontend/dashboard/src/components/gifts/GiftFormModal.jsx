@@ -24,7 +24,6 @@ const EMPTY_FORM = {
   budget: '',
   vendor: '',
   presentation_date: '',
-  responsible_person_id: '',
   comment: '',
 };
 
@@ -42,7 +41,6 @@ function createDefaults() {
   return {
     ...EMPTY_FORM,
     initiator: user?.full_name ?? '',
-    responsible_person_id: user?.id != null ? String(user.id) : '',
     category: lastCategory,
   };
 }
@@ -58,7 +56,6 @@ function toForm(gift) {
     budget: gift.budget?.toString() ?? '',
     vendor: gift.vendor ?? '',
     presentation_date: gift.presentation_date ?? '',
-    responsible_person_id: gift.responsible_person_id?.toString() ?? '',
     comment: gift.comment ?? '',
   };
 }
@@ -71,10 +68,6 @@ function validate(form) {
   if (form.budget === '' || Number(form.budget) < 0 || !Number.isFinite(Number(form.budget))) {
     errors.budget = 'Укажите бюджет (≥ 0)';
   }
-  const responsible = Number(form.responsible_person_id);
-  if (!Number.isInteger(responsible) || responsible < 1) {
-    errors.responsible_person_id = 'Укажите ID (≥ 1)';
-  }
   return errors;
 }
 
@@ -85,7 +78,6 @@ function buildPayload(form) {
     occasion: form.occasion.trim(),
     category: form.category.trim(),
     budget: Number(form.budget),
-    responsible_person_id: Number(form.responsible_person_id),
   };
   if (form.gift_name.trim()) payload.gift_name = form.gift_name.trim();
   if (form.vendor.trim()) payload.vendor = form.vendor.trim();
@@ -176,7 +168,6 @@ export default function GiftFormModal({ mode, gift, onClose, onSubmit }) {
           {renderText('gift_name', 'Название подарка')}
           {renderText('vendor', 'Поставщик')}
           {renderText('budget', 'Бюджет (сум)', { required: true, type: 'number' })}
-          {renderText('responsible_person_id', 'ID ответственного', { required: true, type: 'number' })}
           {renderText('presentation_date', 'Дата вручения', { type: 'date' })}
 
           <label className="col-span-2 flex flex-col gap-1">
