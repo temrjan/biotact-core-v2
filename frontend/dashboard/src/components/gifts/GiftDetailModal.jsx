@@ -24,28 +24,43 @@ export default function GiftDetailModal({ gift, onClose, onEdit, onChangeStatus,
   const { theme } = useGiftTheme();
   const [history, setHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyHasMore, setHistoryHasMore] = useState(false);
   const [newStatus, setNewStatus] = useState('');
   const [statusComment, setStatusComment] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const loadHistory = useCallback(async () => {
-    setHistoryLoading(true);
-    try {
-      // size=100 is the backend max (gifts/router.py); longer histories
-      // are silently truncated — acceptable for the MVP slice.
-      const items = await api.listGiftHistory(gift.id, { size: 100 });
-      setHistory(Array.isArray(items) ? items : []);
-    } catch {
-      setHistory([]);
-    } finally {
-      setHistoryLoading(false);
-    }
-  }, [gift.id]);
+  // size=100 is the backend max (gifts/router.py); the endpoint returns a
+  // plain list without a total, so "more pages exist" is inferred from a
+  // full page — one extra click on an exact-100 boundary is acceptable.
+  const HISTORY_PAGE_SIZE = 100;
+
+  const loadHistory = useCallback(
+    async (page) => {
+      setHistoryLoading(true);
+      try {
+        const items = await api.listGiftHistory(gift.id, {
+          page,
+          size: HISTORY_PAGE_SIZE,
+        });
+        const batch = Array.isArray(items) ? items : [];
+        setHistory((prev) => (page === 1 ? batch : [...prev, ...batch]));
+        setHistoryPage(page);
+        setHistoryHasMore(batch.length === HISTORY_PAGE_SIZE);
+      } catch {
+        if (page === 1) setHistory([]);
+        setHistoryHasMore(false);
+      } finally {
+        setHistoryLoading(false);
+      }
+    },
+    [gift.id],
+  );
 
   useEffect(() => {
-    loadHistory();
+    loadHistory(1);
   }, [loadHistory, gift.status]);
 
   const handleApplyStatus = async () => {
@@ -145,22 +160,35 @@ export default function GiftDetailModal({ gift, onClose, onEdit, onChangeStatus,
         {/* History */}
         <div className="mb-4">
           <p className="mb-2 text-xs font-medium" style={{ color: theme.text.secondary }}>История статусов</p>
-          {historyLoading ? (
+          {historyLoading && history.length === 0 ? (
             <Loader2 size={16} className="animate-spin" style={{ color: theme.text.muted }} />
           ) : history.length === 0 ? (
             <p className="text-xs" style={{ color: theme.text.muted }}>Изменений пока нет</p>
           ) : (
-            <ul className="space-y-1.5">
-              {history.map((item) => (
-                <li key={item.id} className="text-xs" style={{ color: theme.text.secondary }}>
-                  <span style={{ color: statusMeta(item.from_status).color }}>{statusMeta(item.from_status).label}</span>
-                  {' → '}
-                  <span style={{ color: statusMeta(item.to_status).color }}>{statusMeta(item.to_status).label}</span>
-                  <span style={{ color: theme.text.muted }}> · #{item.changed_by} · {formatTimestamp(item.created_at)}</span>
-                  {item.comment && <span style={{ color: theme.text.muted }}> — {item.comment}</span>}
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul className="space-y-1.5">
+                {history.map((item) => (
+                  <li key={item.id} className="text-xs" style={{ color: theme.text.secondary }}>
+                    <span style={{ color: statusMeta(item.from_status).color }}>{statusMeta(item.from_status).label}</span>
+                    {' → '}
+                    <span style={{ color: statusMeta(item.to_status).color }}>{statusMeta(item.to_status).label}</span>
+                    <span style={{ color: theme.text.muted }}> · #{item.changed_by} · {formatTimestamp(item.created_at)}</span>
+                    {item.comment && <span style={{ color: theme.text.muted }}> — {item.comment}</span>}
+                  </li>
+                ))}
+              </ul>
+              {historyHasMore && (
+                <button
+                  type="button"
+                  onClick={() => loadHistory(historyPage + 1)}
+                  disabled={historyLoading}
+                  className="mt-2 flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs transition-colors disabled:opacity-60"
+                  style={{ borderColor: theme.border.default, color: theme.text.secondary }}
+                >
+                  {historyLoading ? <Loader2 size={12} className="animate-spin" /> : 'Показать ещё'}
+                </button>
+              )}
+            </>
           )}
         </div>
 

@@ -4,12 +4,18 @@
 // Rendered by BiotactDashboard for section === 'gifts'. Receives the
 // dashboard theme via props and republishes it through GiftThemeContext
 // so this subtree stays decoupled from the monolith.
+//
+// Each status column is fetched independently (status filter + page).
+// A single time-windowed fetch would let in-flight cards vanish once
+// the done/cancelled archive outgrows the window — WIP must always be
+// fully visible on a Kanban; only terminal columns are paged.
 // ═══════════════════════════════════════════════════════════════
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
 import * as api from '../../api';
+import { GIFT_STATUSES } from './constants';
 import { GiftThemeContext } from './GiftThemeContext';
 import GiftFilters from './GiftFilters';
 import KanbanBoard from './KanbanBoard';
@@ -19,8 +25,12 @@ import GiftDetailModal from './GiftDetailModal';
 const PAGE_SIZE = 100;
 const EMPTY_FILTERS = { month: '', year: '', responsible: '' };
 
-function buildQuery(filters) {
-  const query = { page: 1, size: PAGE_SIZE };
+const EMPTY_COLUMNS = Object.fromEntries(
+  GIFT_STATUSES.map((s) => [s.id, { items: [], total: 0, page: 1 }]),
+);
+
+function buildQuery(filters, status, page) {
+  const query = { status, page, size: PAGE_SIZE };
   if (filters.month) query.month = Number(filters.month);
   if (filters.year) query.year = Number(filters.year);
   if (filters.responsible) query.responsible = Number(filters.responsible);
@@ -28,9 +38,9 @@ function buildQuery(filters) {
 }
 
 export default function GiftFlowPage({ theme, isDark }) {
-  const [gifts, setGifts] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [columns, setColumns] = useState(EMPTY_COLUMNS);
   const [loading, setLoading] = useState(false);
+  const [loadingMoreId, setLoadingMoreId] = useState(null);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
 
@@ -38,13 +48,22 @@ export default function GiftFlowPage({ theme, isDark }) {
   const [selectedGift, setSelectedGift] = useState(null);
   const [movingId, setMovingId] = useState(null);
 
-  const loadGifts = useCallback(async () => {
+  const loadBoard = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.listGifts(buildQuery(filters));
-      setGifts(Array.isArray(res.items) ? res.items : []);
-      setTotal(res.total ?? 0);
+      const responses = await Promise.all(
+        GIFT_STATUSES.map((s) => api.listGifts(buildQuery(filters, s.id, 1))),
+      );
+      const next = {};
+      GIFT_STATUSES.forEach((s, index) => {
+        next[s.id] = {
+          items: Array.isArray(responses[index].items) ? responses[index].items : [],
+          total: responses[index].total ?? 0,
+          page: 1,
+        };
+      });
+      setColumns(next);
     } catch (err) {
       setError(err.message || 'Не удалось загрузить заявки');
     } finally {
@@ -53,16 +72,34 @@ export default function GiftFlowPage({ theme, isDark }) {
   }, [filters]);
 
   useEffect(() => {
-    loadGifts();
-  }, [loadGifts]);
+    loadBoard();
+  }, [loadBoard]);
 
-  const giftsByStatus = useMemo(() => {
-    const grouped = {};
-    for (const gift of gifts) {
-      (grouped[gift.status] ??= []).push(gift);
+  const handleLoadMore = async (statusId) => {
+    const nextPage = columns[statusId].page + 1;
+    setLoadingMoreId(statusId);
+    setError(null);
+    try {
+      const res = await api.listGifts(buildQuery(filters, statusId, nextPage));
+      setColumns((prev) => ({
+        ...prev,
+        [statusId]: {
+          items: [...prev[statusId].items, ...(Array.isArray(res.items) ? res.items : [])],
+          total: res.total ?? prev[statusId].total,
+          page: nextPage,
+        },
+      }));
+    } catch (err) {
+      setError(err.message || 'Не удалось загрузить заявки');
+    } finally {
+      setLoadingMoreId(null);
     }
-    return grouped;
-  }, [gifts]);
+  };
+
+  const boardIsEmpty = useMemo(
+    () => GIFT_STATUSES.every((s) => columns[s.id].items.length === 0),
+    [columns],
+  );
 
   const handleChangeFilters = (patch) => setFilters((prev) => ({ ...prev, ...patch }));
 
@@ -74,7 +111,7 @@ export default function GiftFlowPage({ theme, isDark }) {
     }
     setModalMode(null);
     setSelectedGift(null);
-    await loadGifts();
+    await loadBoard();
   };
 
   const handleMoveStatus = async (gift, statusId) => {
@@ -82,7 +119,7 @@ export default function GiftFlowPage({ theme, isDark }) {
     setError(null);
     try {
       await api.updateGiftStatus(gift.id, { status: statusId });
-      await loadGifts();
+      await loadBoard();
     } catch (err) {
       setError(err.message || 'Не удалось сменить статус');
     } finally {
@@ -93,14 +130,14 @@ export default function GiftFlowPage({ theme, isDark }) {
   const handleChangeStatus = async (statusId, comment) => {
     const updated = await api.updateGiftStatus(selectedGift.id, { status: statusId, comment });
     setSelectedGift(updated);
-    await loadGifts();
+    await loadBoard();
   };
 
   const handleDelete = async () => {
     await api.deleteGift(selectedGift.id);
     setModalMode(null);
     setSelectedGift(null);
-    await loadGifts();
+    await loadBoard();
   };
 
   const themeValue = useMemo(() => ({ theme, isDark }), [theme, isDark]);
@@ -115,7 +152,7 @@ export default function GiftFlowPage({ theme, isDark }) {
             setSelectedGift(null);
             setModalMode('create');
           }}
-          onRefresh={loadGifts}
+          onRefresh={loadBoard}
           loading={loading}
         />
 
@@ -128,25 +165,21 @@ export default function GiftFlowPage({ theme, isDark }) {
           </div>
         )}
 
-        {total > gifts.length && (
-          <p className="mb-3 text-xs" style={{ color: theme.text.muted }}>
-            Показаны первые {gifts.length} из {total} заявок. Уточните фильтры, чтобы увидеть остальные.
-          </p>
-        )}
-
-        {loading && gifts.length === 0 ? (
+        {loading && boardIsEmpty ? (
           <div className="flex items-center gap-2 py-16 text-sm" style={{ color: theme.text.muted }}>
             <Loader2 size={18} className="animate-spin" /> Загрузка заявок…
           </div>
         ) : (
           <KanbanBoard
-            giftsByStatus={giftsByStatus}
+            columns={columns}
             onOpenGift={(gift) => {
               setSelectedGift(gift);
               setModalMode('detail');
             }}
             onMoveStatus={handleMoveStatus}
             movingId={movingId}
+            onLoadMore={handleLoadMore}
+            loadingMoreId={loadingMoreId}
           />
         )}
       </div>
