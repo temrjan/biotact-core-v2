@@ -3,7 +3,7 @@ import {
   LayoutGrid, Wallet, TrendingUp, Users, Package,
   Settings, Bell, Send, Sparkles, ArrowUpRight,
   ArrowDownRight, ChevronLeft, ChevronRight,
-  Server, Megaphone, Briefcase, ShoppingCart, Coffee,
+  Server, Megaphone, Briefcase, Gift, ShoppingCart, Coffee,
   Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2,
   Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText,
   FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown,
@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import * as api from './api';
 import { useLocation, useNavigate } from 'react-router-dom';
+import GiftFlowPage from './components/gifts/GiftFlowPage';
 
 /*
  * BIOTACT Core Dashboard v3.1
@@ -416,6 +417,7 @@ function Dashboard({ onLogout }) {
     { id: 'marketing', label: 'Marketing', icon: Megaphone },
     { id: 'documents', label: 'Документы', icon: FolderOpen },
     { id: 'hr', label: 'HR', icon: Briefcase },
+    { id: 'gifts', label: 'Подарки', icon: Gift },
     { id: 'media', label: 'Медиа', icon: ImageIcon },
   ];
 
@@ -1208,6 +1210,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                 {section === 'marketing' && 'Маркетинг'}
                 {section === 'documents' && 'Документы'}
                 {section === 'hr' && 'HR / Кадры'}
+                {section === 'gifts' && 'Подарки'}
                 {section === 'media' && 'Медиа'}
               </h1>
               <p className="text-xs" style={{ color: theme.text.muted }}>
@@ -2492,9 +2495,11 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
         )}
+        {section === 'gifts' && <GiftFlowPage theme={theme} isDark={isDark} />}
       </main>
 
-      {/* ══════════ CHAT SIDEBAR ══════════ */}
+      {/* Chat sidebar — hidden on the full-width Kanban (gifts) page */}
+      {section !== 'gifts' && (
       <aside
         className="w-96 flex flex-col border-l"
         style={{ backgroundColor: theme.bg.card, borderColor: theme.border.default }}
@@ -2661,6 +2666,7 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
       </aside>
+      )}
     </div>
   );
 }
