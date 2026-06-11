@@ -59,11 +59,15 @@ class GiftRequest(TimestampMixin, Base):
     gift_name: Mapped[str | None] = mapped_column(String(300))
     budget: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     vendor: Mapped[str | None] = mapped_column(String(200))
+    # values_callable: persist enum *values* ("new"), not member names
+    # ("NEW") — the hr_gift_status type created by migration k9l0m1n2o345
+    # holds lowercase values; SQLAlchemy sends member names by default.
     status: Mapped[GiftStatus] = mapped_column(
         PGEnum(
             GiftStatus,
             name="hr_gift_status",
             create_type=True,
+            values_callable=lambda enum_cls: [m.value for m in enum_cls],
         ),
         nullable=False,
         default=GiftStatus.NEW,
@@ -208,6 +212,7 @@ class GiftStatusHistory(Base):
             GiftStatus,
             name="hr_gift_status",
             create_type=True,
+            values_callable=lambda enum_cls: [m.value for m in enum_cls],
         ),
         nullable=False,
     )
@@ -216,6 +221,7 @@ class GiftStatusHistory(Base):
             GiftStatus,
             name="hr_gift_status",
             create_type=True,
+            values_callable=lambda enum_cls: [m.value for m in enum_cls],
         ),
         nullable=False,
     )

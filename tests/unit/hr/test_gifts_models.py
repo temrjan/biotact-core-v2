@@ -8,7 +8,7 @@ import os
 from datetime import date
 
 import pytest
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -332,3 +332,38 @@ async def test_status_history_set_null_on_delete(
     assert record.request_id is None
     assert record.from_status == GiftStatus.NEW
     assert record.to_status == GiftStatus.DONE
+
+
+# =============================================================================
+# Enum label parity (regression for prod-only 500 on INSERT)
+# =============================================================================
+
+
+@pytest.mark.asyncio
+async def test_gift_status_db_labels_match_python_values(
+    test_session: AsyncSession,
+) -> None:
+    """DB enum labels must equal GiftStatus *values*, not member names.
+
+    SQLAlchemy persists Enum member names unless values_callable is set.
+    The production hr_gift_status type (migration k9l0m1n2o345) holds
+    lowercase values, so a name/value drift breaks every gift INSERT in
+    production while CI (schema built by create_all) stays green.
+    """
+    result = await test_session.execute(
+        text("SELECT unnest(enum_range(NULL::hr_gift_status))::text")
+    )
+    labels = [row[0] for row in result]
+    assert labels == [member.value for member in GiftStatus]
+
+
+@pytest.mark.asyncio
+async def test_occasion_type_db_labels_match_python_values(
+    test_session: AsyncSession,
+) -> None:
+    """DB enum labels must equal OccasionType *values*, not member names."""
+    result = await test_session.execute(
+        text("SELECT unnest(enum_range(NULL::hr_occasion_type))::text")
+    )
+    labels = [row[0] for row in result]
+    assert labels == [member.value for member in OccasionType]
