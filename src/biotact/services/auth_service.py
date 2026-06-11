@@ -96,6 +96,28 @@ class AuthService:
             department_id=department_id,
         )
 
+    async def change_password(
+        self,
+        user: User,
+        current_password: str,
+        new_password: str,
+    ) -> None:
+        """Change the user's own password after verifying the current one.
+
+        Args:
+            user: Authenticated user changing their password.
+            current_password: Current plain text password.
+            new_password: New plain text password.
+
+        Raises:
+            AuthenticationError: If the current password is wrong.
+        """
+        if not verify_password(current_password, user.hashed_password):
+            raise AuthenticationError("Current password is incorrect")
+
+        user.hashed_password = hash_password(new_password)
+        await self.user_repo.update(user)
+
     async def get_current_user(self, user_id: int) -> User:
         """Get current user by ID.
 

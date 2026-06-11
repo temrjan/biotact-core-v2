@@ -117,6 +117,98 @@ class TestAuthLogin:
 
 
 @pytest.mark.integration
+class TestChangePassword:
+    """Tests for POST /api/v1/auth/change-password endpoint."""
+
+    async def test_change_password_success(
+        self,
+        authenticated_client: AsyncClient,
+        test_user: User,
+    ) -> None:
+        """New password works for login, old one stops working."""
+        response = await authenticated_client.post(
+            "/api/v1/auth/change-password",
+            json={
+                "current_password": "testpassword123",
+                "new_password": "newpassword456",
+            },
+        )
+        assert response.status_code == 204
+
+        new_login = await authenticated_client.post(
+            "/api/v1/auth/login",
+            json={"email": "test@biotact.uz", "password": "newpassword456"},
+        )
+        assert new_login.status_code == 200
+
+        old_login = await authenticated_client.post(
+            "/api/v1/auth/login",
+            json={"email": "test@biotact.uz", "password": "testpassword123"},
+        )
+        assert old_login.status_code == 401
+
+    async def test_change_password_wrong_current(
+        self,
+        authenticated_client: AsyncClient,
+        test_user: User,
+    ) -> None:
+        """Wrong current password returns 400 (not 401 — see endpoint docs)."""
+        response = await authenticated_client.post(
+            "/api/v1/auth/change-password",
+            json={
+                "current_password": "wrongpassword",
+                "new_password": "newpassword456",
+            },
+        )
+        assert response.status_code == 400
+        assert "detail" in response.json()
+
+    async def test_change_password_too_short(
+        self,
+        authenticated_client: AsyncClient,
+        test_user: User,
+    ) -> None:
+        """New password under 8 chars fails schema validation."""
+        response = await authenticated_client.post(
+            "/api/v1/auth/change-password",
+            json={
+                "current_password": "testpassword123",
+                "new_password": "short",
+            },
+        )
+        assert response.status_code == 422
+
+    async def test_change_password_over_bcrypt_limit(
+        self,
+        authenticated_client: AsyncClient,
+        test_user: User,
+    ) -> None:
+        """New password over 72 bytes is rejected, not silently truncated."""
+        response = await authenticated_client.post(
+            "/api/v1/auth/change-password",
+            json={
+                "current_password": "testpassword123",
+                "new_password": "x" * 73,
+            },
+        )
+        assert response.status_code == 422
+
+    async def test_change_password_requires_auth(
+        self,
+        async_client: AsyncClient,
+    ) -> None:
+        """Without a token the endpoint returns 401/403."""
+        response = await async_client.post(
+            "/api/v1/auth/change-password",
+            json={
+                "current_password": "testpassword123",
+                "new_password": "newpassword456",
+            },
+        )
+        assert response.status_code in (401, 403)
+
+
+@pytest.mark.integration
 class TestAuthToken:
     """Tests for authentication token validation."""
 

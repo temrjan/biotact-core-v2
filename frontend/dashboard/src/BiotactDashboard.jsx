@@ -4,7 +4,7 @@ import {
   Settings, Bell, Send, Sparkles, ArrowUpRight,
   ArrowDownRight, ChevronLeft, ChevronRight,
   Server, Megaphone, Briefcase, Gift, ShoppingCart, Coffee,
-  Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2,
+  Moon, Sun, Monitor, Check, AlertCircle, LogOut, Loader2, KeyRound,
   Headphones, Bot, Save, Upload, RotateCcw, RefreshCw, Copy, FileText,
   FolderOpen, FolderPlus, Download, Trash2, Share2, Search, X, ChevronDown,
   Image as ImageIcon, Video, Music, Mic, Volume2
@@ -16,6 +16,7 @@ import {
 import * as api from './api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import GiftFlowPage from './components/gifts/GiftFlowPage';
+import ChangePasswordModal from './components/ChangePasswordModal';
 
 /*
  * BIOTACT Core Dashboard v3.1
@@ -301,6 +302,7 @@ function Dashboard({ onLogout }) {
   const section = location.pathname === "/" ? "dashboard" : location.pathname.slice(1);
   const setSection = (s) => navigate(s === "dashboard" ? "/" : "/" + s);
   const [sidebar, setSidebar] = useState(true);
+  const [showPwdModal, setShowPwdModal] = useState(false);
 
   // Chat state
   const [msgs, setMsgs] = useState([
@@ -1184,6 +1186,14 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
 
         {/* Logout */}
         <div className="p-3 border-t" style={{ borderColor: theme.border.subtle }}>
+          <button
+            onClick={() => setShowPwdModal(true)}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors"
+            style={{ color: theme.text.muted }}
+          >
+            <KeyRound size={18} strokeWidth={1.5} />
+            {sidebar && <span className="text-sm">Сменить пароль</span>}
+          </button>
           <button
             onClick={onLogout}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-red-500/10"
@@ -2666,6 +2676,10 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
           </div>
         </div>
       </aside>
+      )}
+
+      {showPwdModal && (
+        <ChangePasswordModal theme={theme} onClose={() => setShowPwdModal(false)} />
       )}
     </div>
   );
