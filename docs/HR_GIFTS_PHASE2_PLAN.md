@@ -1,8 +1,8 @@
 # HR Gifts & Events — Phase 2 Roadmap
 
-> **Дата анализа:** 2026-06-10
+> **Дата анализа:** 2026-06-10 · **Обновлено:** 2026-06-11
 > **Источник требований:** `doc_content.txt` (реестр подарков BIOTACT DEUTSCHLAND)
-> **База:** `biotact-core-v2/main` на коммите `e088c15` (PR-2a Gifts+Events API)
+> **База:** `biotact-core-v2/main` на коммите `c376dc4` (все backend PR + Kanban + Events Calendar влиты)
 
 ---
 
@@ -143,7 +143,12 @@ HR Chat (`chat/service.py`) теперь имеет 3 OpenAI tools:
 - ✅ **Kanban-доска по статусам** — PR #33 (2026-06-11): раздел «Подарки» в дашборде,
   `frontend/dashboard/src/components/gifts/` (9 компонентов), 7 статусных колонок,
   создание/редактирование/детали/история, фильтры month/year/responsible.
-- 🔴 Календарь событий, форма KPI, Budget/Report view — отдельными PR.
+- ✅ **Календарь событий** — PR #41 (2026-06-11): раздел «События» (`EventsPage.jsx`),
+  список с фильтрами month/year/department, создание/редактирование/удаление.
+- 🟡 **Связь gift → event** — в форме подарка нужен dropdown выбора события вместо
+  ручного `event_id` (сейчас поле убрано после инцидента FK 500; авто/ручная связь — позже).
+- 🔴 **KPI dashboard, Budget/Report dashboard** — отдельные frontend-PR после backend CRUD
+  (#30 и #26/#27 уже в `main`).
 
 ---
 
@@ -299,6 +304,12 @@ HR Chat (`chat/service.py`) теперь имеет 3 OpenAI tools:
 | AI-интеграция | ✅ Готово | — |
 | Тесты | ✅ Unit + Integration | — |
 | Frontend: Kanban | ✅ Готово (PR #33) | — |
-| Frontend: Календарь / KPI / Budget-Report | 🔴 Не начато | отдельные PR |
+| Frontend: Календарь событий | ✅ Готово (PR #41) | — |
+| Frontend: KPI dashboard | 🔴 Не начато | отдельный frontend-PR |
+| Frontend: Budget/Report dashboard | 🔴 Не начато | отдельный frontend-PR |
+| Frontend: Gift → event dropdown | 🟡 Частично | поле убрано, нужен picker |
+| Auth cleanup | 🟡 Частично | R1 + R3 остались |
 
-**Phase 2 статус:** ✅ Все backend-PR завершены и влиты в `main`. Frontend: Kanban влит (PR #33), остальные view — в очереди.
+**Phase 2 статус:** ✅ Все backend-PR завершены и влиты в `main`. Frontend: Kanban (PR #33) и
+Календарь событий (PR #41) влиты. Остались: KPI/Budget-Report view, gift→event dropdown,
+а также auth-чистка R1/R3.
