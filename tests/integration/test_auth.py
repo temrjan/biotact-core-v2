@@ -32,6 +32,28 @@ class TestAuthLogin:
         assert data["user"]["email"] == "test@biotact.uz"
         assert data["user"]["full_name"] == "Test User"
 
+    async def test_login_mixed_case_email(
+        self,
+        async_client: AsyncClient,
+        test_user: User,
+    ) -> None:
+        """Login is case-insensitive on email.
+
+        Emails are stored lowercase; EmailStr keeps the local-part case
+        as typed, so without schema normalization `Test@Biotact.UZ`
+        would miss the exact-match lookup and fail with 401.
+        """
+        response = await async_client.post(
+            "/api/v1/auth/login",
+            json={
+                "email": "Test@Biotact.UZ",
+                "password": "testpassword123",
+            },
+        )
+
+        assert response.status_code == 200
+        assert response.json()["user"]["email"] == "test@biotact.uz"
+
     async def test_login_invalid_email(
         self,
         async_client: AsyncClient,

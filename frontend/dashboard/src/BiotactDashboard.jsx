@@ -162,8 +162,8 @@ const fmt = (v, short = true) => {
 // ═══════════════════════════════════════════════════════════════
 
 function LoginForm({ onLogin, theme }) {
-  const [email, setEmail] = useState('dashboard@biotact.uz');
-  const [password, setPassword] = useState('dashboard123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
