@@ -61,6 +61,10 @@ async function apiRequest(endpoint, options = {}) {
     throw new Error('Unauthorized');
   }
 
+  if (response.status === 403) {
+    throw new Error('Доступ запрещён: требуется роль HR');
+  }
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: 'Request failed' }));
     throw new Error(error.detail || 'Request failed');
@@ -571,4 +575,67 @@ export async function hrDownloadRendered(documentUrl) {
   a.download = 'document.docx';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HR GIFTS — GiftFlow (заявки на подарки)
+// Backend: src/biotact/modules/hr/gifts/router.py (/hr/gifts)
+// ═══════════════════════════════════════════════════════════════
+
+/** List gift requests with optional filters + pagination */
+export async function listGifts({ status, month, year, responsible, page = 1, size = 20 } = {}) {
+  const params = new URLSearchParams();
+  if (status) params.append('status', status);
+  if (month) params.append('month', month);
+  if (year) params.append('year', year);
+  if (responsible) params.append('responsible', responsible);
+  params.append('page', page);
+  params.append('size', size);
+  return apiRequest(`/hr/gifts?${params.toString()}`);
+}
+
+/** Create a gift request */
+export async function createGift(data) {
+  return apiRequest('/hr/gifts', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Get a gift request by ID */
+export async function getGift(id) {
+  return apiRequest(`/hr/gifts/${id}`);
+}
+
+/** Partially update a gift request */
+export async function updateGift(id, data) {
+  return apiRequest(`/hr/gifts/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Change gift request status (backend appends an audit history record) */
+export async function updateGiftStatus(id, { status, comment = null }) {
+  return apiRequest(`/hr/gifts/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status, comment }),
+  });
+}
+
+/** Delete a gift request (204 No Content → raw fetch, not apiRequest) */
+export async function deleteGift(id) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/gifts/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
+  if (response.status === 403) throw new Error('Доступ запрещён: требуется роль HR');
+  if (!response.ok) throw new Error('Не удалось удалить заявку');
+}
+
+/** List status history for a gift request */
+export async function listGiftHistory(id, { page = 1, size = 20 } = {}) {
+  return apiRequest(`/hr/gifts/${id}/history?page=${page}&size=${size}`);
 }
