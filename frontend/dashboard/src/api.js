@@ -632,7 +632,10 @@ export async function deleteGift(id) {
   });
   if (response.status === 401) { clearAuth(); throw new Error('Unauthorized'); }
   if (response.status === 403) throw new Error('Доступ запрещён: требуется роль HR');
-  if (!response.ok) throw new Error('Не удалось удалить заявку');
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: 'Не удалось удалить заявку' }));
+    throw new Error(err.detail || 'Не удалось удалить заявку');
+  }
 }
 
 /** List status history for a gift request */

@@ -33,7 +33,9 @@ export default function GiftDetailModal({ gift, onClose, onEdit, onChangeStatus,
   const loadHistory = useCallback(async () => {
     setHistoryLoading(true);
     try {
-      const items = await api.listGiftHistory(gift.id);
+      // size=100 is the backend max (gifts/router.py); longer histories
+      // are silently truncated — acceptable for the MVP slice.
+      const items = await api.listGiftHistory(gift.id, { size: 100 });
       setHistory(Array.isArray(items) ? items : []);
     } catch {
       setHistory([]);

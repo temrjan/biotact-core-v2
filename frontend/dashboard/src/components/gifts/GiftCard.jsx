@@ -2,7 +2,7 @@
 // GiftCard — single gift request card inside a Kanban column
 // ═══════════════════════════════════════════════════════════════
 
-import { ChevronLeft, ChevronRight, Calendar, User, Wallet } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, User, Wallet, Loader2 } from 'lucide-react';
 
 import { PIPELINE_ORDER, formatMoney, formatGiftDate } from './constants';
 import { useGiftTheme } from './GiftThemeContext';
@@ -33,10 +33,12 @@ export default function GiftCard({ gift, onOpen, onMoveStatus, isMoving }) {
           onOpen(gift);
         }
       }}
-      className="cursor-pointer rounded-xl border p-3 transition-shadow hover:shadow-md focus:outline-none focus:ring-2"
+      className="cursor-pointer rounded-xl border p-3 transition-all hover:shadow-md focus:outline-none focus:ring-2"
       style={{
         backgroundColor: theme.bg.card,
         borderColor: theme.border.default,
+        opacity: isMoving ? 0.6 : 1,
+        pointerEvents: isMoving ? 'none' : 'auto',
       }}
     >
       <h4 className="mb-1 text-sm font-semibold" style={{ color: theme.text.primary }}>
@@ -70,9 +72,13 @@ export default function GiftCard({ gift, onOpen, onMoveStatus, isMoving }) {
         >
           <ChevronLeft size={14} />
         </button>
-        <span className="text-[10px]" style={{ color: theme.text.muted }}>
-          #{gift.id}
-        </span>
+        {isMoving ? (
+          <Loader2 size={12} className="animate-spin" style={{ color: theme.text.muted }} />
+        ) : (
+          <span className="text-[10px]" style={{ color: theme.text.muted }}>
+            #{gift.id}
+          </span>
+        )}
         <button
           type="button"
           disabled={!nextStatus || isMoving}
