@@ -98,6 +98,10 @@ async function apiRequest(endpoint, options = {}) {
     throw new Error(error.detail || 'Request failed');
   }
 
+  if (response.status === 204) {
+    return null;
+  }
+
   return response.json();
 }
 
@@ -120,6 +124,17 @@ export async function login(email, password) {
 
 export function isAuthenticated() {
   return !!getAuthToken();
+}
+
+/** Change own password (204 on success, 400 if current password is wrong) */
+export async function changePassword(currentPassword, newPassword) {
+  return apiRequest('/auth/change-password', {
+    method: 'POST',
+    body: JSON.stringify({
+      current_password: currentPassword,
+      new_password: newPassword,
+    }),
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════

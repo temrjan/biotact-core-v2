@@ -20,6 +20,23 @@ class LoginRequest(BaseModel):
         return value.lower()
 
 
+class ChangePasswordRequest(BaseModel):
+    """Schema for changing own password."""
+
+    current_password: str = Field(min_length=1, max_length=128)
+    new_password: str = Field(min_length=8, max_length=128)
+
+    @field_validator("new_password", mode="after")
+    @classmethod
+    def fit_bcrypt_limit(cls, value: str) -> str:
+        """bcrypt hashes only the first 72 bytes — reject longer input
+        instead of silently truncating it (audit S5).
+        """
+        if len(value.encode("utf-8")) > 72:
+            raise ValueError("Password must be at most 72 bytes")
+        return value
+
+
 class LoginResponse(BaseModel):
     """Schema for login response."""
 
