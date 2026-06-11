@@ -38,11 +38,15 @@ class HREvent(TimestampMixin, Base):
     date: Mapped[date] = mapped_column(Date, nullable=False)
     employee_name: Mapped[str] = mapped_column(String(300), nullable=False)
     department: Mapped[str] = mapped_column(String(100), nullable=False)
+    # values_callable: persist enum *values* ("birthday"), not member
+    # names ("BIRTHDAY") — the hr_occasion_type type created by migration
+    # k9l0m1n2o345 holds lowercase values (see gifts/models.py).
     occasion_type: Mapped[OccasionType] = mapped_column(
         PGEnum(
             OccasionType,
             name="hr_occasion_type",
             create_type=True,
+            values_callable=lambda enum_cls: [m.value for m in enum_cls],
         ),
         nullable=False,
     )
