@@ -138,9 +138,12 @@ HR Chat (`chat/service.py`) теперь имеет 3 OpenAI tools:
 
 **Merged:** PR #32 (`hr/p2-gifts-ai-tools`)
 
-### 2.6 🟡 Фронтенд — out-of-scope
+### 2.6 🟡 Фронтенд — частично реализован
 
-Kanban-доска по статусам, календарь событий, форма KPI — требуют frontend. В плане backend — только API.
+- ✅ **Kanban-доска по статусам** — PR #33 (2026-06-11): раздел «Подарки» в дашборде,
+  `frontend/dashboard/src/components/gifts/` (9 компонентов), 7 статусных колонок,
+  создание/редактирование/детали/история, фильтры month/year/responsible.
+- 🔴 Календарь событий, форма KPI, Budget/Report view — отдельными PR.
 
 ---
 
@@ -295,5 +298,7 @@ Kanban-доска по статусам, календарь событий, фо
 | KPI (planned+actual) | ✅ Готово | — |
 | AI-интеграция | ✅ Готово | — |
 | Тесты | ✅ Unit + Integration | — |
+| Frontend: Kanban | ✅ Готово (PR #33) | — |
+| Frontend: Календарь / KPI / Budget-Report | 🔴 Не начато | отдельные PR |
 
-**Phase 2 статус:** ✅ Все PR завершены и влиты в `main`.
+**Phase 2 статус:** ✅ Все backend-PR завершены и влиты в `main`. Frontend: Kanban влит (PR #33), остальные view — в очереди.
