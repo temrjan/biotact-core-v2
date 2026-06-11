@@ -64,7 +64,9 @@ async def create_gift(
         vendor=data.vendor,
         status=GiftStatus.NEW,
         presentation_date=data.presentation_date,
-        responsible_person_id=data.responsible_person_id,
+        # Always the authenticated creator — never client input (FK 500
+        # on arbitrary IDs in prod, 2026-06-11; see GiftCreateRequest).
+        responsible_person_id=user_id,
         comment=data.comment,
         created_by=user_id,
     )

@@ -8,7 +8,12 @@ from biotact.modules.hr.gifts.models import GiftStatus
 
 
 class GiftCreateRequest(BaseModel):
-    """Schema for creating a gift request."""
+    """Schema for creating a gift request.
+
+    responsible_person_id is intentionally absent: the service assigns
+    the authenticated creator. Free-form IDs caused FK 500s in prod
+    (2026-06-11) and users cannot know internal IDs anyway.
+    """
 
     event_id: int | None = None
     initiator: str = Field(..., max_length=300)
@@ -19,12 +24,15 @@ class GiftCreateRequest(BaseModel):
     budget: int = Field(..., ge=0)
     vendor: str | None = Field(None, max_length=200)
     presentation_date: date | None = None
-    responsible_person_id: int
     comment: str | None = Field(None, max_length=1000)
 
 
 class GiftUpdateRequest(BaseModel):
-    """Schema for partially updating a gift request."""
+    """Schema for partially updating a gift request.
+
+    responsible_person_id is not updatable — it is always the creator
+    (see GiftCreateRequest). Reassignment needs a user picker first.
+    """
 
     event_id: int | None = None
     initiator: str | None = Field(None, max_length=300)
@@ -35,7 +43,6 @@ class GiftUpdateRequest(BaseModel):
     budget: int | None = Field(None, ge=0)
     vendor: str | None = Field(None, max_length=200)
     presentation_date: date | None = None
-    responsible_person_id: int | None = None
     comment: str | None = Field(None, max_length=1000)
 
 

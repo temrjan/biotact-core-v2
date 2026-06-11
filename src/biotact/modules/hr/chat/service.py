@@ -261,10 +261,8 @@ class HRChatService:
                     "Используйте YYYY-MM-DD."
                 )
 
-        responsible_person_id = args.get("responsible_person_id")
-        if responsible_person_id is None:
-            responsible_person_id = self._user_id
-
+        # responsible_person_id is not accepted from the model: the gifts
+        # service always assigns the authenticated user (self._user_id).
         data = GiftCreateRequest(
             event_id=args.get("event_id"),
             initiator=args["initiator"],
@@ -275,7 +273,6 @@ class HRChatService:
             budget=args["budget"],
             vendor=args.get("vendor"),
             presentation_date=presentation_date,
-            responsible_person_id=responsible_person_id,
             comment=args.get("comment"),
         )
         gift_obj = await create_gift(self.db, data, user_id=self._user_id)

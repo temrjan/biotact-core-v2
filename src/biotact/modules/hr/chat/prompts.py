@@ -223,13 +223,6 @@ OPENAI_TOOLS: list[dict[str, Any]] = [
                         "type": "string",
                         "description": "Дата вручения в формате YYYY-MM-DD (опционально)",
                     },
-                    "responsible_person_id": {
-                        "type": "integer",
-                        "description": (
-                            "ID ответственного сотрудника. "
-                            "Если не указан, используется текущий пользователь."
-                        ),
-                    },
                     "comment": {
                         "type": "string",
                         "description": "Комментарий (опционально)",

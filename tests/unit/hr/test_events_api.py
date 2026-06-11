@@ -293,7 +293,6 @@ async def test_delete_event_sets_null_on_gifts(
         "occasion": "Test",
         "category": "Test",
         "budget": 100,
-        "responsible_person_id": test_user.id,
     }
     r2 = await authenticated_client.post("/api/v1/hr/gifts", json=gift_payload)
     assert r2.status_code == 201
