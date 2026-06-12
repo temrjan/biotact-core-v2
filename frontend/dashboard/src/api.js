@@ -95,7 +95,9 @@ async function apiRequest(endpoint, options = {}) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: 'Request failed' }));
-    throw new Error(error.detail || 'Request failed');
+    const err = new Error(error.detail || 'Request failed');
+    err.status = response.status;
+    throw err;
   }
 
   if (response.status === 204) {
@@ -687,6 +689,41 @@ export async function deleteGift(id) {
 /** List status history for a gift request */
 export async function listGiftHistory(id, { page = 1, size = 20 } = {}) {
   return apiRequest(`/hr/gifts/${id}/history?page=${page}&size=${size}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HR GIFTS KPI — monthly metric records
+// Backend: /hr/gifts/kpi (gifts/router.py); month+year unique,
+// duplicates answer 409. Named *GiftKpi* — a dashboard getKPI()
+// for transactions already exists above.
+// ═══════════════════════════════════════════════════════════════
+
+/** List monthly KPI records (paginated, optional year filter) */
+export async function listGiftKpis({ year, page = 1, size = 100 } = {}) {
+  const params = new URLSearchParams({ page: String(page), size: String(size) });
+  if (year) params.set('year', String(year));
+  return apiRequest(`/hr/gifts/kpi?${params.toString()}`);
+}
+
+/** Create a monthly KPI record (409 if the month already exists) */
+export async function createGiftKpi(data) {
+  return apiRequest('/hr/gifts/kpi', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Partially update a KPI record (month/year are immutable) */
+export async function updateGiftKpi(id, data) {
+  return apiRequest(`/hr/gifts/kpi/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+/** Delete a KPI record */
+export async function deleteGiftKpi(id) {
+  return apiRequest(`/hr/gifts/kpi/${id}`, { method: 'DELETE' });
 }
 
 // ═══════════════════════════════════════════════════════════════
