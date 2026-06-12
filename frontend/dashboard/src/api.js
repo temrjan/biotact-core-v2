@@ -7,6 +7,9 @@ const API_BASE = window.location.hostname === 'localhost'
   ? 'http://localhost:8000/api/v1'
   : 'https://core.biotact.uz/api/v1';
 
+// Cap error message body length to avoid flooding the UI with nginx HTML pages.
+const API_ERROR_MAX_LEN = 200;
+
 // Store auth token in memory
 let authToken = null;
 
@@ -86,17 +89,42 @@ async function apiRequest(endpoint, options = {}) {
 
   if (response.status === 401) {
     clearAuth();
-    throw new Error('Unauthorized');
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    err.statusText = response.statusText;
+    throw err;
   }
 
   if (response.status === 403) {
-    throw new Error('Доступ запрещён: требуется роль HR');
+    const err = new Error('Доступ запрещён: требуется роль HR');
+    err.status = 403;
+    err.statusText = response.statusText;
+    throw err;
   }
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ detail: 'Request failed' }));
-    const err = new Error(error.detail || 'Request failed');
+    const text = await response.text().catch(() => '');
+    let detail;
+    let hasDetail = false;
+    try {
+      const json = JSON.parse(text.trim());
+      if ('detail' in json) {
+        detail = json.detail;
+        hasDetail = true;
+      }
+    } catch {
+      // Response body is not JSON; fall back to raw text.
+    }
+
+    const raw = hasDetail ? detail : text;
+    const body = typeof raw === 'string' && raw.length > API_ERROR_MAX_LEN
+      ? `${raw.slice(0, API_ERROR_MAX_LEN)}…`
+      : raw;
+
+    const message = body || `${response.status} ${response.statusText}`.trim() || 'Request failed';
+    const err = new Error(message);
     err.status = response.status;
+    err.statusText = response.statusText;
     throw err;
   }
 
