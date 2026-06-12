@@ -8,12 +8,8 @@
 
 import { Plus, RefreshCw, X } from 'lucide-react';
 
+import { MONTHS } from './constants';
 import { useGiftTheme } from './GiftThemeContext';
-
-const MONTHS = [
-  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
-];
 
 export default function GiftFilters({ filters, onChange, onCreate, onRefresh, loading }) {
   const { theme } = useGiftTheme();

@@ -2,6 +2,12 @@
 // GiftFlow — shared constants & formatters
 // ═══════════════════════════════════════════════════════════════
 
+// Month names shared by the board filters and the KPI tab.
+export const MONTHS = [
+  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+];
+
 // Status codes mirror backend GiftStatus (src/biotact/modules/hr/gifts/models.py).
 // Colors per design review (2026-06-11). Labels per HR_GIFTS_PHASE2_PLAN §1.3.
 export const GIFT_STATUSES = [
