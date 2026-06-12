@@ -115,8 +115,9 @@ prompts/askbiotact_backup*.txt
 prompts/askbiotact*.backup*
 prompts/askbiotact_full_backup.txt
 
-# Claude Code directory
-.claude/
+# Claude Code directory — local state ignored; /1rules specs are committed
+.claude/*
+!.claude/specs/
 
 # Docker compose backups
 docker-compose.*.backup-*
