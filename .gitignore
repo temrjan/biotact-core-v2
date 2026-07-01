@@ -109,6 +109,9 @@ Biotact\ Dashboard.zip
 # Telegram sessions (sensitive)
 data/telegram_sessions/
 
+# HR document templates (uploaded, contain company PII — never commit)
+data/hr_templates/
+
 # Temp/junk files
 pyproject_additions.txt
 prompts/askbiotact_backup*.txt
