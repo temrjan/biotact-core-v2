@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import json
 from datetime import date
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
 from biotact.modules.hr.chat.service import HRChatService
+from biotact.modules.hr.library.service import ResolveResult, TemplateCandidate
 
 
 def _make_service(user_id: int = 42) -> HRChatService:
@@ -226,3 +228,57 @@ class TestToolGetGiftStatus:
         service = _make_service()
         result = await service._execute_tool("get_gift_status", {"gift_id": "abc"})
         assert "Неверный формат ID" in result
+
+
+class TestFindTemplate:
+    """find_template returns one template, a candidate list, or 'upload'."""
+
+    @pytest.mark.unit
+    async def test_single_match_returns_json(self) -> None:
+        service = _make_service()
+        match = MagicMock()
+        match.id = 5
+        match.name = "NDA.docx"
+        match.template_fields = ["A", "B"]
+        with patch(
+            "biotact.modules.hr.chat.service.resolve_template",
+            new_callable=AsyncMock,
+            return_value=ResolveResult(match=match, candidates=[]),
+        ):
+            result = await service._execute_tool(
+                "find_template", {"category": "nda_rabotnik"}
+            )
+        data = json.loads(result)
+        assert data["template_id"] == 5
+        assert data["name"] == "NDA.docx"
+        assert data["fields"] == ["A", "B"]
+
+    @pytest.mark.unit
+    async def test_ambiguous_returns_list_never_says_upload(self) -> None:
+        service = _make_service()
+        candidates = [
+            TemplateCandidate(id=1, category="nda_rabotnik", name="NDA раб.docx"),
+            TemplateCandidate(id=2, category="nda_gpd", name="NDA гпд.docx"),
+        ]
+        with patch(
+            "biotact.modules.hr.chat.service.resolve_template",
+            new_callable=AsyncMock,
+            return_value=ResolveResult(match=None, candidates=candidates),
+        ):
+            result = await service._execute_tool("find_template", {"category": "nda"})
+        assert "id=1" in result
+        assert "id=2" in result
+        # a non-empty library must NEVER tell the user to upload a template
+        assert "загруз" not in result.lower()
+
+    @pytest.mark.unit
+    async def test_empty_library_says_upload(self) -> None:
+        service = _make_service()
+        with patch(
+            "biotact.modules.hr.chat.service.resolve_template",
+            new_callable=AsyncMock,
+            return_value=ResolveResult(match=None, candidates=[]),
+        ):
+            result = await service._execute_tool("find_template", {"category": "nda"})
+        assert "пуст" in result.lower()
+        assert "загруз" in result.lower()

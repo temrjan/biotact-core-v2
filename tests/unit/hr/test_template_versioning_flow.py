@@ -219,12 +219,13 @@ async def test_get_template_by_category_returns_only_active(
     )
     v2 = r2.json()
 
-    # get_template_by_category filters by extracted_text IS NOT NULL,
-    # so backfill the fake-docx rows before asserting.
+    # get_template_by_category now gates on render-eligibility (template_fields
+    # IS NOT NULL), not extracted_text — extraction is unrelated to rendering.
+    # The fake-docx rows carry no placeholders, so backfill template_fields.
     await test_session.execute(
         update(HRTemplate)
         .where(HRTemplate.category == category)
-        .values(extracted_text="test")
+        .values(template_fields=["FIELD"])
     )
     await test_session.commit()
 
