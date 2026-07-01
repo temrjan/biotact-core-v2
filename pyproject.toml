@@ -64,6 +64,7 @@ dependencies = [
 
     # HR Module — document processing
     "docxtpl>=0.18.0",
+    "python-docx>=1.0",  # imported directly (docx.oxml) for table-width normalization
     "pypdf>=4.0.0",
     "num2words>=0.5.0",
 ]
