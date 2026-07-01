@@ -1,9 +1,10 @@
 """Alembic environment configuration."""
 
+import os
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import engine_from_config, make_url, pool
 
 from biotact.core.config import get_settings
 from biotact.models import Base
@@ -16,9 +17,18 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Set SQLAlchemy URL from settings
-settings = get_settings()
-config.set_main_option("sqlalchemy.url", settings.database_url_sync)
+# Set the SQLAlchemy URL. Tests and CI point everything at DATABASE_URL (async);
+# honor it here so Alembic targets the SAME database rather than the settings
+# defaults — a mismatch fails migrations with an auth / wrong-database error.
+# Alembic uses a sync driver, so swap the async driver for psycopg2.
+_database_url = os.environ.get("DATABASE_URL")
+if _database_url:
+    _sync_url = make_url(_database_url).set(drivername="postgresql+psycopg2")
+    config.set_main_option(
+        "sqlalchemy.url", _sync_url.render_as_string(hide_password=False)
+    )
+else:
+    config.set_main_option("sqlalchemy.url", get_settings().database_url_sync)
 
 # Model's MetaData for 'autogenerate' support
 target_metadata = Base.metadata
