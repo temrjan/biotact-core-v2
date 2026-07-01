@@ -239,8 +239,8 @@ async def test_report_query_uses_index(
             EXPLAIN (FORMAT TEXT)
             SELECT count(id), coalesce(sum(budget), 0)
             FROM hr_gift_requests
-            WHERE created_at >= '2026-06-01'::timestamptz
-              AND created_at < '2026-07-01'::timestamptz
+            WHERE presentation_date >= '2026-06-01'::date
+              AND presentation_date < '2026-07-01'::date
             """
         )
     )

@@ -378,24 +378,20 @@ async def get_monthly_report(
     Uses two independent queries (no JOIN) to avoid aggregation bugs
     and plan-loss on empty months.
     """
-    from datetime import UTC, datetime
+    start_date = date(year, month, 1)
+    end_date = date(year + 1, 1, 1) if month == 12 else date(year, month + 1, 1)
 
-    start = datetime(year, month, 1, tzinfo=UTC)
-    end = (
-        datetime(year + 1, 1, 1, tzinfo=UTC)
-        if month == 12
-        else datetime(year, month + 1, 1, tzinfo=UTC)
-    )
-
-    # 1. Aggregate gifts (excluding cancelled)
+    # 1. Aggregate gifts by presentation month (excluding cancelled). Mirrors
+    #    list_gifts: the range comparison excludes rows with a NULL
+    #    presentation_date, so a monthly report only counts datable gifts.
     total, actual = (
         await db.execute(
             select(
                 func.count(GiftRequest.id),
                 func.coalesce(func.sum(GiftRequest.budget), 0),
             ).where(
-                GiftRequest.created_at >= start,
-                GiftRequest.created_at < end,
+                GiftRequest.presentation_date >= start_date,
+                GiftRequest.presentation_date < end_date,
                 GiftRequest.status != GiftStatus.CANCELLED,
             )
         )
