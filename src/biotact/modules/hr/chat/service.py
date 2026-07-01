@@ -16,8 +16,8 @@ from biotact.modules.hr.events.service import list_events
 from biotact.modules.hr.gifts.schemas import GiftCreateRequest
 from biotact.modules.hr.gifts.service import create_gift, get_gift
 from biotact.modules.hr.library.service import (
-    get_template_by_category,
     list_templates,
+    resolve_template,
 )
 
 if TYPE_CHECKING:
@@ -203,21 +203,28 @@ class HRChatService:
         return f"Неизвестный инструмент: {name}"
 
     async def _tool_find_template(self, args: dict[str, Any]) -> str:
-        category = args.get("category", "")
-        template = await get_template_by_category(self.db, category)
-        if not template:
-            return (
-                f"Шаблон для категории '{category}' не найден. "
-                "Попросите загрузить шаблон."
+        query = args.get("category", "")
+        result = await resolve_template(self.db, query)
+
+        if result.match is not None:
+            return json.dumps(
+                {
+                    "template_id": result.match.id,
+                    "name": result.match.name,
+                    "fields": result.match.template_fields or [],
+                },
+                ensure_ascii=False,
             )
-        return json.dumps(
-            {
-                "template_id": template.id,
-                "name": template.name,
-                "fields": template.template_fields or [],
-            },
-            ensure_ascii=False,
-        )
+
+        # No single match. Offer the render-eligible templates deterministically;
+        # "upload a template" is said ONLY when the library has nothing renderable.
+        if not result.candidates:
+            return "Библиотека шаблонов пуста. Загрузите шаблон документа."
+        lines = [
+            f"- id={c.id} категория={c.category} название={c.name}"
+            for c in result.candidates
+        ]
+        return "Уточните, какой шаблон нужен:\n" + "\n".join(lines)
 
     async def _tool_generate_document(self, args: dict[str, Any]) -> str:
         return await generate_hr_document(

@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import uuid
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -288,12 +290,18 @@ async def get_template_by_category(
     db: AsyncSession,
     category: str,
 ) -> TemplateDetailResponse | None:
-    """Get the active template for a category (for LLM tool)."""
+    """Get the active, render-eligible template for a category.
+
+    Render-eligibility is gated on ``template_fields IS NOT NULL`` (the fields a
+    document needs), NOT on ``extracted_text`` — extraction is unrelated to
+    rendering (``chat/documents.py`` renders from ``file_path`` + fields), and in
+    prod most templates have ``extracted_text = NULL`` yet render fine.
+    """
     result = await db.execute(
         select(HRTemplate)
         .where(HRTemplate.category == category)
         .where(HRTemplate.is_active.is_(True))
-        .where(HRTemplate.extracted_text.is_not(None))
+        .where(HRTemplate.template_fields.is_not(None))
         .order_by(HRTemplate.version.desc())
         .limit(1)
     )
@@ -301,6 +309,109 @@ async def get_template_by_category(
     if not template:
         return None
     return TemplateDetailResponse.model_validate(template)
+
+
+# ---------------------------------------------------------------------------
+# Deterministic template resolution (for the HR chat tool)
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True, slots=True)
+class TemplateCandidate:
+    """Lightweight, DB-free view of a render-eligible template."""
+
+    id: int
+    category: str
+    name: str
+
+
+@dataclass(frozen=True, slots=True)
+class ResolveResult:
+    """Outcome of :func:`resolve_template`.
+
+    ``match`` is the single unambiguous template, or ``None`` when the query is
+    ambiguous / matched nothing. ``candidates`` is every render-eligible template
+    (used to offer a list; empty means the library has nothing renderable).
+    """
+
+    match: TemplateDetailResponse | None
+    candidates: list[TemplateCandidate]
+
+
+def _normalize(text: str) -> str:
+    """Lowercase, trim, collapse runs of whitespace/underscores to one space."""
+    return re.sub(r"[\s_]+", " ", text.strip().lower())
+
+
+def _query_matches(normalized_query: str, candidate: TemplateCandidate) -> bool:
+    """True if the query is contained in (or contains) the category or name."""
+    category = _normalize(candidate.category)
+    name = _normalize(candidate.name)
+    return (
+        normalized_query in category
+        or category in normalized_query
+        or normalized_query in name
+        or name in normalized_query
+    )
+
+
+def match_template(
+    candidates: list[TemplateCandidate],
+    query: str,
+) -> TemplateCandidate | None:
+    """Resolve ``query`` to exactly one candidate, deterministically.
+
+    Priority, highest first: exact normalized category slug, then exact
+    normalized name, then normalized containment. Returns a candidate only when
+    the highest level that matches anything matches EXACTLY one; an empty query,
+    no match, or an ambiguous (>1) level returns ``None``. Pure function: no DB,
+    no randomness, no LLM.
+    """
+    normalized_query = _normalize(query)
+    if not normalized_query:
+        return None
+
+    for exact in (
+        [c for c in candidates if _normalize(c.category) == normalized_query],
+        [c for c in candidates if _normalize(c.name) == normalized_query],
+    ):
+        if len(exact) == 1:
+            return exact[0]
+        if exact:  # more than one at this level -> ambiguous
+            return None
+
+    contains = [c for c in candidates if _query_matches(normalized_query, c)]
+    return contains[0] if len(contains) == 1 else None
+
+
+async def resolve_template(db: AsyncSession, query: str) -> ResolveResult:
+    """Resolve a free-text query to one render-eligible template, or a list.
+
+    Loads the active, render-eligible templates (``is_active`` + non-empty
+    ``template_fields``), runs the deterministic matcher, and returns either the
+    single matched template (full detail) or the candidate list.
+    """
+    result = await db.execute(
+        select(HRTemplate)
+        .where(HRTemplate.is_active.is_(True))
+        .where(HRTemplate.template_fields.is_not(None))
+        .order_by(HRTemplate.category)
+    )
+    rows = [row for row in result.scalars().all() if row.template_fields]
+    candidates = [
+        TemplateCandidate(id=row.id, category=row.category, name=row.name)
+        for row in rows
+    ]
+
+    matched = match_template(candidates, query)
+    if matched is None:
+        return ResolveResult(match=None, candidates=candidates)
+
+    matched_row = next(row for row in rows if row.id == matched.id)
+    return ResolveResult(
+        match=TemplateDetailResponse.model_validate(matched_row),
+        candidates=candidates,
+    )
 
 
 async def list_template_history(
