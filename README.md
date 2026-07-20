@@ -33,6 +33,18 @@ make typecheck   # Run type checker
 make format      # Format code
 ```
 
+Integration tests need PostgreSQL (models use `JSONB`, which SQLite can't
+compile); the OpenAI client is mocked, so no real key is needed:
+
+```bash
+podman run -d --rm --name pg-test \
+  -e POSTGRES_PASSWORD=test -e POSTGRES_DB=biotact_test \
+  -p 5433:5432 postgres:16-alpine
+DATABASE_URL=postgresql+asyncpg://postgres:test@localhost:5433/biotact_test \
+OPENAI_API_KEY=sk-dummy \
+  pytest -m integration
+```
+
 
 ## AskBiotact Telegram Bot
 

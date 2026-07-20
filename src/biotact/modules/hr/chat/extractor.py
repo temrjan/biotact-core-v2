@@ -8,27 +8,29 @@ from typing import TYPE_CHECKING
 
 from openai import OpenAIError
 
+from biotact.modules.hr.chat.field_rules import build_extractor_rules
+
 if TYPE_CHECKING:
     from openai import AsyncOpenAI
 
 logger = logging.getLogger(__name__)
 
-_EXTRACTION_PROMPT_TEMPLATE = (
-    "Извлеки данные из текста переписки и верни JSON.\n"
-    "Поля: {fields}\n\n"
-    "Правила:\n"
-    "- FIO: ЗАГЛАВНЫМИ кириллицей (ПЕТРОВ АЛЕКСЕЙ СЕРГЕЕВИЧ)\n"
-    "- FIO_LATIN: ЗАГЛАВНЫМИ латиницей (PETROV ALEKSEY SERGEEVICH)\n"
-    "- FIO_SHORT_LATIN: PETROV A. S.\n"
-    "- CONTRACT_TYPE: 'неопределённый срок' или 'определённый срок'\n"
-    "- CONTRACT_TYPE_UZ: 'муддатсиз' или 'муайян муддатга'\n"
-    "- WORK_TYPE: 'основной работы' или 'работы по совместительству'\n"
-    "- WORK_TYPE_UZ: 'асосий иш жойи' или 'ўриндошлик бўйича иш жойи'\n"
-    "- Даты: ДД.ММ.ГГГГ\n"
-    "- Если поле нельзя извлечь — пустая строка\n\n"
-    "Верни ТОЛЬКО JSON, без пояснений.\n\n"
-    "Переписка:\n{context}"
-)
+
+def _build_extraction_prompt(fields: list[str], category: str, context: str) -> str:
+    """Assemble the focused-extraction prompt with per-category field rules.
+
+    Uses an f-string (not ``str.format``) so ``{`` / ``}`` in the user's text
+    are never interpreted as format placeholders.
+    """
+    return (
+        "Извлеки данные из текста переписки и верни JSON.\n"
+        f"Поля: {json.dumps(fields)}\n\n"
+        f"{build_extractor_rules(category)}\n\n"
+        "Правила извлечения:\n"
+        "- Если поле нельзя извлечь — пустая строка\n\n"
+        "Верни ТОЛЬКО JSON, без пояснений.\n\n"
+        f"Переписка:\n{context}"
+    )
 
 
 async def extract_data_from_context(
@@ -36,12 +38,15 @@ async def extract_data_from_context(
     model: str,
     context: str,
     fields: list[str],
+    category: str,
 ) -> dict[str, str]:
-    """Use a focused LLM call to extract structured data from conversation."""
-    prompt = _EXTRACTION_PROMPT_TEMPLATE.format(
-        fields=json.dumps(fields),
-        context=context,
-    )
+    """Use a focused LLM call to extract structured data from conversation.
+
+    ``category`` selects the per-category field rules (the same single source
+    as the system prompt) so the fallback path knows document-specific fields
+    like ``GPD_NUMBER`` / ``GPD_DATE`` instead of guessing from bare names.
+    """
+    prompt = _build_extraction_prompt(fields, category, context)
     try:
         response = await openai.chat.completions.create(
             model=model,
