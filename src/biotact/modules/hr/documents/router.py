@@ -112,10 +112,9 @@ async def render_docx(
     )
 
     logger.info(
-        "Rendered template_id=%d fields=%d filename=%s",
+        "Rendered template_id=%d fields=%d",
         req.template_id,
         len(req.data),
-        filename,
     )
 
     return StreamingResponse(

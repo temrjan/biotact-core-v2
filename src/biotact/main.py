@@ -13,6 +13,7 @@ from biotact.api.v1 import router as api_router
 from biotact.api.v1.webhooks import register_bot_commands
 from biotact.core.config import get_settings
 from biotact.core.database import close_db
+from biotact.core.logging import configure_logging
 from biotact.modules import module_registry
 from biotact.modules.callcenter.config import callcenter_config
 from biotact.modules.dashboard.config import dashboard_config
@@ -59,6 +60,9 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     scheduler.shutdown()
     await close_db()
 
+
+# Configure logging before anything logs (must run at import, before the app).
+configure_logging()
 
 settings = get_settings()
 

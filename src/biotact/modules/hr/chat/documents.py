@@ -53,12 +53,13 @@ async def generate_hr_document(
     missing = [f for f in fields if f not in data or not data[f]]
     if missing and messages_context:
         logger.info(
-            "generate_document: %d/%d fields missing, extracting via LLM",
+            "generate_document: %d/%d fields missing %s, extracting via LLM",
             len(missing),
             len(fields),
+            missing,  # field NAMES (not values) — safe to log
         )
         extracted = await extract_data_from_context(
-            openai, model, messages_context, fields
+            openai, model, messages_context, fields, db_template.category
         )
         for k, v in extracted.items():
             if k not in data or not data.get(k):
@@ -90,9 +91,10 @@ async def generate_hr_document(
         await db.flush()
 
         logger.info(
-            "Document rendered: %s employee=%s fields=%d",
+            "Document rendered: %s template=%s(id=%d) fields=%d",
             out_path,
-            employee,
+            db_template.category,
+            db_template.id,
             len(data),
         )
         return f"/api/v1/hr/documents/download/{file_id}"

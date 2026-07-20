@@ -30,8 +30,6 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-LOG_ARG_TRUNCATE = 2000  # max chars of tool-call args written to the log
-
 
 def _cached_tokens(usage: Any) -> int:
     """Cached prompt tokens reported by OpenAI, or 0 when unavailable.
@@ -144,9 +142,9 @@ class HRChatService:
                 func_name = tool_call.function.name
                 func_args = json.loads(tool_call.function.arguments)
                 logger.info(
-                    "HR tool: %s args=%s",
+                    "HR tool: %s args_keys=%s",
                     func_name,
-                    json.dumps(func_args, ensure_ascii=False)[:LOG_ARG_TRUNCATE],
+                    sorted(func_args),  # top-level keys only — never field VALUES
                 )
 
                 tool_result = await self._execute_tool(func_name, func_args)

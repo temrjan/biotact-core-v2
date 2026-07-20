@@ -26,7 +26,7 @@ async def hr_chat_message(
     db: SessionDep,
 ) -> HRChatResponse:
     """Send message to HR AI assistant. Returns text + optional document."""
-    logger.info("HR chat: user=%s message=%r", current_user.email, req.message[:80])
+    logger.info("HR chat: user_id=%s msg_len=%d", current_user.id, len(req.message))
     settings = get_settings()
     service = HRChatService(settings, db, user_id=current_user.id)
     result: dict[str, Any] = await service.process_message(req.message, req.history)
