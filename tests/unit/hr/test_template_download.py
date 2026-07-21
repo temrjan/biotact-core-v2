@@ -17,6 +17,7 @@ from biotact.core.config import Settings, get_settings
 from biotact.main import app
 from biotact.models.user import User
 from biotact.modules.hr.library.models import HRTemplate
+from tests.factories import make_docx_bytes
 
 pytestmark = pytest.mark.skipif(
     not os.environ.get("DATABASE_URL"),
@@ -26,7 +27,8 @@ pytestmark = pytest.mark.skipif(
 DOCX_MEDIA_TYPE = (
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 )
-MINIMAL_DOCX = b"PK\x03\x04" + b"\x00" * 200
+# Real, openable DOCX — the upload path now rejects unopenable files.
+MINIMAL_DOCX = make_docx_bytes(["FIO"])
 
 
 def _build_settings(allowed_emails: str) -> Settings:

@@ -64,6 +64,25 @@ class HRTemplateConflictError(HRFileError):
     status_code = 409
 
 
+class HRFileCorruptError(HRFileError):
+    """Uploaded DOCX cannot be opened / parsed."""
+
+    status_code = 422
+
+
+class HRTemplateDroppedFieldsError(HRFileError):
+    """A replacement dropped placeholders that the previous active version had."""
+
+    status_code = 409
+
+    def __init__(self, dropped: list[str]) -> None:
+        self.dropped = dropped
+        super().__init__(
+            f"Replacement dropped placeholders: {', '.join(dropped)}. "
+            "Re-upload with confirm=true to proceed."
+        )
+
+
 def _upload_dir() -> Path:
     """Return configured upload directory."""
     return Path(get_settings().hr_upload_dir)
@@ -134,11 +153,89 @@ def extract_text(file_path: str, file_type: str) -> str | None:
         return None
 
 
+def _assert_docx_openable(file_path: str) -> None:
+    """Raise :class:`HRFileCorruptError` if python-docx cannot open the file.
+
+    The scanner and text extractor are fail-soft (return ``[]``/``None`` on error),
+    so a corrupt DOCX would otherwise be stored silently. This is the fail-closed
+    gate against that — placed before extract/scan so we bail fast.
+    """
+    try:
+        Document(file_path)
+    except Exception as exc:  # python-docx raises varied errors on bad packages
+        raise HRFileCorruptError("Uploaded DOCX is corrupt or unreadable.") from exc
+
+
+async def _insert_new_version(
+    db: AsyncSession,
+    *,
+    category: str,
+    name: str,
+    file_path: str,
+    ext: str,
+    file_size: int,
+    extracted: str | None,
+    fields: list[str],
+    user_id: int,
+    confirm: bool,
+) -> HRTemplate:
+    """Lock the active version, guard field-drops, bump version, insert the new row.
+
+    Raises :class:`HRTemplateDroppedFieldsError` if the replacement loses
+    placeholders the active version had (unless ``confirm``). ``IntegrityError``
+    from the partial-unique "one active per category" index propagates to the
+    caller (concurrent upload).
+    """
+    prev_result = await db.execute(
+        select(HRTemplate)
+        .where(HRTemplate.category == category)
+        .where(HRTemplate.is_active.is_(True))
+        .with_for_update()
+    )
+    prev = prev_result.scalar_one_or_none()
+
+    # Replacing an active version: block a silent loss of placeholders unless the
+    # caller explicitly confirms (bad Word edits drop fields).
+    if prev is not None and not confirm:
+        dropped = sorted(set(prev.template_fields or []) - set(fields))
+        if dropped:
+            raise HRTemplateDroppedFieldsError(dropped)
+
+    next_version = (prev.version + 1) if prev else 1
+
+    if prev is not None:
+        prev.is_active = False
+        await db.flush()
+
+    template = HRTemplate(
+        name=name,
+        category=category,
+        file_path=file_path,
+        file_type=ext,
+        file_size=file_size,
+        extracted_text=extracted,
+        template_fields=fields if fields else None,
+        uploaded_by=user_id,
+        version=next_version,
+        is_active=True,
+    )
+    db.add(template)
+    await db.flush()
+    await db.refresh(template)
+
+    if prev is not None:
+        prev.superseded_by_id = template.id
+        await db.flush()
+
+    return template
+
+
 async def upload_template(
     db: AsyncSession,
     file: UploadFile,
     category: str,
     user_id: int,
+    confirm: bool = False,
 ) -> TemplateResponse:
     """Upload a template file, extract text, save to DB.
 
@@ -186,48 +283,30 @@ async def upload_template(
                     )
                 f.write(chunk)
 
+        # Fail-closed: reject a DOCX python-docx can't open (scanner is fail-soft).
+        if ext == "docx":
+            _assert_docx_openable(str(file_path))
+
         # Extract text
         extracted = extract_text(str(file_path), ext)
 
         # Scan for {{ PLACEHOLDER }} fields in DOCX templates
-        fields: list[str] = []
-        if ext == "docx":
-            fields = scan_template_fields(str(file_path))
+        fields = scan_template_fields(str(file_path)) if ext == "docx" else []
 
-        # Versioning: lock current active template, bump version, deactivate prev.
+        # Versioning (locks active row, guards field-drops, bumps version).
         try:
-            prev_result = await db.execute(
-                select(HRTemplate)
-                .where(HRTemplate.category == category)
-                .where(HRTemplate.is_active.is_(True))
-                .with_for_update()
-            )
-            prev = prev_result.scalar_one_or_none()
-            next_version = (prev.version + 1) if prev else 1
-
-            if prev is not None:
-                prev.is_active = False
-                await db.flush()
-
-            template = HRTemplate(
-                name=safe_basename,
+            template = await _insert_new_version(
+                db,
                 category=category,
+                name=safe_basename,
                 file_path=str(file_path),
-                file_type=ext,
+                ext=ext,
                 file_size=total_size,
-                extracted_text=extracted,
-                template_fields=fields if fields else None,
-                uploaded_by=user_id,
-                version=next_version,
-                is_active=True,
+                extracted=extracted,
+                fields=fields,
+                user_id=user_id,
+                confirm=confirm,
             )
-            db.add(template)
-            await db.flush()
-            await db.refresh(template)
-
-            if prev is not None:
-                prev.superseded_by_id = template.id
-                await db.flush()
         except IntegrityError as exc:
             file_path.unlink(missing_ok=True)
             msg = (

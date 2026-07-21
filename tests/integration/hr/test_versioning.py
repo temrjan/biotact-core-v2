@@ -10,6 +10,7 @@ import pytest_asyncio
 
 from biotact.core.config import Settings, get_settings
 from biotact.main import app
+from tests.factories import make_docx_bytes
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -18,7 +19,7 @@ if TYPE_CHECKING:
 
 pytestmark = pytest.mark.integration
 
-MINIMAL_DOCX = b"PK\x03\x04" + b"\x00" * 200
+MINIMAL_DOCX = make_docx_bytes(["FIO"])
 
 
 def _hr_settings() -> Settings:

@@ -557,19 +557,26 @@ export async function deleteTranscription(transcriptionId) {
 // HR MODULE
 // ═══════════════════════════════════════════════════════════════
 
-/** Upload HR template (DOCX/PDF/TXT) */
-export async function hrUploadTemplate(file, category) {
+/** Upload HR template (DOCX/PDF/TXT). Re-upload to a category replaces it.
+ *  `confirm` proceeds past a 409 when the new file drops placeholders. */
+export async function hrUploadTemplate(file, category, confirm = false) {
   const token = getAuthToken();
   const formData = new FormData();
   formData.append('file', file);
-  const response = await fetch(`${API_BASE}/hr/library?category=${encodeURIComponent(category)}`, {
+  const url = `${API_BASE}/hr/library?category=${encodeURIComponent(category)}&confirm=${confirm}`;
+  const response = await fetch(url, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${token}` },
     body: formData,
   });
   if (!response.ok) {
-    const err = await response.json().catch(() => ({ detail: 'Upload failed' }));
-    throw new Error(err.detail || 'Upload failed');
+    const body = await response.json().catch(() => ({ detail: 'Upload failed' }));
+    const detail = body.detail;
+    const message = typeof detail === 'string' ? detail : (detail?.message || 'Upload failed');
+    const error = new Error(message);
+    error.status = response.status;
+    error.detail = detail;
+    throw error;
   }
   return response.json();
 }

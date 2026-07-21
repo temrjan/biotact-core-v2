@@ -21,6 +21,7 @@ from biotact.modules.hr.library.service import (
     _verify_magic_bytes,
     upload_template,
 )
+from tests.factories import make_docx_bytes
 
 
 def _fake_upload(filename: str, content: bytes) -> UploadFile:
@@ -201,7 +202,9 @@ class TestPartialFileCleanup:
     ) -> None:
         """If db.flush() raises after the file is written, unlink the file."""
         monkeypatch.setattr(library_service, "_upload_dir", lambda: tmp_path)
-        f = _fake_upload("doc.docx", b"PK\x03\x04rest of valid header")
+        # Real DOCX so it reaches the mocked db.flush() (the failure under test)
+        # instead of tripping the corrupt-DOCX guard first.
+        f = _fake_upload("doc.docx", make_docx_bytes(["FIO"]))
         execute_result = MagicMock()
         execute_result.scalar_one_or_none = MagicMock(return_value=None)
         db = MagicMock()
