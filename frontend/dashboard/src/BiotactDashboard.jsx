@@ -1028,6 +1028,16 @@ function Dashboard({ onLogout }) {
     hrFileInputRef.current?.click();
   }, []);
 
+  const handleHrRollbackTemplate = useCallback(async (id) => {
+    if (!confirm('Сделать эту версию активной (откатить)?')) return;
+    try {
+      await api.hrRollbackTemplate(id);
+      await loadHrTemplates();
+    } catch (e) {
+      setHrUploadMsg({ type: 'error', text: 'Ошибка отката: ' + (e.message || 'попробуйте позже') });
+    }
+  }, [loadHrTemplates]);
+
   // HR Document History
   const loadHrDocHistory = useCallback(async (page = 1) => {
     setHrDocHistoryLoading(true);
@@ -2095,10 +2105,15 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                         </div>
                         <div>
                           <div className="text-sm font-medium" style={{ color: theme.text.primary }}>{t.name}</div>
-                          <div className="text-xs" style={{ color: theme.text.muted }}>{t.category} · {(t.file_size / 1024).toFixed(0)} KB</div>
+                          <div className="text-xs" style={{ color: theme.text.muted }}>{t.category} · v{t.version} · {t.is_active ? 'активна' : 'заменена'} · {(t.file_size / 1024).toFixed(0)} KB</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
+                        {!t.is_active && (
+                          <button onClick={() => handleHrRollbackTemplate(t.id)} title="Откатить к этой версии" className="p-1.5 rounded-md transition-colors hover:text-green-500" style={{ color: theme.text.muted }}>
+                            <RotateCcw size={14} />
+                          </button>
+                        )}
                         <button onClick={() => handleHrReplaceClick(t.category)} title="Заменить" className="p-1.5 rounded-md transition-colors hover:text-amber-500" style={{ color: theme.text.muted }}>
                           <Upload size={14} />
                         </button>
