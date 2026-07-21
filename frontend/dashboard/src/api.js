@@ -591,6 +591,22 @@ export async function hrDeleteTemplate(id) {
   return true;
 }
 
+/** Download a template file by id (raw file to edit and re-upload) */
+export async function hrDownloadTemplate(id, filename = 'template.docx') {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/library/${id}/download`, {
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Download failed');
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 /** HR Chat — send message, get response + optional document */
 export async function hrChat(message, history = null) {
   const body = { message };

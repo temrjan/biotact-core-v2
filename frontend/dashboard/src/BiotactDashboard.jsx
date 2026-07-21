@@ -998,6 +998,14 @@ function Dashboard({ onLogout }) {
     }
   }, [loadHrTemplates]);
 
+  const handleHrDownloadTemplate = useCallback(async (template) => {
+    try {
+      await api.hrDownloadTemplate(template.id, template.name);
+    } catch (e) {
+      setHrUploadMsg({ type: 'error', text: 'Ошибка скачивания: ' + (e.message || 'попробуйте позже') });
+    }
+  }, []);
+
   // HR Document History
   const loadHrDocHistory = useCallback(async (page = 1) => {
     setHrDocHistoryLoading(true);
@@ -2068,9 +2076,14 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                           <div className="text-xs" style={{ color: theme.text.muted }}>{t.category} · {(t.file_size / 1024).toFixed(0)} KB</div>
                         </div>
                       </div>
-                      <button onClick={() => handleHrDeleteTemplate(t.id)} className="p-1.5 rounded-md transition-colors hover:text-red-500" style={{ color: theme.text.muted }}>
-                        <Trash2 size={14} />
-                      </button>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => handleHrDownloadTemplate(t)} title="Скачать" className="p-1.5 rounded-md transition-colors hover:text-blue-500" style={{ color: theme.text.muted }}>
+                          <Download size={14} />
+                        </button>
+                        <button onClick={() => handleHrDeleteTemplate(t.id)} title="Удалить" className="p-1.5 rounded-md transition-colors hover:text-red-500" style={{ color: theme.text.muted }}>
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

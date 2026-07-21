@@ -1,9 +1,11 @@
 """HR Library API endpoints."""
 
 import logging
+from pathlib import Path
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, status
+from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.database import get_session
@@ -20,6 +22,15 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/hr/library", tags=["hr-library"])
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
+
+# Media types for template file downloads, keyed by stored file_type.
+_MEDIA_TYPES: dict[str, str] = {
+    "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "pdf": "application/pdf",
+    "txt": "text/plain",
+    "md": "text/markdown",
+}
+_DEFAULT_MEDIA_TYPE = "application/octet-stream"
 
 
 @router.post("", response_model=TemplateResponse, status_code=status.HTTP_201_CREATED)
@@ -65,6 +76,33 @@ async def get_template(
             status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
         )
     return result
+
+
+@router.get("/{template_id}/download")
+async def download_template(
+    template_id: int,
+    current_user: RequireHREmailDep,
+    db: SessionDep,
+) -> FileResponse:
+    """Download the raw template file by ID (to edit in Word, then re-upload)."""
+    _ = current_user  # auth guard
+    template = await service.get_template_file(db, template_id)
+    if template is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Template not found"
+        )
+    # FileResponse raises 500 on a missing path — guard explicitly so a stale row
+    # (file removed from disk) returns a clean 404 instead.
+    file_path = Path(template.file_path)
+    if not file_path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Template file not found"
+        )
+    return FileResponse(
+        path=str(file_path),
+        filename=template.name,
+        media_type=_MEDIA_TYPES.get(template.file_type, _DEFAULT_MEDIA_TYPE),
+    )
 
 
 @router.get("/{category}/history", response_model=TemplateListResponse)

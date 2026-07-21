@@ -286,6 +286,20 @@ async def get_template(
     return TemplateDetailResponse.model_validate(template)
 
 
+async def get_template_file(
+    db: AsyncSession,
+    template_id: int,
+) -> HRTemplate | None:
+    """Fetch the raw template row for file download.
+
+    Unlike :func:`get_template`, returns the ORM row — the download endpoint needs
+    on-disk metadata (``file_path``, ``name``, ``file_type``) that the response
+    schemas deliberately omit.
+    """
+    result = await db.execute(select(HRTemplate).where(HRTemplate.id == template_id))
+    return result.scalar_one_or_none()
+
+
 async def get_template_by_category(
     db: AsyncSession,
     category: str,
