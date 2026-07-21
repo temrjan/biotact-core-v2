@@ -41,10 +41,25 @@ async def upload_template(
     category: str = Query(
         ..., description="Template category: трудовой_договор, приказ, etc."
     ),
+    confirm: bool = Query(
+        False,
+        description="Proceed even if the upload drops placeholders the active version had.",
+    ),
 ) -> TemplateResponse:
-    """Upload a document template (DOCX/PDF/TXT)."""
+    """Upload a document template (DOCX/PDF/TXT). Re-upload to a category replaces it."""
     try:
-        return await service.upload_template(db, file, category, current_user.id)
+        return await service.upload_template(
+            db, file, category, current_user.id, confirm=confirm
+        )
+    except service.HRTemplateDroppedFieldsError as e:
+        raise HTTPException(
+            status_code=e.status_code,
+            detail={
+                "code": "dropped_placeholders",
+                "dropped": e.dropped,
+                "message": str(e),
+            },
+        ) from e
     except service.HRTemplateConflictError as e:
         raise HTTPException(status_code=e.status_code, detail=str(e)) from e
     except service.HRFileError as e:

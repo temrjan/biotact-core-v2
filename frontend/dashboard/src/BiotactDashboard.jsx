@@ -973,9 +973,26 @@ function Dashboard({ onLogout }) {
     if (!files || files.length === 0) return;
     setHrUploading(true);
     setHrUploadMsg(null);
+
+    const uploadOne = async (file) => {
+      try {
+        await api.hrUploadTemplate(file, hrSelectedCategory);
+      } catch (e) {
+        if (e.status === 409 && e.detail?.code === 'dropped_placeholders') {
+          const dropped = (e.detail.dropped || []).join(', ');
+          if (!confirm(`Новый шаблон теряет поля: ${dropped}.\nБудущие документы выйдут без них. Всё равно заменить?`)) {
+            throw new Error('Замена отменена');
+          }
+          await api.hrUploadTemplate(file, hrSelectedCategory, true);
+        } else {
+          throw e;
+        }
+      }
+    };
+
     try {
       for (const file of files) {
-        await api.hrUploadTemplate(file, hrSelectedCategory);
+        await uploadOne(file);
       }
       await loadHrTemplates();
       setHrUploadMsg({ type: 'success', text: `Загружено: ${files.length} файл(ов) в категорию "${hrSelectedCategory}"` });
@@ -1004,6 +1021,11 @@ function Dashboard({ onLogout }) {
     } catch (e) {
       setHrUploadMsg({ type: 'error', text: 'Ошибка скачивания: ' + (e.message || 'попробуйте позже') });
     }
+  }, []);
+
+  const handleHrReplaceClick = useCallback((category) => {
+    setHrSelectedCategory(category);
+    hrFileInputRef.current?.click();
   }, []);
 
   // HR Document History
@@ -2077,6 +2099,9 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
+                        <button onClick={() => handleHrReplaceClick(t.category)} title="Заменить" className="p-1.5 rounded-md transition-colors hover:text-amber-500" style={{ color: theme.text.muted }}>
+                          <Upload size={14} />
+                        </button>
                         <button onClick={() => handleHrDownloadTemplate(t)} title="Скачать" className="p-1.5 rounded-md transition-colors hover:text-blue-500" style={{ color: theme.text.muted }}>
                           <Download size={14} />
                         </button>

@@ -15,6 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from biotact.core.config import Settings, get_settings
 from biotact.main import app
+from tests.factories import make_docx_bytes
 
 # HR models use PostgreSQL JSONB columns (template_fields)
 # which SQLite cannot render. CI sets DATABASE_URL to a Postgres service;
@@ -228,7 +229,7 @@ class TestHrPathTraversal:
         hr_allow_test_user: None,
     ) -> None:
         """Filename containing '../' is stripped; file lands in UPLOAD_DIR with UUID name."""
-        content = b"PK\x03\x04" + b"\x00" * 200
+        content = make_docx_bytes(["FIO"])
         response = await async_client.post(
             "/api/v1/hr/library",
             params={"category": "td_osnovnoy"},
@@ -254,7 +255,7 @@ class TestHrPathTraversal:
         hr_allow_test_user: None,
     ) -> None:
         """Filename containing '\\..\\' is stripped; file lands in UPLOAD_DIR with UUID name."""
-        content = b"PK\x03\x04" + b"\x00" * 200
+        content = make_docx_bytes(["FIO"])
         response = await async_client.post(
             "/api/v1/hr/library",
             params={"category": "td_osnovnoy"},
