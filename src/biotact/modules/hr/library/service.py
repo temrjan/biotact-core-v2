@@ -201,7 +201,16 @@ async def _insert_new_version(
         if dropped:
             raise HRTemplateDroppedFieldsError(dropped)
 
-    next_version = (prev.version + 1) if prev else 1
+    # Bump from MAX(version), not the active row: after a rollback the active row
+    # is an older version, so active.version+1 would collide with an existing
+    # (category, version) row and surface a phantom conflict. with_for_update on
+    # the active row already serializes writers, so this MAX read is race-safe.
+    max_version = (
+        await db.execute(
+            select(func.max(HRTemplate.version)).where(HRTemplate.category == category)
+        )
+    ).scalar_one()
+    next_version = (max_version or 0) + 1
 
     if prev is not None:
         prev.is_active = False
