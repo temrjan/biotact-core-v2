@@ -598,6 +598,17 @@ export async function hrDeleteTemplate(id) {
   return true;
 }
 
+/** Rollback a category to a specific template version (reactivate it) */
+export async function hrRollbackTemplate(id) {
+  const token = getAuthToken();
+  const response = await fetch(`${API_BASE}/hr/library/${id}/rollback`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error('Rollback failed');
+  return response.json();
+}
+
 /** Download a template file by id (raw file to edit and re-upload) */
 export async function hrDownloadTemplate(id, filename = 'template.docx') {
   const token = getAuthToken();

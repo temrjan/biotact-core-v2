@@ -197,6 +197,49 @@ async def test_rollback_makes_target_active(
 
 
 @pytest.mark.asyncio
+async def test_upload_after_rollback_does_not_false_conflict(
+    authenticated_client_with_hr: AsyncClient,
+    test_user: None,
+) -> None:
+    """Regression: a legit upload after a rollback must not hit a phantom 409.
+
+    next_version was ``active.version + 1``; after rollback the active row is an
+    older version, so the bump collided with an existing ``(category, version)``
+    row → IntegrityError surfaced as a bogus "version conflict". Fixed by using
+    ``MAX(version) + 1`` over the category.
+    """
+    category = "трудовой_договор_rollback_bump"
+
+    v1 = (
+        await authenticated_client_with_hr.post(
+            "/api/v1/hr/library",
+            params={"category": category},
+            files={"file": ("v1.docx", MINIMAL_DOCX, "application/octet-stream")},
+        )
+    ).json()
+    r2 = await authenticated_client_with_hr.post(
+        "/api/v1/hr/library",
+        params={"category": category},
+        files={"file": ("v2.docx", MINIMAL_DOCX, "application/octet-stream")},
+    )
+    assert r2.status_code == 201
+
+    rollback = await authenticated_client_with_hr.post(
+        f"/api/v1/hr/library/{v1['id']}/rollback"
+    )
+    assert rollback.status_code == 200
+
+    # Legit new upload after the rollback — must succeed, not a phantom conflict.
+    r3 = await authenticated_client_with_hr.post(
+        "/api/v1/hr/library",
+        params={"category": category},
+        files={"file": ("v3.docx", MINIMAL_DOCX, "application/octet-stream")},
+    )
+    assert r3.status_code == 201, r3.text
+    assert r3.json()["version"] == 3
+
+
+@pytest.mark.asyncio
 async def test_get_template_by_category_returns_only_active(
     authenticated_client_with_hr: AsyncClient,
     test_user: None,
