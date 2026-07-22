@@ -2058,16 +2058,21 @@ const handleRestartBot = async () => {    setBotRestarting(true);    try {      
                     className="px-3 py-2 rounded-lg text-sm border outline-none"
                     style={{ backgroundColor: theme.bg.elevated, borderColor: theme.border.default, color: theme.text.primary }}
                   >
+                    {/* Values are the backend's category keys — the ones
+                        POSTPROCESS_BY_CATEGORY and field_rules.py are keyed on.
+                        A category outside that set silently degrades extraction
+                        to the common rules, so the document loses its own. */}
                     <option value="td_osnovnoy">ТД (основное место)</option>
                     <option value="td_sovmestitelstvo">ТД (совместительство)</option>
-                    <option value="гпд">ГПД</option>
-                    <option value="приказ">Приказ</option>
-                    <option value="должностная_инструкция">Должностная инструкция</option>
-                    <option value="мат_ответственность">Мат. ответственность</option>
-                    <option value="соглашение_конфиденциальности">NDA / Конфиденциальность</option>
-                    <option value="соглашение_персданные">Обработка перс. данных</option>
-                    <option value="соглашение_возмещение">Возмещение</option>
-                    <option value="другое">Другое</option>
+                    <option value="gpd_uslugi">ГПД на оказание услуг</option>
+                    <option value="prikaz_priem">Приказ о приёме</option>
+                    <option value="prikaz_avto">Приказ о закреплении авто</option>
+                    <option value="mat_otvetstvennost">Мат. ответственность</option>
+                    <option value="dop_soglashenie_pasport">Доп. соглашение (смена паспорта)</option>
+                    <option value="nda_rabotnik">NDA для работника</option>
+                    <option value="nda_gpd">NDA для исполнителя ГПД</option>
+                    <option value="soglashenie_vozmeshenie">Возмещение расходов</option>
+                    <option value="soglashenie_pd">Обработка перс. данных</option>
                   </select>
                   <button
                     onClick={() => hrFileInputRef.current?.click()}

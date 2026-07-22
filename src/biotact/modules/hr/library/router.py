@@ -39,7 +39,15 @@ async def upload_template(
     db: SessionDep,
     file: UploadFile,
     category: str = Query(
-        ..., description="Template category: трудовой_договор, приказ, etc."
+        ...,
+        description=(
+            "Template category — one of the keys the extraction rules are "
+            "written for: td_osnovnoy, td_sovmestitelstvo, gpd_uslugi, "
+            "prikaz_priem, prikaz_avto, mat_otvetstvennost, "
+            "dop_soglashenie_pasport, nda_rabotnik, nda_gpd, "
+            "soglashenie_vozmeshenie, soglashenie_pd. Anything else is "
+            "accepted but degrades extraction to the common rules."
+        ),
     ),
     confirm: bool = Query(
         False,
