@@ -43,10 +43,10 @@ async def _run_and_capture_messages(items: list[object]) -> list[dict[str, objec
         captured["messages"] = kwargs["messages"]  # type: ignore[assignment]
         return _final_response()
 
-    templates = AsyncMock(return_value=SimpleNamespace(items=items))
+    templates = AsyncMock(return_value=items)
     with (
         patch("biotact.modules.hr.chat.service.AsyncOpenAI") as mock_cls,
-        patch("biotact.modules.hr.chat.service.list_templates", new=templates),
+        patch("biotact.modules.hr.chat.service.list_render_eligible", new=templates),
     ):
         mock_cls.return_value.chat.completions.create = AsyncMock(side_effect=_create)
         service = HRChatService(_settings(), MagicMock(), user_id=1)

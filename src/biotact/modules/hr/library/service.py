@@ -486,12 +486,18 @@ def match_template(
     return contains[0] if len(contains) == 1 else None
 
 
-async def resolve_template(db: AsyncSession, query: str) -> ResolveResult:
-    """Resolve a free-text query to one render-eligible template, or a list.
+async def list_render_eligible(db: AsyncSession) -> list[HRTemplate]:
+    """Templates a document may actually be generated from, newest state only.
 
-    Loads the active, render-eligible templates (``is_active`` + non-empty
-    ``template_fields``), runs the deterministic matcher, and returns either the
-    single matched template (full detail) or the candidate list.
+    "Render-eligible" means active (one row per category, enforced by the
+    partial unique index) and carrying placeholders. This is the single source
+    for every path that offers templates to the LLM — the deterministic matcher
+    behind ``find_template`` and both chat-facing listings. Keeping it in one
+    place is what stops those paths from drifting apart again: they previously
+    disagreed, and the unfiltered one was the path the system prompt preferred.
+
+    Deliberately NOT used by ``list_templates``: the library tab shows every
+    version flat, which is how rollback (#54) presents history.
     """
     result = await db.execute(
         select(HRTemplate)
@@ -499,7 +505,21 @@ async def resolve_template(db: AsyncSession, query: str) -> ResolveResult:
         .where(HRTemplate.template_fields.is_not(None))
         .order_by(HRTemplate.category)
     )
-    rows = [row for row in result.scalars().all() if row.template_fields]
+    # `is_not(None)` lets an empty JSONB list through. Nothing writes one today
+    # (uploads store `fields if fields else None`), but this is the one place
+    # every LLM-facing path reads from, so the "non-empty list" invariant is
+    # pinned here rather than left to each consumer.
+    return [row for row in result.scalars().all() if row.template_fields]
+
+
+async def resolve_template(db: AsyncSession, query: str) -> ResolveResult:
+    """Resolve a free-text query to one render-eligible template, or a list.
+
+    Loads the active, render-eligible templates (``is_active`` + non-empty
+    ``template_fields``), runs the deterministic matcher, and returns either the
+    single matched template (full detail) or the candidate list.
+    """
+    rows = await list_render_eligible(db)
     candidates = [
         TemplateCandidate(id=row.id, category=row.category, name=row.name)
         for row in rows

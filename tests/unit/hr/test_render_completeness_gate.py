@@ -16,7 +16,6 @@ guard that placement.
 from __future__ import annotations
 
 import io
-import logging
 from datetime import UTC, datetime
 from types import SimpleNamespace
 from typing import TYPE_CHECKING
@@ -25,7 +24,6 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
     from pathlib import Path
 
 from biotact.modules.hr.chat.documents import generate_hr_document
@@ -179,33 +177,6 @@ class TestGatePassesCompleteData:
 
         assert result.startswith(_URL_PREFIX)
         render.assert_called_once()
-
-
-class _ListHandler(logging.Handler):
-    """Capture fully-rendered log lines (message + any traceback)."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.lines: list[str] = []
-        self.setFormatter(logging.Formatter("%(message)s"))
-
-    def emit(self, record: logging.LogRecord) -> None:
-        self.lines.append(self.format(record))
-
-
-@pytest.fixture
-def hr_log_lines() -> Iterator[list[str]]:
-    """Capture ``biotact.modules.hr.*`` INFO+ lines regardless of propagation."""
-    handler = _ListHandler()
-    logger = logging.getLogger("biotact.modules.hr")
-    prev_level = logger.level
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
-    try:
-        yield handler.lines
-    finally:
-        logger.removeHandler(handler)
-        logger.setLevel(prev_level)
 
 
 @pytest.mark.asyncio
