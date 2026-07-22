@@ -13,9 +13,13 @@ from biotact.models import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-# Interpret the config file for Python logging.
+# Interpret the config file for Python logging. ``disable_existing_loggers``
+# defaults to True, which switches off every logger already created — including
+# ``biotact.modules.hr``. Harmless for a standalone ``alembic upgrade``, but in
+# the test process it silently kills the HR log assertions of every test that
+# runs after a migration test.
 if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+    fileConfig(config.config_file_name, disable_existing_loggers=False)
 
 # Set the SQLAlchemy URL. Tests and CI point everything at DATABASE_URL (async);
 # honor it here so Alembic targets the SAME database rather than the settings
