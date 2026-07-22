@@ -36,7 +36,14 @@ async def generate_hr_document(
 ) -> str:
     """Render a DOCX from AI-provided data and persist it.
 
-    Returns a public download URL or an error message.
+    Fields still empty after post-processing block the render: docxtpl runs on a
+    default Jinja environment, so an unfilled placeholder would silently become
+    an empty string in a document the chat then reports as ready. The check runs
+    *after* ``postprocess`` because most of a template's fields are derived
+    (salary in words, weekly hours, dates) rather than supplied by HR.
+
+    Returns a public download URL, or a message for the model — either what to
+    ask the user for, or the reason the render failed.
     """
     template_id = args.get("template_id")
     data = args.get("data", {})
@@ -65,7 +72,28 @@ async def generate_hr_document(
             if k not in data or not data.get(k):
                 data[k] = v
 
+    # The model omits a field it cannot fill rather than sending it empty
+    # (SYSTEM_PROMPT: «НЕ выдумывай данные — если не указаны, спроси»). Declaring
+    # the template's own fields as empty lets the post-processor apply its
+    # defaults to them — and only to them, so an NDA never acquires an ORDER_DATE.
+    for field in fields:
+        data.setdefault(field, "")
+
     data = postprocess(data, category=db_template.category, now=now)
+
+    still_missing = [f for f in fields if not data.get(f)]
+    if still_missing:
+        logger.info(
+            "generate_document blocked: %d/%d fields still missing %s",
+            len(still_missing),
+            len(fields),
+            still_missing,  # field NAMES (not values) — safe to log
+        )
+        return (
+            "Документ НЕ создан — не хватает данных: "
+            f"{', '.join(still_missing)}. "
+            "Спроси эти значения у пользователя и вызови generate_document снова."
+        )
 
     try:
         render_dir = Path(get_settings().hr_render_dir)

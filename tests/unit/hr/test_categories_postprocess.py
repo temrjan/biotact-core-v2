@@ -118,3 +118,29 @@ class TestPostprocessProbation:
         data = {"PROBATION": "без испытательного срока"}
         result = postprocess(data, "td_osnovnoy", datetime.now(UTC))
         assert result["PROBATION"] == "без испытательного срока"
+
+
+class TestDateDefaultsUseBusinessTimezone:
+    """Document dates follow the Tashkent business day, not UTC.
+
+    The evening gap is the whole point: the other date tests freeze at midnight,
+    where UTC and Tashkent agree, so they stay green under either implementation
+    and prove nothing about the timezone.
+    """
+
+    @freeze_time("2026-07-22 19:30")  # UTC → Tashkent 23.07 00:30
+    def test_contract_date_uses_tashkent_day(self) -> None:
+        result = postprocess({"CONTRACT_DATE": ""}, "td_osnovnoy", datetime.now(UTC))
+        assert result["CONTRACT_DATE"] == "23.07.2026"
+
+    @freeze_time("2026-07-22 19:30")
+    def test_unrelated_document_gets_no_date(self) -> None:
+        """A category without a date placeholder never acquires one."""
+        result = postprocess({"GPD_NUMBER": "7"}, "nda_gpd", datetime.now(UTC))
+        assert "ORDER_DATE" not in result
+        assert "CONTRACT_DATE" not in result
+
+    @freeze_time("2026-07-22 09:00")  # same calendar day in both zones
+    def test_daytime_is_unaffected(self) -> None:
+        result = postprocess({"ORDER_DATE": ""}, "prikaz_priem", datetime.now(UTC))
+        assert result["ORDER_DATE"] == "22.07.2026"

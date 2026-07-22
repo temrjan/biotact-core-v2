@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
+from zoneinfo import ZoneInfo
 
 from biotact.modules.hr.num_to_text import (
     format_salary,
@@ -42,6 +43,13 @@ def _parse_int(value: str) -> int | None:
     digits = "".join(c for c in value if c.isdigit())
     return int(digits) if digits else None
 
+
+# Documents are dated by the Uzbek business day, not by UTC: the server runs on
+# UTC and Tashkent is UTC+5, so after ~19:00 local time a UTC-derived "today"
+# is already yesterday's date on paper. Module-level so the tz database is read
+# once at import — if tzdata is ever missing from the runtime image the app
+# fails loudly on startup instead of silently mis-dating the tenth document.
+_BUSINESS_TZ = ZoneInfo("Asia/Tashkent")
 
 _MONTHS_RU = [
     "",
@@ -198,8 +206,14 @@ def _normalize_work_type(data: dict[str, str], category: str) -> None:
 
 
 def _fill_date_defaults(data: dict[str, str], now: datetime) -> None:
-    """Default CONTRACT_DATE / AGREEMENT_DATE / ORDER_DATE to today."""
-    today = now.strftime("%d.%m.%Y")
+    """Default CONTRACT_DATE / AGREEMENT_DATE / ORDER_DATE to the Tashkent today.
+
+    Only keys already present are filled, so a document never acquires a date it
+    has no placeholder for. Callers that know the template's declared fields
+    (``generate_hr_document``) seed them first, which is what makes the default
+    reach a date the model omitted entirely.
+    """
+    today = now.astimezone(_BUSINESS_TZ).strftime("%d.%m.%Y")
     for date_field in ("CONTRACT_DATE", "AGREEMENT_DATE", "ORDER_DATE"):
         if date_field in data and not data[date_field]:
             data[date_field] = today
