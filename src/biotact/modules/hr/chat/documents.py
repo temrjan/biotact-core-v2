@@ -51,10 +51,22 @@ async def generate_hr_document(
     if not template_id:
         return "Ошибка: не указан template_id"
 
-    result = await db.execute(select(HRTemplate).where(HRTemplate.id == template_id))
+    # ``is_active`` is part of the lookup, not a check afterwards: a category
+    # keeps its superseded versions as rows, and rendering a contract from an
+    # outdated legal wording is not something the caller may opt into. The two
+    # cases are answered together because the model's recovery is the same —
+    # ask the library for the current template and retry.
+    result = await db.execute(
+        select(HRTemplate)
+        .where(HRTemplate.id == template_id)
+        .where(HRTemplate.is_active.is_(True))
+    )
     db_template = result.scalar_one_or_none()
     if not db_template:
-        return "Ошибка: шаблон не найден"
+        return (
+            "Ошибка: шаблон не найден или больше не актуален. "
+            "Возьми актуальный шаблон из списка доступных и повтори."
+        )
 
     fields = db_template.template_fields or []
     missing = [f for f in fields if f not in data or not data[f]]

@@ -16,7 +16,7 @@ from biotact.modules.hr.events.service import list_events
 from biotact.modules.hr.gifts.schemas import GiftCreateRequest
 from biotact.modules.hr.gifts.service import create_gift, get_gift
 from biotact.modules.hr.library.service import (
-    list_templates,
+    list_render_eligible,
     resolve_template,
 )
 
@@ -62,14 +62,19 @@ class HRChatService:
         self._messages_context = ""
 
     async def _get_template_context(self) -> str:
-        """Pre-fetch available templates to inject into system prompt."""
+        """Pre-fetch available templates to inject into system prompt.
+
+        Only render-eligible ones: a category can hold several versions, and the
+        line below carries no ``version`` or ``is_active``, so a superseded row
+        reaching the model would be indistinguishable from the current one.
+        """
         try:
-            templates_result = await list_templates(self.db)
-            if not templates_result.items:
+            templates = await list_render_eligible(self.db)
+            if not templates:
                 return ""
             lines = [
                 f"- id={t.id} name={t.name} category={t.category} fields={t.template_fields or []}"
-                for t in templates_result.items
+                for t in templates
             ]
             return (
                 "Доступные шаблоны (уже загружены, find_template не нужен):\n"
@@ -236,13 +241,19 @@ class HRChatService:
         )
 
     async def _tool_list_available_templates(self, _args: dict[str, Any]) -> str:
-        templates_result = await list_templates(self.db)
-        if not templates_result.items:
+        """List templates for the model. Same source as the system context.
+
+        This listing shows neither id nor version, so a superseded row here is
+        even less distinguishable than in the system context — filtering is what
+        keeps the two chat-facing paths from disagreeing.
+        """
+        templates = await list_render_eligible(self.db)
+        if not templates:
             return "Библиотека пуста. Загрузите шаблоны документов."
         lines = [
             f"- {t.name} (категория: {t.category}, "
             f"полей: {len(t.template_fields or [])})"
-            for t in templates_result.items
+            for t in templates
         ]
         return "Доступные шаблоны:\n" + "\n".join(lines)
 

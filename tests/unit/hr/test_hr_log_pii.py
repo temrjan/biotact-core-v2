@@ -8,49 +8,17 @@ field names / counts / ids — not values. Guards the sites fixed in PR-A:
 from __future__ import annotations
 
 import json
-import logging
 from datetime import UTC, datetime
 from types import SimpleNamespace
-from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
-if TYPE_CHECKING:
-    from collections.abc import Iterator
 
 from biotact.modules.hr.chat.documents import generate_hr_document
 from biotact.modules.hr.chat.service import HRChatService
 
 _PASSPORT = "AE4049022"
 _ADDRESS = "г. Ташкент, Сергелийский район, ул. Навруз, д.109"
-
-
-class _ListHandler(logging.Handler):
-    """Capture fully-rendered log lines (message + any traceback)."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.lines: list[str] = []
-        self.setFormatter(logging.Formatter("%(message)s"))
-
-    def emit(self, record: logging.LogRecord) -> None:
-        self.lines.append(self.format(record))
-
-
-@pytest.fixture
-def hr_log_lines() -> Iterator[list[str]]:
-    """Capture ``biotact.modules.hr.*`` INFO+ lines regardless of propagation."""
-    handler = _ListHandler()
-    logger = logging.getLogger("biotact.modules.hr")
-    prev_level = logger.level
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
-    try:
-        yield handler.lines
-    finally:
-        logger.removeHandler(handler)
-        logger.setLevel(prev_level)
 
 
 def _settings() -> SimpleNamespace:
@@ -95,10 +63,10 @@ async def test_tool_call_args_values_not_logged(hr_log_lines: list[str]) -> None
             _final_response(),
         ]
     )
-    templates = AsyncMock(return_value=SimpleNamespace(items=[]))
+    templates = AsyncMock(return_value=[])
     with (
         patch("biotact.modules.hr.chat.service.AsyncOpenAI") as mock_cls,
-        patch("biotact.modules.hr.chat.service.list_templates", new=templates),
+        patch("biotact.modules.hr.chat.service.list_render_eligible", new=templates),
         patch(
             "biotact.modules.hr.chat.service.generate_hr_document",
             new=AsyncMock(return_value="/api/v1/hr/documents/download/abc"),
