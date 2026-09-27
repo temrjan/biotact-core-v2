@@ -28,7 +28,7 @@ dependencies = [
     "uvicorn[standard]>=0.32.0",
 
     # Database
-    "sqlalchemy[asyncio]>=2.0.0",
+    "sqlalchemy[asyncio]==2.0.51",
     "asyncpg>=0.30.0",
     "psycopg2-binary>=2.9.0",  # Sync driver for Alembic
     "alembic>=1.13.0",
@@ -47,7 +47,7 @@ dependencies = [
     "qdrant-client>=1.12.0",
 
     # AI/LLM
-    "anthropic>=0.40.0",
+    "anthropic==0.117.1",
     "apscheduler>=3.10.0",
     "telethon>=1.30.0",
     "redis>=5.0.0",
@@ -84,7 +84,7 @@ dev = [
     "types-python-jose>=3.3.0",
 
     # Linting & Formatting
-    "ruff>=0.3.0",
+    "ruff==0.15.22",
 
     # Development
     "pre-commit>=3.6.0",
