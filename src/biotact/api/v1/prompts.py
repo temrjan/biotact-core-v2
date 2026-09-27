@@ -4,10 +4,14 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-router = APIRouter(prefix="/prompts", tags=["prompts"])
+from biotact.core.dependencies import CurrentUserDep, get_current_user
+
+router = APIRouter(
+    prefix="/prompts", tags=["prompts"], dependencies=[Depends(get_current_user)]
+)
 
 PROMPTS_DIR = Path(__file__).parent.parent.parent.parent.parent / "prompts"
 
@@ -43,8 +47,13 @@ async def get_prompt(name: str) -> PromptResponse:
 
 
 @router.put("/{name}", response_model=PromptResponse)
-async def update_prompt(name: str, request: PromptUpdateRequest) -> PromptResponse:
+async def update_prompt(
+    name: str, request: PromptUpdateRequest, current_user: CurrentUserDep
+) -> PromptResponse:
     """Update prompt content with automatic backup."""
+    if current_user.department_id != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+
     safe_name = name.replace("..", "").replace("/", "").replace("\\", "")
     prompt_path = PROMPTS_DIR / f"{safe_name}.txt"
 
