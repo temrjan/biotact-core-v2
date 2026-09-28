@@ -22,7 +22,7 @@ services:
     container_name: biotact-api
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     environment:
       # App
       APP_ENV: production
